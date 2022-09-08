@@ -2,6 +2,12 @@
 ;;; Example code to show how to display a bitmap on the C256jr
 ;;;
 
+;
+; Definitions
+;
+
+bitmap_base = $10000        ; The base address of our bitmap
+
 ; Point the reset vector to the start of code to kick start it
 
 * = $FFFC
@@ -12,8 +18,14 @@ reset:  .word <>start
 ; Define some variables
 ;
 
-pointer     equ $0010           ; A pointer we'll use
-bitmap_base equ $10000          ; The base address of our bitmap
+* = $0010
+
+pointer     .word ?             ; A pointer we'll use
+tmp         .byte ?             ; A scratch variable
+line        .byte ?             ; The number of the bitmap line we're changing
+line_sys    .long ?             ; 24-bit system address of the current line in the bitmap
+line_bank   .byte ?             ; Number of the memory bank (8KB) the current line is in
+line_cpu    .word ?             ; 16-bit CPU address of the current line
 
 * = $1000
 
@@ -91,3 +103,78 @@ lut_done:
             lda #`bitmap_base   ; Set the upper two bits of the bitmap's address
             and #$03
             sta $D103
+
+            stz line            ; Start with line #0
+
+            lda #<bitmap_base   ; Set the base system address of the bitmap
+            sta line_sys
+            lda #>bitmap_base
+            sta line_sys+1
+            lda #`bitmap_base
+            sta line_sys+2
+
+            ; Calculate the bank of the line
+            ; line_bank := (line_sys & 0xfe000) >> 13
+            ; Actually calculated differently to save cycles
+
+loop1:      lda line_sys+2      ; Get upper bits of address
+            and #$0f
+            sta line_bank       ; And stick them in line_bank
+
+            lda line_sys+1      ; Get the next 3 bits of the address
+            and #$e0
+            sta tmp             ; Into tmp
+
+            asl tmp             ; Shift the three bits into line_bank
+            rol line_bank
+            asl tmp
+            rol line_bank
+            asl tmp
+            rol line_bank
+
+            ; Calculate pointer address of line within CPU memory
+            ; pointer := (line_sys & 0x1fff) + 0x8000;
+
+            lda line_sys        ; Offset within bank...
+            sta pointer
+            lda line_sys+1
+            and #$1f
+            ora #$80            ; Plus $8000 for address of the CPU bank
+            sta pointer+1
+
+            ; Fill the line with the color... first 256 pixels
+
+            lda line            ; The line will be colored using the color with its number as index
+
+            ldy #0
+loop2:      sta (pointer),y
+            iny
+            bne loop2
+
+            inc pointer+1       ; Move pointer to the next page
+
+            ; Fill the line with the color... second 64 pixels
+
+loop3:      sta (pointer),y
+            iny
+            cmp #64             ; Have we reached the end of the line?
+            bne loop3           ; No, keep looping
+
+            inc a               ; Move to the next line
+            cmp #240            ; Have we reached the last line?
+            beq done            ; Yes: we're done
+
+            sta line            ; Save the new line number
+
+            clc                 ; Move the line system address forward by 320 bytes
+            lda line_sys
+            adc #<320
+            sta line_sys
+            lda line_sys+1
+            adc #>320
+            sta line_sys+1
+
+            bra loop1           ; And process this new line
+
+done:       nop                 ; Lock up here
+            bra done
