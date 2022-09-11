@@ -1,11 +1,11 @@
-AS = d:\64tass\64tass
+AS = 64tass
 ASFLAGS = -a --mw65c02
 
 .PHONY: all runhex
 
 all: bitmaps.hex
 
-runhex: mmu_text.hex
+runhex: bitmaps.hex
 	python3 $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload bitmaps.hex
 
 %.hex: %.asm

@@ -18,7 +18,7 @@ reset:  .word <>start
 ; Define some variables
 ;
 
-* = $0010
+* = $0020
 
 pointer     .word ?             ; A pointer we'll use
 tmp         .byte ?             ; A scratch variable
@@ -27,13 +27,16 @@ line_sys    .long ?             ; 24-bit system address of the current line in t
 line_bank   .byte ?             ; Number of the memory bank (8KB) the current line is in
 line_cpu    .word ?             ; 16-bit CPU address of the current line
 
-* = $1000
+* = $e000
 
 start:
 
 ;
 ; Initialize the LUT to greyscale from (0, 0, 0) to (255, 255, 255)
 ;
+
+            lda #$80            ; Turn on editting of MMU LUT #0, and work off #0
+            sta $0000
 
             lda #$01            ; Set the I/O page to #1
             sta $0001
@@ -48,9 +51,17 @@ start:
 lut_loop:   ldy #0
             sta (pointer),y     ; Set the blue component
             iny
+            pha
+            eor #$ff
+            inc a
+            pha
+            lda #0
             sta (pointer),y     ; Set the green component
             iny
+            pla
             sta (pointer),y     ; Set the red component
+            iny
+            pla
 
             inc a               ; Go to the next color
             beq lut_done        ; If we are back to black, we're done with the LUT
@@ -76,7 +87,7 @@ lut_done:
 
             lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
             sta $D000           ; Save that to VICKY master control register 0
-            stz $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+            sta $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
 
             stz $D004           ; Turn off the border
 
@@ -104,77 +115,43 @@ lut_done:
             and #$03
             sta $D103
 
-            stz line            ; Start with line #0
-
-            lda #<bitmap_base   ; Set the base system address of the bitmap
-            sta line_sys
-            lda #>bitmap_base
-            sta line_sys+1
-            lda #`bitmap_base
-            sta line_sys+2
-
-            ; Calculate the bank of the line
-            ; line_bank := (line_sys & 0xfe000) >> 13
-            ; Actually calculated differently to save cycles
-
-loop1:      lda line_sys+2      ; Get upper bits of address
-            and #$0f
-            sta line_bank       ; And stick them in line_bank
-
-            lda line_sys+1      ; Get the next 3 bits of the address
-            and #$e0
-            sta tmp             ; Into tmp
-
-            asl tmp             ; Shift the three bits into line_bank
-            rol line_bank
-            asl tmp
-            rol line_bank
-            asl tmp
-            rol line_bank
-
-            ; Calculate pointer address of line within CPU memory
-            ; pointer := (line_sys & 0x1fff) + 0x8000;
-
-            lda line_sys        ; Offset within bank...
+            lda #0
             sta pointer
-            lda line_sys+1
-            and #$1f
-            ora #$80            ; Plus $8000 for address of the CPU bank
+            lda #$20
             sta pointer+1
+
+            ; Alter the LUT entries for $2000 -> $bfff
+
+            lda #$08            ; $2000 - $3fff -> $1:0000 - $1:1fff
+            sta $0009
+            lda #$09            ; $4000 - $5fff -> $1:2000 - $1:3fff
+            sta $000a
+            lda #$0a            ; $6000 - $7fff -> $1:4000 - $1:5fff
+            sta $000b
+            lda #$0b            ; $8000 - $9fff -> $1:6000 - $1:7fff
+            sta $000c
+            lda #$0c            ; $a000 - $bfff -> $1:8000 - $1:9fff
 
             ; Fill the line with the color... first 256 pixels
 
-            lda line            ; The line will be colored using the color with its number as index
-
+loop3:      sec
+            lda pointer+1
+            sbc #$20
+            inc a
             ldy #0
 loop2:      sta (pointer),y
             iny
             bne loop2
 
-            inc pointer+1       ; Move pointer to the next page
+            lda pointer+1
+            inc a
+            sta pointer+1
+            cmp #$c0
+            bne loop3
 
-            ; Fill the line with the color... second 64 pixels
+lock        nop
+            bra lock
 
-loop3:      sta (pointer),y
-            iny
-            cmp #64             ; Have we reached the end of the line?
-            bne loop3           ; No, keep looping
-
-            inc a               ; Move to the next line
-            cmp #240            ; Have we reached the last line?
-            beq done            ; Yes: we're done
-
-            sta line            ; Save the new line number
-
-            clc                 ; Move the line system address forward by 320 bytes
-            lda line_sys
-            adc #<320
-            sta line_sys
-            lda line_sys+1
-            adc #>320
-            sta line_sys+1
-
-            bra loop1           ; And process this new line
 
 done:       nop                 ; Lock up here
             bra done
