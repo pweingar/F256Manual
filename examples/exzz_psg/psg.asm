@@ -28,8 +28,7 @@ done:       nop
             ; Find the frequency for the note
 
 playnote:   sec                     ; Convert the note character to an index
-            sbc #'A'                ; Into the frequency table of 10 bit values
-            asl a
+            sbc #'A'                ; Into the frequency table
             tax
 
             lda frequency,x         ; Get the low 4 bits of the frequency
@@ -55,7 +54,7 @@ playnote:   sec                     ; Convert the note character to an index
 
             ; Wait for the length of the note (1/2 second)
 
-            ldx #5
+            ldx #3
             jsr wait_tens
 
             ; Stop playing the note
@@ -66,7 +65,7 @@ playnote:   sec                     ; Convert the note character to an index
 
             ; Wait for the pause between notes (1/5 second)
 
-            ldx #2
+            ldx #3
             jsr wait_tens
 
             ; Try the next note
@@ -120,20 +119,20 @@ wait_tens:  jsr wait_100ms
 ; NOTE: in general, this table should support 10-bit values
 ;       we're using just one octave here, so we can get away with bytes
 ;
-frequency:  .byte 223   ; A (Concert A)
-            .byte 199   ; B
-            .byte 188   ; C
-            .byte 167   ; D
-            .byte 149   ; E
-            .byte 141   ; F
-            .byte 125   ; G
+frequency:  .byte 127   ; A (Concert A)
+            .byte 113   ; B
+            .byte 212   ; C
+            .byte 190   ; D
+            .byte 169   ; E
+            .byte 159   ; F
+            .byte 142   ; G
 
 ;
 ; The notes to play
 ;
-score:      .text "GGDDEED"
-            .text "CCBBAAG"
-            .text "DDCCBBA"
-            .text "DDCCBBA"
-            .text "GGDDEED"
-            .text "CCBBAAG",0
+score:      .text "CCGGAAG"
+            .text "FFEEDDC"
+            .text "GGFFEED"
+            .text "GGFFEED"
+            .text "CCGGAAG"
+            .text "FFEEDDC",0
