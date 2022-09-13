@@ -16,17 +16,14 @@ reset:      .word <>start
 start:      ldy #0
 
             ; Get the note to play
-
 loop:       lda score,y
 
             ; If we're at the end of the score, we're done
-
             bne playnote
 done:       nop
             bra done
 
             ; Find the frequency for the note
-
 playnote:   sec                     ; Convert the note character to an index
             sbc #'A'                ; Into the frequency table
             tax
@@ -47,29 +44,24 @@ playnote:   sec                     ; Convert the note character to an index
             sta psg_r
 
             ; Start playing the note
-
             lda #$90
             sta psg_l
             sta psg_r
 
             ; Wait for the length of the note (1/2 second)
-
             ldx #3
             jsr wait_tens
 
             ; Stop playing the note
-
             lda #$9f
             sta psg_l
             sta psg_r
 
             ; Wait for the pause between notes (1/5 second)
-
             ldx #3
             jsr wait_tens
 
             ; Try the next note
-
             iny
             bra loop
 
