@@ -35,9 +35,6 @@ start:
 ; Initialize the LUT to greyscale from (0, 0, 0) to (255, 255, 255)
 ;
 
-            lda #$80            ; Turn on editting of MMU LUT #0, and work off #0
-            sta $0000
-
             lda #$01            ; Set the I/O page to #1
             sta $0001
 
@@ -122,15 +119,25 @@ lut_done:
 
             ; Alter the LUT entries for $2000 -> $bfff
 
+            lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
+            sta $0000
+
             lda #$08            ; $2000 - $3fff -> $1:0000 - $1:1fff
             sta $0009
-            lda #$09            ; $4000 - $5fff -> $1:2000 - $1:3fff
-            sta $000a
-            lda #$0a            ; $6000 - $7fff -> $1:4000 - $1:5fff
-            sta $000b
-            lda #$0b            ; $8000 - $9fff -> $1:6000 - $1:7fff
-            sta $000c
-            lda #$0c            ; $a000 - $bfff -> $1:8000 - $1:9fff
+
+            stz $0000           ; Turn off editing of MMU LUT #0, and work off #0
+
+            lda #$ff
+            ldy #0
+loop4:      sta $2000,y         ; Write to several pages, just to make it more visible
+            sta $2100,y
+            sta $2200,y
+            sta $2300,y
+            iny
+            bne loop4
+
+loop5:      nop
+            bra loop5
 
             ; Fill the line with the color... first 256 pixels
 
