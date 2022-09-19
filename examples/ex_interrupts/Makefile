@@ -5,8 +5,8 @@ ASFLAGS = -a --mw65c02
 
 all: interrupts.hex
 
-runhex: mmu_text.hex
-	python3 $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload interrupts.hex
+runhex: interrupts.hex
+	python $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload interrupts.hex
 
 %.hex: %.asm
 	$(AS) $(ASFLAGS) --intel-hex -o $@ $<

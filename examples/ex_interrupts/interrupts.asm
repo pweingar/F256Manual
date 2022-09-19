@@ -75,6 +75,28 @@ start:      ; Disable IRQ handling
             sta INT_PEND_0
             sta INT_PEND_1
 
+            ; Put a character in the upper right of the screen
+            lda #SYS_CTRL_TEXT_PG
+            sta SYS_CTRL_1
+
+            lda #'@'
+            sta $c000
+
+            ; Set the color of the character
+            lda #SYS_CTRL_COLOR_PG
+            sta SYS_CTRL_1
+
+            lda #$F0
+            sta $c000
+
+            ; Go back to I/O page 0
+            stz SYS_CTRL_1
+
+            ; Make sure we're in text mode
+            lda #$01            ; enable TEXT
+            sta $D000           ; Save that to VICKY master control register 0
+            stz $D001
+
             ; Re-enable IRQ handling
             cli
 

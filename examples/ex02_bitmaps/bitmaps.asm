@@ -18,18 +18,13 @@ reset:  .word <>start
 ; Define some variables
 ;
 
-* = $0020
+* = $0080
 
 pointer     .word ?             ; A pointer we'll use
-tmp         .byte ?             ; A scratch variable
-line        .byte ?             ; The number of the bitmap line we're changing
-line_sys    .long ?             ; 24-bit system address of the current line in the bitmap
-line_bank   .byte ?             ; Number of the memory bank (8KB) the current line is in
-line_cpu    .word ?             ; 16-bit CPU address of the current line
 
 * = $e000
 
-start:
+start:      sei                 ; Turn off interrupts
 
 ;
 ; Initialize the LUT to greyscale from (0, 0, 0) to (255, 255, 255)
@@ -84,9 +79,19 @@ lut_done:
 
             lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
             sta $D000           ; Save that to VICKY master control register 0
-            sta $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+            stz $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
 
-            stz $D004           ; Turn off the border
+            lda #$01            ; Turn on the border
+            sta $D004
+
+            lda #$10            ; Border is 16 pixels wide
+            sta $D008
+            sta $D009
+
+            lda #$80
+            sta $d005           ; Set border red
+            sta $d006           ; Set border blue
+            sta $d007           ; Set border green
 
             stz $D00D           ; Set background color to black
             stz $D00E
@@ -112,8 +117,7 @@ lut_done:
             and #$03
             sta $D103
 
-            lda #0
-            sta pointer
+loop4:      stz pointer         ; Set the pointer to start of the current bank
             lda #$20
             sta pointer+1
 
@@ -122,43 +126,34 @@ lut_done:
             lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
             sta $0000
 
-            lda #$08            ; $2000 - $3fff -> $1:0000 - $1:1fff
-            sta $0009
+            lda #$08
+            sta $0009           ; Set the bank we will map to $2000 - $3fff
 
-            stz $0000           ; Turn off editing of MMU LUT #0, and work off #0
+            stz $0000           ; Turn off editing of MMU LUT #0
 
-            lda #$ff
+            ; Fill the line with the color..
+
             ldy #0
-loop4:      sta $2000,y         ; Write to several pages, just to make it more visible
+loop2:      lda #$ff
+            sta $2000,y
             sta $2100,y
             sta $2200,y
             sta $2300,y
+            sta $2400,y
+            sta $2500,y
+            sta $2600,y
+            sta $2700,y
+            sta $2800,y
+            sta $2900,y
+            sta $2a00,y
+            sta $2b00,y
+            sta $2c00,y
+            sta $2d00,y
+            sta $2e00,y
+            sta $2f00,y
+
             iny
-            bne loop4
-
-loop5:      nop
-            bra loop5
-
-            ; Fill the line with the color... first 256 pixels
-
-loop3:      sec
-            lda pointer+1
-            sbc #$20
-            inc a
-            ldy #0
-loop2:      sta (pointer),y
-            iny
-            bne loop2
-
-            lda pointer+1
-            inc a
-            sta pointer+1
-            cmp #$c0
-            bne loop3
-
-lock        nop
-            bra lock
-
+            bra loop2
 
 done:       nop                 ; Lock up here
             bra done
