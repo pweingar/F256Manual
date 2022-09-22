@@ -2,6 +2,7 @@
 \usepackage{concmath}
 \usepackage[OT1]{fontenc}
 \usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multirow}
 \newcommand{\jr}{{\sc C256jr}}
 \newcommand{\microsec}{$\mu$s}
 \begin{document}
@@ -133,13 +134,7 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 
 \section{Tiles}
 
-\chapter{Sound}
-
-\chapter{CODEC}
-
-\section{Using the PSGs}
-
-\section{Using the SIDs}
+\input{sound.tex}
 
 \chapter{Interrupt Controller}
 

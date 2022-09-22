@@ -1,0 +1,84 @@
+\chapter{Sound}
+
+The \jr\ supports two different sound chips, although only one is built-in. The built-in sound chip is the SN76489 (called the ``PGS'' here), which was used by many vintage machines including the TI99/4A, the BBC Micro, the IBM PCjr, and the Tandy 1000. On the \jr, the PSG is implemented as two stereo PSGs in the FPGA. The other chip supported is the Commodore SID chip (6581 or 8580). The SID is not installed by default, but the board comes with two sockets for SID chips. The \jr\ supports the original 6581, the lower voltage 8580, and the modern SID replacement projects.
+
+\section{CODEC}
+
+\section{Using the PSGs}
+
+\section{Using the SIDs}
+
+The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips that can be installed on the \jr\ (see table~\ref{tab:sid_registers}).
+
+The SID chip provides three independent voices (so it can play three notes at once). The three voices are almost identical in their features, with voice 3 being the only one different. Each voice can produce one of four basic sound wave forms: randomized noise, square waves, saw tooth waves, and triangle waves. These waves can be generated over a range of frequencies, and for the square waves, the width of the pulse ({\it i.e. duty cycle}) may be adjusted.
+
+The type of wave form produced by a voice is controlled by the NOISE, PULSE, SAW, and TRI bits. If NOISE is set to 1, the output is random noise. If PULSE is set, a square wave is produced. If SAW is set, a saw tooth wave is produced. If TRI is set, the voice produces a triangle wave. If PULSE is set, the duty cycle of the square wave (or pulse width, if you prefer) is set by the PW bits according to the formula
+${\rm PW} / 40.95$ (expressed as a percent).
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+			Voice & Offset & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            \multirow{7}{*}{V1} & 0 & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0 \\ \cline{2-10}
+            & 1 & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-10}
+            & 2 & PW7 & PW6 & PW5 & PW4 & PW3 & PW2 & PW1 & PW0 \\ \cline{2-10}
+            & 3 & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-10}
+            & 4 & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-10}
+            & 5 & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-10}
+            & 6 & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
+
+            \multicolumn{10}{c}{} \\ \hline
+
+            \multirow{7}{*}{V2} & 7 & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0\\ \cline{2-10}
+            & 8 & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-10}
+            & 9 & PW7 & PW6 & PW5 & PW4 & PW3 & PW2 & PW1 & PW0 \\ \cline{2-10}
+            & 10 & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-10}
+            & 11 & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-10}
+            & 12 & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-10}
+            & 13 & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
+
+            \multicolumn{10}{c}{} \\ \hline
+
+            \multirow{7}{*}{V3} & 14 & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0 \\ \cline{2-10}
+            & 15 & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-10}
+            & 16 & PW7 & PW6 & PW5 & PW4 & PW3 & PW2 & PW1 & PW0 \\ \cline{2-10}
+            & 17 & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-10}
+            & 18 & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-10}
+            & 19 & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-10}
+            & 20 & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
+
+            \multicolumn{10}{c}{} \\ \hline
+
+            \multirow{7}{*}{} & 21 & \multicolumn{5}{|c|}{X} & FC2 & FC1 & FC0 \\ \cline{2-10}
+            & 22 & FC10 & FC9 & FC8 & FC7 & FC6 & FC5 & FC4 & FC3 \\ \cline{2-10}
+            & 23 & RES3 & RES2 & RES1 & RES0 & EXT & FILTV3 & FILTV2 & FILTV1 \\ \cline{2-10}
+            & 24 & MUTEV3 & HIGH & BAND & LOW & VOL3 & VOL2 & VOL1 & VOL0 \\ \cline{2-10}
+            & 25 & \multicolumn{8}{|c|}{paddle x} \\ \cline{2-10}
+            & 26 & \multicolumn{8}{|c|}{paddle y} \\ \cline{2-10}
+            & 27 & \multicolumn{8}{|c|}{oscillator 3} \\ \cline{2-10}
+            & 28 & \multicolumn{8}{|c|}{envelope 3} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{SID Registers}
+	\label{tab:sid_registers}
+\end{table}
+
+Each of the three voices has a sound ``envelope'' which changes the volume of the sound during the duration of the note. There are four phases to the sound envelope: attack, decay, sustain, and release (ADSR). When the note first starts playing (that is, the GATE bit for the voice is set to 1), it starts at the attack phase when the volume starts at zero and goes up to the current maximum volume. How fast this happens is determined by the attack rate (ATK3-0 in the registers). Once the volume reaches the maximum, the volume goes down again to the sustain volume. This phase is called decay, and the speed at which the volume drops is determined by the DCY3-0 register values. Next, the envelope enters the sustain phase, where the volume is held steady at the sustain level (STN3-0). It stays here until the note is to stop playing (GATE is set to 0). At this point, the envelope enters the release stage, where the volume drops back to zero at the release rate (RLS3-0).
+
+The ADSR envelope allows the SID chip to mimic the qualities of various musical instruments or shape various sound effects. For instance, a pipe organ's notes are typically either on or off, so the attack, decay, and release rates would be set to be instantaneous, and the sustain level would be set to full. A piano, on the other hand tends to have a sharp, somewhat percussive sound at the beginning with the note holding a long time on release if not dampened.
+
+While the different voices are independent, they can be set to alter one another through two different effects: synchronization, and ring modulation. With these features, the voices can interact with each other in the following pairs:
+
+\begin{itemize}
+\item Voice 1 controls voice 2
+\item Voice 2 controls voice 3
+\item Voice 3 controls voice 1
+\end{itemize}
+
+\subsection{Ring Modulation}
+
+If a voice's RING bit is set and the voice is set to use the triangle wave form (TRI is set), then the triangle wave will be replaced by the combination of the two voice's frequencies. So if the RING bit of voice 1 is set, the result will be the ring modulation of voice 1 and voice 3. Ring modulation tends to produce harmonics and overtones and can be used for bell like sounds.
+
+\subsection{Synchronization}
+
+If a voice's SYNC bit is set, the frequency it produces will be synchronized to the controlling voice. So if voice 1's SYNC bit is set, its frequency will be synchronized to voice 3.
