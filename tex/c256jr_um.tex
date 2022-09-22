@@ -1,10 +1,12 @@
 \documentclass[oneside]{book}
 \usepackage{concmath}
 \usepackage[OT1]{fontenc}
-\newcommand{\junior}{{\sc C256jr}}
+\usepackage[a4paper, margin=1in]{geometry}
+\newcommand{\jr}{{\sc C256jr}}
+\newcommand{\microsec}{$\mu$s}
 \begin{document}
 
-\title{Foenix \junior\ User's Manual}
+\title{Foenix \jr\ User's Manual}
 \author{Peter Weingartner}
 \maketitle
 
@@ -12,13 +14,13 @@
 
 Put the introduction here.
 
-\chapter{\junior\ Basics}
+\chapter{\jr\ Basics}
 
 \chapter{Memory Management}
 
-The \junior\ has 256 KB of system RAM which can be used for programs, data, and graphics. It also has 512 KB of read-only flash memory that can be used by whatever operating system is installed. Now, the 65C02 CPU at the heart of the \junior\ has an address space of only 64 KB, so how can it access all this memory, not to mention the I/O devices on the system? The answer is paging. The \junior\ has a special memory management unit (MMU) that can swap banks of memory or I/O registers into and out of the memory space of the CPU.
+The \jr\ has 256 KB of system RAM which can be used for programs, data, and graphics. It also has 512 KB of read-only flash memory that can be used by whatever operating system is installed. Now, the 65C02 CPU at the heart of the \jr\ has an address space of only 64 KB, so how can it access all this memory, not to mention the I/O devices on the system? The answer is paging. The \jr\ has a special memory management unit (MMU) that can swap banks of memory or I/O registers into and out of the memory space of the CPU.
 
-To understand how it all works, we first need to look at how RAM and flash memory are handled by the \junior. Because there are 768 KB of total storage on the system, the system has a 20-bit address bus to manage the memory. RAM and flash have address on that 20-bit bus as shown in table~\ref{tab:memory}.
+To understand how it all works, we first need to look at how RAM and flash memory are handled by the \jr. Because there are 768 KB of total storage on the system, the system has a 20-bit address bus to manage the memory. RAM and flash have address on that 20-bit bus as shown in table~\ref{tab:memory}.
 
 \begin{table}
 	\begin{center}
@@ -35,12 +37,12 @@ To understand how it all works, we first need to look at how RAM and flash memor
 
 This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, a bank number there is 7 bits. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
 
-The \junior's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
+The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
-			Bank & A[15..A13] & Start & End \\ \hline\hline
+			Bank & A[15..13] & Start & End \\ \hline\hline
 			0 & 000 & 0x0000 & 0x1FFF \\ \hline
 			1 & 001 & 0x2000 & 0x3FFF \\ \hline
 			2 & 010 & 0x4000 & 0x5FFF \\ \hline
@@ -55,12 +57,12 @@ The \junior's MMU supports up to four LUTs, only one of which is active at any g
 	\label{tab:mem_banks}
 \end{table}
 
-Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as the rest can, or it can be mapped to I/O registers, which are not memory mapped in the same way as RAM and flash. All I/O devices on the \junior\ therefore live within 0xC000 through 0xDFFF on the CPU, but only if the MMU is set to map I/O to bank 6. There is quite a lot of I/O to access on the \junior, so there are four different banks of I/O registers and memory that can be mapped to bank 6 (see table~\ref{tab:io_banks}).
+Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as the rest can, or it can be mapped to I/O registers, which are not memory mapped in the same way as RAM and flash. All I/O devices on the \jr\ therefore live within 0xC000 through 0xDFFF on the CPU, but only if the MMU is set to map I/O to bank 6. There is quite a lot of I/O to access on the \jr, so there are four different banks of I/O registers and memory that can be mapped to bank 6 (see table~\ref{tab:io_banks}).
 
 \begin{table}
 	\begin{center}
 		\begin{tabular}{| l | l |} \hline
-			I/O Bank & Purpose \\ \hline
+			I/O Bank & Purpose \\ \hline\hline
 			0 & Low level I/O registers \\ \hline
 			1 & Text display font memory and graphics color LUTs \\ \hline
 			2 & Text display character matrix \\ \hline
@@ -141,18 +143,6 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 
 \chapter{Interrupt Controller}
 
-\chapter{Tracking Time}
-
-\section{Interval Timers}
-
-\section{Real Time Clock}
-
-\appendix{The OpenKernal API}
-
-\appendix{Debugging Interface}
-
-\appendix{The 64TASS Assembler}
-
-\appendix{THe Calypsi Development Suite}
+\input{time.tex}
 
 \end{document}
