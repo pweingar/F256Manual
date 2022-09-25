@@ -6,6 +6,124 @@ The \jr\ supports two different sound chips, although only one is built-in. The 
 
 \section{Using the PSGs}
 
+The \jr\ has support for dual SN76489 (PSG) sound chips, emulated in the FPGA. The SN76489 was used in several vintage machines, including the TI-99/4A, BBC Micro, IBM PCjr, and Tandy 1000. The chip provides three independent square-wave tone generators and a single noise generator. Each tone generator can produce tones of several frequencies in 16 different volume levels. The noise generator can produce two different types of noise in three different tones at 16 different volume levels.
+
+Access to each PSG is through a single memory address, but that single address allows the CPU to write a value to eight different internal registers. For each tone generator, there is a ten bit frequency (which takes two bytes to set), and a four bit ``attenuation'' or volume level. For the noise generator, there is a noise control register and a noise attenuation register.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|l|} \hline
+			R2 & R1 & R0 & Channel & Purpose \\ \hline \hline
+			0 & 0 & 0 & Tone 1 & Frequency \\ \hline
+			0 & 0 & 1 & Tone 1 & Attenuation \\ \hline
+			0 & 1 & 0 & Tone 2 & Frequency \\ \hline
+			0 & 1 & 1 & Tone 2 & Attenuation \\ \hline
+			1 & 0 & 0 & Tone 3 & Frequency \\ \hline
+			1 & 0 & 1 & Tone 3 & Attenuation \\ \hline
+			1 & 1 & 0 & Noise & Control \\ \hline
+			1 & 1 & 1 & Noise & Attenuation \\ \hline
+		\end{tabular}
+		\caption{SN76489 Channel Registers}
+	\end{center}
+	\label{tab:psg_registers}
+\end{table}
+
+There are four basic formats of bytes that can be written to the port:
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|l|} \hline
+			D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 & Purpose \\ \hline \hline
+			1 & R2 & R1 & R0 & F3 & F2 & F1 & F0 & Set the low four bits of the frequency \\ \hline
+			0 & X & F9 & F8 & F7 & F6 & F5 & F4 & Set the high seven bits of the frequency \\ \hline
+			1 & 1 & 1 & 0 & X & FB & F1 & F0 & Set the type and frequency of the noise generator \\ \hline
+			1 & R2 & R1 & R0 & A3 & A2 & A1 & A0 & Set the attenuation (four bits) \\ \hline
+		\end{tabular}
+		\caption{SN76489 Command Formats}
+	\end{center}
+	\label{tab:psg_commands}
+\end{table}
+
+Note: there is a PSG sound device for the left stereo channel and one for the right. The left channel PSG can be accessed at 0xD600, and the right channel at 0xD610. Both are in I/O page 0.
+
+\subsection{Attenuation}
+
+All the channels support attenuation or volume control. The PSG expresses the loudness of the sound with how much it is attenuated or dampened. Therefore, an attenuation of 0 will be the loudest sound, while an attenuation of 15 will make the channel silent.
+
+\subsection{Tones}
+
+Each of the three sound channels generates simple square waves. The frequency generated depends upon the system clock driving the chip and the number provided in the frequency register. The relationship is:
+\[
+f = \frac{C}{32n}
+\]
+where $f$ is the frequency produced, $C$ is the system clock, and $n$ is the number provided in the register. Expressed a different way, the value we need to produce a given frequency can be computed as:
+\[
+n = \frac{C}{32f}
+\]
+For the \jr\ the system clock is 3.56 MHz, which means:
+\[
+n = \frac{111,320}{f}
+\]
+So, let us say we want channel 1 to produce a concert A, which is 440Hz at maximum volume. The value we need to set for the frequency code is $111,320 / 440 = 253$ or 0xFD. We can do that with this code:
+
+\begin{verbatim}
+    lda #$90        ; %10010000 = Channel 1 attenuation = 0
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+
+    lda #$8D        ; %10001101 = Set the low 4 bits of the frequency code
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+
+    lda #$0F        ; %00001111 = Set the high 7 bits of the frequency
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+\end{verbatim}
+To turn it off later, we just need to write:
+
+\begin{verbatim}
+    lda #$9F        ; %10011111 = Channel 1 attenuation = 15 (silence)
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+\end{verbatim}
+
+\subsection{Noise}
+
+Noise works differently from tones, since it is random. The noise generator on the PSG can produce two styles of noise determined by the FB bit: white noise (FB = 1), and periodic (FB = 0). The noise has a sort of frequency, based on either the system clock or the current output of tone 3. This frequency is set using the F1 and F0 bits:
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|l|} \hline
+			F1 & F0 & Frequency \\ \hline \hline
+			0 & 0 & $C / 512$ \\ \hline
+			0 & 1 & $C / 1024$ \\ \hline
+			1 & 0 & $C / 2048$ \\ \hline
+			1 & 1 & Tone 3 output \\ \hline
+		\end{tabular}
+		\caption{SN76489 Noise Frequencies}
+	\end{center}
+	\label{tab:psg_noise_freq}
+\end{table}
+
+As an example, to set white noise of the highest frequency ($C / 512$ or around 6 kHz), we could use the code:
+
+\begin{verbatim}
+    lda #$F0        ; %10010000 = Channel 3 attenuation = 0
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+
+    lda #$E4        ; %11100100 = white noise, f = C/512
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+\end{verbatim}
+To turn it off later, we just need to write:
+
+\begin{verbatim}
+    lda #$FF        ; %1ff11111 = Channel 3 attenuation = 15 (silence)
+    sta $D600       ; Send it to left PSG
+    sta $D610       ; Send it to right PSG
+\end{verbatim}
+
 \section{Using the SIDs}
 
 The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips that can be installed on the \jr\ (see table~\ref{tab:sid_registers}).
@@ -70,9 +188,9 @@ The ADSR envelope allows the SID chip to mimic the qualities of various musical 
 While the different voices are independent, they can be set to alter one another through two different effects: synchronization, and ring modulation. With these features, the voices can interact with each other in the following pairs:
 
 \begin{itemize}
-\item Voice 1 controls voice 2
-\item Voice 2 controls voice 3
-\item Voice 3 controls voice 1
+\item Voice 1 $\rightarrow$ Voice 2
+\item Voice 2 $\rightarrow$ Voice 3
+\item Voice 3 $\rightarrow$ Voice 1
 \end{itemize}
 
 \subsection{Ring Modulation}

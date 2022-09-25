@@ -1,0 +1,77 @@
+\chapter{Memory Maps}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{|c|l|} \hline
+            Address & Purpose \\ \hline\hline
+            \verb+0x00000+ & \multirow{2}{*}{System RAM for programs, data, and graphics (256 KB)} \\ \cline{1-1}
+            \verb+0x3FFFF+ & \\ \hline
+            \verb+0x40000+ & \multirow{2}{*}{Reserved (256 KB)} \\ \cline{1-1}
+            \verb+0x7FFFF+ & \\ \hline
+            \verb+0x80000+ & \multirow{2}{*}{Flash memory (512 KB)} \\ \cline{1-1}
+            \verb+0xFFFFF+ & \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{System Memory Map for the \jr}
+    \label{tab:sys_mem_map}
+\end{table}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Bank & Purpose \\ \hline\hline
+            \multirow{10}{*}{0} & \verb+0x0000+ & MMU Memory Control Register \\ \cline{2-3}
+            & \verb+0x0001+ & MMU I/O Control Register \\ \cline{2-3}
+            & \verb+0x0002+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x000F+ & \\ \cline{2-3}
+            & \verb+0x0010+ & \multirow{2}{*}{RAM, Flash, or MMU LUT Registers} \\ \cline{2-2}
+            & \verb+0x001F+ & \\ \cline{2-3}
+            & \verb+0x0020+ & \multirow{2}{*}{65C02 Page Zero} \\ \cline{2-2}
+            & \verb+0x00FF+ & \\ \cline{2-3}
+            & \verb+0x0100+ & \multirow{2}{*}{65C02 Stack} \\ \cline{2-2}
+            & \verb+0x01FF+ & \\ \cline{2-3}
+            & \verb+0x0200+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x1FFF+ & \\ \hline
+            \multirow{2}{*}{1} & \verb+0x2000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x3FFF+ & \\ \hline
+            \multirow{2}{*}{2} & \verb+0x4000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x5FFF+ & \\ \hline
+            \multirow{2}{*}{3} & \verb+0x6000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x7FFF+ & \\ \hline
+            \multirow{2}{*}{4} & \verb+0x8000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0x9FFF+ & \\ \hline
+            \multirow{2}{*}{5} & \verb+0xA000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0xBFFF+ & \\ \hline
+            \multirow{2}{*}{6} & \verb+0xC000+ & \multirow{2}{*}{RAM, Flash, I/O, Text mode character, or color data} \\ \cline{2-2}
+            & \verb+0xDFFF+ & \\ \hline
+            \multirow{8}{*}{7} & \verb+0xE000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
+            & \verb+0xFFFA+ & \\ \cline{2-3}
+            & \verb+0xFFFA+ & \multirow{2}{*}{65C02 NMI Vector} \\ \cline{2-2}
+            &\verb+0xFFFB+ & \\ \cline{2-3}
+            &\verb+0xFFFC+ & \multirow{2}{*}{65C02 Reset Vector} \\ \cline{2-2}
+            &\verb+0xFFFD+ & \\ \cline{2-3}
+            &\verb+0xFFFE+ & \multirow{2}{*}{65C02 IRQ Vector} \\ \cline{2-2}
+            &\verb+0xFFFF+ & \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{CPU Memory Map for the \jr}
+    \label{tab:cpu_mem_map}
+\end{table}
+
+\input{io_page_0_tab.tex}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Start & End & Purpose \\ \hline\hline
+            \verb+0xC000+ & \verb+0xC7FF+ & Text Mode Font Memory \\ \hline
+            \verb+0xC800+ & \verb+0xCFFF+ & Reserved \\ \hline
+            \verb+0xD000+ & \verb+0xD3FF+ & Graphics Color LUT 0 \\ \hline
+            \verb+0xD400+ & \verb+0xD7FF+ & Graphics Color LUT 1 \\ \hline
+            \verb+0xD800+ & \verb+0xDBFF+ & Graphics Color LUT 2 \\ \hline
+            \verb+0xDC00+ & \verb+0xDFFF+ & Graphics Color LUT 3 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Memory Map for I/O Page 1}
+    \label{tab:map_io_1}
+\end{table}
