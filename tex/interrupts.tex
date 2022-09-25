@@ -1,0 +1,159 @@
+\chapter{Interrupt Controller}
+
+The 65C02 has two interrupts: non-maskable interrupts (NMI) for high priority events, and the regular interrupt request line (IRQ) for normal priority events. Currently, the C256 series of computers do not use NMI for any purpose, so the only interrupt is the IRQ line. There are many devices on the \jr\ which can trigger interrupts, so to save the interrupt handler the chore of querying each device in turn, the \jr\ provides an interrupt controller module.
+The individual devices route their interrupt request signals to the interrupt controller. When an interrupt comes in, the controller knows which device it is and decides whether or not to forward the interrupt to the CPU. The interrupt handler can then query the interrupt handler to see which device or devices have interrupts pending and can then acknowledge them once they have been properly handled.
+
+The interrupt controller provides two sets of registers to provide its functionality: interrupt masks, and interrupt pending. The mask registers provide a mask flag for every possible interrupt. If the flag is true (1), the interrupt from that device is masked, and an interrupt coming in from it will not trigger an IRQ on the processor. The pending register provides a pending flag for every possible interrupt. If the flag is true (1) on a read, the device has requested an interrupt, if false (0) there is no interrupt pending from the device. Setting a flag in a pending register to 1 will acknowledge the interrupt and cause the controller to drop the pending flag. Writing a 0 to a flag will have no effect.
+
+NOTE: Some of the devices on the \jr\ have their own interrupt enable flags (separate from the mask flags). For example, the 65C22 VIA has an interrupt enable bit in one of its registers and will not send an interrupt to the \jr’s interrupt controller if that bit is not enabled. For such devices, the interrupt enable flag on the device must be set and the corresponding mask bit in the interrupt controller must be clear in order for interrupts to be sent to the CPU. Other devices, like VICKY, do not have a separate enable flag. In their case, only their corresponding mask bits must be cleared to enable their interrupts.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | l |} \hline
+            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
+			
+            \multirow{8}{*}{0xD666} & \multirow{8}{*}{0xD660} & 0x01 & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt
+			\footnote{Occurs once per vertical blanking period. The frequency of this interrupt will vary with the display resolution.} \\ \cline{3-5}
+
+            & & 0x02 & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt
+			\footnote{Occurs when the raster line has reached a preset target line.} \\ \cline{3-5}
+
+            & & 0x04 & INT\_PS2\_KBD & PS/2 keyboard event \\ \cline{3-5}
+
+            & & 0x08 & INT\_PS2\_MOUSE & PS/2 mouse event \\ \cline{3-5}
+
+            & & 0x10 & INT\_TIMER\_0 & TIMER0 has reached its target value \\ \cline{3-5}
+
+            & & 0x20 & INT\_TIMER\_1 & TIMER1 has reached its target value \\ \cline{3-5}
+
+            & & 0x40 & INT\_DMA & DMA has completed \\ \cline{3-5}
+
+            & & 0x80 & RESERVED & \\ \hline
+
+            \multirow{8}{*}{0xD667} & \multirow{8}{*}{0xD661} & 0x01 & INT\_UART & The UART is ready to receive or send data \\ \cline{3-5}
+
+            & & 0x02 & RESERVED & \\ \cline{3-5}
+
+            & & 0x04 & RESERVED & \\ \cline{3-5}
+
+            & & 0x08 & RESERVED & \\ \cline{3-5}
+
+            & & 0x10 & INT\_RTC & Event from the real time clock chip \\ \cline{3-5}
+
+            & & 0x20 & INT\_VIA & Event from the 65C22 VIA chip \\ \cline{3-5}
+
+            & & 0x40 & INT\_IEC & Event from the IEC serial bus \\ \cline{3-5}
+
+            & & 0x80 & INT\_SDC\_INS & User has inserted an SD card \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+As an example of working with the interrupt controller, let’s try using the SOF interrupt to alter the character in the upper left corner.
+
+To start, we will need to install our interrupt handler to respond to IRQs. For this example, we’re going to completely take over interrupt processing, so we’ll do some things we wouldn’t ordinarily do. Also, since an interrupt could come in while we’re setting things, up, we need to be careful about how we do things.
+
+\begin{enumerate}
+    \item First, we want to disable IRQs at the CPU level.
+    \item Then we set the interrupt vector.
+    \item Next, we want to mask off all but the SOF interrupt, since that is the only one we will process (in real programs, we will either need to handle several interrupts or play nicely with the operating system).
+    \item Now, there might be interrupts that came in earlier, so will go ahead and just clear all the pending interrupt flags so we start cleanly.
+    \item Finally, we enable CPU interrupt handling again and loop forever... processing the SOF interrupt when it comes in.
+\end{enumerate}
+
+\begin{verbatim}
+VIRQ = $FFFE
+
+INT_PEND_0 = $D660  ; Pending register for interrupts 0 - 7
+INT_PEND_1 = $D661  ; Pending register for interrupts 8 - 15
+INT_MASK_0 = $D666  ; Mask register for interrupts 0 - 7
+INT_MASK_1 = $D667  ; Mask register for interrupts 8 - 15
+
+start:      ; Disable IRQ handling
+            sei
+
+            ; Load my IRQ handler into the IRQ vector
+            ; NOTE: this code just takes over IRQs completely. It could save
+            ;       the pointer to the old handler and chain to it when it had
+            ;       handled its interrupt. But what is proper really depends on
+            ;       what the program is trying to do.
+            lda #<my_handler
+            sta VIRQ
+            lda #>my_handler
+            sta VIRQ+1
+
+            ; Mask off all but the SOF interrupt
+            lda #$ff
+            sta INT_MASK_1
+            and #~INT00_VKY_SOF
+            sta INT_MASK_0
+
+            ; Clear all pending interrupts
+            lda #$ff
+            sta INT_PEND_0
+            sta INT_PEND_1
+
+            ; Put a character in the upper right of the screen
+            lda #SYS_CTRL_TEXT_PG
+            sta SYS_CTRL_1
+
+            lda #'@'
+            sta $c000
+
+            ; Set the color of the character
+            lda #SYS_CTRL_COLOR_PG
+            sta SYS_CTRL_1
+
+            lda #$F0
+            sta $c000
+
+            ; Go back to I/O page 0
+            stz SYS_CTRL_1
+
+            ; Make sure we're in text mode
+            lda #$01            ; enable TEXT
+            sta $D000           ; Save that to VICKY master control register 0
+            stz $D001
+
+            ; Re-enable IRQ handling
+            cli
+\end{verbatim}
+
+To actually process the interrupt, we need to read and then increment the character at the start of the screen, clear the pending flag for the SOF interrupt, and then return. However, the screen and the interrupt control registers are in different I/O banks, so we’ll need to change the I/O bank a couple of times during interrupt processing. So, the first thing we will do is to save the value of the system control register at 0x0001, so we can restore it before we return from the interrupt.
+
+\begin{verbatim}
+SYS_CTRL_1 = $0001
+SYS_CTRL_TEXT_PG = $02
+
+my_handler: pha
+
+            ; Save the system control register
+            lda SYS_CTRL_1
+            pha
+
+            ; Switch to I/O page 0
+            stz SYS_CTRL_1
+
+            ; Check for SOF flag
+            lda #INT00_VKY_SOF
+            bit INT_PEND_0
+            beq return              ; If it's zero, exit the handler
+
+            ; Yes: clear the flag for SOF
+            sta INT_PEND_0
+
+            ; Move to the text screen page
+            lda #SYS_CTRL_TEXT_PG
+            sta SYS_CTRL_1
+
+            ; Increment the character at position 0
+            inc $c000
+
+            ; Restore the system control register
+return:     pla
+            sta SYS_CTRL_1
+
+            ; Return to the original code
+            pla
+            rti
+\end{verbatim}

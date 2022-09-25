@@ -1,0 +1,106 @@
+\chapter{Memory Management}
+
+The \jr\ has 256 KB of system RAM which can be used for programs, data, and graphics. It also has 512 KB of read-only flash memory that can be used by whatever operating system is installed. Now, the 65C02 CPU at the heart of the \jr\ has an address space of only 64 KB, so how can it access all this memory, not to mention the I/O devices on the system? The answer is paging. The \jr\ has a special memory management unit (MMU) that can swap banks of memory or I/O registers into and out of the memory space of the CPU.
+
+To understand how it all works, we first need to look at how RAM and flash memory are handled by the \jr. Because there are 768 KB of total storage on the system, the system has a 20-bit address bus to manage the memory. RAM and flash have address on that 20-bit bus as shown in table~\ref{tab:memory}.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{| l | l | l |} \hline
+			Start & End & Memory Type \\ \hline\hline
+		  	{\tt 0x00000} & {\tt 0x2FFFF} & System RAM (256 KB)\\ \hline
+			{\tt 0x30000} & {\tt 0x7FFFF} & Reserved for future use (256 KB)\\ \hline
+		  	{\tt 0x80000} & {\tt 0xFFFFF} & Flash Memory (512 KB) \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{C256jr memory layout}
+	\label{tab:memory}
+\end{table}
+
+This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, a bank number there is 7 bits. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
+
+The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
+			Bank & A[15..13] & Start & End \\ \hline\hline
+			0 & 000 & 0x0000 & 0x1FFF \\ \hline
+			1 & 001 & 0x2000 & 0x3FFF \\ \hline
+			2 & 010 & 0x4000 & 0x5FFF \\ \hline
+			3 & 011 & 0x6000 & 0x7FFF \\ \hline
+			4 & 100 & 0x8000 & 0x9FFF \\ \hline
+			5 & 101 & 0xA000 & 0xBFFF \\ \hline
+			6 & 110 & 0xC000 & 0xDFFF \\ \hline
+			7 & 111 & 0xE000 & 0xFFFF \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{CPU Memory Banks}
+	\label{tab:mem_banks}
+\end{table}
+
+Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as the rest can, or it can be mapped to I/O registers, which are not memory mapped in the same way as RAM and flash. All I/O devices on the \jr\ therefore live within 0xC000 through 0xDFFF on the CPU, but only if the MMU is set to map I/O to bank 6. There is quite a lot of I/O to access on the \jr, so there are four different banks of I/O registers and memory that can be mapped to bank 6 (see table~\ref{tab:io_banks}).
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{| l | l |} \hline
+			I/O Bank & Purpose \\ \hline\hline
+			0 & Low level I/O registers \\ \hline
+			1 & Text display font memory and graphics color LUTs \\ \hline
+			2 & Text display character matrix \\ \hline
+			3 & Text display color matrix \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{I/O Banks}
+	\label{tab:io_banks}
+\end{table}
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
+			Address & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+			0x0000 & SYS\_CTRL\_0 & EDIT\_EN & RSVD & \multicolumn{2}{|c|}{EDIT\_LUT} & RSVD & RSVD & \multicolumn{2}{|c|}{ACT\_LUT} \\ \hline
+			0x0001 & SYS\_CTRL\_1 & \multicolumn{5}{|c|}{RSVD} & IO\_DISABLE & \multicolumn{2}{|c|}{IO\_PAGE} \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{MMU Registers}
+	\label{tab:mmu_registers}
+\end{table}
+
+The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active LUT, edit a LUT, and control bank 6:
+
+\begin{itemize}
+	\item[ACT\_LUT] these two bits specify which LUT (0 - 3) is used to translate CPU bus address to system bus addresses.
+
+	\item[EDIT\_EN] if set (1), this bit allows a LUT to be edited by the program, and memory addresses 0x0010 - 0x0017 will be used by the LUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
+
+	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being editted and will appear in memory addresses 0x0010 - 0x0017.
+
+	\item[IO\_DISABLE] if set (1), bank 6 is mapped like any other memory bank. If clear (0), bank 6 is mapped to I/O memory.
+
+	\item[IO\_PAGE] if IO\_DISABLE is clear, these two bits specify which bank of I/O memory (0 - 3) is mapped to bank 6.
+\end{itemize}
+
+\section{Example: Setting up a LUT}
+
+In this example, we will set up LUT 1 so that the first six banks of CPU memory map to the first banks of RAM, bank 7 of CPU memory maps to the first bank of flash memory, and bank 6 maps to the first I/O bank.
+
+\begin{verbatim}
+    lda #$90      ; Active LUT = 0, Edit LUT#1
+    sta $0000
+
+    ldx #0        ; Start at bank 0
+l1: txa           ; First 6 banks will just be the first banks of RAM
+    sta $0010,x   ; Set the LUT mapping for this bank
+    inx           ; Move to the next bank
+    cpx #6        ; Until we get to bank 6
+    bne l1
+
+    lda #$40      ; Bank 7 maps to $80000, first bank of flash
+    sta $0017
+
+    stz $0001     ; Bank 6 should be I/O bank 0
+
+    lda #$01      ; Turn off LUT editting, and switch to LUT#1
+    sta $0000
+\end{verbatim}
