@@ -1,9 +1,10 @@
 ;/////////////////////////
 ;// CODEC
 ;/////////////////////////
-;CODEC_LOW        = $D620
-;CODEC_HI         = $D621
-;CODEC_CTRL       = $D622
+CODEC_LOW        = $D620
+CODEC_HI         = $D621
+CODEC_CTRL       = $D622
+
 INIT_CODEC
             ;                LDA #%00011010_00000000     ;R13 - Turn On Headphones
             lda #%00000000
