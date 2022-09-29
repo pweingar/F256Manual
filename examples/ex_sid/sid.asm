@@ -10,7 +10,10 @@ MMU_IO_CTRL = $0001
 SID_LEFT = $D400        ; Location of the first register for the left SID chip
 SID_RIGHT = $D500       ; Location of the first register for the right SID chip
 
-NOTE_A = 7346           ; Concert A = 440Hz
+;
+; Frequencies. SID system clock is 1.022714 MHz
+;
+NOTE_A = 7218           ; Concert A = 440Hz
 
 ;
 ; RESET vector to kickstart the code
@@ -82,7 +85,7 @@ clr_loop:   sta SID_LEFT,x
 ; Wait 1 second
 ;
 
-            ldx #20
+            ldx #10
             jsr wait_tens
 
 ;

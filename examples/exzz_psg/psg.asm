@@ -110,6 +110,7 @@ wait_tens:  jsr wait_100ms
 ; Assignment of notes to frequency
 ; NOTE: in general, this table should support 10-bit values
 ;       we're using just one octave here, so we can get away with bytes
+;       PSG system clock is 3.57MHz
 ;
 frequency:  .byte 127   ; A (Concert A)
             .byte 113   ; B

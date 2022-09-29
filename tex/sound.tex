@@ -53,7 +53,7 @@ The \jr\ has support for dual SN76489 (PSG) sound chips, emulated in the FPGA. T
 
 Access to each PSG is through a single memory address, but that single address allows the CPU to write a value to eight different internal registers. For each tone generator, there is a ten bit frequency (which takes two bytes to set), and a four bit ``attenuation'' or volume level. For the noise generator, there is a noise control register and a noise attenuation register.
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|l|} \hline
 			R2 & R1 & R0 & Channel & Purpose \\ \hline \hline
@@ -73,7 +73,7 @@ Access to each PSG is through a single memory address, but that single address a
 
 There are four basic formats of bytes that can be written to the port:
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|l|} \hline
 			D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 & Purpose \\ \hline \hline
@@ -103,18 +103,18 @@ where $f$ is the frequency produced, $C$ is the system clock, and $n$ is the num
 \[
 n = \frac{C}{32f}
 \]
-For the \jr\ the system clock is 3.56 MHz, which means:
+For the \jr\ the system clock is 3.57 MHz, which means:
 \[
-n = \frac{111,320}{f}
+n = \frac{111,563}{f}
 \]
-So, let us say we want channel 1 to produce a concert A, which is 440Hz at maximum volume. The value we need to set for the frequency code is $111,320 / 440 = 253$ or 0xFD. We can do that with this code:
+So, let us say we want channel 1 to produce a concert A, which is 440Hz at maximum volume. The value we need to set for the frequency code is $111,320 / 440 = 253$ or 0xFE. We can do that with this code:
 
 \begin{verbatim}
     lda #$90        ; %10010000 = Channel 1 attenuation = 0
     sta $D600       ; Send it to left PSG
     sta $D610       ; Send it to right PSG
 
-    lda #$8D        ; %10001101 = Set the low 4 bits of the frequency code
+    lda #$8E        ; %10001100 = Set the low 4 bits of the frequency code
     sta $D600       ; Send it to left PSG
     sta $D610       ; Send it to right PSG
 
@@ -134,7 +134,7 @@ To turn it off later, we just need to write:
 
 Noise works differently from tones, since it is random. The noise generator on the PSG can produce two styles of noise determined by the FB bit: white noise (FB = 1), and periodic (FB = 0). The noise has a sort of frequency, based on either the system clock or the current output of tone 3. This frequency is set using the F1 and F0 bits:
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|l|} \hline
 			F1 & F0 & Frequency \\ \hline \hline
@@ -176,7 +176,7 @@ The SID chip provides three independent voices (so it can play three notes at on
 The type of wave form produced by a voice is controlled by the NOISE, PULSE, SAW, and TRI bits. If NOISE is set to 1, the output is random noise. If PULSE is set, a square wave is produced. If SAW is set, a saw tooth wave is produced. If TRI is set, the voice produces a triangle wave. If PULSE is set, the duty cycle of the square wave (or pulse width, if you prefer) is set by the PW bits according to the formula
 ${\rm PW} / 40.95$ (expressed as a percent).
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
 			Voice & Offset & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
@@ -223,6 +223,22 @@ ${\rm PW} / 40.95$ (expressed as a percent).
 	\caption{SID Registers}
 	\label{tab:sid_registers}
 \end{table}
+
+The frequency of the waveform is set by the bits \verb+F[15..0]+. This number sets the actual frequency according the the formula:
+
+\[
+f_{\rm out} = \frac{FC}{16777216}
+\]
+where: $f_{\rm out}$ is the output frequency, $F$ is the number set in the registers, and $C$ is the system clock driving the SIDs. For the \jr, $C$ is 1.022714 MHz, so the formula for the \jr\ is:
+
+\[
+f_{\rm out} = \frac{F}{16.405}
+\]
+or:
+\[
+F = 16.404f_{\rm out}
+\]
+For example: concert A, which is 440 Hz, would be: $F = 16.405 \times 440 \approx 7218$. So, to play a concert A, you would set the frequency to 7218, or 0x1C32.
 
 Each of the three voices has a sound ``envelope'' which changes the volume of the sound during the duration of the note. There are four phases to the sound envelope: attack, decay, sustain, and release (ADSR). When the note first starts playing (that is, the GATE bit for the voice is set to 1), it starts at the attack phase when the volume starts at zero and goes up to the current maximum volume. How fast this happens is determined by the attack rate (ATK3-0 in the registers). Once the volume reaches the maximum, the volume goes down again to the sustain volume. This phase is called decay, and the speed at which the volume drops is determined by the DCY3-0 register values. Next, the envelope enters the sustain phase, where the volume is held steady at the sustain level (STN3-0). It stays here until the note is to stop playing (GATE is set to 0). At this point, the envelope enters the release stage, where the volume drops back to zero at the release rate (RLS3-0).
 

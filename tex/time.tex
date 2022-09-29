@@ -8,26 +8,26 @@ For programs needing to keep track of time, \jr\ provides a real time clock chip
 
 The RTC is relatively straightforward to use, but one potentially tricky thing to keep in mind is that there is a specific procedure to follow when reading or writing the date-time. As well as the registers the CPU can access, the RTC has internal registers which are constantly updating as time progresses. Normally, the internal registers update their external counterparts, but this should not be allowed to happen while the CPU is getting or setting the externally facing registers. So, to access the external registers, the program must first disable the automatic updates to the external registers. Then it can read or write the external registers. Then it can re-enable the automatic updates. If the program has changed the registers, when updates are re-enabled the data in the external registers will be sent to the internal registers in one action. This keeps the time information consistent.
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
 			Address & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-			0xD690 & Seconds & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
-            0xD691 & Seconds Alarm & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
-            0xD692 & Minutes & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
-            0xD693 & Minutes Alarm & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
-            0xD694 & Hours & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
-            0xD695 & Hours Alarm & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
-            0xD696 & Days & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
-            0xD697 & Days Alarm & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
-            0xD698 & Day of Week & 0 & 0 & 0 & 0 & 0 & \multicolumn{3}{|c|}{day of week digit} \\ \hline
-            0xD699 & Month & 0 & 0 & 0 & month 10s digit & \multicolumn{4}{|c|}{month 1s digit} \\ \hline
-            0xD69A & Year & \multicolumn{4}{|c|}{year 10s digit} & \multicolumn{4}{|c|}{year 1s digit}  \\ \hline
-            0xD69B & Rates & 0 & \multicolumn{3}{|c|}{WD} & \multicolumn{4}{|c|}{RS} \\ \hline
-            0xD69C & Enables & 0 & 0 & 0 & 0 & AIE & PIE & PWRIE & ABE \\ \hline
-            0xD69D & Flags & 0 & 0 & 0 & 0 & AF & PF & PWRF & BVF \\ \hline
-            0xD69E & Control & 0 & 0 & 0 & 0 & UTI & STOP & 12/24 & DSE \\ \hline
-            0xD69F & Century & \multicolumn{4}{|c|}{century 10s digit} & \multicolumn{4}{|c|}{century 1s digit}  \\ \hline
+			\verb+0xD690+ & Seconds & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
+            \verb+0xD691+ & Seconds Alarm & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
+            \verb+0xD692+ & Minutes & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
+            \verb+0xD693+ & Minutes Alarm & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
+            \verb+0xD694+ & Hours & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
+            \verb+0xD695+ & Hours Alarm & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
+            \verb+0xD696+ & Days & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
+            \verb+0xD697+ & Days Alarm & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
+            \verb+0xD698+ & Day of Week & 0 & 0 & 0 & 0 & 0 & \multicolumn{3}{|c|}{day of week digit} \\ \hline
+            \verb+0xD699+ & Month & 0 & 0 & 0 & month 10s digit & \multicolumn{4}{|c|}{month 1s digit} \\ \hline
+            \verb+0xD69A+ & Year & \multicolumn{4}{|c|}{year 10s digit} & \multicolumn{4}{|c|}{year 1s digit}  \\ \hline
+            \verb+0xD69B+ & Rates & 0 & \multicolumn{3}{|c|}{WD} & \multicolumn{4}{|c|}{RS} \\ \hline
+            \verb+0xD69C+ & Enables & 0 & 0 & 0 & 0 & AIE & PIE & PWRIE & ABE \\ \hline
+            \verb+0xD69D+ & Flags & 0 & 0 & 0 & 0 & AF & PF & PWRF & BVF \\ \hline
+            \verb+0xD69E+ & Control & 0 & 0 & 0 & 0 & UTI & STOP & 12/24 & DSE \\ \hline
+            \verb+0xD69F+ & Century & \multicolumn{4}{|c|}{century 10s digit} & \multicolumn{4}{|c|}{century 1s digit}  \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{MMU Registers}
@@ -36,8 +36,8 @@ The RTC is relatively straightforward to use, but one potentially tricky thing t
 
 There are 16 registers for the RTC (see table~\ref{tab:rtc_registers}). There is a register each for century, year, month, day of the week ({\it i.e.} Sunday - Saturday), day, hour, minute, and second. Each one is expressed in binary-coded-decimal, meaning the lower four bits are the ones digit (0 - 9), and the upper bits are the 10s digit. In most cases, the upper digit is limited ({\it e.g.} seconds and minutes can only have 0 - 6 as the tens digit). For seconds, minutes, hours, and day there is a separate alarm register, which will be described later. Finally, there are the four registers for rates, enabled, flags, and control:
 
-The Enables register has for separate enable bits:
-\begin{itemize}
+The Enables register has four separate enable bits:
+\begin{description}
     \item[AIE] if set (1), the alarm interrupt will be enabled. The RTC will raise an interrupt when the current time matches the time specified in the alarm registers.
 
     \item[PIE] if set (1), the RTC will raise an interrupt periodically, where the period is specified by the RS field.
@@ -45,10 +45,10 @@ The Enables register has for separate enable bits:
     \item[PWRIE] if set (1), the RTC will raise an interrupt on a power failure (not relevant to the \jr).
 
     \item[ABE] if set (1), the RTC will allow alarm interrupts when on battery backup (not relevant to the \jr).
-\end{itemize}
+\end{description}
 
 The Flags register has four separate flags, which generally reflect why an interrupt was raised:
-\begin{itemize}
+\begin{description}
     \item[AF] if set (1), the alarm was triggered
 
     \item[PF] if set (1), the periodic interrupt was triggered
@@ -56,10 +56,10 @@ The Flags register has four separate flags, which generally reflect why an inter
     \item[PWRF] if set (1), the power failure interrupt was triggered
 
     \item[BVF] if set (1), the battery voltage is within safe range. If clear (0), the battery voltage is low, and the time may be invalid.
-\end{itemize}
+\end{description}
 
 The Control register has four bits which change how the RTC operates:
-\begin{itemize}
+\begin{description}
     \item[UTI] if set (1), the update of the externally facing registers by the internal timers is inhibited. In order to read or write those registers, the program must first set UTI and then clear it when done.
 
     \item[STOP] this bit allows for a battery saving feature. If it is clear (0) before the system is powered down, it will avoid draining the battery and may stop tracking the time. If it is set (1), it will keep using the battery as long as possible.
@@ -67,11 +67,11 @@ The Control register has four bits which change how the RTC operates:
     \item[12/24] sets whether the RTC is using 12 or 24 hour accounting.
 
     \item[DSE] if set (1), daylight savings is in effect.
-\end{itemize}
+\end{description}
 
 The Rates register controls the watchdog timer and the periodic interrupt. The watchdog timer is not really relevant to the \jr, but it monitors for activity and raises an interrupt if activity has not been seen within a certain amount of time (specified by the WD field). The periodic interrupt will be raised repeatedly, the period of which is set by the RS field (see table~\ref{tab:rtc_rs}).
 
-\begin{table}
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{| c | c | c | c | c |} \hline
 			RS3 & RS2 & RS1 & RS0 & Period \\ \hline\hline
