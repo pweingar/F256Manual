@@ -4,6 +4,49 @@ The \jr\ supports two different sound chips, although only one is built-in. The 
 
 \section{CODEC}
 
+The \jr\ (and indeed all the Foenix computers up to this point) makes use of a WM8776 CODEC chip. You can think of the CODEC as the central switchboard for audio on the \jr. The CODEC chip has inputs for several different audio channels (both analog and digital), and each audio device on the \jr\ is routed to an input on the CODEC. The CODEC then has outputs for audio line level and headphones. The CODEC will convert analog inputs to digital, mix all the audio inputs according to its settings, and then convert the resulting digital audio to analog and drive the outputs. With the CODEC, you can turn on and off the various input channels, control the volume, and mute or enable the different outputs.
+
+The CODEC is a rather complex chip with many features, and the full details are really beyond the scope of this document. Most programs for the \jr\ will not need to use it or will only use it in very specific ways. Therefore, this document will really just show how to access it and initialize it and then leave a reference to the data sheet for the chip that has the complete data on the chip.
+
+Raw access to the CODEC chip is fairly complex. Fortunately, the FPGA on the \jr\ provides three registers to simply access for programs. The FPGA takes care of the actual timing of transmitting data to the CODEC, serializing the data correctly, and so on. All the program needs to know about are the correct format for the 16-bit command words that are sent to the CODEC, and then a status register to monitor.
+
+The CODEC commands are based around a number of registers. Each command is really just writing values to those registers. The command words are 16-bits wide, with the 7 most significant bits being the number of the register to write, and the 9 least significant bits being the data to write. For instance, there is a register to enable and disable the headphone output. Bit 0 of the register controls whether or not the headphone output is enabled (0 = enabled, 1 = disabled). The register number is 13. So, to disable the output on the headphones, we would need to write \verb+000000001+ to register 13. The register number in binary is \verb+0001101+, So the command word we would need to send is \verb+0001101000000001\+ or \verb+0x1A01+.
+
+The registers for the CODEC on the \jr\ are:
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|l|} \hline
+			Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 & Purpose \\ \hline \hline
+			\verb+0xD620+ & W & D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 & Command Low \\ \hline
+			\verb+0xD621+ & W & R6 & R5 & R4 & R3 & R2 & R1 & R0 & D8 & Command High \\ \hline
+			\verb+0xD622+ & R & \multicolumn{7}{|c|}{X} & BUSY & Status \\ \hline
+			\verb+0xD622+ & W & \multicolumn{7}{|c|}{X} & START & Control \\ \hline
+		\end{tabular}
+		\caption{CODEC Control Registers}
+	\end{center}
+	\label{tab:codec_registers}
+\end{table}
+
+Bit 0 of the status/control register both triggers sending the command (on a write) and indicates if the CODEC is busy receiving a command (writing a 1 triggers the sending of the command, reading a 1 indicates that the CODEC is busy).
+
+So to mute the headphones, we would issue the following:
+
+\begin{verbatim}
+wait:  lda $D622    ; Wait for the CODEC to be ready
+       and #$01
+	   cmp #$01
+       beq wait 	; Bit 0 = 1, CODEC is still busy... keep waiting
+
+	   lda #$01		; Set command to %0001101000000001, or R13 <- 000000001
+	   sta $D620
+	   lda #$1A
+	   sta $D621
+
+	   lda #$01		; Trigger the transmission of the command to the CODEC
+	   sta $D622
+\end{verbatim}
+
 \section{Using the PSGs}
 
 The \jr\ has support for dual SN76489 (PSG) sound chips, emulated in the FPGA. The SN76489 was used in several vintage machines, including the TI-99/4A, BBC Micro, IBM PCjr, and Tandy 1000. The chip provides three independent square-wave tone generators and a single noise generator. Each tone generator can produce tones of several frequencies in 16 different volume levels. The noise generator can produce two different types of noise in three different tones at 16 different volume levels.
