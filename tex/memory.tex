@@ -81,7 +81,7 @@ The MMU is controlled through two main registers, which are always at locations 
 	\item[IO\_PAGE] if IO\_DISABLE is clear, these two bits specify which bank of I/O memory (0 - 3) is mapped to bank 6.
 \end{description}
 
-\section{Example: Setting up a LUT}
+\example{Setting up a LUT}
 
 In this example, we will set up LUT 1 so that the first six banks of CPU memory map to the first banks of RAM, bank 7 of CPU memory maps to the first bank of flash memory, and bank 6 maps to the first I/O bank.
 
