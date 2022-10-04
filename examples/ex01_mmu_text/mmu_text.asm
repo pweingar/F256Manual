@@ -37,7 +37,7 @@ l1:	    txa		        ; The CPU bank and System bank will be the same
         lda #$02		; Swap I/O Page 2 into bank 6
         sta $0001
 
-        lda #'A'		; Write ‘A’ to the upper left corner
+        lda #'f'		; Write ‘f’ to the upper left corner
         sta $C000
 
         pla             ; Restore the old MMU setting
@@ -52,12 +52,16 @@ l1:	    txa		        ; The CPU bank and System bank will be the same
 
         stz $0001		; Switch in I/O Page #0
 
+        lda #$01        ; Make sure we're in text mode
+        sta $D000
+        stz $D001       ; Make sure we're in 80x60
+
         stz $D810		; Set foreground #4 to medium yellow
         lda #$80
         sta $D811
         sta $D812
 
-        lda #$FF		; Set background #5 to blue
+        lda #$80		; Set background #5 to blue
         sta $D854
         stz $D855
         stz $D856
@@ -68,6 +72,20 @@ l1:	    txa		        ; The CPU bank and System bank will be the same
         lda #$45		; Color will be foreground=4, background=5
         sta $C000
 
+;
+; Change 'f' to be our "fancy F"
+;
+
+        lda #$01        ; Switch to I/O page 1
+        sta $0001
+
+        ldx #0
+fontlp: lda fancyf,x    ; Get the next byte of our F
+        sta $c230,x     ; And write it to the position of 'F' in font memory
+        inx
+        cpx #8          ; Just copy 8 bytes
+        bne fontlp      ; Keep looping until we're done
+
         pla             ; Restore the MMU state
         sta $0001
 
@@ -76,3 +94,5 @@ l1:	    txa		        ; The CPU bank and System bank will be the same
 ;
 spin:   nop
         bra spin
+
+fancyf: .byte $1F, $30, $30, $7C, $60, $C0, $C0

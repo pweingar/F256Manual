@@ -21,6 +21,9 @@ reset:  .word <>start
 * = $0080
 
 pointer     .word ?             ; A pointer we'll use
+bm_bank     .byte ?             ; The bank number for bitmap
+line        .byte ?             ; The number of the current line being drawn
+column      .word ?             ; The number of the column being drawn
 
 * = $e000
 
@@ -81,7 +84,7 @@ lut_done:
             sta $D000           ; Save that to VICKY master control register 0
             stz $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
 
-            lda #$01            ; Turn on the border
+            lda #$00            ; Turn off the border
             sta $D004
 
             lda #$10            ; Border is 16 pixels wide
@@ -117,43 +120,65 @@ lut_done:
             and #$03
             sta $D103
 
-loop4:      stz pointer         ; Set the pointer to start of the current bank
+            ; Set the line number to 0
+            stz line
+
+            ; Calculate the bank number for the bitmap
+            lda #(bitmap_base >> 13)
+            sta bm_bank
+
+bank_loop:  stz pointer         ; Set the pointer to start of the current bank
             lda #$20
             sta pointer+1
+
+            ; Set the column to 0
+            stz column
+            stz column+1
 
             ; Alter the LUT entries for $2000 -> $bfff
 
             lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
             sta $0000
 
-            lda #$08
+            lda bm_bank
             sta $0009           ; Set the bank we will map to $2000 - $3fff
 
             stz $0000           ; Turn off editing of MMU LUT #0
 
             ; Fill the line with the color..
 
-            ldy #0
-loop2:      lda #$ff
-            sta $2000,y
-            sta $2100,y
-            sta $2200,y
-            sta $2300,y
-            sta $2400,y
-            sta $2500,y
-            sta $2600,y
-            sta $2700,y
-            sta $2800,y
-            sta $2900,y
-            sta $2a00,y
-            sta $2b00,y
-            sta $2c00,y
-            sta $2d00,y
-            sta $2e00,y
-            sta $2f00,y
+loop2:      lda line            ; The line number is the color of the line
+            sta (pointer)
 
-            iny
-            bra loop2
+inc_column: inc column          ; Increment the column number
+            bne chk_col
+            inc column+1
+
+chk_col:    lda column          ; Check to see if we have finished the row
+            cmp #<320
+            bne inc_point
+            lda column+1
+            cmp #>320
+            bne inc_point
+
+            lda line            ; If so, increment the line number
+            inc a
+            sta line
+            cmp #240            ; If line = 240, we're done
+            beq done
+
+            stz column          ; Set the column to 0
+            stz column+1
+
+inc_point:  inc pointer         ; Increment pointer
+            bne loop2           ; If < $4000, keep looping
+            inc pointer+1
+            lda pointer+1
+            cmp #$40
+            bne loop2
+
+            inc bm_bank         ; Move to the next bank
+            bra bank_loop       ; And start filling it
 
 done:       nop                 ; Lock up here
             bra done

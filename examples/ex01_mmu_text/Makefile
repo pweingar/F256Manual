@@ -6,7 +6,7 @@ ASFLAGS = -a --mw65c02
 all: mmu_text.hex
 
 runhex: mmu_text.hex
-	python3 $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload mmu_text.hex
+	python $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload mmu_text.hex
 
 %.hex: %.asm
 	$(AS) $(ASFLAGS) --intel-hex -o $@ $<
