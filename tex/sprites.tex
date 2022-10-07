@@ -1,1 +1,54 @@
 \chapter{Sprites}
+
+In addition to bitmaps and tiles, the \jr\ provides support for sprites, which are mobile graphical objects that can appear anywhere on the screen. \jr\ sprites are similar to the sprites on the Commodore 64 or player-missile graphics on the 8-bit Atari computers, but they are more flexible than either of those. A sprite is essentially a little bitmap that can be positioned anywhere on the screen. Each one can come in one of four sizes: $8 \times 8$, $16 \times 16$, $24 \times 24$, or $32 \times 32$. Each one can display up to 256 colors, picked from one of the four graphics color lookup tables.
+
+A program for the \jr\ can use up to 64 sprites, each one of which is controlled by a block of sprite control registers. The sprite control registers are in I/O page 0, and start at 0xD900. Each sprite takes up 8 bytes, so sprite 0 starts at 0xD900, sprite 1 starts at 0xD908, sprite 2 at 0xD910, and so on. The registers for each sprite are arranged within that block of 8 bytes as shown in table~\ref{tab:sp_reg}.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Offset & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            0 & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{DEPTH} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
+            1 & \multirow{3}{*}{Sprite Address} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            2 &  & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            3 &  & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            4 & \multirow{2}{*}{Sprite X} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-1}\cline{3-10}
+            5 &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
+            6 & \multirow{2}{*}{Sprite Y} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-1}\cline{3-10}
+            7 &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Sprite Registers for a Single Sprite}
+    \label{tab:sp_reg}
+\end{table}
+These registers manage seven fields:
+
+\begin{description}
+    \item[ENABLE] if set, this particular sprite will be displayed (assuming the graphics and sprite engines are enabled in the Vicky Master Control Register).
+
+    \item[LUT] selects the graphics color lookup table to use in assigning colors to pixels
+
+    \item[DEPTH] selects the layer on which the sprite will be displayed
+
+    \item[SIZE] selects the size of the sprite (see table~\ref{tab:sp_sizes})
+
+    \item[AD] the address of the bitmap (must be within the first 256 KB of RAM). The address is based on the 24-bit system bus, not the CPU's address space.
+
+    \item[X] the X coordinate where the sprite will be displayed (corresponds to the sprite's upper-left corner)
+
+    \item[Y] the Y coordinate where the sprite will be displayed (corresponds to the sprite's upper-left corner)
+\end{description}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|} \hline
+            \multicolumn{2}{|c|}{SIZE} & Meaning \\ \hline\hline
+            0 & 0 & $32 \times 32$ \\ \hline
+            0 & 1 & $24 \times 24$ \\ \hline
+            1 & 0 & $16 \times 16$ \\ \hline
+            1 & 1 & $8 \times 8$ \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Sprite Sizes}
+    \label{tab:sp_sizes}
+\end{table}
