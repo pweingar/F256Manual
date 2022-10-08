@@ -2,6 +2,8 @@
 ;;; Example code to show how to display a bitmap on the C256jr
 ;;;
 
+.include "../common/f256jr.asm" ; Include register definitions for the F256jr
+
 ;
 ; Definitions
 ;
@@ -30,46 +32,45 @@ column      .word ?             ; The number of the column being drawn
 start:      sei                 ; Turn off interrupts
 
 ;
-; Initialize the LUT to greyscale from (0, 0, 0) to (255, 255, 255)
+; Initialize the LUT to greyscale from (255, 0, 0) to (0, 0, 255)
 ;
 
             lda #$01            ; Set the I/O page to #1
-            sta $0001
+            sta MMU_IO_CTRL
 
-            lda #$00            ; pointer will be used to point to a particular LUT entry
+            lda #<VKY_GR_CLUT_0 ; pointer will be used to point to a particular LUT entry
             sta pointer
-            lda #$D0
+            lda #>VKY_GR_CLUT_0
             sta pointer+1
 
-            lda #0              ; Start with black
+            ldx #0              ; Start with blue = 0
 
-lut_loop:   ldy #0
+lut_loop:   ldy #0              ; And start at the offset for blue
+            txa                 ; Take the current blue color level
             sta (pointer),y     ; Set the blue component
             iny
-            pha
-            eor #$ff
-            inc a
-            pha
+
             lda #0
-            sta (pointer),y     ; Set the green component
+            sta (pointer),y     ; Set the green component to 0
             iny
-            pla
+
+            txa                 ; Get the blue component again
+            eor #$ff            ; And compute the 2's complement of it
+            inc a
             sta (pointer),y     ; Set the red component
             iny
-            pla
 
-            inc a               ; Go to the next color
+            inx                 ; Go to the next color
             beq lut_done        ; If we are back to black, we're done with the LUT
 
-            pha                 ; Move pointer to the next LUT entry (+ 4)
-            clc
+            clc                 ; Move pointer to the next LUT entry (+ 4)
             lda pointer
             adc #4
             sta pointer
             lda pointer+1
             adc #0
             sta pointer+1
-            pla
+
             bra lut_loop
 
 lut_done:
@@ -78,47 +79,38 @@ lut_done:
 ; Turn on the bitmap graphics display, turn off the border
 ;
 
-            stz $0001           ; Go back to I/O page #0
+            stz MMU_IO_CTRL     ; Go back to I/O page #0
 
             lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
-            sta $D000           ; Save that to VICKY master control register 0
-            stz $D001           ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+            sta VKY_MSTR_CTRL_0 ; Save that to VICKY master control register 0
+            stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode (VICKY master control register 1)
 
             lda #$00            ; Turn off the border
-            sta $D004
+            sta VKY_BRDR_CTRL
 
-            lda #$10            ; Border is 16 pixels wide
-            sta $D008
-            sta $D009
-
-            lda #$80
-            sta $d005           ; Set border red
-            sta $d006           ; Set border blue
-            sta $d007           ; Set border green
-
-            stz $D00D           ; Set background color to black
-            stz $D00E
-            stz $D00F
+            stz VKY_BKG_COL_R   ; Set background color to black
+            stz VKY_BKG_COL_G
+            stz VKY_BKG_COL_B
 
             lda #$20            ; Set up layers (we'll cover this later)
-            sta $D002
+            sta VKY_LAYER_CTRL_0
             lda #$01
-            sta $D003
+            sta VKY_LAYER_CTRL_0
 
 ;
 ; Turn on bitmap #0
 ;
 
             lda #$01            ; Use graphics LUT #0, and enable bitmap
-            sta $D100
+            sta VKY_BM0_CTRL
 
             lda #<bitmap_base   ; Set the low byte of the bitmap's address
-            sta $D101
+            sta VKY_BM0_ADDR_L
             lda #>bitmap_base   ; Set the middle byte of the bitmap's address
-            sta $D102
+            sta VKY_BM0_ADDR_M
             lda #`bitmap_base   ; Set the upper two bits of the bitmap's address
             and #$03
-            sta $D103
+            sta VKY_BM0_ADDR_H
 
             ; Set the line number to 0
             stz line
@@ -138,12 +130,12 @@ bank_loop:  stz pointer         ; Set the pointer to start of the current bank
             ; Alter the LUT entries for $2000 -> $bfff
 
             lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
-            sta $0000
+            sta MMU_MEM_CTRL
 
             lda bm_bank
-            sta $0009           ; Set the bank we will map to $2000 - $3fff
+            sta MMU_MEM_BANK_1  ; Set the bank we will map to $2000 - $3fff
 
-            stz $0000           ; Turn off editing of MMU LUT #0
+            stz MMU_MEM_CTRL    ; Turn off editing of MMU LUT #0
 
             ; Fill the line with the color..
 
