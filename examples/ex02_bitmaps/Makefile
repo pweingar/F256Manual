@@ -6,7 +6,7 @@ ASFLAGS = -a --mw65c02
 all: bitmaps.hex
 
 runhex: bitmaps.hex
-	python $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload bitmaps.hex
+	python3 $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload bitmaps.hex
 
 %.hex: %.asm
 	$(AS) $(ASFLAGS) --intel-hex -o $@ $<

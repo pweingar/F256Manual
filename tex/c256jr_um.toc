@@ -1,0 +1,34 @@
+\contentsline {chapter}{\numberline {1}Introduction}{3}{}%
+\contentsline {chapter}{\numberline {2}F256jr\ Basics}{4}{}%
+\contentsline {chapter}{\numberline {3}Memory Management}{5}{}%
+\contentsline {subsection}{\numberline {3.0.1}Example: Setting up a LUT}{6}{}%
+\contentsline {chapter}{\numberline {4}The Text Screen}{8}{}%
+\contentsline {section}{\numberline {4.1}Text Matrix}{8}{}%
+\contentsline {subsection}{\numberline {4.1.1}Example: Print an A to the Screen}{8}{}%
+\contentsline {section}{\numberline {4.2}Text Color LUTs}{9}{}%
+\contentsline {section}{\numberline {4.3}Color Matrix}{9}{}%
+\contentsline {subsection}{\numberline {4.3.1}Example: Make That ``A'' Yellow on Blue}{10}{}%
+\contentsline {section}{\numberline {4.4}Entering Text Mode}{10}{}%
+\contentsline {section}{\numberline {4.5}Text Fonts}{11}{}%
+\contentsline {chapter}{\numberline {5}Graphics}{12}{}%
+\contentsline {section}{\numberline {5.1}Graphics Colors}{12}{}%
+\contentsline {subsection}{\numberline {5.1.1}Example: A Simple Gradient}{12}{}%
+\contentsline {section}{\numberline {5.2}Graphics Layers}{14}{}%
+\contentsline {subsection}{\numberline {5.2.1}Example: Put Bitmap 0 on Layer 0}{14}{}%
+\contentsline {section}{\numberline {5.3}Bitmaps}{15}{}%
+\contentsline {chapter}{\numberline {6}Sprites}{16}{}%
+\contentsline {chapter}{\numberline {7}Tiles}{18}{}%
+\contentsline {chapter}{\numberline {8}Sound}{19}{}%
+\contentsline {section}{\numberline {8.1}CODEC}{19}{}%
+\contentsline {section}{\numberline {8.2}Using the PSGs}{20}{}%
+\contentsline {subsection}{\numberline {8.2.1}Attenuation}{21}{}%
+\contentsline {subsection}{\numberline {8.2.2}Tones}{21}{}%
+\contentsline {subsection}{\numberline {8.2.3}Noise}{21}{}%
+\contentsline {section}{\numberline {8.3}Using the SIDs}{22}{}%
+\contentsline {subsection}{\numberline {8.3.1}Ring Modulation}{23}{}%
+\contentsline {subsection}{\numberline {8.3.2}Synchronization}{23}{}%
+\contentsline {chapter}{\numberline {9}Interrupt Controller}{24}{}%
+\contentsline {chapter}{\numberline {10}Tracking Time}{27}{}%
+\contentsline {section}{\numberline {10.1}Interval Timers}{27}{}%
+\contentsline {section}{\numberline {10.2}Real Time Clock}{27}{}%
+\contentsline {chapter}{\numberline {11}Memory Maps}{30}{}%

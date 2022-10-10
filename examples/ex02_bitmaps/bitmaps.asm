@@ -92,14 +92,16 @@ lut_done:
             stz VKY_BKG_COL_G
             stz VKY_BKG_COL_B
 
-            lda #$20            ; Set up layers (we'll cover this later)
+            lda #$20            ; Layer 0 = BM 0, Layer 1 = TM 0
             sta VKY_LAYER_CTRL_0
-            lda #$01
-            sta VKY_LAYER_CTRL_0
+            lda #$01            ; Layer 2 = BM 1
+            sta VKY_LAYER_CTRL_1
 
 ;
 ; Turn on bitmap #0
 ;
+
+            stz VKY_BM1_CTRL    ; Make sure bitmap 1 is turned off
 
             lda #$01            ; Use graphics LUT #0, and enable bitmap
             sta VKY_BM0_CTRL

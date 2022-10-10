@@ -6,8 +6,8 @@
 ;; MMU Registers
 ;;
 
-MMU_MEM_CTRL = $0001            ; MMU Memory Control Register
-MMU_IO_CTRL = $0002             ; MMU I/O Control Register
+MMU_MEM_CTRL = $0000            ; MMU Memory Control Register
+MMU_IO_CTRL = $0001             ; MMU I/O Control Register
 MMU_MEM_BANK_0 = $0008          ; MMU Edit Register for bank 0 ($0000 - $1FFF)
 MMU_MEM_BANK_1 = $0009          ; MMU Edit Register for bank 1 ($2000 - $3FFF)
 MMU_MEM_BANK_2 = $000A          ; MMU Edit Register for bank 2 ($4000 - $5FFF)
@@ -25,9 +25,14 @@ VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
 VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
 
 VKY_LAYER_CTRL_0 = $D002        ; Vicky Layer Control Register 0
-VKY_LAYER_CTRL_1 = $D002        ; Vicky Layer Control Register 1
+VKY_LAYER_CTRL_1 = $D003        ; Vicky Layer Control Register 1
 
 VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
+VKY_BRDR_COL_B = $D005          ; Vicky Border Color -- Blue
+VKY_BRDR_COL_G = $D006          ; Vicky Border Color -- Green
+VKY_BRDR_COL_R = $D007          ; Vicky Border Color -- Red
+VKY_BRDR_VERT = $D008           ; Vicky Border vertical thickness in pixels
+VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
 
 VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
 VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
@@ -48,7 +53,7 @@ VKY_BM1_ADDR_M = $D10A          ; Bitmap #1 Address bits 15..8
 VKY_BM1_ADDR_H = $D10B          ; Bitmap #1 Address bits 17..16
 
 ;;
-;; Color Lookup Tables
+;; Color Lookup Tables (I/O Page 1)
 ;;
 
 VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0

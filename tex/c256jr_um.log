@@ -1,0 +1,756 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  9 OCT 2022 14:48
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**c256jr_um.tex
+(./c256jr_um.tex
+LaTeX2e <2022-06-01> patch level 5
+L3 programming layer <2022-08-30>
+(/usr/local/texlive/2022/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2022/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@chapter=\count186
+\c@section=\count187
+\c@subsection=\count188
+\c@subsubsection=\count189
+\c@paragraph=\count190
+\c@subparagraph=\count191
+\c@figure=\count192
+\c@table=\count193
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2022/texmf-dist/tex/latex/concmath/concmath.sty
+Package: concmath 1999/03/10 v2.0b LaTeX package for Concrete math fonts
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 43.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ccr/m/n on input line 43.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ccr/m/n on input line 43.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 44.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ccm/m/it on input line 44.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ccm/m/it on input line 44.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 45.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ccsy/m/n on input line 45.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ccsy/m/n on input line 45.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 46.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ccex/m/n on input line 46.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ccex/m/n on input line 46.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/ccr/m/n --> OT1/ccr/bx/n on input line 47.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/ccm/m/it --> OML/ccm/b/it on input line 48.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/ccsy/m/n --> OMS/ccsy/b/n on input line 49.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 53.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ccr/bx/n on input line 53.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ccr/bx/n on input line 53.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 54.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ccr/m/it on input line 54.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ccr/m/it on input line 54.
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for OT1+ccr on input line 1
+12.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/concmath/ot1ccr.fd
+File: ot1ccr.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
+))
+(/usr/local/texlive/2022/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(/usr/local/texlive/2022/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/local/texlive/2022/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count194
+\Gm@cntv=\count195
+\c@Gm@tempcnt=\count196
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks18
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip49
+\multirow@cntb=\count197
+\multirow@dima=\skip50
+\bigstrutjot=\dimen147
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+(/usr/local/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-08-30 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count198
+\l__pdf_internal_box=\box51
+)
+(./c256jr_um.aux)
+\openout1 = `c256jr_um.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=452.9679pt
+* \textheight=700.50687pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-30.06749pt
+* \headheight=12.0pt
+* \headsep=18.06749pt
+* \topskip=10.0pt
+* \footskip=25.29494pt
+* \marginparwidth=69.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count199
+\scratchdimen=\dimen148
+\scratchbox=\box52
+\nofMPsegments=\count266
+\nofMParguments=\count267
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count268
+\MPscratchDim=\dimen149
+\MPnumerator=\count269
+\makeMPintoPDFobject=\count270
+\everyMPtoPDFconversion=\toks20
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Font Info:    Trying to load font information for OML+ccm on input line 1
+5.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/concmath/omlccm.fd
+File: omlccm.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
+)
+LaTeX Font Info:    Trying to load font information for OMS+ccsy on input line 
+15.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/concmath/omsccsy.fd
+File: omsccsy.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
+)
+LaTeX Font Info:    Trying to load font information for OMX+ccex on input line 
+15.
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/concmath/omxccex.fd
+File: omxccex.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
+)
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <12> on input line 15.
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <8> on input line 15.
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <6> on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+
+{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 17.
+
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 17.
+(./c256jr_um.toc
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 1.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 2.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 3.
+
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <10> on input line 4.
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <7> on input line 4.
+LaTeX Font Info:    External font `xccex10' loaded for size
+(Font)              <5> on input line 4.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 5.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 13.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 19.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 20.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 21.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 30.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 31.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 34.
+
+)
+\tf@toc=\write3
+\openout3 = `c256jr_um.toc'.
+
+ [1
+
+]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 18.
+
+(./c256jr_um.lot)
+\tf@lot=\write4
+\openout4 = `c256jr_um.lot'.
+
+ [2
+
+]
+Chapter 1.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 20.
+
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <20.74> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 20.
+[3
+
+]
+Chapter 2.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 26.
+
+(./memory.tex [4
+
+]
+Chapter 3.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+[5
+
+]
+Overfull \hbox (18.16045pt too wide) in paragraph at lines 60--65
+ [] 
+ []
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 73.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 75.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 77.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 79.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 81.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 84.
+
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 84.
+[6]) (./text.tex [7]
+Chapter 4.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+LaTeX Font Info:    Trying to load font information for TS1+ccr on input line 6
+.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/ccfonts/ts1ccr.fd
+File: ts1ccr.fd 1999/11/22 v1.0a (WaS)
+)
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 14.
+
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 14.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 20.
+
+[8
+
+]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 37.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 71.
+
+[9]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 79.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 106.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 123.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 125.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 127.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 129.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 131.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 133.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 135.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 137.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 140.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 142.
+
+[10]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 145.
+
+) (./graphics.tex [11]
+Chapter 5.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 13.
+
+<images/bitmaps.pdf, id=50, 356.88293pt x 225.88641pt>
+File: images/bitmaps.pdf Graphic file (type pdf)
+<use images/bitmaps.pdf>
+Package pdftex.def Info: images/bitmaps.pdf  used on input line 19.
+(pdftex.def)             Requested size: 356.88205pt x 225.88585pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 41.
+
+[12
+
+]
+Overfull \hbox (14.27803pt too wide) in paragraph at lines 92--92
+[]            \OT1/cmtt/m/n/10 lda #<VKY_GR_CLUT_0 ; pointer will be used to po
+int to a particular LUT entry[] 
+ []
+
+[13 <./images/bitmaps.pdf>]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 94.
+
+<images/Layers.pdf, id=82, 270.31108pt x 238.69128pt>
+File: images/Layers.pdf Graphic file (type pdf)
+<use images/Layers.pdf>
+Package pdftex.def Info: images/Layers.pdf  used on input line 102.
+(pdftex.def)             Requested size: 270.31041pt x 238.69069pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 122.
+
+[14]) (./bitmap.tex
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 24.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 26.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 28.
+
+) (./sprites.tex [15 <./images/Layers.pdf>]
+Chapter 6.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 27.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 29.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 31.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 33.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 35.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 37.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 39.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./tiles.tex [16
+
+] [17]
+Chapter 7.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+) (./sound.tex [18
+
+]
+Chapter 8.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 5.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[19
+
+]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 50.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 92.
+
+[20]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 96.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 133.
+
+[21]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 170.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[22]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 255.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 259.
+
+) (./interrupts.tex [23]
+Chapter 9.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+[24
+
+] [25]) (./time.tex [26]
+Chapter 10.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 3.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 5.
+
+[27
+
+]
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 41.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 43.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 45.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 47.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 52.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 54.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 56.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 58.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 63.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 65.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 67.
+
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 69.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./memory_map.tex [28] [29]
+Chapter 11.
+
+LaTeX Font Warning: Font shape `OT1/ccr/b/n' undefined
+(Font)              using `OT1/ccr/bx/n' instead on input line 1.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(./io_page_0_tab.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [30
+
+] [31] [32] (./c256jr_um.aux) ) 
+Here is how much of TeX's memory you used:
+ 2904 strings out of 475075
+ 44091 string characters out of 5779003
+ 429178 words of memory out of 5000000
+ 24236 multiletter control sequences out of 15000+600000
+ 481460 words of font info for 72 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 55i,16n,62p,1030b,379s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </Users/pjw/Library/texlive/2022/texmf-var/font
+s/pk/ljfour/public/concrete/ccr7.600pk> </Users/pjw/Library/texlive/2022/texmf-
+var/fonts/pk/ljfour/public/concrete/ccti10.600pk> </Users/pjw/Library/texlive/2
+022/texmf-var/fonts/pk/ljfour/public/concmath-fonts/xccmi10.600pk> </Users/pjw/
+Library/texlive/2022/texmf-var/fonts/pk/ljfour/public/concmath-fonts/xccsy10.60
+0pk>{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.e
+nc} </Users/pjw/Library/texlive/2022/texmf-var/fonts/pk/ljfour/public/concrete/
+ccsl10.600pk> </Users/pjw/Library/texlive/2022/texmf-var/fonts/pk/ljfour/public
+/concrete/ccr10.600pk> </Users/pjw/Library/texlive/2022/texmf-var/fonts/pk/ljfo
+ur/public/concrete/ccr10.720pk> </Users/pjw/Library/texlive/2022/texmf-var/font
+s/pk/ljfour/public/concrete/ccr10.1037pk></usr/local/texlive/2022/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/font
+s/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts
+/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/f
+onts/type1/public/cm-super/sform10.pfb>
+Output written on c256jr_um.pdf (33 pages, 276046 bytes).
+PDF statistics:
+ 368 PDF objects out of 1000 (max. 8388607)
+ 141 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+

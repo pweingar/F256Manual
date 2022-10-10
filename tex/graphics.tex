@@ -5,7 +5,7 @@ The \jr\ provides three separate graphics engines, providing programs with a cho
 \begin{itemize}
     \item Bitmaps are simple raster images. They are the size of the screen ($320 \times 200$ or $320 \times 240$) and cannot be moved. The TinyVicky chip used by the \jr\ allows for two separate bitmaps to be displayed at the same time.
 
-    \item Tile maps are images made up of tiles. The tiles come in a tile set, which is a raster image like a bitmap but provides 256 tiles. The tile map itself creates its image by indicating which tile is displayed at every position in the tile map. This mapping can be changed on the fly, allowing tile maps to be altered, and tile maps can also be scrolled horizontally and vertically to a limited degree. This allows for possibility for smooth scrolling of a tile map scene. TinyVicky allows for three separate tile maps to be displayed simulatneously.
+    \item Tile maps are images made up of tiles. The tiles come in a tile set, which is a raster image like a bitmap but provides 256 tiles. The tile map itself creates its image by indicating which tile is displayed at every position in the tile map. This mapping can be changed on the fly, allowing tile maps to be altered, and tile maps can also be scrolled horizontally and vertically to a limited degree. This allows for possibility for smooth scrolling of a tile map scene. TinyVicky allows for three separate tile maps to be displayed simultaneously.
 
     \item Sprites are small, square graphics elements that may be moved to any position on the screen. Sprites are typically used to represent game characters or very mobile UI elements. TinyVicky sprites may be 8, 16, 24, or 32 pixels on a side. There may be as many as 64 sprites active on the screen at once (without using special techniques).
 \end{itemize}
@@ -43,47 +43,49 @@ However, there is a key difference from text mode. In text mode, there are two c
 Let's set up a CLUT so that we have the colors for a gradient fill between red and blue. In this example, \verb+pointer+ is a two byte variable down in zero page, which will be used to point to the first byte of the CLUT entry the code is updating. The \verb+Y+ register is being used to point to the individual components of the entry.
 
 \begin{verbatim}
+MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0
+
 ;
 ; Initialize the LUT to greyscale from (255, 0, 0) to (0, 0, 255)
 ;
 
             lda #$01            ; Set the I/O page to #1
-            sta $0001
+            sta MMU_IO_CTRL
 
-            lda #$00            ; pointer will be used to point to a particular LUT entry
+            lda #<VKY_GR_CLUT_0 ; pointer will be used to point to a particular LUT entry
             sta pointer
-            lda #$D0
+            lda #>VKY_GR_CLUT_0
             sta pointer+1
 
-            lda #0
+            ldx #0              ; Start with blue = 0
 
-lut_loop:   ldy #0
+lut_loop:   ldy #0              ; And start at the offset for blue
+            txa                 ; Take the current blue color level
             sta (pointer),y     ; Set the blue component
-            iny                 ; Y points to the green component now
-            pha                 ; Save the blue component
-            eor #$ff
-            inc a
-            pha                 ; Calculate and save the red component
+            iny
+
             lda #0
+            sta (pointer),y     ; Set the green component to 0
+            iny
 
-            sta (pointer),y     ; Set the green component
-            iny                 ; Y points to the red component now
-            pla                 ; Get the red component
+            txa                 ; Get the blue component again
+            eor #$ff            ; And compute the 2's complement of it
+            inc a
             sta (pointer),y     ; Set the red component
-            pla                 ; Get the blue component back
+            iny
 
-            inc a               ; Go to the next color
-            beq lut_done        ; If we are back to 0, we're done with the LUT
+            inx                 ; Go to the next color
+            beq lut_done        ; If we are back to black, we're done with the LUT
 
-            pha                 ; Move pointer to the next LUT entry (+ 4)
-            clc
+            clc                 ; Move pointer to the next LUT entry (+ 4)
             lda pointer
             adc #4
             sta pointer
             lda pointer+1
             adc #0
             sta pointer+1
-            pla
+
             bra lut_loop
 
 lut_done:
@@ -113,6 +115,17 @@ Bitmaps and tile maps are assigned to their layers using the layer control regis
             \verb+0xD003+ & \multicolumn{5}{|c|}{---} & \multicolumn{3}{|c|}{LAYER2} \\\hline
         \end{tabular}
     \end{center}
-    \caption{Bitmap and Tilemap Layer Registers}
+    \caption{Bitmap and Tile Map Layer Registers}
     \label{tab:bm_tm_layers}
 \end{table}
+
+\example{Put Bitmap 0 on Layer 0}
+
+As an example of how to use layers, we can set things up for future examples by putting bitmap 0 in the front layer (0), tile map 0 in the next layer (1), and bitmap 1 in the back layer (2).
+
+\begin{verbatim}
+    lda #$20            ; Layer 0 = BM 0, Layer 1 = TM 0
+    sta VKY_LAYER_CTRL_0
+    lda #$01            ; Layer 2 = BM 1
+    sta VKY_LAYER_CTRL_1
+\end{verbatim}

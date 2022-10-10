@@ -27,3 +27,5 @@ TinyVicky allows for two full screen bitmaps to be displayed at once. These bitm
 
     \item[AD] give the address of the first byte of the pixel data within the 256 KB system RAM. Note that this address is relative to the system bus of 20 bits and is not based on the CPU's addressing.
 \end{description}
+
+Setting up a bitmap is relatively straightforward. The first thing is to enable graphics and the bitmap engine in the TinyVicky Master Control Register. Then the bitmap's pixel data should be loaded into RAM somewhere. Then the address of the first byte of the bitmap pixel data is put into the address field of the bitmap control registers. The bitmap should be placed in the appropriate layer. Then, the bitmap's main control register should be set to enable it and set which graphics CLUT should be used to interpret the bitmap's color data.
