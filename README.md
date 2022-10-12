@@ -1,3 +1,8 @@
+This project is for managing the documentation for the Foenix F256jr 8-bit computer.
+
+* [PDF](tex/c256jr_um.pdf)
+* [Examples](examples)
+
 This project is for the user's manual for the C256jr. When finished, it will contain a full user's manual and example code.
 
 Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]

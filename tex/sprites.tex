@@ -8,7 +8,7 @@ A program for the \jr\ can use up to 64 sprites, each one of which is controlled
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Offset & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            0 & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{DEPTH} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
+            0 & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{LAYER} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
             1 & \multirow{3}{*}{Sprite Address} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
             2 &  & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
             3 &  & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
@@ -28,7 +28,7 @@ These registers manage seven fields:
 
     \item[LUT] selects the graphics color lookup table to use in assigning colors to pixels
 
-    \item[DEPTH] selects the layer on which the sprite will be displayed
+    \item[LAYER] selects which sprite layer the sprite will be displayed on
 
     \item[SIZE] selects the size of the sprite (see table~\ref{tab:sp_sizes})
 
@@ -52,3 +52,166 @@ These registers manage seven fields:
     \caption{Sprite Sizes}
     \label{tab:sp_sizes}
 \end{table}
+
+\section{Sprite, Layers, and Display Priority}
+
+While a sprite can be assigned to any of four layers, this layer is only used for determining how the sprite interacts with bitmap or tile map graphics and not how sprites layer with each other. When sprites ``collide,'' a built-in sprite priority order is used to determine which sprite determines a pixel's color. When two sprites are both trying to set the color of a pixel on the screen, the sprite with the lowest number is the one that determines the color. For example, if sprite 0 and sprite 5 are in the same location, it is sprite 0 that will display in the foreground. The sprite layers {\em cannot} be used to change this.
+
+The best practice for assigning sprites is to place the images that need to be on top in the first sprites and those that need to be in the back in the higher numbered sprites. Use the LAYER field for the sprites to control how the sprites layer with the tile maps and bitmaps.
+
+\example{Displaying a Sprite}
+In this example, we'll just put a ball on the screen. First, the program needs to set up TinyVicky to be in sprite mode with no border and a light purple background:
+
+\begin{verbatim}
+MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+
+VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
+VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
+VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
+VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
+VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
+VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
+
+VKY_SP0_CTRL = $D900            ; Sprite #0's control register
+VKY_SP0_AD_L = $D901            ; Sprite #0's pixel data address register
+VKY_SP0_AD_M = $D902
+VKY_SP0_AD_H = $D903
+VKY_SP0_POS_X_L = $D904         ; Sprite #0's X position register
+VKY_SP0_POS_X_H = $D905
+VKY_SP0_POS_Y_L = $D906         ; Sprite #0's Y position register
+VKY_SP0_POS_Y_H = $D907
+
+            ;
+            ; Set up TinyVicky to display sprites
+            ;
+            lda #$24                    ; Graphics and Sprite engines enabled
+            sta VKY_MSTR_CTRL_0
+            stz VKY_MSTR_CTRL_1         ; 320x240 @ 60Hz
+
+            stz VKY_BRDR_CTRL           ; No border
+
+            lda #$96                    ; Background: lavender
+            sta VKY_BKG_COL_R
+            lda #$7B
+            sta VKY_BKG_COL_G
+            lda #$B6
+            sta VKY_BKG_COL_B
+\end{verbatim}
+
+Next, the program loads the sprite's colors into the CLUT (\verb+ptr_src+ and \verb+ptr_dst+ are 16-bit storage locations in zero page and are used as pointers):
+
+\begin{verbatim}
+            ;
+            ; Load the sprite LUT into memory
+            ;
+
+            lda #$01                    ; Switch to I/O Page #1
+            sta MMU_IO_CTRL
+
+            lda #<balls_clut_start      ; Set the source pointer to the palette data
+            sta ptr_src
+            lda #>balls_clut_start
+            sta ptr_src+1
+
+            lda #<VKY_GR_CLUT_0         ; Set the destination pointer to Graphics CLUT 1
+            sta ptr_dst
+            lda #>VKY_GR_CLUT_0
+            sta ptr_dst+1
+
+            ldx #0                      ; X is a counter for the number of colors copied
+color_loop: ldy #0                      ; Y is a pointer to the component within a CLUT color
+comp_loop:  lda (ptr_src),y             ; Read a byte from the code
+            sta (ptr_dst),y             ; And write it to the CLUT
+            iny                         ; Move to the next byte
+            cpy #4
+            bne comp_loop               ; Continue until we have copied 4 bytes
+
+            inx                         ; Move to the next color
+            cmp #16
+            beq done_lut                ; Until we have copied all 16
+
+            clc                         ; Advance ptr_src to the next source color entry
+            lda ptr_src
+            adc #4
+            sta ptr_src
+            lda ptr_src+1
+            adc #0
+            sta ptr_src+1
+
+            clc                         ; Advance ptr_dst to the next destination color entry
+            lda ptr_dst
+            adc #4
+            sta ptr_dst
+            lda ptr_dst+1
+            adc #0
+            sta ptr_dst+1
+
+            bra color_loop              ; And start copying that new color
+
+done_lut:   stz MMU_IO_CTRL             ; Go back to I/O Page 0
+\end{verbatim}
+
+Finally, we point sprite 0 to the pixel data (which is included in the assembly code below), set its location on the screen (which will be the upper left corner of the screen), and then we turn on the sprite setting its LUT and LAYER in the process:
+
+\begin{verbatim}
+            ;
+            ; Set up sprite #0
+            ;
+init_sp0:   lda #<balls_img_start       ; Address = balls_img_start
+            sta VKY_SP0_AD_L
+            lda #>balls_img_start
+            sta VKY_SP0_AD_M
+            stz VKY_SP0_AD_H
+
+            lda #32
+            sta VKY_SP0_POS_X_L         ; (x, y) = (32, 32)... should be upper-left corner of the screen
+            stz VKY_SP0_POS_X_H
+
+            lda #32
+            sta VKY_SP0_POS_Y_L
+            stz VKY_SP0_POS_Y_H
+
+            lda #$41                    ; Size = 16x16, Layer = 0, LUT = 0, Enabled
+            sta VKY_SP0_CTRL
+\end{verbatim}
+
+Here is the pixel data for the sprite:
+\begin{verbatim}
+balls_img_start:
+    .byte $00, $00, $00, $00, $00, $00, $03, $02, $02, $01, $00, $00, $00, $00, $00, $00
+    .byte $00, $00, $00, $00, $05, $05, $04, $03, $03, $03, $03, $02, $00, $00, $00, $00
+    .byte $00, $00, $00, $07, $07, $07, $06, $05, $04, $04, $03, $03, $01, $00, $00, $00
+    .byte $00, $00, $07, $09, $0A, $0B, $0A, $08, $06, $05, $04, $03, $02, $01, $00, $00
+    .byte $00, $05, $07, $0A, $0D, $0E, $0D, $0A, $07, $05, $05, $04, $03, $01, $01, $00
+    .byte $00, $05, $07, $0B, $0E, $0E, $0E, $0C, $07, $05, $05, $04, $03, $01, $01, $00
+    .byte $03, $04, $06, $0A, $0D, $0E, $0D, $0A, $07, $05, $05, $04, $03, $02, $01, $01
+    .byte $02, $03, $05, $08, $0A, $0C, $0A, $08, $06, $05, $05, $04, $03, $02, $01, $01
+    .byte $02, $03, $04, $06, $07, $07, $07, $06, $05, $05, $05, $04, $03, $01, $01, $01
+    .byte $01, $03, $04, $05, $05, $05, $05, $05, $05, $05, $05, $03, $03, $01, $01, $01
+    .byte $00, $03, $03, $04, $05, $05, $05, $05, $05, $05, $04, $03, $02, $01, $01, $00
+    .byte $00, $02, $03, $03, $04, $04, $04, $04, $04, $03, $03, $02, $01, $01, $01, $00
+    .byte $00, $00, $01, $02, $03, $03, $03, $03, $03, $03, $02, $01, $01, $01, $00, $00
+    .byte $00, $00, $00, $01, $01, $01, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00
+    .byte $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00
+    .byte $00, $00, $00, $00, $00, $00, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00
+\end{verbatim}
+
+Here are the colors for the sprite (note that this example is using only 15 colors, to make the example more understandable in print):
+\begin{verbatim}
+balls_clut_start:
+    .byte $00, $00, $00, $00
+    .byte $88, $00, $00, $00
+    .byte $7C, $18, $00, $00
+    .byte $9C, $20, $1C, $00
+    .byte $90, $38, $1C, $00
+    .byte $B0, $40, $38, $00
+    .byte $A8, $54, $38, $00
+    .byte $C0, $5C, $50, $00
+    .byte $BC, $70, $50, $00
+    .byte $D0, $74, $68, $00
+    .byte $CC, $88, $68, $00
+    .byte $E0, $8C, $7C, $00
+    .byte $DC, $9C, $7C, $00
+    .byte $EC, $A4, $90, $00
+    .byte $EC, $B4, $90, $00
+\end{verbatim}

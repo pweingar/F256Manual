@@ -91,6 +91,10 @@ lut_loop:   ldy #0              ; And start at the offset for blue
 lut_done:
 \end{verbatim}
 
+\section{Pixel Data}
+
+All three graphics engines arrange their pixel data in the same manner. They all use rectangular raster images as a base, although the width and height of the rectangle can vary. The pixels are placed in memory in sequential order in left-to-rigth and top-to-bottom order. That is, the first pixel in the sequence is the upper-left pixel in the image. The next pixel is the pixel to the immediate right and so on. If the image is $w \times h$, the position of a pixel at $(x, y)$ in the list is $y \times w + x$.
+
 \section{Graphics Layers}
 
 Now, what happens if two sprites take up the same position or if a program displays a tile map and a bitmap together? How does TinyVicky determine what color to display at a given position? TinyVicky provides a flexible layering system with several layers. Elements in ``near'' layers (lower numbers) get displayed on top of elements in ``far'' layers (higher numbers). If a sprite in layer 0 says a pixel should be blue while a tile in layer 1 says it should be red, the pixel will be blue. Color 0, however, is special. It is always the transparent ``color''. A pixel that is 0 in an element will be the color of whatever is behind it (or the global background color, if there is nothing behind it).

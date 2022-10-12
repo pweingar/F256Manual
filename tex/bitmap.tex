@@ -28,4 +28,129 @@ TinyVicky allows for two full screen bitmaps to be displayed at once. These bitm
     \item[AD] give the address of the first byte of the pixel data within the 256 KB system RAM. Note that this address is relative to the system bus of 20 bits and is not based on the CPU's addressing.
 \end{description}
 
-Setting up a bitmap is relatively straightforward. The first thing is to enable graphics and the bitmap engine in the TinyVicky Master Control Register. Then the bitmap's pixel data should be loaded into RAM somewhere. Then the address of the first byte of the bitmap pixel data is put into the address field of the bitmap control registers. The bitmap should be placed in the appropriate layer. Then, the bitmap's main control register should be set to enable it and set which graphics CLUT should be used to interpret the bitmap's color data.
+To set up and display a bitmap, the following things need to be done. The order is not terribly important, although updates to the bitmap's pixel data after the bitmap is displaying will be visible. That could be desirable, depending on what the program is doing.
+
+\begin{enumerate}
+    \item Enable bitmap graphics in the TinyVicky Master Control Register (see table:~\ref{tab:vky_master_ctrl_reg}). This means you need to set both the GRAPH and BITMAP bits and either clear TEXT or set the OVRLY to display text and bitmap together.
+
+    \item Set up the pixel data for the bitmap somewhere in the first 256 KB of RAM.
+
+    \item Set the address of the bitmap's pixel data in the AD field.
+
+    \item Assign the bitmap to a layer using the layer control registers (see table:~\ref{tab:bm_tm_layers}).
+
+    \item Set the bitmap's CLUT and ENABLE bit in its control register.
+\end{enumerate}
+
+\example{Display a Bitmap}
+
+This example will build on the previous examples of setting up the CLUT and display a gradient on the screen. First, it needs to turn on the bitmap graphics:
+
+\begin{verbatim}
+            MMU_MEM_CTRL = $0000            ; MMU Memory Control Register
+            MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+            VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
+            VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
+            VKY_BM0_CTRL = $D100            ; Bitmap #0 Control Register
+            VKY_BM0_ADDR_L = $D101          ; Bitmap #0 Address bits 7..0
+            VKY_BM0_ADDR_M = $D102          ; Bitmap #0 Address bits 15..8
+            VKY_BM0_ADDR_H = $D103          ; Bitmap #0 Address bits 17..16
+
+            bitmap_base = $10000            ; The base address of our bitmap
+
+            stz MMU_IO_CTRL     ; Go back to I/O page #0
+
+            lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
+            sta VKY_MSTR_CTRL_0 ; Save that to VICKY master control register 0
+            stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+\end{verbatim}
+
+Next, it needs to set up the bitmap: setting the address, CLUT, and enabling the bitmap:
+
+\begin{verbatim}
+            ;
+            ; Turn on bitmap #0
+            ;
+
+            stz VKY_BM1_CTRL    ; Make sure bitmap 1 is turned off
+
+            lda #$01            ; Use graphics LUT #0, and enable bitmap
+            sta VKY_BM0_CTRL
+
+            lda #<bitmap_base   ; Set the low byte of the bitmap's address
+            sta VKY_BM0_ADDR_L
+            lda #>bitmap_base   ; Set the middle byte of the bitmap's address
+            sta VKY_BM0_ADDR_M
+            lda #`bitmap_base   ; Set the upper two bits of the bitmap's address
+            and #$03
+            sta VKY_BM0_ADDR_H
+\end{verbatim}
+
+Now, the code needs to create the pixel data for the gradient in memory. This is a bit tricky on the \jr, because the program is using the larger $320 \times 240$ screen, which requires more than 64 KB of memory. In order to write to the entire bitmap, the program will have to work with the MMU to switch memory banks to access the whole bitmap. The program will use bank 1 (0x2000 -- 0x3FFF) as its window into the bitmap, which will start at 0x10000. It will walk through the memory byte-by-byte, setting each pixel's color based on what line it is on (tracked in a \verb+line+ variable). Once it has written a bank's worth of pixels (8 KB), it will increment the bank number and update the MMU register. Once it has written 240 lines, it will finish.
+
+NOTE: in the following code, \verb+bm_bank+ and \verb+line+ are byte variables, and \verb+pointer+ and \verb+column+ are two-byte variables in zero page (although really only \verb+pointer+ has to be there).
+
+\begin{verbatim}
+            ; Set the line number to 0
+            stz line
+
+            ; Calculate the bank number for the bitmap
+            lda #(bitmap_base >> 13)
+            sta bm_bank
+
+bank_loop:  stz pointer         ; Set the pointer to start of the current bank
+            lda #$20
+            sta pointer+1
+
+            ; Set the column to 0
+            stz column
+            stz column+1
+
+            ; Alter the LUT entries for $2000 -> $bfff
+
+            lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
+            sta MMU_MEM_CTRL
+
+            lda bm_bank
+            sta MMU_MEM_BANK_1  ; Set the bank we will map to $2000 - $3fff
+
+            stz MMU_MEM_CTRL    ; Turn off editing of MMU LUT #0
+
+            ; Fill the line with the color..
+
+loop2:      lda line            ; The line number is the color of the line
+            sta (pointer)
+
+inc_column: inc column          ; Increment the column number
+            bne chk_col
+            inc column+1
+
+chk_col:    lda column          ; Check to see if we have finished the row
+            cmp #<320
+            bne inc_point
+            lda column+1
+            cmp #>320
+            bne inc_point
+
+            lda line            ; If so, increment the line number
+            inc a
+            sta line
+            cmp #240            ; If line = 240, we're done
+            beq done
+
+            stz column          ; Set the column to 0
+            stz column+1
+
+inc_point:  inc pointer         ; Increment pointer
+            bne loop2           ; If < $4000, keep looping
+            inc pointer+1
+            lda pointer+1
+            cmp #$40
+            bne loop2
+
+            inc bm_bank         ; Move to the next bank
+            bra bank_loop       ; And start filling it
+
+done:       nop                 ; Lock up here
+            bra done
+\end{verbatim}
