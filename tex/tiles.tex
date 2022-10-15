@@ -1,1 +1,80 @@
 \chapter{Tiles}
+The third graphics engine TinyVicky provides is the tile map system. The tile map system might seem a bit confusing at first, but really it is very similar to text mode, just made more flexible. In text mode, we have characters (256 of them). The shapes of the characters are defined in the font. What character is shown in a particular spot on the screen is set in the text matrix, which is a rectangular array of bytes in memory. In the same way, with the tile system we have tiles (256 of those, too). What those tiles look like are defined in a ``tile set.'' What tile is shown in a particular spot on the screen is set in the ``tile map.'' So there is an analogy:
+
+\begin{eqnarray*}
+    {\rm character} & \approx & {\rm tile} \\
+    {\rm font} & \approx & {\rm tile set} \\
+    {\rm text matrix} & \approx & {\rm tile map} \\
+\end{eqnarray*}
+
+There are several differences with tile maps, however:
+
+\begin{itemize}
+    \item A tile map may use tiles that are either $8 \times 8$ pixels or $16 \times 16$ pixels.
+
+    \item A tile map can be scrolled smoothly horizontally or vertically.
+
+    \item A tile may use 256 colors in its pixels as opposed to text mode's two-color characters. In particular, this means that a tile set uses one byte per pixel, with that byte's value being an index into a CLUT (as with bitmaps and sprites), where text mode fonts are one {\em bit} per pixel choosing between a foreground and background color.
+
+    \item The tile map system allows for up to eight different tile sets to be used at the same time, where text mode has a single font.
+
+    \item Up to three different tile maps can be displayed at one time, where text mode can only display one text matrix.
+
+    \item A tile map can be placed on any one of three display layers, where text mode is always on top.
+\end{itemize}
+
+One way tile maps get their flexibility is that, where text mode uses 8-bit bytes for the text matrix, a tile map is actually a rectangular collection of 16-bit integers in memory. A tile map entry is divided up into two pieces: the first byte is the number of the tile to display in that position (much like the character code in text mode), but the upper byte contains attribute bits (see table:~\ref{tab:tile_bits}), which have two fields:
+
+\begin{description}
+    \item[SET] is the number of the tile set to use for this tile's appearance
+
+    \item[CLUT] is the number of the graphics CLUT to use in setting the colors
+\end{description}
+
+This attribute system makes tiles very powerful. Effectively, a single tile map can display 1,024 completely unique shapes at one time by using all eight tile sets. Also, since the CLUT is set for each tile in the attributes, the number of tiles needed can be reduced by clever use of recoloring.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            \multicolumn{3}{|c|}{---} & \multicolumn{2}{|c|}{CLUT} & \multicolumn{3}{|c|}{SET} & \multicolumn{8}{|c|}{TILE NUMBER} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Tile Bits}
+    \label{tab:tile_bits}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & Tile Map & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            \verb+0xD200+ & \multirow{11}{*}{0} & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+            \verb+0xD201+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+            \verb+0xD202+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+            \verb+0xD203+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            \verb+0xD204+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+            \verb+0xD205+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            \verb+0xD206+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+            \verb+0xD207+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            \verb+0xD208+ & & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
+            \verb+0xD209+ & & DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 & X4 \\ \hline
+            \verb+0xD20A+ & & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
+            \verb+0xD20B+ & & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline \\
+
+            \verb+0xD210+ & \multirow{11}{*}{1} & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+            \verb+0xD211+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+            \verb+0xD212+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+            \verb+0xD213+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            \verb+0xD214+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+            \verb+0xD215+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            \verb+0xD216+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+            \verb+0xD217+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            \verb+0xD218+ & & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
+            \verb+0xD219+ & & DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 & X4 \\ \hline
+            \verb+0xD21A+ & & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
+            \verb+0xD21B+ & & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline \\
+        \end{tabular}
+    \end{center}
+    \caption{Tile Map Registers}
+    \label{tab:tilemap_reg}
+\end{table}

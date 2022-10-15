@@ -1,0 +1,2441 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.20)  13 OCT 2022 12:25
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**tiles.tex
+(./tiles.tex
+LaTeX2e <2018-12-01>
+./tiles.tex:1: Undefined control sequence.
+l.1 \chapter
+            {Tiles}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+./tiles.tex:1: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \chapter{T
+              iles}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no T in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 1--2
+[] 
+ []
+
+
+./tiles.tex:4: LaTeX Error: Environment table undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4 \begin{table}
+                 [h]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+./tiles.tex:4: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4 \begin{table}[
+                  h]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 4--5
+[] 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 6.
+Missing character: There is no O in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no W in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no W in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no - in font nullfont!
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no c in font nullfont!
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./tiles.tex:8: LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+./tiles.tex:8: Missing } inserted.
+<inserted text> 
+                }
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./tiles.tex:8: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Missing { inserted.
+<inserted text> 
+                {
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: You can't use `macro parameter character #' in restricted horizontal mode.
+\@preamble ...colsep {\hfil \ignorespaces \@sharp 
+                                                  \unskip \hfil }\hskip \tab...
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./tiles.tex:8: Missing } inserted.
+<inserted text> 
+                }
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Missing } inserted.
+<inserted text> 
+                }
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I'm guessing that you meant to end an alignment here.
+
+./tiles.tex:8: Missing { inserted.
+<inserted text> 
+                {
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./tiles.tex:8: Missing } inserted.
+<inserted text> 
+                }
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Missing $ inserted.
+<inserted text> 
+                $
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Missing } inserted.
+<inserted text> 
+                }
+l.8 ...}{|c|}{---} & \multicolumn{2}{TILE\_SIZE} &
+                                                   \multicolumn{3}{|c|}{---}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./tiles.tex:8: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:8: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:8: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:8: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:8: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:8: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:8: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.8 ...{2}{TILE\_SIZE} & \multicolumn{3}{|c|}{---}
+                                                   & ENABLE \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:8: Misplaced alignment tab character &.
+l.8 ...}{TILE\_SIZE} & \multicolumn{3}{|c|}{---} &
+                                                   ENABLE \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no E in font nullfont!
+Missing character: There is no N in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no E in font nullfont!
+./tiles.tex:8: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.8 ...multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 &
+                    W & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 & W &
+                        AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 7 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 & W & AD7 &
+                              AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 6 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 & W & AD7 & AD6 &
+                                    AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 5 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 & W & AD7 & AD6 & AD5 &
+                                          AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 4 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9             1 & W & AD7 & AD6 & AD5 & AD4 &
+                                                AD3 & AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9 ...      1 & W & AD7 & AD6 & AD5 & AD4 & AD3 &
+                                                   AD2 & AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9 ...1 & W & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 &
+                                                   AD1 & AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:9: Misplaced alignment tab character &.
+l.9 ...& AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 &
+                                                   AD0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:9: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.9 ...AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10             2 &
+                     W & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10             2 & W &
+                         AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10             2 & W & AD15 &
+                                AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10             2 & W & AD15 & AD14 &
+                                       AD13 & AD12 & AD11 & AD10 & AD9 & AD8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10             2 & W & AD15 & AD14 & AD13 &
+                                              AD12 & AD11 & AD10 & AD9 & AD8...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10 ...       2 & W & AD15 & AD14 & AD13 & AD12 &
+                                                   AD11 & AD10 & AD9 & AD8 \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10 ...2 & W & AD15 & AD14 & AD13 & AD12 & AD11 &
+                                                   AD10 & AD9 & AD8 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10 ... AD15 & AD14 & AD13 & AD12 & AD11 & AD10 &
+                                                   AD9 & AD8 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 9 in font nullfont!
+./tiles.tex:10: Misplaced alignment tab character &.
+l.10 ...& AD14 & AD13 & AD12 & AD11 & AD10 & AD9 &
+                                                   AD8 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 8 in font nullfont!
+./tiles.tex:10: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.10 ...& AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:11: Misplaced alignment tab character &.
+l.11             3 &
+                     W & \multicolumn{2}{|c|}{---} & AD17 & AD16 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:11: Misplaced alignment tab character &.
+l.11             3 & W &
+                         \multicolumn{2}{|c|}{---} & AD17 & AD16 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:11: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.11             3 & W & \multicolumn{2}{|c|}{---}
+                                                   & AD17 & AD16 \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:11: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.11             3 & W & \multicolumn{2}{|c|}{---}
+                                                   & AD17 & AD16 \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:11: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.11             3 & W & \multicolumn{2}{|c|}{---}
+                                                   & AD17 & AD16 \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:11: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.11             3 & W & \multicolumn{2}{|c|}{---}
+                                                   & AD17 & AD16 \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:11: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.11             3 & W & \multicolumn{2}{|c|}{---}
+                                                   & AD17 & AD16 \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:11: Misplaced alignment tab character &.
+l.11 ...       3 & W & \multicolumn{2}{|c|}{---} &
+                                                   AD17 & AD16 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+./tiles.tex:11: Misplaced alignment tab character &.
+l.11 ...3 & W & \multicolumn{2}{|c|}{---} & AD17 &
+                                                   AD16 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+./tiles.tex:11: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.11 ...olumn{2}{|c|}{---} & AD17 & AD16 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 4 in font nullfont!
+./tiles.tex:12: Misplaced alignment tab character &.
+l.12             4 &
+                     W & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:12: Misplaced alignment tab character &.
+l.12             4 & W &
+                         \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:12: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:12: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:12: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.12 ...4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:12: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.12 ...ulticolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 5 in font nullfont!
+./tiles.tex:13: Misplaced alignment tab character &.
+l.13             5 &
+                     W & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:13: Misplaced alignment tab character &.
+l.13             5 & W &
+                         \multicolumn{8}{|c|}{RESERVED} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:13: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:13: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:13: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.13 ...    5 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:13: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.13 ...& \multicolumn{8}{|c|}{RESERVED} \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 6 in font nullfont!
+./tiles.tex:14: Misplaced alignment tab character &.
+l.14             6 &
+                     W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:14: Misplaced alignment tab character &.
+l.14             6 & W &
+                         \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:14: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:14: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:14: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.14 ...6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:14: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.14 ...ulticolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 7 in font nullfont!
+./tiles.tex:15: Misplaced alignment tab character &.
+l.15             7 &
+                     W & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:15: Misplaced alignment tab character &.
+l.15             7 & W &
+                         \multicolumn{8}{|c|}{RESERVED} \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:15: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:15: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:15: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.15 ...    7 & W & \multicolumn{8}{|c|}{RESERVED}
+                                                   \\ \hline
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:15: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.15 ...& \multicolumn{8}{|c|}{RESERVED} \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 8 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 &
+                     W & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 & W &
+                         X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 & W & X3 &
+                              X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 & W & X3 & X2 &
+                                   X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 & W & X3 & X2 & X1 &
+                                        X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16             8 & W & X3 & X2 & X1 & X0 &
+                                             SSX3 & SSX2 & SSX1 & SSX0 \\ \h...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no X in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16 ...        8 & W & X3 & X2 & X1 & X0 & SSX3 &
+                                                   SSX2 & SSX1 & SSX0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no X in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16 ... 8 & W & X3 & X2 & X1 & X0 & SSX3 & SSX2 &
+                                                   SSX1 & SSX0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no X in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:16: Misplaced alignment tab character &.
+l.16 ...& X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 &
+                                                   SSX0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no X in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:16: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.16 ...& X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 9 in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17             9 &
+                     W & DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17             9 & W &
+                         DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no D in font nullfont!
+Missing character: There is no I in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no X in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17             9 & W & DIR\_X &
+                                  \multicolumn{3}{|c|}{---} & X7 & X6 & X5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:17: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:17: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:17: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:17: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:17: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:17: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:17: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.17 ...9 & W & DIR\_X & \multicolumn{3}{|c|}{---}
+                                                   & X7 & X6 & X5 & X4 \\ \h...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17 ...& W & DIR\_X & \multicolumn{3}{|c|}{---} &
+                                                   X7 & X6 & X5 & X4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 7 in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17 ... DIR\_X & \multicolumn{3}{|c|}{---} & X7 &
+                                                   X6 & X5 & X4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 6 in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17 ..._X & \multicolumn{3}{|c|}{---} & X7 & X6 &
+                                                   X5 & X4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 5 in font nullfont!
+./tiles.tex:17: Misplaced alignment tab character &.
+l.17 ...\multicolumn{3}{|c|}{---} & X7 & X6 & X5 &
+                                                   X4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no X in font nullfont!
+Missing character: There is no 4 in font nullfont!
+./tiles.tex:17: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.17 ...3}{|c|}{---} & X7 & X6 & X5 & X4 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 &
+                      W & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 & W &
+                          Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 & W & Y3 &
+                               Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 & W & Y3 & Y2 &
+                                    Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 & W & Y3 & Y2 & Y1 &
+                                         Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18             10 & W & Y3 & Y2 & Y1 & Y0 &
+                                              SSY3 & SSY2 & SSY1 & SSY0 \\ \...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 3 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18 ...       10 & W & Y3 & Y2 & Y1 & Y0 & SSY3 &
+                                                   SSY2 & SSY1 & SSY0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 2 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18 ...10 & W & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 &
+                                                   SSY1 & SSY0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:18: Misplaced alignment tab character &.
+l.18 ...& Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 &
+                                                   SSY0 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no S in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 0 in font nullfont!
+./tiles.tex:18: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.18 ...& Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19             11 &
+                      W & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no W in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19             11 & W &
+                          DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no D in font nullfont!
+Missing character: There is no I in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no Y in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19             11 & W & DIR\_Y &
+                                  \multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 &...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:19: Misplaced \omit.
+\multispan ->\omit 
+                   \@multispan 
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:19: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:19: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:19: Misplaced \span.
+\sp@n ->\span 
+              \omit \advance \@multicnt \m@ne 
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:19: Misplaced \omit.
+\sp@n ->\span \omit 
+                    \advance \@multicnt \m@ne 
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:19: Undefined control sequence.
+<argument> ...nextchar \ifcase \@chclass \@classz 
+                                                  \or \@classi \or \@classii...
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:19: Undefined control sequence.
+\@classi ->\ifcase \@lastchclass \@acol 
+                                        \@arrayrule \or \@addtopreamble {\hs...
+l.19 ...11 & W & DIR\_Y &\multicolumn{3}{|c|}{---}
+                                                   & Y7 & Y6 & Y5 & Y4 \\ \h...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19 ... & W & DIR\_Y &\multicolumn{3}{|c|}{---} &
+                                                   Y7 & Y6 & Y5 & Y4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 7 in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19 ...& DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 &
+                                                   Y6 & Y5 & Y4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 6 in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19 ...\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 &
+                                                   Y5 & Y4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 5 in font nullfont!
+./tiles.tex:19: Misplaced alignment tab character &.
+l.19 ...\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 &
+                                                   Y4 \\ \hline
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+Missing character: There is no Y in font nullfont!
+Missing character: There is no 4 in font nullfont!
+./tiles.tex:19: Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.19 ...3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline
+                                                  
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./tiles.tex:20: Misplaced \crcr.
+\endtabular ->\crcr 
+                    \egroup \egroup $\egroup 
+l.20         \end{tabular}
+                          
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./tiles.tex:20: Extra }, or forgotten \endgroup.
+\endtabular ->\crcr \egroup 
+                            \egroup $\egroup 
+l.20         \end{tabular}
+                          
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./tiles.tex:20: Extra }, or forgotten \endgroup.
+\endtabular ->\crcr \egroup \egroup 
+                                    $\egroup 
+l.20         \end{tabular}
+                          
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./tiles.tex:20: Extra }, or forgotten $.
+<recently read> \egroup 
+                        
+l.20         \end{tabular}
+                          
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+./tiles.tex:20: LaTeX Error: \begin{center} on input line 5 ended by \end{tabular}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.20         \end{tabular}
+                          
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./tiles.tex:20: Missing $ inserted.
+<inserted text> 
+                $
+l.20         \end{tabular}
+                          
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+./tiles.tex:21: LaTeX Error: \begin{document} ended by \end{center}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.21     \end{center}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+./tiles.tex:22: LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.22     \caption
+                 {Tile Map Registers}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no T in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no s in font nullfont!
+
+./tiles.tex:24: LaTeX Error: \begin{document} ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24 \end{table}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./tiles.tex:24: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.24 \end{table}
+                
+Things are pretty mixed up, but I think the worst is over.
+
+
+./tiles.tex:28: LaTeX Error: Environment table undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.28 \begin{table}
+                  [h]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 28--29
+[] 
+ []
+
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 9 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no U in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no I in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no N in font nullfont!
+Missing character: There is no U in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no R in font nullfont!
+
+./tiles.tex:35: LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35     \caption
+                 {Tile Bits}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no T in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no s in font nullfont!
+
+./tiles.tex:37: LaTeX Error: \begin{document} ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.37 \end{table}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> tiles.tex
+             
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 9 strings out of 492609
+ 177 string characters out of 6132833
+ 62663 words of memory out of 5000000
+ 4030 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 19i,7n,17p,151b,169s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
