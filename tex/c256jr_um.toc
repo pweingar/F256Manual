@@ -1,38 +1,49 @@
-\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}% 
-\contentsline {chapter}{\numberline {2}F256jr\ Basics}{4}{chapter.2}% 
-\contentsline {chapter}{\numberline {3}Memory Management}{5}{chapter.3}% 
-\contentsline {subsection}{\numberline {3.0.1}Example: Setting up a LUT}{6}{subsection.3.0.1}% 
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}F256jr\ Basics}{5}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Features}{5}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Ports}{5}{section.2.2}% 
+\contentsline {section}{\numberline {2.3}Set Up}{5}{section.2.3}% 
+\contentsline {section}{\numberline {2.4}DIP Switches}{5}{section.2.4}% 
+\contentsline {chapter}{\numberline {3}Memory Management}{6}{chapter.3}% 
+\contentsline {subsection}{\numberline {3.0.1}Example: Setting up a LUT}{7}{subsection.3.0.1}% 
 \contentsline {chapter}{\numberline {4}The Text Screen}{8}{chapter.4}% 
 \contentsline {section}{\numberline {4.1}Text Matrix}{8}{section.4.1}% 
 \contentsline {subsection}{\numberline {4.1.1}Example: Print an A to the Screen}{8}{subsection.4.1.1}% 
-\contentsline {section}{\numberline {4.2}Text Color LUTs}{9}{section.4.2}% 
+\contentsline {section}{\numberline {4.2}Text Color LUTs}{8}{section.4.2}% 
 \contentsline {section}{\numberline {4.3}Color Matrix}{9}{section.4.3}% 
-\contentsline {subsection}{\numberline {4.3.1}Example: Make That ``A'' Yellow on Blue}{10}{subsection.4.3.1}% 
+\contentsline {subsection}{\numberline {4.3.1}Example: Make That ``A'' Yellow on Blue}{9}{subsection.4.3.1}% 
 \contentsline {section}{\numberline {4.4}Entering Text Mode}{10}{section.4.4}% 
-\contentsline {section}{\numberline {4.5}Text Fonts}{11}{section.4.5}% 
-\contentsline {chapter}{\numberline {5}Graphics}{12}{chapter.5}% 
-\contentsline {section}{\numberline {5.1}Graphics Colors}{12}{section.5.1}% 
+\contentsline {section}{\numberline {4.5}Text Fonts}{10}{section.4.5}% 
+\contentsline {chapter}{\numberline {5}Graphics}{11}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Graphics Colors}{11}{section.5.1}% 
 \contentsline {subsection}{\numberline {5.1.1}Example: A Simple Gradient}{12}{subsection.5.1.1}% 
-\contentsline {section}{\numberline {5.2}Pixel Data}{14}{section.5.2}% 
-\contentsline {section}{\numberline {5.3}Graphics Layers}{14}{section.5.3}% 
-\contentsline {subsection}{\numberline {5.3.1}Example: Put Bitmap 0 on Layer 0}{15}{subsection.5.3.1}% 
-\contentsline {section}{\numberline {5.4}Bitmaps}{15}{section.5.4}% 
-\contentsline {subsection}{\numberline {5.4.1}Example: Display a Bitmap}{16}{subsection.5.4.1}% 
-\contentsline {chapter}{\numberline {6}Sprites}{19}{chapter.6}% 
-\contentsline {section}{\numberline {6.1}Sprite, Layers, and Display Priority}{20}{section.6.1}% 
-\contentsline {subsection}{\numberline {6.1.1}Example: Displaying a Sprite}{20}{subsection.6.1.1}% 
-\contentsline {chapter}{\numberline {7}Tiles}{23}{chapter.7}% 
-\contentsline {chapter}{\numberline {8}Sound}{25}{chapter.8}% 
-\contentsline {section}{\numberline {8.1}CODEC}{25}{section.8.1}% 
-\contentsline {section}{\numberline {8.2}Using the PSGs}{26}{section.8.2}% 
+\contentsline {section}{\numberline {5.2}Pixel Data}{13}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Graphics Layers}{13}{section.5.3}% 
+\contentsline {subsection}{\numberline {5.3.1}Example: Put Bitmap 0 on Layer 0}{14}{subsection.5.3.1}% 
+\contentsline {section}{\numberline {5.4}Bitmaps}{14}{section.5.4}% 
+\contentsline {subsection}{\numberline {5.4.1}Example: Display a Bitmap}{14}{subsection.5.4.1}% 
+\contentsline {chapter}{\numberline {6}Sprites}{17}{chapter.6}% 
+\contentsline {section}{\numberline {6.1}Sprite, Layers, and Display Priority}{18}{section.6.1}% 
+\contentsline {subsection}{\numberline {6.1.1}Example: Displaying a Sprite}{18}{subsection.6.1.1}% 
+\contentsline {chapter}{\numberline {7}Tiles}{21}{chapter.7}% 
+\contentsline {section}{\numberline {7.1}Tile Maps}{21}{section.7.1}% 
+\contentsline {subsection}{\numberline {7.1.1}Scrolling}{22}{subsection.7.1.1}% 
+\contentsline {section}{\numberline {7.2}Tile Sets}{23}{section.7.2}% 
+\contentsline {subsection}{\numberline {7.2.1}Example: A Simple Tile Map}{23}{subsection.7.2.1}% 
+\contentsline {chapter}{\numberline {8}Sound}{26}{chapter.8}% 
+\contentsline {section}{\numberline {8.1}CODEC}{26}{section.8.1}% 
+\contentsline {section}{\numberline {8.2}Using the PSGs}{27}{section.8.2}% 
 \contentsline {subsection}{\numberline {8.2.1}Attenuation}{27}{subsection.8.2.1}% 
 \contentsline {subsection}{\numberline {8.2.2}Tones}{27}{subsection.8.2.2}% 
-\contentsline {subsection}{\numberline {8.2.3}Noise}{27}{subsection.8.2.3}% 
-\contentsline {section}{\numberline {8.3}Using the SIDs}{28}{section.8.3}% 
-\contentsline {subsection}{\numberline {8.3.1}Ring Modulation}{29}{subsection.8.3.1}% 
-\contentsline {subsection}{\numberline {8.3.2}Synchronization}{29}{subsection.8.3.2}% 
-\contentsline {chapter}{\numberline {9}Interrupt Controller}{30}{chapter.9}% 
-\contentsline {chapter}{\numberline {10}Tracking Time}{33}{chapter.10}% 
-\contentsline {section}{\numberline {10.1}Interval Timers}{33}{section.10.1}% 
-\contentsline {section}{\numberline {10.2}Real Time Clock}{33}{section.10.2}% 
+\contentsline {subsection}{\numberline {8.2.3}Noise}{28}{subsection.8.2.3}% 
+\contentsline {section}{\numberline {8.3}Using the SIDs}{29}{section.8.3}% 
+\contentsline {subsection}{\numberline {8.3.1}Ring Modulation}{30}{subsection.8.3.1}% 
+\contentsline {subsection}{\numberline {8.3.2}Synchronization}{30}{subsection.8.3.2}% 
+\contentsline {chapter}{\numberline {9}Interrupt Controller}{31}{chapter.9}% 
+\contentsline {chapter}{\numberline {10}Tracking Time}{34}{chapter.10}% 
+\contentsline {section}{\numberline {10.1}Interval Timers}{34}{section.10.1}% 
+\contentsline {section}{\numberline {10.2}Real Time Clock}{34}{section.10.2}% 
 \contentsline {chapter}{\numberline {11}Memory Maps}{36}{chapter.11}% 
+\contentsline {chapter}{\numberline {12}Using the Debug Port}{39}{chapter.12}% 
+\contentsline {section}{\numberline {12.1}Foenix Uploader Tool}{39}{section.12.1}% 
+\contentsline {section}{\numberline {12.2}FoenixMgr}{39}{section.12.2}% 

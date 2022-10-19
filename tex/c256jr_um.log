@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.20)  13 OCT 2022 14:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.20)  19 OCT 2022 16:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,21 +210,21 @@ File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 )) (./c256jr_um.aux)
 \openout1 = `c256jr_um.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Try loading font information for OT1+ccr on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Try loading font information for OT1+ccr on input line 15.
  (d:/texlive/2019/texmf-dist/tex/latex/concmath/ot1ccr.fd
 File: ot1ccr.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
 )
@@ -236,7 +236,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 13.
+Package hyperref Info: Link coloring ON on input line 15.
  (d:/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/12 v2.45 Cross-referencing by name of section
  (d:/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -244,9 +244,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count103
 )
-LaTeX Info: Redefining \ref on input line 13.
-LaTeX Info: Redefining \pageref on input line 13.
-LaTeX Info: Redefining \nameref on input line 13.
+LaTeX Info: Redefining \ref on input line 15.
+LaTeX Info: Redefining \pageref on input line 15.
+LaTeX Info: Redefining \nameref on input line 15.
  (./c256jr_um.out) (./c256jr_um.out)
 \@outlinefile=\write3
 \openout3 = `c256jr_um.out'.
@@ -260,15 +260,15 @@ LaTeX Info: Redefining \nameref on input line 13.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
-* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* h-part:(L,W,R)=(36.135pt, 525.23788pt, 36.135pt)
+* v-part:(T,H,B)=(36.135pt, 772.77686pt, 36.135pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=452.9679pt
-* \textheight=700.50687pt
-* \oddsidemargin=0.0pt
-* \evensidemargin=0.0pt
-* \topmargin=-30.06749pt
+* \textwidth=525.23788pt
+* \textheight=772.77686pt
+* \oddsidemargin=-36.135pt
+* \evensidemargin=-36.135pt
+* \topmargin=-66.20248pt
 * \headheight=12.0pt
 * \headsep=18.06749pt
 * \topskip=10.0pt
@@ -311,29 +311,29 @@ Package grfext Info: Graphics extension search list:
  (d:/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Try loading font information for OML+ccm on input line 18.
+LaTeX Font Info:    Try loading font information for OML+ccm on input line 20.
  (d:/texlive/2019/texmf-dist/tex/latex/concmath/omlccm.fd
 File: omlccm.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
 )
-LaTeX Font Info:    Try loading font information for OMS+ccsy on input line 18.
+LaTeX Font Info:    Try loading font information for OMS+ccsy on input line 20.
  (d:/texlive/2019/texmf-dist/tex/latex/concmath/omsccsy.fd
 File: omsccsy.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
 )
-LaTeX Font Info:    Try loading font information for OMX+ccex on input line 18.
+LaTeX Font Info:    Try loading font information for OMX+ccex on input line 20.
  (d:/texlive/2019/texmf-dist/tex/latex/concmath/omxccex.fd
 File: omxccex.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
 )
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <12> on input line 18.
+(Font)              <12> on input line 20.
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <8> on input line 18.
+(Font)              <8> on input line 20.
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <6> on input line 18.
-LaTeX Font Info:    Try loading font information for U+msa on input line 18.
+(Font)              <6> on input line 20.
+LaTeX Font Info:    Try loading font information for U+msa on input line 20.
  (d:/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 18.
+LaTeX Font Info:    Try loading font information for U+msb on input line 20.
  (d:/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
@@ -341,58 +341,63 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {d:/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 19.
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 21.
  (./c256jr_um.toc
 LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <10> not available
 (Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 1.
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <10> on input line 4.
+(Font)              <10> on input line 3.
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <7> on input line 4.
+(Font)              <7> on input line 3.
 LaTeX Font Info:    External font `xccex10' loaded for size
-(Font)              <5> on input line 4.
-)
-\tf@toc=\write4
-\openout4 = `c256jr_um.toc'.
-
+(Font)              <5> on input line 3.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.20 \listoftables
-                   [1
+l.46 ...umberline {11}Memory Maps}{36}{chapter.11}
+                                                  % [1
 
-] (./c256jr_um.lot)
+])
+\tf@toc=\write4
+\openout4 = `c256jr_um.toc'.
+
+ [2] (./c256jr_um.lot)
 \tf@lot=\write5
 \openout5 = `c256jr_um.lot'.
 
- [2
+ [3
 
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <20.74> not available
-(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 22.
-[3
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 24.
+[4
 
 ]
 Chapter 2.
-(./memory.tex [4
+LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 32.
+(./memory.tex [5
 
 ]
 Chapter 3.
-[5
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6
 
 ]
-Overfull \hbox (18.16032pt too wide) in paragraph at lines 60--65
- [] 
- []
-
 LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <12> not available
 (Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 84.
+
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 84.
 
-[6]) (./text.tex [7]
+) (./text.tex [7]
 Chapter 4.
 LaTeX Font Info:    Try loading font information for OMS+ccr on input line 6.
 (d:/texlive/2019/texmf-dist/tex/latex/concmath/omsccr.fd
@@ -400,234 +405,99 @@ File: omsccr.fd 1999/03/10 v2.0b LaTeX font defs for Concrete math fonts
 )
 LaTeX Font Info:    Font shape `OMS/ccr/m/n' in size <10> not available
 (Font)              Font shape `OMS/ccsy/m/n' tried instead on input line 6.
-LaTeX Font Info:    Font shape `OT1/ccr/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/cmr/bx/n' tried instead on input line 14.
  [8
 
-] [9] [10]) (./graphics.tex [11]
+] [9]) (./graphics.tex [10]
 Chapter 5.
-<images/bitmaps.pdf, id=311, 356.88293pt x 225.88641pt>
+<images/bitmaps.pdf, id=366, 356.88293pt x 225.88641pt>
 File: images/bitmaps.pdf Graphic file (type pdf)
 <use images/bitmaps.pdf>
 Package pdftex.def Info: images/bitmaps.pdf  used on input line 19.
 (pdftex.def)             Requested size: 356.88205pt x 225.88585pt.
+[11
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[12
-
-]
-Overfull \hbox (14.27803pt too wide) in paragraph at lines 92--92
-[]            \OT1/cmtt/m/n/10 lda #<VKY_GR_CLUT_0 ; pointer will be used to point to a particular LUT entry[] 
- []
-
-[13 <./images/bitmaps.pdf>]
-<images/Layers.pdf, id=348, 270.31108pt x 238.69128pt>
+ <./images/bitmaps.pdf>] [12]
+<images/Layers.pdf, id=403, 270.31108pt x 238.69128pt>
 File: images/Layers.pdf Graphic file (type pdf)
 <use images/Layers.pdf>
 Package pdftex.def Info: images/Layers.pdf  used on input line 106.
 (pdftex.def)             Requested size: 270.31041pt x 238.69069pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[14]) (./bitmap.tex [15 <./images/Layers.pdf>]
-Overfull \hbox (93.02734pt too wide) in paragraph at lines 66--66
+ [13 <./images/Layers.pdf>]) (./bitmap.tex [14]
+Overfull \hbox (20.75735pt too wide) in paragraph at lines 66--66
 []            \OT1/cmtt/m/n/10 stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode (VICKY master control register 1)[] 
  []
 
-[16] [17]) (./sprites.tex [18]
+[15]) (./sprites.tex [16]
 Chapter 6.
+[17
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[19
-
-] [20]
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 152--152
-[]            \OT1/cmtt/m/n/10 lda #<VKY_GR_CLUT_0         ; Set the destination pointer to Graphics CLUT 1[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 152--152
-[]            \OT1/cmtt/m/n/10 ldx #0                      ; X is a counter for the number of colors copied[] 
- []
-
-
-Overfull \hbox (35.27785pt too wide) in paragraph at lines 152--152
-[]\OT1/cmtt/m/n/10 color_loop: ldy #0                      ; Y is a pointer to the component within a CLUT color[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 152--152
-[]            \OT1/cmtt/m/n/10 clc                         ; Advance ptr_src to the next source color entry[] 
- []
-
-
-Overfull \hbox (35.27785pt too wide) in paragraph at lines 152--152
-[]            \OT1/cmtt/m/n/10 clc                         ; Advance ptr_dst to the next destination color entry[] 
- []
-
-[21]
-Overfull \hbox (93.02734pt too wide) in paragraph at lines 176--176
+] [18]
+Overfull \hbox (20.75735pt too wide) in paragraph at lines 176--176
 []            \OT1/cmtt/m/n/10 sta VKY_SP0_POS_X_L         ; (x, y) = (32, 32)... should be upper-left corner of the screen[] 
  []
 
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $00, $00, $00, $03, $02, $02, $01, $00, $00, $00, $00, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $00, $05, $05, $04, $03, $03, $03, $03, $02, $00, $00, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $07, $07, $07, $06, $05, $04, $04, $03, $03, $01, $00, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $07, $09, $0A, $0B, $0A, $08, $06, $05, $04, $03, $02, $01, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $05, $07, $0A, $0D, $0E, $0D, $0A, $07, $05, $05, $04, $03, $01, $01, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $05, $07, $0B, $0E, $0E, $0E, $0C, $07, $05, $05, $04, $03, $01, $01, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $03, $04, $06, $0A, $0D, $0E, $0D, $0A, $07, $05, $05, $04, $03, $02, $01, $01[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $02, $03, $05, $08, $0A, $0C, $0A, $08, $06, $05, $05, $04, $03, $02, $01, $01[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $02, $03, $04, $06, $07, $07, $07, $06, $05, $05, $05, $04, $03, $01, $01, $01[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $01, $03, $04, $05, $05, $05, $05, $05, $05, $05, $05, $03, $03, $01, $01, $01[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $03, $03, $04, $05, $05, $05, $05, $05, $05, $04, $03, $02, $01, $01, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $02, $03, $03, $04, $04, $04, $04, $04, $03, $03, $02, $01, $01, $01, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $01, $02, $03, $03, $03, $03, $03, $03, $02, $01, $01, $01, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $01, $01, $01, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00[] 
- []
-
-
-Overfull \hbox (9.02808pt too wide) in paragraph at lines 197--197
-[]    \OT1/cmtt/m/n/10 .byte $00, $00, $00, $00, $00, $00, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00[] 
- []
-
-) (./tiles.tex [22]
+[19]) (./tiles.tex [20]
 Chapter 7.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[21
+
+] [22]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) (./sound.tex [23
-
-] [24]
+[23] [24]) (./sound.tex [25]
 Chapter 8.
+[26
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[25
-
-] [26] [27]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[28]) (./interrupts.tex [29]
+] [27] [28] [29]) (./interrupts.tex [30]
 Chapter 9.
-[30
+[31
 
-] [31]) (./time.tex [32]
+] [32]) (./time.tex [33]
 Chapter 10.
-[33
+[34
 
-]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (./memory_map.tex [34] [35]
+]) (./memory_map.tex [35]
 Chapter 11.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 (./io_page_0_tab.tex)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
- [36
+) [36
 
 ] [37] [38]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
+Chapter 12.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 57.
+[39
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 57.
  (./c256jr_um.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 57.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 57.
 Package rerunfilecheck Info: File `c256jr_um.out' has not changed.
-(rerunfilecheck)             Checksum: BF6B05024D272B8297C98E0A2C9771DA;2341.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
+(rerunfilecheck)             Checksum: F778603C7124FBE061B0E2A300A20127;2999.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 57.
  ) 
 Here is how much of TeX's memory you used:
- 6324 strings out of 492609
- 90995 string characters out of 6132833
- 206973 words of memory out of 5000000
- 10017 multiletter control sequences out of 15000+600000
+ 6351 strings out of 492609
+ 91346 string characters out of 6132833
+ 223137 words of memory out of 5000000
+ 10030 multiletter control sequences out of 15000+600000
  15500 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,16n,32p,1011b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,16n,32p,1011b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist, replaced by a fixed one
 
  <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccr7.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccti10.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concmath-fonts/xccmi10.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concmath-fonts/xccsy10.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccsl10.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccr10.600pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccr10.720pk> <c:/Users/pjw/.texlive2019/texmf-var/fonts/pk/ljfour/public/concrete/ccr10.1037pk><d:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on c256jr_um.pdf (39 pages, 293094 bytes).
+Output written on c256jr_um.pdf (40 pages, 305749 bytes).
 PDF statistics:
- 735 PDF objects out of 1000 (max. 8388607)
- 494 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
- 315 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 806 PDF objects out of 1000 (max. 8388607)
+ 561 compressed objects within 6 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 403 words of extra memory for PDF output out of 10000 (max. 10000000)
 

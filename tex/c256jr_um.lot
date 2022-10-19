@@ -1,36 +1,39 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces C256jr memory layout}}{5}{table.3.1}% 
-\contentsline {table}{\numberline {3.2}{\ignorespaces CPU Memory Banks}}{5}{table.3.2}% 
-\contentsline {table}{\numberline {3.3}{\ignorespaces I/O Banks}}{6}{table.3.3}% 
-\contentsline {table}{\numberline {3.4}{\ignorespaces MMU Registers}}{6}{table.3.4}% 
+\contentsline {table}{\numberline {3.1}{\ignorespaces C256jr memory layout}}{6}{table.3.1}% 
+\contentsline {table}{\numberline {3.2}{\ignorespaces CPU Memory Banks}}{6}{table.3.2}% 
+\contentsline {table}{\numberline {3.3}{\ignorespaces I/O Banks}}{7}{table.3.3}% 
+\contentsline {table}{\numberline {3.4}{\ignorespaces MMU Registers}}{7}{table.3.4}% 
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Text Color Lookup Tables}}{9}{table.4.1}% 
 \contentsline {table}{\numberline {4.2}{\ignorespaces VICKY Master Control Registers}}{10}{table.4.2}% 
-\contentsline {table}{\numberline {4.3}{\ignorespaces A sample character}}{11}{table.4.3}% 
+\contentsline {table}{\numberline {4.3}{\ignorespaces A sample character}}{10}{table.4.3}% 
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Graphics Color Lookup Tables}}{13}{table.5.1}% 
-\contentsline {table}{\numberline {5.2}{\ignorespaces Bitmap and Tile Map Layer Registers}}{14}{table.5.2}% 
-\contentsline {table}{\numberline {5.3}{\ignorespaces Bitmap Registers}}{15}{table.5.3}% 
+\contentsline {table}{\numberline {5.1}{\ignorespaces Graphics Color Lookup Tables}}{12}{table.5.1}% 
+\contentsline {table}{\numberline {5.2}{\ignorespaces Bitmap and Tile Map Layer Registers}}{13}{table.5.2}% 
+\contentsline {table}{\numberline {5.3}{\ignorespaces Bitmap Registers}}{14}{table.5.3}% 
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Sprite Registers for a Single Sprite}}{19}{table.6.1}% 
-\contentsline {table}{\numberline {6.2}{\ignorespaces Sprite Sizes}}{20}{table.6.2}% 
+\contentsline {table}{\numberline {6.1}{\ignorespaces Sprite Registers for a Single Sprite}}{17}{table.6.1}% 
+\contentsline {table}{\numberline {6.2}{\ignorespaces Sprite Sizes}}{17}{table.6.2}% 
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Tile Bits}}{24}{table.7.1}% 
-\contentsline {table}{\numberline {7.2}{\ignorespaces Tile Map Registers}}{24}{table.7.2}% 
+\contentsline {table}{\numberline {7.1}{\ignorespaces Tile Map Registers}}{22}{table.7.1}% 
+\contentsline {table}{\numberline {7.2}{\ignorespaces A Tile Map Entry}}{22}{table.7.2}% 
+\contentsline {table}{\numberline {7.3}{\ignorespaces Arrangement of Tiles in a Tile Set Image}}{23}{table.7.3}% 
+\contentsline {table}{\numberline {7.4}{\ignorespaces Tile Set Address Registers}}{24}{table.7.4}% 
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {8.1}{\ignorespaces CODEC Control Registers}}{26}{table.8.1}% 
-\contentsline {table}{\numberline {8.2}{\ignorespaces SN76489 Channel Registers}}{26}{table.8.2}% 
-\contentsline {table}{\numberline {8.3}{\ignorespaces SN76489 Command Formats}}{26}{table.8.3}% 
-\contentsline {table}{\numberline {8.4}{\ignorespaces SN76489 Noise Frequencies}}{27}{table.8.4}% 
+\contentsline {table}{\numberline {8.2}{\ignorespaces SN76489 Channel Registers}}{27}{table.8.2}% 
+\contentsline {table}{\numberline {8.3}{\ignorespaces SN76489 Command Formats}}{27}{table.8.3}% 
+\contentsline {table}{\numberline {8.4}{\ignorespaces SN76489 Noise Frequencies}}{28}{table.8.4}% 
 \contentsline {table}{\numberline {8.5}{\ignorespaces SID Registers}}{29}{table.8.5}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {10.1}{\ignorespaces MMU Registers}}{33}{table.10.1}% 
+\contentsline {table}{\numberline {10.1}{\ignorespaces MMU Registers}}{34}{table.10.1}% 
 \contentsline {table}{\numberline {10.2}{\ignorespaces RTC Periodic Interrupt Rates}}{35}{table.10.2}% 
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {11.1}{\ignorespaces System Memory Map for the F256jr}}{36}{table.11.1}% 
-\contentsline {table}{\numberline {11.2}{\ignorespaces CPU Memory Map for the F256jr}}{37}{table.11.2}% 
-\contentsline {table}{\numberline {11.3}{\ignorespaces I/O Page 0 Addresses}}{38}{table.11.3}% 
+\contentsline {table}{\numberline {11.2}{\ignorespaces CPU Memory Map for the F256jr}}{36}{table.11.2}% 
+\contentsline {table}{\numberline {11.3}{\ignorespaces I/O Page 0 Addresses}}{37}{table.11.3}% 
 \contentsline {table}{\numberline {11.4}{\ignorespaces Memory Map for I/O Page 1}}{38}{table.11.4}% 
+\addvspace {10\p@ }

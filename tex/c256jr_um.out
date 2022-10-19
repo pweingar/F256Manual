@@ -1,38 +1,49 @@
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
 \BOOKMARK [0][-]{chapter.2}{F256jr Basics}{}% 2
-\BOOKMARK [0][-]{chapter.3}{Memory Management}{}% 3
-\BOOKMARK [1][-]{subsection.3.0.1}{Example: Setting up a LUT}{chapter.3}% 4
-\BOOKMARK [0][-]{chapter.4}{The Text Screen}{}% 5
-\BOOKMARK [1][-]{section.4.1}{Text Matrix}{chapter.4}% 6
-\BOOKMARK [2][-]{subsection.4.1.1}{Example: Print an A to the Screen}{section.4.1}% 7
-\BOOKMARK [1][-]{section.4.2}{Text Color LUTs}{chapter.4}% 8
-\BOOKMARK [1][-]{section.4.3}{Color Matrix}{chapter.4}% 9
-\BOOKMARK [2][-]{subsection.4.3.1}{Example: Make That ``A'' Yellow on Blue}{section.4.3}% 10
-\BOOKMARK [1][-]{section.4.4}{Entering Text Mode}{chapter.4}% 11
-\BOOKMARK [1][-]{section.4.5}{Text Fonts}{chapter.4}% 12
-\BOOKMARK [0][-]{chapter.5}{Graphics}{}% 13
-\BOOKMARK [1][-]{section.5.1}{Graphics Colors}{chapter.5}% 14
-\BOOKMARK [2][-]{subsection.5.1.1}{Example: A Simple Gradient}{section.5.1}% 15
-\BOOKMARK [1][-]{section.5.2}{Pixel Data}{chapter.5}% 16
-\BOOKMARK [1][-]{section.5.3}{Graphics Layers}{chapter.5}% 17
-\BOOKMARK [2][-]{subsection.5.3.1}{Example: Put Bitmap 0 on Layer 0}{section.5.3}% 18
-\BOOKMARK [1][-]{section.5.4}{Bitmaps}{chapter.5}% 19
-\BOOKMARK [2][-]{subsection.5.4.1}{Example: Display a Bitmap}{section.5.4}% 20
-\BOOKMARK [0][-]{chapter.6}{Sprites}{}% 21
-\BOOKMARK [1][-]{section.6.1}{Sprite, Layers, and Display Priority}{chapter.6}% 22
-\BOOKMARK [2][-]{subsection.6.1.1}{Example: Displaying a Sprite}{section.6.1}% 23
-\BOOKMARK [0][-]{chapter.7}{Tiles}{}% 24
-\BOOKMARK [0][-]{chapter.8}{Sound}{}% 25
-\BOOKMARK [1][-]{section.8.1}{CODEC}{chapter.8}% 26
-\BOOKMARK [1][-]{section.8.2}{Using the PSGs}{chapter.8}% 27
-\BOOKMARK [2][-]{subsection.8.2.1}{Attenuation}{section.8.2}% 28
-\BOOKMARK [2][-]{subsection.8.2.2}{Tones}{section.8.2}% 29
-\BOOKMARK [2][-]{subsection.8.2.3}{Noise}{section.8.2}% 30
-\BOOKMARK [1][-]{section.8.3}{Using the SIDs}{chapter.8}% 31
-\BOOKMARK [2][-]{subsection.8.3.1}{Ring Modulation}{section.8.3}% 32
-\BOOKMARK [2][-]{subsection.8.3.2}{Synchronization}{section.8.3}% 33
-\BOOKMARK [0][-]{chapter.9}{Interrupt Controller}{}% 34
-\BOOKMARK [0][-]{chapter.10}{Tracking Time}{}% 35
-\BOOKMARK [1][-]{section.10.1}{Interval Timers}{chapter.10}% 36
-\BOOKMARK [1][-]{section.10.2}{Real Time Clock}{chapter.10}% 37
-\BOOKMARK [0][-]{chapter.11}{Memory Maps}{}% 38
+\BOOKMARK [1][-]{section.2.1}{Features}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Ports}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Set Up}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.4}{DIP Switches}{chapter.2}% 6
+\BOOKMARK [0][-]{chapter.3}{Memory Management}{}% 7
+\BOOKMARK [1][-]{subsection.3.0.1}{Example: Setting up a LUT}{chapter.3}% 8
+\BOOKMARK [0][-]{chapter.4}{The Text Screen}{}% 9
+\BOOKMARK [1][-]{section.4.1}{Text Matrix}{chapter.4}% 10
+\BOOKMARK [2][-]{subsection.4.1.1}{Example: Print an A to the Screen}{section.4.1}% 11
+\BOOKMARK [1][-]{section.4.2}{Text Color LUTs}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.3}{Color Matrix}{chapter.4}% 13
+\BOOKMARK [2][-]{subsection.4.3.1}{Example: Make That ``A'' Yellow on Blue}{section.4.3}% 14
+\BOOKMARK [1][-]{section.4.4}{Entering Text Mode}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.5}{Text Fonts}{chapter.4}% 16
+\BOOKMARK [0][-]{chapter.5}{Graphics}{}% 17
+\BOOKMARK [1][-]{section.5.1}{Graphics Colors}{chapter.5}% 18
+\BOOKMARK [2][-]{subsection.5.1.1}{Example: A Simple Gradient}{section.5.1}% 19
+\BOOKMARK [1][-]{section.5.2}{Pixel Data}{chapter.5}% 20
+\BOOKMARK [1][-]{section.5.3}{Graphics Layers}{chapter.5}% 21
+\BOOKMARK [2][-]{subsection.5.3.1}{Example: Put Bitmap 0 on Layer 0}{section.5.3}% 22
+\BOOKMARK [1][-]{section.5.4}{Bitmaps}{chapter.5}% 23
+\BOOKMARK [2][-]{subsection.5.4.1}{Example: Display a Bitmap}{section.5.4}% 24
+\BOOKMARK [0][-]{chapter.6}{Sprites}{}% 25
+\BOOKMARK [1][-]{section.6.1}{Sprite, Layers, and Display Priority}{chapter.6}% 26
+\BOOKMARK [2][-]{subsection.6.1.1}{Example: Displaying a Sprite}{section.6.1}% 27
+\BOOKMARK [0][-]{chapter.7}{Tiles}{}% 28
+\BOOKMARK [1][-]{section.7.1}{Tile Maps}{chapter.7}% 29
+\BOOKMARK [2][-]{subsection.7.1.1}{Scrolling}{section.7.1}% 30
+\BOOKMARK [1][-]{section.7.2}{Tile Sets}{chapter.7}% 31
+\BOOKMARK [2][-]{subsection.7.2.1}{Example: A Simple Tile Map}{section.7.2}% 32
+\BOOKMARK [0][-]{chapter.8}{Sound}{}% 33
+\BOOKMARK [1][-]{section.8.1}{CODEC}{chapter.8}% 34
+\BOOKMARK [1][-]{section.8.2}{Using the PSGs}{chapter.8}% 35
+\BOOKMARK [2][-]{subsection.8.2.1}{Attenuation}{section.8.2}% 36
+\BOOKMARK [2][-]{subsection.8.2.2}{Tones}{section.8.2}% 37
+\BOOKMARK [2][-]{subsection.8.2.3}{Noise}{section.8.2}% 38
+\BOOKMARK [1][-]{section.8.3}{Using the SIDs}{chapter.8}% 39
+\BOOKMARK [2][-]{subsection.8.3.1}{Ring Modulation}{section.8.3}% 40
+\BOOKMARK [2][-]{subsection.8.3.2}{Synchronization}{section.8.3}% 41
+\BOOKMARK [0][-]{chapter.9}{Interrupt Controller}{}% 42
+\BOOKMARK [0][-]{chapter.10}{Tracking Time}{}% 43
+\BOOKMARK [1][-]{section.10.1}{Interval Timers}{chapter.10}% 44
+\BOOKMARK [1][-]{section.10.2}{Real Time Clock}{chapter.10}% 45
+\BOOKMARK [0][-]{chapter.11}{Memory Maps}{}% 46
+\BOOKMARK [0][-]{chapter.12}{Using the Debug Port}{}% 47
+\BOOKMARK [1][-]{section.12.1}{Foenix Uploader Tool}{chapter.12}% 48
+\BOOKMARK [1][-]{section.12.2}{FoenixMgr}{chapter.12}% 49

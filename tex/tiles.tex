@@ -23,6 +23,58 @@ There are several differences with tile maps, however:
     \item A tile map can be placed on any one of three display layers, where text mode is always on top.
 \end{itemize}
 
+
+\section{Tile Maps}
+
+There are three tile maps supported by TinyVicky, each of which has 13 bytes worth of registers (see table:~\ref{tab:tilemap_reg}). Tile map 0 starts at 0xD200. Tile map 1 starts at 0xD20C. Tile map 2 starts at 0xD218.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Offset & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            0 & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+            1 & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+            2 & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+            3 & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            4 & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+            5 & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            6 & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+            7 & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            8 & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
+            9 & DIR\_X & --- & X9 & X8 & X7 & X6 & X5 & X4 \\ \hline
+            10 & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
+            12 & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Tile Map Registers}
+    \label{tab:tilemap_reg}
+\end{table}
+
+\begin{description}
+    \item[TILE\_SIZE] if 0, tiles are 8 pixels wide by 8 tall. If 1, tiles are 16 pixels wide by 16 pixels tall
+
+    \item[ENABLE] if set, the tile map will be displayed (if GRAPH and TILES are set in TinyVicky's Master Control Register)
+
+    \item[AD] the address of the tile map data in RAM
+
+    \item[MAP\_SIZE\_X] the width of the tile map in tiles ({\it i.e.} the number of columns)
+
+    \item[MAP\_SIZE\_Y] the height of the tile map in tiles ({\it i.e.} the number of rows)
+
+    \item[X] horizontal scroll in tile widths
+
+    \item[SSX] horizontal scroll in pixels. How these bits are used varies with the size. If tiles are 16 pixels wide, then flags SSX[3..0] are used. If tiles are only 8 pixels wide, then only SSX[3..1] are used.
+
+    \item[DIR\_X] the direction of the horizontal scroll.
+
+    \item[Y] vertical scroll in tile heights
+
+    \item[SSY] vertical scroll in pixels. How these bits are used varies with the size. If tiles are 16 pixels wide, then flags SSY[3..0] are used. If tiles are only 8 pixels wide, then only SSY[3..1] are used.
+
+    \item[DIR\_Y] the direction of the vertical scroll.
+
+\end{description}
+
 One way tile maps get their flexibility is that, where text mode uses 8-bit bytes for the text matrix, a tile map is actually a rectangular collection of 16-bit integers in memory. A tile map entry is divided up into two pieces: the first byte is the number of the tile to display in that position (much like the character code in text mode), but the upper byte contains attribute bits (see table:~\ref{tab:tile_bits}), which have two fields:
 
 \begin{description}
@@ -40,41 +92,181 @@ This attribute system makes tiles very powerful. Effectively, a single tile map 
             \multicolumn{3}{|c|}{---} & \multicolumn{2}{|c|}{CLUT} & \multicolumn{3}{|c|}{SET} & \multicolumn{8}{|c|}{TILE NUMBER} \\ \hline
         \end{tabular}
     \end{center}
-    \caption{Tile Bits}
+    \caption{A Tile Map Entry}
     \label{tab:tile_bits}
 \end{table}
+
+\subsection{Scrolling}
+
+Tile maps can scroll across the screen both horizontally and vertically. The position of the tile map on the screen is controlled through the registers at offsets 8, 9, and 10. The horizontal position is controlled by DIR\_X, X, and SSX. The vertical position is controlled by DIR\_Y, Y, and SSY. The bits X and Y set the position in units of tiles. That is, the number in X[9..0] specifies how many complete tile columns the tile map is moved left or right. Likewise, Y[9..0] specifies how many tile rows the tile map is moved up or down. The SSX and SSY bits are used to specify how many rows of pixels within a tile the tile map is to move. SSX and SSY are therefore ``smooth scroll'' registers. They have a small trick to their use, however:
+
+If the tile map uses tiles 16 pixels on a side, SSX[3..0] is used to specify the number of pixels to shift the tile map left or right: from 0 to 15. If, on the other hand, the tile map uses tiles 8 pixels on a side, only SSX[3..1] are used to specify the number of pixels to move: from 0 to 7. Note that SSX[0] is not used at all in this case. The SSY bits work in exactly the same way for smooth scrolling in the vertical direction.
+
+Finally, DIR\_X and DIR\_Y are used to control the direction of the scrolling. If DIR\_X is 0, the tile map will move to the left. If DIR\_X is 1, the tile map will move to the right. If DIR\_Y is 0, the tile map will move to up. If DIR\_Y is 1, the tile map will move down. Note that the representation of the amount of the scrolling is separate from the direction (set X to 3 to scroll by 3 tiles, whether that is 3 to the left or 3 to the right). One way to look at the scroll registers is that they are one's complement numbers: a magnitude and a separate sign bit.
+
+To make sure that scrolling will work properly, the tile map needs to be at least as big as the full screen (even if it is largely ``empty''), and there should be blank columns to the left and the right and blank rows above and below. That is, it is best to leave an empty margin all the way around your working tile map.
+
+\section{Tile Sets}
+
+Essentially, a tile set is just a bitmap, but of a smaller size and arranged in a particular way. If the smaller ($8 \times 8$) tiles are used, the tile set image is 128 pixels wide by 128 pixels tall. If the larger ($16 \times 16$) tiles are used, the tile set image is 256 pixels wide by 256 pixels tall. The image is then divided up into 256 equal sizes squares; that is 16 squares by 16 squares. Each square area of the tile set image is the image data for a particular tile. The tiles are arranged left-to-right and top-to-bottom. Tile 0 is in the upper left of the image and tile 255 is in the lower right. Table~\ref{tab:tile_set_layout} shows graphically how they are arranged.
+
+As with bitmaps and sprites, the pixels of the tiles are each an individual byte. The contents of the byte (0 -- 255) serving as an index into a color lookup table. The pixels are also laid out in left-to-right and top-to-bottom order, just as with bitmaps and individual sprites.
+
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            & \multicolumn{16}{|c|}{$\leftarrow$ \hfill 128 or 256 pixels \hfill $\rightarrow$} \\ \hline
+            \multirow{16}{*}{\rotatebox{90}{128 or 256 pixels}}
+            & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 \\ \cline{2-17}
+            & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 \\ \cline{2-17}
+            & 32 & 33 & 34 & 35 & 36 & 37 & 38 & 39 & 40 & 41 & 42 & 43 & 44 & 45 & 46 & 46 \\ \cline{2-17}
+            & 48 & 49 & 50 & 51 & 52 & 53 & 54 & 55 & 56 & 57 & 58 & 59 & 60 & 61 & 62 & 63 \\ \cline{2-17}
+            & 64 & 65 & 66 & 67 & 68 & 69 & 60 & 71 & 72 & 73 & 74 & 75 & 76 & 77 & 78 & 79 \\ \cline{2-17}
+            & 80 & 81 & 82 & 83 & 84 & 85 & 86 & 87 & 88 & 89 & 90 & 91 & 92 & 93 & 94 & 95 \\ \cline{2-17}
+            & 96 & 97 & 98 & 99 & 100 & 101 & 102 & 103 & 104 & 105 & 106 & 107 & 108 & 109 & 110 & 111 \\ \cline{2-17}
+            & 112 & 113 & 114 & 115 & 116 & 117 & 118 & 119 & 120 & 121 & 122 & 123 & 124 & 125 & 126 & 127 \\ \cline{2-17}
+            & 128 & 129 & 130 & 131 & 132 & 133 & 134 & 135 & 136 & 137 & 138 & 139 & 140 & 141 & 142 & 143 \\ \cline{2-17}
+            & 144 & 145 & 146 & 147 & 148 & 149 & 150 & 151 & 152 & 153 & 154 & 155 & 156 & 157 & 158 & 159 \\ \cline{2-17}
+            & 160 & 161 & 162 & 163 & 164 & 165 & 166 & 167 & 168 & 169 & 170 & 171 & 172 & 173 & 174 & 175 \\ \cline{2-17}
+            & 176 & 177 & 178 & 179 & 180 & 181 & 182 & 183 & 184 & 185 & 186 & 187 & 188 & 189 & 190 & 191 \\ \cline{2-17}
+            & 192 & 193 & 194 & 195 & 196 & 197 & 198 & 199 & 200 & 201 & 202 & 203 & 204 & 205 & 206 & 207 \\ \cline{2-17}
+            & 208 & 209 & 210 & 211 & 212 & 213 & 214 & 215 & 216 & 217 & 218 & 219 & 220 & 221 & 222 & 223 \\ \cline{2-17}
+            & 224 & 225 & 226 & 227 & 228 & 229 & 230 & 231 & 232 & 233 & 234 & 235 & 236 & 237 & 238 & 239 \\ \cline{2-17}
+            & 240 & 241 & 242 & 243 & 244 & 245 & 246 & 247 & 248 & 249 & 250 & 251 & 252 & 253 & 254 & 255 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Arrangement of Tiles in a Tile Set Image}
+    \label{tab:tile_set_layout}
+\end{table}
+
+TinyVicky supports eight separate tile sets. Each one has a single three byte address register, which provides the address to the tile set pixel data (see table:~\ref{tab:tile_set_addr}). To use them, a program simply stores the address of the pixel data to use into the appropriate address register.
 
 \begin{table}[h]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
-            Address & Tile Map & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
-            \verb+0xD200+ & \multirow{11}{*}{0} & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
-            \verb+0xD201+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
-            \verb+0xD202+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
-            \verb+0xD203+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
-            \verb+0xD204+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
-            \verb+0xD205+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            \verb+0xD206+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
-            \verb+0xD207+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            \verb+0xD208+ & & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
-            \verb+0xD209+ & & DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 & X4 \\ \hline
-            \verb+0xD20A+ & & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
-            \verb+0xD20B+ & & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline \\
+            Address & Tile Set & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            \verb+0xD280+ & \multirow{3}{*}{0} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD281+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD282+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
 
-            \verb+0xD210+ & \multirow{11}{*}{1} & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
-            \verb+0xD211+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
-            \verb+0xD212+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
-            \verb+0xD213+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
-            \verb+0xD214+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
-            \verb+0xD215+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            \verb+0xD216+ & & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
-            \verb+0xD217+ & & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            \verb+0xD218+ & & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
-            \verb+0xD219+ & & DIR\_X & \multicolumn{3}{|c|}{---} & X7 & X6 & X5 & X4 \\ \hline
-            \verb+0xD21A+ & & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
-            \verb+0xD21B+ & & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline \\
+            \verb+0xD284+ & \multirow{3}{*}{1} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD285+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD286+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD288+ & \multirow{3}{*}{2} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD289+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD28A+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD28C+ & \multirow{3}{*}{3} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD28D+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD28E+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD290+ & \multirow{3}{*}{4} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD291+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD292+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD294+ & \multirow{3}{*}{5} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD295+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD296+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD298+ & \multirow{3}{*}{6} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD299+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD29A+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+
+            \verb+0xD29C+ & \multirow{3}{*}{7} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD29D+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
+            \verb+0xD29E+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
         \end{tabular}
     \end{center}
-    \caption{Tile Map Registers}
-    \label{tab:tilemap_reg}
+    \caption{Tile Set Address Registers}
+    \label{tab:tile_set_addr}
 \end{table}
+
+\example{A Simple Tile Map}
+
+\begin{verbatim}
+            ;
+            ; Set up TinyVicky to display tiles
+            ;
+            lda #$14                    ; Graphics and Tile engines enabled
+            sta VKY_MSTR_CTRL_0
+            stz VKY_MSTR_CTRL_1         ; 320x240 @ 60Hz
+
+            stz VKY_BRDR_CTRL           ; No border
+
+            lda #$19                    ; Background: midnight blue
+            sta VKY_BKG_COL_R
+            lda #$19
+            sta VKY_BKG_COL_G
+            lda #$70
+            sta VKY_BKG_COL_B
+\end{verbatim}
+
+To define the tile set, all we really need to do is to set the address register for the tile set to point to the actual pixel data. In this particular case, the code is just going to use tile set 0.
+
+\begin{verbatim}
+            ;
+            ; Set tile set #0 to our image
+            ;
+
+            lda #<tiles_img_start
+            sta VKY_TS0_ADDR_L
+            lda #>tiles_img_start
+            sta VKY_TS0_ADDR_M
+            lda #`tiles_img_start
+            sta VKY_TS0_ADDR_H
+\end{verbatim}
+
+Finally, the code sets up the tile map itself, setting the size of the tiles, the size of the tile map, setting the position of the screen in the tile map, and pointing to the tile map data.
+
+\begin{verbatim}
+            ;
+            ; Set tile map #0
+            ;
+
+            lda #$01                    ; 16x16 tiles, enable
+            sta VKY_TM0_CTRL
+
+            lda #22                     ; Our tile map is 20x15
+            sta VKY_TM0_SIZE_X
+            lda #16
+            sta VKY_TM0_SIZE_Y
+
+            lda #<tile_map              ; Point to the tile map
+            sta VKY_TM0_ADDR_L
+            lda #>tile_map
+            sta VKY_TM0_ADDR_M
+            lda #`tile_map
+            sta VKY_TM0_ADDR_H
+
+            lda #$0F                    ; Set scrolling (15, 0)
+            sta VKY_TM0_POS_X_L
+            lda #$00
+            sta VKY_TM0_POS_X_H
+
+            stz VKY_TM0_POS_Y_L
+            stz VKY_TM0_POS_Y_H
+\end{verbatim}
+
+The tile map itself. In this case, we just define it in-line. The data is formatted to match the dimensions of the tilemap for ease of reading. Note that the left-most and right-most columns are essentially blank, providing some buffer space to allow for scrolling. Similiarly, there is a spare row on the bottom. This data is formatted as single hexadecimal digits, to make it easier to format this data on the page, but the data is actually stored as 16-bit values. This is taking advantage of the fact that the code is using CLUT 0 and LAYER 0 for the tiles and that there are no more than 16 tiles in the tile set.
+
+\begin{verbatim}
+tile_map:
+.word $4,$1,$0,$1,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$4,$0,$4,$0
+.word $0,$0,$1,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$4,$0,$0
+.word $0,$1,$0,$1,$0,$0,$6,$7,$7,$7,$7,$7,$7,$7,$7,$8,$0,$0,$4,$0,$4,$0
+.word $0,$0,$0,$0,$0,$0,$9,$1,$2,$3,$4,$5,$0,$0,$0,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$2,$1,$2,$3,$4,$5,$0,$0,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$3,$2,$1,$2,$3,$4,$5,$0,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$4,$3,$2,$1,$2,$3,$4,$5,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$5,$4,$3,$2,$1,$2,$3,$4,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$0,$5,$4,$3,$2,$1,$2,$3,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$0,$0,$5,$4,$3,$2,$1,$2,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$9,$0,$0,$0,$5,$4,$3,$2,$1,$A,$0,$0,$0,$0,$0,$0
+.word $0,$0,$0,$0,$0,$0,$B,$C,$C,$C,$C,$C,$C,$C,$C,$D,$0,$0,$0,$0,$0,$0
+.word $0,$3,$0,$3,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$2,$0,$2,$0
+.word $0,$0,$3,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$2,$0,$0
+.word $0,$3,$0,$3,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$2,$0,$2,$0
+.word $0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$2,$0,$0,$4
+\end{verbatim}
