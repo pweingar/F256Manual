@@ -109,7 +109,7 @@ TinyVicky provides for seven layers, but they are split up a bit. Three of the l
     \label{fig:layers}
 \end{figure}
 
-Bitmaps and tile maps are assigned to their layers using the layer control registers (see table:~\ref{tab:bm_tm_layers}). The three fields LAYER0, LAYER1, and LAYER2 in the layer registers are three bit values, which indicate which graphical element to assign to that layer: 0--Bitmap 0, 1--Bitmap 1, 2--Tile map 0, 3--Tile map 1, 4--Tile map 2.
+Bitmaps and tile maps are assigned to their layers using the layer control registers (see table:~\ref{tab:bm_tm_layers}). The three fields LAYER0, LAYER1, and LAYER2 in the layer registers are three bit values, which indicate which graphical element to assign to that layer (see table:~\ref{tab:bm_tm_layer_codes}).
 
 \begin{table}[h]
     \begin{center}
@@ -121,6 +121,22 @@ Bitmaps and tile maps are assigned to their layers using the layer control regis
     \end{center}
     \caption{Bitmap and Tile Map Layer Registers}
     \label{tab:bm_tm_layers}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|l|} \hline
+            Code & Layer \\ \hline\hline
+            0 & Bitmap Layer 0 \\ \hline
+            1 & Bitmap Layer 1 \\ \hline
+            2 & Bitmap Layer 2 \\ \hline
+            4 & Tile Map Layer 0 \\ \hline
+            5 & Tile Map Layer 1 \\ \hline
+            6 & Tile Map Layer 2 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Bitmap and Tile Map Layer Codes}
+    \label{tab:bm_tm_layer_codes}
 \end{table}
 
 \example{Put Bitmap 0 on Layer 0}

@@ -35,6 +35,11 @@ start:      sei                         ; Turn off interrupts
             sta VKY_MSTR_CTRL_0
             stz VKY_MSTR_CTRL_1         ; 320x240 @ 60Hz
 
+            lda #$40                    ; Layer 0 = Bitmap 0, Layer 1 = Tile map 0
+            sta VKY_LAYER_CTRL_0
+            lda #$15                    ; Layer 2 = Tile Map 1
+            sta VKY_LAYER_CTRL_1
+
             stz VKY_BRDR_CTRL           ; No border
 
             lda #$19                    ; Background: midnight blue
@@ -111,6 +116,9 @@ done_lut:   stz MMU_IO_CTRL             ; Go back to I/O Page 0
             lda #$01                    ; 16x16 tiles, enable
             sta VKY_TM0_CTRL
 
+            stz VKY_TM1_CTRL            ; Make sure the other tile maps are off
+            stz VKY_TM2_CTRL
+
             lda #22                     ; Our tile map is 20x15
             sta VKY_TM0_SIZE_X
             lda #16
@@ -123,12 +131,12 @@ done_lut:   stz MMU_IO_CTRL             ; Go back to I/O Page 0
             lda #`tile_map
             sta VKY_TM0_ADDR_H
 
-            lda #$0F                    ; Set scrolling
+            lda #$0F                    ; Set scrolling X = 15
             sta VKY_TM0_POS_X_L
             lda #$00
             sta VKY_TM0_POS_X_H
 
-            stz VKY_TM0_POS_Y_L
+            stz VKY_TM0_POS_Y_L         ; Set scrolling Y = 0
             stz VKY_TM0_POS_Y_H
 
 lock:       nop

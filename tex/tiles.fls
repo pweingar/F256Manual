@@ -1,6 +1,0 @@
-PWD D:/Projects/C256jr/User Manual/tex
-INPUT d:/texlive/2019/texmf.cnf
-INPUT d:/texlive/2019/texmf-dist/web2c/texmf.cnf
-INPUT d:/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT tiles.tex
-OUTPUT tiles.log

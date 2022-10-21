@@ -1,6 +1,6 @@
 \section{Bitmaps}
 
-TinyVicky allows for two full screen bitmaps to be displayed at once. These bitmaps are either $320 \times 200$ or $320 \times 240$, depending on the value of the CLK\_70 bit of the master control register. A bitmap's pixel data contains either 64,000 bytes, or 76,800 bytes of data. In both cases, the pixel data is arranged from left to right and top to bottom. The first 320 bytes are the pixels of the first line (with the first pixel being the left-most). The second 320 bytes are the second line, and so on. Additionally, the bitmaps can independently use any of the four graphics CLUTs to specify the colors for those indexes. TinyVicky provides registers for each bitmap set the CLUT and the address of the bitmap:
+TinyVicky allows for three full screen bitmaps to be displayed at once. These bitmaps are either $320 \times 200$ or $320 \times 240$, depending on the value of the CLK\_70 bit of the master control register. A bitmap's pixel data contains either 64,000 bytes, or 76,800 bytes of data. In both cases, the pixel data is arranged from left to right and top to bottom. The first 320 bytes are the pixels of the first line (with the first pixel being the left-most). The second 320 bytes are the second line, and so on. Additionally, the bitmaps can independently use any of the four graphics CLUTs to specify the colors for those indexes. TinyVicky provides registers for each bitmap set the CLUT and the address of the bitmap:
 
 \begin{table}[h]
     \begin{center}
@@ -10,10 +10,16 @@ TinyVicky allows for two full screen bitmaps to be displayed at once. These bitm
             \verb+0xD101+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\\cline{1-1}\cline{3-10}
             \verb+0xD102+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\\cline{1-1}\cline{3-10}
             \verb+0xD103+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            
             \verb+0xD108+ & \multirow{4}{*}{1} & \multicolumn{5}{|c|}{---} & \multicolumn{2}{|c|}{CLUT} & ENABLE \\\cline{1-1}\cline{3-10}
             \verb+0xD109+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\\cline{1-1}\cline{3-10}
             \verb+0xD10A+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\\cline{1-1}\cline{3-10}
             \verb+0xD10B+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+
+            \verb+0xD110+ & \multirow{4}{*}{2} & \multicolumn{5}{|c|}{---} & \multicolumn{2}{|c|}{CLUT} & ENABLE \\\cline{1-1}\cline{3-10}
+            \verb+0xD111+ & & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\\cline{1-1}\cline{3-10}
+            \verb+0xD112+ & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\\cline{1-1}\cline{3-10}
+            \verb+0xD113+ & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Bitmap Registers}

@@ -3,8 +3,8 @@ The third graphics engine TinyVicky provides is the tile map system. The tile ma
 
 \begin{eqnarray*}
     {\rm character} & \approx & {\rm tile} \\
-    {\rm font} & \approx & {\rm tile set} \\
-    {\rm text matrix} & \approx & {\rm tile map} \\
+    {\rm font} & \approx & {\rm tile\ set} \\
+    {\rm text\ matrix} & \approx & {\rm tile\ map} \\
 \end{eqnarray*}
 
 There are several differences with tile maps, however:
@@ -116,7 +116,7 @@ As with bitmaps and sprites, the pixels of the tiles are each an individual byte
 \begin{table}[h]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
-            & \multicolumn{16}{|c|}{$\leftarrow$ \hfill 128 or 256 pixels \hfill $\rightarrow$} \\ \hline
+            & \multicolumn{16}{|c|}{128 or 256 pixels} \\ \hline
             \multirow{16}{*}{\rotatebox{90}{128 or 256 pixels}}
             & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 \\ \cline{2-17}
             & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 \\ \cline{2-17}
@@ -193,6 +193,11 @@ TinyVicky supports eight separate tile sets. Each one has a single three byte ad
             sta VKY_MSTR_CTRL_0
             stz VKY_MSTR_CTRL_1         ; 320x240 @ 60Hz
 
+            lda #$40                    ; Layer 0 = Bitmap 0, Layer 1 = Tile map 0
+            sta VKY_LAYER_CTRL_0
+            lda #$15                    ; Layer 2 = Tile Map 1
+            sta VKY_LAYER_CTRL_1
+
             stz VKY_BRDR_CTRL           ; No border
 
             lda #$19                    ; Background: midnight blue
@@ -249,7 +254,7 @@ Finally, the code sets up the tile map itself, setting the size of the tiles, th
             stz VKY_TM0_POS_Y_H
 \end{verbatim}
 
-The tile map itself. In this case, we just define it in-line. The data is formatted to match the dimensions of the tilemap for ease of reading. Note that the left-most and right-most columns are essentially blank, providing some buffer space to allow for scrolling. Similiarly, there is a spare row on the bottom. This data is formatted as single hexadecimal digits, to make it easier to format this data on the page, but the data is actually stored as 16-bit values. This is taking advantage of the fact that the code is using CLUT 0 and LAYER 0 for the tiles and that there are no more than 16 tiles in the tile set.
+The tile map itself. In this case, we just define it in-line. The data is formatted to match the dimensions of the tile map for ease of reading. Note that the left-most and right-most columns are essentially blank, providing some buffer space to allow for scrolling. Similarly, there is a spare row on the bottom. This data is formatted as single hexadecimal digits, to make it easier to format this data on the page, but the data is actually stored as 16-bit values. This is taking advantage of the fact that the code is using CLUT 0 and LAYER 0 for the tiles and that there are no more than 16 tiles in the tile set.
 
 \begin{verbatim}
 tile_map:
