@@ -1,0 +1,38 @@
+;;;
+;;; Definitions for the interval timers and the RTC
+;;;
+
+; Timer 0 -- Based on system clock
+
+TM0_CTRL = $D650
+TM_CTRL_ENABLE = $01
+TM_CTRL_CLEAR = $02
+TM_CTRL_LOAD = $04
+TM_CTRL_UP_DOWN = $08
+TM_CTRL_RECLEAR = $10
+TM_CTRL_RELOAD = $20
+TM_CTRL_INTEN = $80
+
+TM0_STAT = $D650
+TM_STAT_EQUAL = $01
+
+TM0_VALUE_L = $D651
+TM0_VALUE_M = $D652
+TM0_VALUE_H = $D653
+
+TM0_CMP_CTRL = $D654
+TM0_CMP_L = $D655
+TM0_CMP_M = $D656
+TM0_CMP_H = $D657
+
+; Timer 1 -- Based on SOF
+
+TM1_CTRL = $D658
+TM1_STAT = $D658
+TM1_VALUE_L = $D659
+TM1_VALUE_M = $D65A
+TM1_VALUE_H = $D65B
+TM1_CMP_CTRL = $D65C
+TM1_CMP_L = $D65D
+TM1_CMP_M = $D65E
+TM1_CMP_H = $D65F
