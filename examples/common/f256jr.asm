@@ -8,6 +8,10 @@
 
 MMU_MEM_CTRL = $0000            ; MMU Memory Control Register
 MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+MMU_IO_PAGE_0 = $00
+MMU_IO_PAGE_1 = $01
+MMU_IO_TEXT = $02
+MMU_IO_COLOR = $03
 MMU_MEM_BANK_0 = $0008          ; MMU Edit Register for bank 0 ($0000 - $1FFF)
 MMU_MEM_BANK_1 = $0009          ; MMU Edit Register for bank 1 ($2000 - $3FFF)
 MMU_MEM_BANK_2 = $000A          ; MMU Edit Register for bank 2 ($4000 - $5FFF)
@@ -37,6 +41,8 @@ VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
 VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
 VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
 VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
+
+VKY_CRSR_CTRL = $D010           ; Vicky Text Cursor Control
 
 ;;
 ;; Bitmap Registers

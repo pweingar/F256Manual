@@ -96,3 +96,84 @@ The Rates register controls the watchdog timer and the periodic interrupt. The w
 	\caption{RTC Periodic Interrupt Rates}
 	\label{tab:rtc_rs}
 \end{table}
+
+\example{Display the Time}
+In this example, we will read the time from the real time clock chip and print it out to the screen in {\it hh:mm:ss} format. To make things a little different, the code will also use the OpenKernal calls to initialize the text screen and print text. OpenKernel is a clean-room implementation of the Commodore Kernel calls. The basic procedure is fairly simple: first the code disables the update of the transfer registers, then the code reads the hours and prints them, then the code reads the minutes and prints them, then the code fetches the seconds and prints them. Finally, the code re-enables the update of the transfer registers by dropping the UTI flag.
+
+NOTE: This code resets the MMU I/O page to 0 before it tries to read from the clock chip. This is just to allow for the possibilty of the kernal routines changing the I/O page without restoring it to 0.
+
+\begin{verbatim}
+ok_cint = $FF81							; OpenKernal call to initialize the screen
+ok_cout = $FFD2							; OpenKernal call to print the character code in A
+
+RTC_SECS = $D690						; RTC Seconds register
+RTC_MINS = $D692						; RTC Minutes register
+RTC_HOURS = $D694						; RTC Hours register
+
+RTC_CTRL = $D96E						; RTC Control register
+RTC_24HR = $02							; 12/24 hour flag (1 = 24 Hr, 0 = 12 Hr)
+RTC_STOP = $04							; 0 = STOP when power off, 1 = run from battery when power off
+RTC_UTI = $08							; Update Transfer Inhibit
+
+start:      jsr ok_cint                 ; Initialize the text screen
+
+            stz MMU_IO_CTRL             ; Make sure we're on I/O page 0
+
+            lda RTC_CTRL                ; Stop the update of the RTC registers
+            ora #RTC_UTI | RTC_24HR
+            sta RTC_CTRL
+
+            stz MMU_IO_CTRL				; Make sure we're on I/O page 0
+
+            lda RTC_HOURS               ; Print the hours
+            jsr putbcd
+
+            lda #':'
+            jsr ok_cout
+
+            stz MMU_IO_CTRL				; Make sure we're on I/O page 0
+
+            lda RTC_MINS                ; Print the minutes
+            jsr putbcd
+
+            lda #':'
+            jsr ok_cout
+
+            stz MMU_IO_CTRL				; Make sure we're on I/O page 0
+
+            lda RTC_SECS                ; Print the seconds
+            jsr putbcd
+
+            stz MMU_IO_CTRL				; Make sure we're on I/O page 0
+
+            lda RTC_CTRL                ; Reenable the update of the registers
+            and #~RTC_UTI
+            sta RTC_CTRL
+\end{verbatim}
+
+Since the time registers of the clock chip are encoded in binary-coded-decimal, printing is relatively straightforward, and is handled by a simple \verb+putbcd+ subroutine:
+
+\begin{verbatim}
+;
+; Print a BCD number to the screen
+;
+putbcd:     pha                         ; Save the number
+            and #$F0                    ; Isolate the upper digit
+            lsr a
+            lsr a
+            lsr a
+            lsr a
+
+            clc                         ; Convert to ASCII
+            adc #'0'
+            jsr ok_cout                 ; And print
+
+            pla                         ; Get the full number back
+            and #$0F                    ; Isolate the lower digit
+
+            clc                         ; Convert to ASCII
+            adc #'0'
+            jsr ok_cout                 ; And print
+
+            rts
+\end{verbatim}
