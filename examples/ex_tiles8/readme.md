@@ -1,0 +1,1 @@
+This example shows how 8x8 tiles might be displayed. It uses a scaled down version of the 16x16 tile set and uses the 64TASS `fill` directive to fill out the empty spaces in the tile map. It does not really show all that much that the 16x16 tile map example does not show, but it can be used to demonstrate how 8x8 tile maps look.
