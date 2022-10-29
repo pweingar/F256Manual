@@ -10,24 +10,24 @@ The RTC is relatively straightforward to use, but one potentially tricky thing t
 
 \begin{table}[h]
 	\begin{center}
-		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
-			Address & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-			\verb+0xD690+ & Seconds & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
-            \verb+0xD691+ & Seconds Alarm & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
-            \verb+0xD692+ & Minutes & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
-            \verb+0xD693+ & Minutes Alarm & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
-            \verb+0xD694+ & Hours & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
-            \verb+0xD695+ & Hours Alarm & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
-            \verb+0xD696+ & Days & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
-            \verb+0xD697+ & Days Alarm & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
-            \verb+0xD698+ & Day of Week & 0 & 0 & 0 & 0 & 0 & \multicolumn{3}{|c|}{day of week digit} \\ \hline
-            \verb+0xD699+ & Month & 0 & 0 & 0 & month 10s digit & \multicolumn{4}{|c|}{month 1s digit} \\ \hline
-            \verb+0xD69A+ & Year & \multicolumn{4}{|c|}{year 10s digit} & \multicolumn{4}{|c|}{year 1s digit}  \\ \hline
-            \verb+0xD69B+ & Rates & 0 & \multicolumn{3}{|c|}{WD} & \multicolumn{4}{|c|}{RS} \\ \hline
-            \verb+0xD69C+ & Enables & 0 & 0 & 0 & 0 & AIE & PIE & PWRIE & ABE \\ \hline
-            \verb+0xD69D+ & Flags & 0 & 0 & 0 & 0 & AF & PF & PWRF & BVF \\ \hline
-            \verb+0xD69E+ & Control & 0 & 0 & 0 & 0 & UTI & STOP & 12/24 & DSE \\ \hline
-            \verb+0xD69F+ & Century & \multicolumn{4}{|c|}{century 10s digit} & \multicolumn{4}{|c|}{century 1s digit}  \\ \hline
+		\begin{tabular}{| c | c | c || c | c | c | c | c | c | c | c |} \hline
+			Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+			\verb+0xD690+ & R/W & Seconds & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
+            \verb+0xD691+ & R/W & Seconds Alarm & 0 & \multicolumn{3}{|c|}{second 10s digit} & \multicolumn{4}{|c|}{second 1s digit} \\ \hline
+            \verb+0xD692+ & R/W & Minutes & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
+            \verb+0xD693+ & R/W & Minutes Alarm & 0 & \multicolumn{3}{|c|}{minute 10s digit} & \multicolumn{4}{|c|}{minute 1s digit} \\ \hline
+            \verb+0xD694+ & R/W & Hours & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
+            \verb+0xD695+ & R/W & Hours Alarm & AM/PM & 0 & \multicolumn{2}{|c|}{hour 10s digit} & \multicolumn{4}{|c|}{hour 1s digit} \\ \hline
+            \verb+0xD696+ & R/W & Days & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
+            \verb+0xD697+ & R/W & Days Alarm & 0 & 0 & \multicolumn{2}{|c|}{day 10s digit} & \multicolumn{4}{|c|}{day 1s digit} \\ \hline
+            \verb+0xD698+ & R/W & Day of Week & 0 & 0 & 0 & 0 & 0 & \multicolumn{3}{|c|}{day of week digit} \\ \hline
+            \verb+0xD699+ & R/W & Month & 0 & 0 & 0 & month 10s digit & \multicolumn{4}{|c|}{month 1s digit} \\ \hline
+            \verb+0xD69A+ & R/W & Year & \multicolumn{4}{|c|}{year 10s digit} & \multicolumn{4}{|c|}{year 1s digit}  \\ \hline
+            \verb+0xD69B+ & R/W & Rates & 0 & \multicolumn{3}{|c|}{WD} & \multicolumn{4}{|c|}{RS} \\ \hline
+            \verb+0xD69C+ & R/W & Enables & 0 & 0 & 0 & 0 & AIE & PIE & PWRIE & ABE \\ \hline
+            \verb+0xD69D+ & R/W & Flags & 0 & 0 & 0 & 0 & AF & PF & PWRF & BVF \\ \hline
+            \verb+0xD69E+ & R/W & Control & 0 & 0 & 0 & 0 & UTI & STOP & 12/24 & DSE \\ \hline
+            \verb+0xD69F+ & R/W & Century & \multicolumn{4}{|c|}{century 10s digit} & \multicolumn{4}{|c|}{century 1s digit}  \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{MMU Registers}
@@ -100,7 +100,7 @@ The Rates register controls the watchdog timer and the periodic interrupt. The w
 \example{Display the Time}
 In this example, we will read the time from the real time clock chip and print it out to the screen in {\it hh:mm:ss} format. To make things a little different, the code will also use the OpenKernal calls to initialize the text screen and print text. OpenKernel is a clean-room implementation of the Commodore Kernel calls. The basic procedure is fairly simple: first the code disables the update of the transfer registers, then the code reads the hours and prints them, then the code reads the minutes and prints them, then the code fetches the seconds and prints them. Finally, the code re-enables the update of the transfer registers by dropping the UTI flag.
 
-NOTE: This code resets the MMU I/O page to 0 before it tries to read from the clock chip. This is just to allow for the possibilty of the kernal routines changing the I/O page without restoring it to 0.
+NOTE: This code resets the MMU I/O page to 0 before it tries to read from the clock chip. This is just to allow for the possibility of the kernel routines changing the I/O page without restoring it to 0.
 
 \begin{verbatim}
 ok_cint = $FF81							; OpenKernal call to initialize the screen

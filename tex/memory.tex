@@ -57,10 +57,10 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 
 \begin{table}[h]
 	\begin{center}
-		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
-			Address & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-			\verb+0x0000+ & MMU\_MEM\_CTRL & EDIT\_EN & RSVD & \multicolumn{2}{|c|}{EDIT\_LUT} & RSVD & RSVD & \multicolumn{2}{|c|}{ACT\_LUT} \\ \hline
-			\verb+0x0001+ & MMU\_IO\_CTRL & \multicolumn{5}{|c|}{RSVD} & IO\_DISABLE & \multicolumn{2}{|c|}{IO\_PAGE} \\ \hline
+		\begin{tabular}{| c | c | c || c | c | c | c | c | c | c | c |} \hline
+			Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+			\verb+0x0000+ & RW & MMU\_MEM\_CTRL & EDIT\_EN & --- & \multicolumn{2}{|c|}{EDIT\_LUT} & --- & --- & \multicolumn{2}{|c|}{ACT\_LUT} \\ \hline
+			\verb+0x0001+ & RW & MMU\_IO\_CTRL & \multicolumn{5}{|c|}{---} & IO\_DISABLE & \multicolumn{2}{|c|}{IO\_PAGE} \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{MMU Registers}

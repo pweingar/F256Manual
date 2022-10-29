@@ -4,9 +4,9 @@ The display on the \jr\ is managed by TinyVicky, which is the smaller member of 
 
 \begin{itemize}
     \item Text: an old school style text screen where the characters to display are stored in a text matrix, and the shape of those characters comes from font memory. Text mode characters are 8 pixels wide by 8 pixels high.
-    \item Bitmap: a simple pixel graphics mode that can be either 300x240 or 300x200. TinyVicky supports two layers of bitmap
-    \item Sprite: an engine to display small, movable sprites on the screen. [TODO: how many and what resolutions]
-    \item Tile: an engine to display images on the screen made up of tiles from a tile set [TODO: how many layers, tile size]
+    \item Bitmap: a simple pixel graphics mode that can be either 300x240 or 300x200.
+    \item Sprite: an engine to display small, movable sprites on the screen.
+    \item Tile: an engine to display images on the screen made up of tiles from a tile set.
 \end{itemize}
 
 The bitmap, sprite, and tile engines are considered graphics modes. TinyVicky will let you display either text by itself, a mix of the graphics modes by themselves, or text overlayed on top of the graphics modes.
@@ -44,24 +44,24 @@ Each LUT is a list of 16 entries. Each entry is a set of four bytes: blue, green
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|} \hline
-            Index & Foreground & Background & 0 & 1 & 2 & 3 \\ \hline\hline
-            0 & \verb+0xD800+ & \verb+0xD840+ & BLUE\_0 & GREEN\_0 & RED\_0 & X \\ \hline
-            1 & \verb+0xD804+ & \verb+0xD844+ & BLUE\_1 & GREEN\_1 & RED\_1 & X \\ \hline
-            2 & \verb+0xD808+ & \verb+0xD848+ & BLUE\_2 & GREEN\_2 & RED\_2 & X \\ \hline
-            3 & \verb+0xD80C+ & \verb+0xD84C+ & BLUE\_3 & GREEN\_3 & RED\_3 & X \\ \hline
-            4 & \verb+0xD810+ & \verb+0xD850+ & BLUE\_4 & GREEN\_4 & RED\_4 & X \\ \hline
-            5 & \verb+0xD814+ & \verb+0xD854+ & BLUE\_5 & GREEN\_5 & RED\_5 & X \\ \hline
-            6 & \verb+0xD818+ & \verb+0xD858+ & BLUE\_6 & GREEN\_6 & RED\_6 & X \\ \hline
-            7 & \verb+0xD81C+ & \verb+0xD85C+ & BLUE\_7 & GREEN\_7 & RED\_7 & X \\ \hline
-            8 & \verb+0xD820+ & \verb+0xD860+ & BLUE\_8 & GREEN\_8 & RED\_8 & X \\ \hline
-            9 & \verb+0xD824+ & \verb+0xD864+ & BLUE\_9 & GREEN\_9 & RED\_9 & X \\ \hline
-            10 & \verb+0xD828+ & \verb+0xD868+ & BLUE\_10 & GREEN\_10 & RED\_10 & X \\ \hline
-            11 & \verb+0xD82C+ & \verb+0xD86C+ & BLUE\_11 & GREEN\_11 & RED\_11 & X \\ \hline
-            12 & \verb+0xD830+ & \verb+0xD870+ & BLUE\_12 & GREEN\_12 & RED\_12 & X \\ \hline
-            13 & \verb+0xD834+ & \verb+0xD874+ & BLUE\_13 & GREEN\_13 & RED\_13 & X \\ \hline
-            14 & \verb+0xD838+ & \verb+0xD878+ & BLUE\_14 & GREEN\_14 & RED\_14 & X \\ \hline
-            15 & \verb+0xD83C+ & \verb+0xD87C+ & BLUE\_15 & GREEN\_15 & RED\_15 & X \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
+            Index & R/W & Foreground & Background & 0 & 1 & 2 & 3 \\ \hline\hline
+            0 & W & \verb+0xD800+ & \verb+0xD840+ & BLUE\_0 & GREEN\_0 & RED\_0 & X \\ \hline
+            1 & W & \verb+0xD804+ & \verb+0xD844+ & BLUE\_1 & GREEN\_1 & RED\_1 & X \\ \hline
+            2 & W & \verb+0xD808+ & \verb+0xD848+ & BLUE\_2 & GREEN\_2 & RED\_2 & X \\ \hline
+            3 & W & \verb+0xD80C+ & \verb+0xD84C+ & BLUE\_3 & GREEN\_3 & RED\_3 & X \\ \hline
+            4 & W & \verb+0xD810+ & \verb+0xD850+ & BLUE\_4 & GREEN\_4 & RED\_4 & X \\ \hline
+            5 & W & \verb+0xD814+ & \verb+0xD854+ & BLUE\_5 & GREEN\_5 & RED\_5 & X \\ \hline
+            6 & W & \verb+0xD818+ & \verb+0xD858+ & BLUE\_6 & GREEN\_6 & RED\_6 & X \\ \hline
+            7 & W & \verb+0xD81C+ & \verb+0xD85C+ & BLUE\_7 & GREEN\_7 & RED\_7 & X \\ \hline
+            8 & W & \verb+0xD820+ & \verb+0xD860+ & BLUE\_8 & GREEN\_8 & RED\_8 & X \\ \hline
+            9 & W & \verb+0xD824+ & \verb+0xD864+ & BLUE\_9 & GREEN\_9 & RED\_9 & X \\ \hline
+            10 & W & \verb+0xD828+ & \verb+0xD868+ & BLUE\_10 & GREEN\_10 & RED\_10 & X \\ \hline
+            11 & W & \verb+0xD82C+ & \verb+0xD86C+ & BLUE\_11 & GREEN\_11 & RED\_11 & X \\ \hline
+            12 & W & \verb+0xD830+ & \verb+0xD870+ & BLUE\_12 & GREEN\_12 & RED\_12 & X \\ \hline
+            13 & W & \verb+0xD834+ & \verb+0xD874+ & BLUE\_13 & GREEN\_13 & RED\_13 & X \\ \hline
+            14 & W & \verb+0xD838+ & \verb+0xD878+ & BLUE\_14 & GREEN\_14 & RED\_14 & X \\ \hline
+            15 & W & \verb+0xD83C+ & \verb+0xD87C+ & BLUE\_15 & GREEN\_15 & RED\_15 & X \\ \hline
         \end{tabular}
     \end{center}
     \caption{Text Color Lookup Tables}
@@ -109,10 +109,10 @@ Whether or not text mode is being displayed (and in what resolution) is controll
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
-            Address & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            \verb+0xD000+ & X & GAMMA & SPRITE & TILE & BITMAP & GRAPH & OVRLY & TEXT \\ \hline
-            \verb+0xD001+ & \multicolumn{5}{|c|}{X} & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            \verb+0xD000+ & R/W & X & GAMMA & SPRITE & TILE & BITMAP & GRAPH & OVRLY & TEXT \\ \hline
+            \verb+0xD001+ & R/W & \multicolumn{5}{|c|}{X} & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
         \end{tabular}
     \end{center}
     \caption{VICKY Master Control Registers}

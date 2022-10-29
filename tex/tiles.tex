@@ -30,20 +30,20 @@ There are three tile maps supported by TinyVicky, each of which has 13 bytes wor
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
-            Offset & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
-            0 & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
-            1 & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
-            2 & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
-            3 & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
-            4 & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
-            5 & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            6 & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
-            7 & \multicolumn{8}{|c|}{RESERVED} \\ \hline
-            8 & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
-            9 & DIR\_X & --- & X9 & X8 & X7 & X6 & X5 & X4 \\ \hline
-            10 & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
-            12 & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            0 & W & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+            1 & W & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+            2 & W & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+            3 & W & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            4 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_X} \\ \hline
+            5 & W & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            6 & W & \multicolumn{8}{|c|}{MAP\_SIZE\_Y} \\ \hline
+            7 & W & \multicolumn{8}{|c|}{RESERVED} \\ \hline
+            8 & W & X3 & X2 & X1 & X0 & SSX3 & SSX2 & SSX1 & SSX0 \\ \hline
+            9 & W & DIR\_X & --- & X9 & X8 & X7 & X6 & X5 & X4 \\ \hline
+            10 & W & Y3 & Y2 & Y1 & Y0 & SSY3 & SSY2 & SSY1 & SSY0 \\ \hline
+            12 & W & DIR\_Y &\multicolumn{3}{|c|}{---} & Y7 & Y6 & Y5 & Y4 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Tile Map Registers}
@@ -140,46 +140,54 @@ As with bitmaps and sprites, the pixels of the tiles are each an individual byte
     \label{tab:tile_set_layout}
 \end{table}
 
-TinyVicky supports eight separate tile sets. Each one has a single three byte address register, which provides the address to the tile set pixel data (see table:~\ref{tab:tile_set_addr}). To use them, a program simply stores the address of the pixel data to use into the appropriate address register.
+TinyVicky supports eight separate tile sets. Each one has a single three byte address register, which provides the address to the tile set pixel data, and a configuration register (see table:~\ref{tab:tile_set_addr}). To use them, a program simply stores the address of the pixel data to use into the appropriate address register. The configuration register contains a single SQUARE flag, which indicates the layout of the tile set image. If SQUARE is set (1), the tile set image is square ($128 \times 128$ pixels for $8 \times 8$ tiles or $256 \times 256$ pixels for $16 \times 16$ tiles). If SQUARE is clear (0), the tile set image is vertical ($8 \times 2,048$ pixels for $8 \times 8$ tiles, or $16 \times 4,096$ pixels for $16 \times 16$ tiles).
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
-            Address & Tile Set & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            \verb+0xD280+ & \multirow{3}{*}{0} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD281+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD282+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Tile Set & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            \verb+0xD280+ & W & \multirow{4}{*}{0} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD281+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD282+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD283+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD284+ & \multirow{3}{*}{1} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD285+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD286+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD284+ & W & \multirow{4}{*}{1} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD285+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD286+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD287+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD288+ & \multirow{3}{*}{2} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD289+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD28A+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD288+ & W & \multirow{4}{*}{2} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD289+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD28A+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD28B+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD28C+ & \multirow{3}{*}{3} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD28D+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD28E+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD28C+ & W & \multirow{4}{*}{3} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD28D+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD28E+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD28F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD290+ & \multirow{3}{*}{4} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD291+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD292+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD290+ & W & \multirow{4}{*}{4} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD291+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD292+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD293+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD294+ & \multirow{3}{*}{5} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD295+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD296+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD294+ & W & \multirow{4}{*}{5} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD295+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD296+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD297+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD298+ & \multirow{3}{*}{6} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD299+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD29A+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline\hline
+            \verb+0xD298+ & W & \multirow{4}{*}{6} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD299+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD29A+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD29B+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
 
-            \verb+0xD29C+ & \multirow{3}{*}{7} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD29D+ &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            \verb+0xD29E+ &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            \verb+0xD29C+ & W & \multirow{4}{*}{7} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD29D+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD29E+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD29F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
         \end{tabular}
     \end{center}
-    \caption{Tile Set Address Registers}
+    \caption{Tile Set Registers}
     \label{tab:tile_set_addr}
 \end{table}
 

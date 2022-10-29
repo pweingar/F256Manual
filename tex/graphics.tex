@@ -3,7 +3,7 @@
 The \jr\ provides three separate graphics engines, providing programs with a choice in how they display information to the user. Those different engines do share certain features, however, and this chapter will cover the common elements. The three graphics engines are bitmaps, tile maps, and sprites. What is common between all these elements is how they determine what colors to display and how to determine, when two or more objects are in the same place, which object is displayed.
 
 \begin{itemize}
-    \item Bitmaps are simple raster images. They are the size of the screen ($320 \times 200$ or $320 \times 240$) and cannot be moved. The TinyVicky chip used by the \jr\ allows for two separate bitmaps to be displayed at the same time.
+    \item Bitmaps are simple raster images. They are the size of the screen ($320 \times 200$ or $320 \times 240$) and cannot be moved. The TinyVicky chip used by the \jr\ allows for three separate bitmaps to be displayed at the same time.
 
     \item Tile maps are images made up of tiles. The tiles come in a tile set, which is a raster image like a bitmap but provides 256 tiles. The tile map itself creates its image by indicating which tile is displayed at every position in the tile map. This mapping can be changed on the fly, allowing tile maps to be altered, and tile maps can also be scrolled horizontally and vertically to a limited degree. This allows for possibility for smooth scrolling of a tile map scene. TinyVicky allows for three separate tile maps to be displayed simultaneously.
 
@@ -26,12 +26,12 @@ However, there is a key difference from text mode. In text mode, there are two c
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|l|} \hline
-            Address & Purpose \\\hline\hline
-            \verb+0xD000+ & Graphics CLUT 0 \\ \hline
-            \verb+0xD400+ & Graphics CLUT 1 \\ \hline
-            \verb+0xD800+ & Graphics CLUT 2 \\ \hline
-            \verb+0xDC00+ & Graphics CLUT 3 \\ \hline
+        \begin{tabular}{|c|c|l|} \hline
+            Address & R/W & Purpose \\\hline\hline
+            \verb+0xD000+ & R/W & Graphics CLUT 0 \\ \hline
+            \verb+0xD400+ & R/W & Graphics CLUT 1 \\ \hline
+            \verb+0xD800+ & R/W & Graphics CLUT 2 \\ \hline
+            \verb+0xDC00+ & R/W & Graphics CLUT 3 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Graphics Color Lookup Tables}
@@ -93,7 +93,7 @@ lut_done:
 
 \section{Pixel Data}
 
-All three graphics engines arrange their pixel data in the same manner. They all use rectangular raster images as a base, although the width and height of the rectangle can vary. The pixels are placed in memory in sequential order in left-to-rigth and top-to-bottom order. That is, the first pixel in the sequence is the upper-left pixel in the image. The next pixel is the pixel to the immediate right and so on. If the image is $w \times h$, the position of a pixel at $(x, y)$ in the list is $y \times w + x$.
+All three graphics engines arrange their pixel data in the same manner. They all use rectangular raster images as a base, although the width and height of the rectangle can vary. The pixels are placed in memory in sequential order in left-to-right and top-to-bottom order. That is, the first pixel in the sequence is the upper-left pixel in the image. The next pixel is the pixel to the immediate right and so on. If the image is $w \times h$, the position of a pixel at $(x, y)$ in the list is $y \times w + x$.
 
 \section{Graphics Layers}
 
@@ -113,10 +113,10 @@ Bitmaps and tile maps are assigned to their layers using the layer control regis
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
-            Address & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            \verb+0xD002+ & --- & \multicolumn{3}{|c|}{LAYER1} & --- & \multicolumn{3}{|c|}{LAYER0} \\\hline
-            \verb+0xD003+ & \multicolumn{5}{|c|}{---} & \multicolumn{3}{|c|}{LAYER2} \\\hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            \verb+0xD002+ & R/W & --- & \multicolumn{3}{|c|}{LAYER1} & --- & \multicolumn{3}{|c|}{LAYER0} \\\hline
+            \verb+0xD003+ & R/W & \multicolumn{5}{|c|}{---} & \multicolumn{3}{|c|}{LAYER2} \\\hline
         \end{tabular}
     \end{center}
     \caption{Bitmap and Tile Map Layer Registers}

@@ -1,0 +1,101 @@
+\chapter{Using the Debug Port}
+
+One of the ways to get software and data onto the \jr\ is through the USB debug port. The debug port uses a USB serial protocol to allow a host computer to issue commands to the \jr. These commands allow the host computer to stop and start the CPU, write to memory, read from memory, erase the flash memory, and reprogram the flash memory. With this port, it is possible to load a program and its data directly into the \jr's memory and start it running. It is also possible to examine the \jr's memory to see what state a program has left it in.
+
+Three are three main tools available to provide user access to the debug port:
+
+\begin{description}
+    \item[Foenix IDE] A full featured emulator and development tool for the Foenix line of computers. Among the many tools provided by the IDE is a built-in GUI tool to upload and download data to the \jr\ and program the flash. The main limitation of the IDE is that it was written in .NET and uses features that are available under under the Windows API.
+
+    \item[Foenix Uploader Tool] A stand-alone version of just the uploader tool from the Foenix IDE. This tool is more limited (it may only support binary files) and is tailored to specific machines.
+
+    \item[FoenixMgr] A script written in Python 3 which provides command line access on the host computer to the debug port. It supports files in Intel HEX, Motorola SREC, raw binary, PGX, and PGZ files. It should run on any computer or operating system that can run Python 3 and provide sufficient access to USB serial interfaces. It runs under Windows and Linux definitely and may be able to run under Mac OS X eventually.
+\end{description}
+
+\section{Debug Protocol}
+
+The USB debug port is accessed over the USB Serial protocol. Data is sent from the host computer to the \jr\ using data packets, each one of which is a command. The general process is:
+
+\begin{enumerate}
+    \item Host PC sends the command to enter debug mode
+    \item The \jr\ replies
+    \item Host PC sends one or more command packets
+    \item The \jr\ replies
+    \item Host PC send the command to exit debug mode
+    \item The \jr\ replies and sends a reset signal to the CPU
+\end{enumerate}
+
+The commands sent from the host PC are in the form of command packets show in table~\ref{tab:debug_cmd_packet}. The command codes them selves are listed in table~\ref{tab:debug_commands}. The \jr\ will respond to each command packet with a response packet as shown in table~\ref{tab:debug_resp_packet}. The size of a packet can vary depending on the command. Some commands and responses include no actual data payload bytes. Others will transfer actual data and will include however many bytes of payload are needed.
+
+Each command and response packet includes an LRC check byte, which is simply the exclusive-or of all the bytes in the packet, with the exception of the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Offset & Size & Name \\ \hline\hline
+            0 & 1 & Command sync byte\\ \hline
+            1 & 1 & Command byte \\ \hline
+            2 & 3 & Address \\ \hline
+            5 & 2 & Length \\ \hline
+            7 & $n$ & Payload \\ \hline
+            $7 + n$ & 1 & LRC check byte\\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{USB Debug Port Command Packet}
+    \label{tab:debug_cmd_packet}
+\end{table}
+
+\begin{description}
+    \item[Command sync byte] This is always \verb+0x55+ and signals the start of a command packet
+
+    \item[Command byte] This byte specifies what command is being sent (see table:~\ref{tab:debug_commands})
+
+    \item[Address] This is a three byte, big-endian integer that provides the address relevant to the command. For a write command, it is the address of the first block of memory to receive data. For a read command, it is the address of the first byte of memory to read. For the program flash command, it is the address of the first byte of data to write to flash.
+
+    \item[Length] This is the number of bytes to transfer. For a write command, it is the number of bytes to be sent to the \jr\ and will be control the size of the payload section of the write command packet. For the read command, it is the number of bytes to read from the \jr\ and will control the size of the payload section of the response packet (the payload section of the read command packet is empty).
+
+    \item[Payload] This is an option section of the packet that contains the actual data to transfer between the host PC and the \jr.
+
+    \item[LRC check byte] This byte provides for simple error checking on the packet transmission.
+\end{description}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Offset & Size & Purpose \\ \hline\hline
+            0 & 1 & Response sync byte (\verb+0xAA+)\\ \hline
+            1 & 2 & Status bytes \\ \hline
+            3 & $m$ & Payload \\ \hline
+            $3 + m$ & 1 & LRC check byte \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{USB Debug Port Command Packet}
+    \label{tab:debug_resp_packet}
+\end{table}
+
+\begin{description}
+    \item[Response sync byte] This is always \verb+0xAA+ and signals the start of a response packet
+
+    \item[Status bytes] These two bytes contain the status codes for the success or failure of the command
+
+    \item[Payload] This is an option section of the packet that contains the actual data to transfer between the host PC and the \jr.
+
+    \item[LRC check byte] This byte provides for simple error checking on the packet transmission.
+\end{description}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|l|} \hline
+            Command & Purpose \\ \hline\hline
+            \verb+0x80+ & Enter debug mode \\ \hline
+            \verb+0x81+ & Exit debug mode (resets CPU)\\ \hline
+            \verb+0x01+ & Write a block of data to RAM on the \jr \\ \hline
+            \verb+0x00+ & Read a block of data from the \jr\ to the host PC \\ \hline
+            \verb+0xFE+ & Fetch the revision number of the debug interface \\ \hline
+            \verb+0x11+ & Erase flash memory \\ \hline
+            \verb+0x10+ & Program flash memory from data in \jr's RAM \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{USB Debug Port Commands}
+    \label{tab:debug_commands}
+\end{table}

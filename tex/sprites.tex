@@ -6,16 +6,16 @@ A program for the \jr\ can use up to 64 sprites, each one of which is controlled
 
 \begin{table}[h]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
-            Offset & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            0 & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{LAYER} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
-            1 & \multirow{3}{*}{Sprite Address} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-1}\cline{3-10}
-            2 &  & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-1}\cline{3-10}
-            3 &  & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
-            4 & \multirow{2}{*}{Sprite X} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-1}\cline{3-10}
-            5 &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
-            6 & \multirow{2}{*}{Sprite Y} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-1}\cline{3-10}
-            7 &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Offset & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            0 & W & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{LAYER} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
+            1 & W & \multirow{3}{*}{Sprite Address} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            2 & W &  & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            3 & W &  & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            4 & W & \multirow{2}{*}{Sprite X} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
+            5 & W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
+            6 & W & \multirow{2}{*}{Sprite Y} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-2}\cline{4-11}
+            7 & W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Sprite Registers for a Single Sprite}
