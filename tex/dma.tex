@@ -16,28 +16,28 @@ Rectangular data (or ``2D'') is a bit more complicated and is meant to be workin
             \verb+0xDF01+ & W & FD7 & FD6 & FD5 & FD4 & FD3 & FD2 & FD1 & FD0 \\ \hline
             \verb+0xDF01+ & R & BUSY & \multicolumn{7}{|c|}{---}  \\ \hline\hline
 
-            \verb+0xDF04+ & W & SA7 & SA6 & SA5 & SA4 & SA3 & SA2 & SA1 & SA0 \\ \hline
-            \verb+0xDF05+ & W & SA15 & SA14 & SA13 & SA12 & SA11 & SA10 & SA9 & SA8 \\ \hline
-            \verb+0xDF06+ & W & \multicolumn{6}{|c|}{---} & SA17 & SA16 \\ \hline\hline
+            \verb+0xDF04+ & R/W & SA7 & SA6 & SA5 & SA4 & SA3 & SA2 & SA1 & SA0 \\ \hline
+            \verb+0xDF05+ & R/W & SA15 & SA14 & SA13 & SA12 & SA11 & SA10 & SA9 & SA8 \\ \hline
+            \verb+0xDF06+ & R/W & \multicolumn{6}{|c|}{---} & SA17 & SA16 \\ \hline\hline
 
-            \verb+0xDF08+ & W & DA7 & DA6 & DA5 & DA4 & DA3 & DA2 & DA1 & DA0 \\ \hline
-            \verb+0xDF09+ & W & DA15 & DA14 & DA13 & DA12 & DA11 & DA10 & DA9 & DA8 \\ \hline
-            \verb+0xDF0A+ & W & \multicolumn{6}{|c|}{---} & DA17 & DA16 \\ \hline\hline
+            \verb+0xDF08+ & R/W & DA7 & DA6 & DA5 & DA4 & DA3 & DA2 & DA1 & DA0 \\ \hline
+            \verb+0xDF09+ & R/W & DA15 & DA14 & DA13 & DA12 & DA11 & DA10 & DA9 & DA8 \\ \hline
+            \verb+0xDF0A+ & R/W & \multicolumn{6}{|c|}{---} & DA17 & DA16 \\ \hline\hline
 
-            \verb+0xDF0C+ & W & CNT7 & CNT6 & CNT5 & CNT4 & CNT3 & CNT2 & CNT1 & CNT0 \\ \hline
-            \verb+0xDF0D+ & W & CNT15 & CNT14 & CNT13 & CNT12 & CNT11 & CNT10 & CNT9 & CNT8 \\ \hline
-            \verb+0xDF0E+ & W & \multicolumn{6}{|c|}{---} & CNT17 & CNT16 \\ \hline\hline
+            \verb+0xDF0C+ & R/W & CNT7 & CNT6 & CNT5 & CNT4 & CNT3 & CNT2 & CNT1 & CNT0 \\ \hline
+            \verb+0xDF0D+ & R/W & CNT15 & CNT14 & CNT13 & CNT12 & CNT11 & CNT10 & CNT9 & CNT8 \\ \hline
+            \verb+0xDF0E+ & R/W & \multicolumn{6}{|c|}{---} & CNT17 & CNT16 \\ \hline\hline
 
-            \verb+0xDF0C+ & W & W7 & W6 & W5 & W4 & W3 & W2 & W1 & W0 \\ \hline
-            \verb+0xDF0D+ & W & W15 & W14 & W13 & W12 & W11 & W10 & W9 & W8 \\ \hline
-            \verb+0xDF0E+ & W & H7 & H6 & H5 & H4 & H3 & H2 & H1 & H0 \\ \hline
-            \verb+0xDF0F+ & W & H15 & H14 & H13 & H12 & H11 & H10 & H9 & H8 \\ \hline\hline
+            \verb+0xDF0C+ & R/W & R/W7 & R/W6 & R/W5 & R/W4 & R/W3 & R/W2 & R/W1 & R/W0 \\ \hline
+            \verb+0xDF0D+ & R/W & R/W15 & R/W14 & R/W13 & R/W12 & R/W11 & R/W10 & R/W9 & R/W8 \\ \hline
+            \verb+0xDF0E+ & R/W & H7 & H6 & H5 & H4 & H3 & H2 & H1 & H0 \\ \hline
+            \verb+0xDF0F+ & R/W & H15 & H14 & H13 & H12 & H11 & H10 & H9 & H8 \\ \hline\hline
 
-            \verb+0xDF10+ & W & SX7 & SX6 & SX5 & SX4 & SX3 & SX2 & SX1 & SX0 \\ \hline
-            \verb+0xDF11+ & W & SX15 & SX14 & SX13 & SX12 & SX11 & SX10 & SX9 & SX8 \\ \hline
+            \verb+0xDF10+ & R/W & SX7 & SX6 & SX5 & SX4 & SX3 & SX2 & SX1 & SX0 \\ \hline
+            \verb+0xDF11+ & R/W & SX15 & SX14 & SX13 & SX12 & SX11 & SX10 & SX9 & SX8 \\ \hline
 
-            \verb+0xDF12+ & W & SY7 & SY6 & SY5 & SY4 & SY3 & SY2 & SY1 & SY0 \\ \hline
-            \verb+0xDF13+ & W & SY15 & SY14 & SY13 & SY12 & SY11 & SY10 & SY9 & SY8 \\ \hline
+            \verb+0xDF12+ & R/W & SY7 & SY6 & SY5 & SY4 & SY3 & SY2 & SY1 & SY0 \\ \hline
+            \verb+0xDF13+ & R/W & SY15 & SY14 & SY13 & SY12 & SY11 & SY10 & SY9 & SY8 \\ \hline
         \end{tabular}
     \end{center}
     \caption{DMA Registers}
