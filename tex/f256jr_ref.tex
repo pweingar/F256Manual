@@ -2,19 +2,23 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue}
 \usepackage{amssymb}
-%usepackage{concmath}
-%usepackage[OT1]{fontenc}
 \usepackage{notomath}
 \usepackage[T1]{fontenc}
 \usepackage[a4paper, margin=0.5in]{geometry}
 \usepackage{multirow}
 \usepackage{graphbox}
+\usepackage{sectsty}
+\usepackage[Bjornstrup]{fncychap}
+\definecolor{darkblue}{rgb}{0.1, 0.0, 0.6}
+\ChNumVar{\color{darkblue}\fontsize{76}{80}\usefont{OT1}{pzc}{m}{n}\selectfont}
+\ChTitleVar{\color{darkblue}\raggedleft\Huge\sffamily\bfseries}
+\allsectionsfont{\color{darkblue}\bfseries\sffamily}
 \newcommand{\jr}{F256jr}
 \newcommand{\microsec}{$\mu$s}
 \newcommand{\example}[1]{\subsection{Example: #1}}
 \begin{document}
 
-\title{Foenix \jr\ User's Manual}
+\title{Foenix \jr\ Reference Manual}
 \author{Peter Weingartner}
 \maketitle
 
@@ -108,6 +112,7 @@ The top of the board has several connectors and other features that should be ex
 \input{sound.tex}
 \input{interrupts.tex}
 \input{time.tex}
+\input{dma.tex}
 \input{memory_map.tex}
 \input{debug.tex}
 

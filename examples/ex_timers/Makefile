@@ -9,4 +9,4 @@ runhex: timers.hex
 	python $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload timers.hex
 
 %.hex: %.asm
-	$(AS) $(ASFLAGS) --intel-hex -l timers.lst -o $@ $<
+	$(AS) $(ASFLAGS) --intel-hex --list=timers.lst --labels=timers.lbl -o $@ $<

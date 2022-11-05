@@ -1,0 +1,58 @@
+okay, I guess these ought to be considered good news for the JR Community! 😉
+- Well, I got the whole Flash Sector programming sorted out, so I can now program any 8K sectors in the flash.
+- I have reintroduce the DMA controller and I got it to work... This is the good news, the bad news is that it is going to be "an intrusive" DMA as oppose to be non-intrusive DMA. Meaning that during the time the DMA will do its transfer or fill or else, the CPU will be halted. This is of course during the time the DMA does its thing which is during the VERTICAL Blanking. So, in a nutshell, if you begin a DMA Tansfer, it will only take place during the Vertical Blanking time. If it concludes before the end of said time, then the CPU will resume. If the DMA needs another (or many more intervales) to finish its works, it will give re-enable the CPU while it is waiting for the next SOF and so on and so forth.
+The DMA Specs:
+Fill Speed: 100MBytes Per Second
+Transfer Speed: 33MBytes Per Second
+Byte Transfered during each frame (approx): ~45KBytes/frame  (1.3ms/30.3ns) (43 Lines of Blanking used by the DMA, by line 44, the Engine is precharging for the first video line)
+Fill Rate for each frame (approx): 136KBytes/frame  (1.3mm/10ns)
+CPU Cycles Muted during a full Vertical Blanking (approx) : 8600 CPU Clock Cycle / avg 2.5 Cycle per instruction = ~3440 Instructions muted.
+
+
+;DMA
+DMA_CTRL_REG        = $DF00
+DMA_CTRL_Enable     = $01
+DMA_CTRL_1D_2D      = $02
+DMA_CTRL_Fill       = $04
+DMA_CTRL_Int_En     = $08
+DMA_CTRL_NotUsed0   = $10
+DMA_CTRL_NotUsed1   = $20
+DMA_CTRL_NotUsed2   = $40
+DMA_CTRL_Start_Trf  = $80
+
+DMA_DATA_2_WRITE    = $DF01 ; Write Only
+DMA_STATUS_REG      = $DF01 ; Read Only
+DMA_STATUS_TRF_IP   = $80   ; Transfer in Progress
+DMA_RESERVED_0      = $DF02
+DMA_RESERVED_1      = $DF03
+
+; Source Addy
+DMA_SOURCE_ADDY_L   = $DF04
+DMA_SOURCE_ADDY_M   = $DF05
+DMA_SOURCE_ADDY_H   = $DF06
+DMA_RESERVED_2      = $DF07
+; Destination Addy
+DMA_DEST_ADDY_L     = $DF08
+DMA_DEST_ADDY_M     = $DF09
+DMA_DEST_ADDY_H     = $DF0A
+DMA_RESERVED_3      = $DF0B
+; Size in 1D Mode
+DMA_SIZE_1D_L       = $DF0C
+DMA_SIZE_1D_M       = $DF0D
+DMA_SIZE_1D_H       = $DF0E
+DMA_RESERVED_4      = $DF0F
+; Size in 2D Mode
+DMA_SIZE_X_L        = $DF0C
+DMA_SIZE_X_H        = $DF0D
+DMA_SIZE_Y_L        = $DF0E
+DMA_SIZE_Y_H        = $DF0F
+; Stride in 2D Mode
+DMA_SRC_STRIDE_X_L  = $DF10
+DMA_SRC_STRIDE_X_H  = $DF11
+DMA_DST_STRIDE_Y_L  = $DF12
+DMA_DST_STRIDE_Y_H  = $DF13
+
+DMA_RESERVED_5      = $DF14
+DMA_RESERVED_6      = $DF15
+DMA_RESERVED_7      = $DF16
+DMA_RESERVED_8      = $DF17

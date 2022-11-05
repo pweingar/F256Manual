@@ -43,6 +43,11 @@ VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Componen
 VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
 
 VKY_CRSR_CTRL = $D010           ; Vicky Text Cursor Control
+VKY_CRSR_CHAR = $D012
+VKY_CRSR_X_L = $D014            ; Cursor X position
+VKY_CRSR_X_H = $D015
+VKY_CRSR_Y_L = $D016            ; Cursor Y position
+VKY_CRSR_Y_H = $D017
 
 ;;
 ;; Bitmap Registers
@@ -57,6 +62,9 @@ VKY_BM1_CTRL = $D108            ; Bitmap #1 Control Register
 VKY_BM1_ADDR_L = $D109          ; Bitmap #1 Address bits 7..0
 VKY_BM1_ADDR_M = $D10A          ; Bitmap #1 Address bits 15..8
 VKY_BM1_ADDR_H = $D10B          ; Bitmap #1 Address bits 17..16
+
+VKY_TXT_FGLUT = $D800           ; Text foreground CLUT
+VKY_TXT_BGLUT = $D840           ; Text background CLUT
 
 ;;
 ;; Color Lookup Tables (I/O Page 1)
