@@ -1,0 +1,100 @@
+\chapter{SD Card Interface}
+
+The \jr\ includes a controller for SD cards. This controller provides for a simplified interface to SD cards, allowing programs to relatively easily transfer blocks of data to and from an SD card. This simplified interface has its limitations, and it only works for older, standard SD cards. More advanced SD cards, like SDHC and SDXC cards, will not work with this simpler interface. The interface does provide a direct access method, however, which allows programs to send commands and data directly to an SD card. With adequate programming, any SD card should be usable with this method.
+
+The simplified interface works off the idea of a transfer. The program wanting to use the SD card sets up a transfer, providing the information the controller needs to perform the transfer, and then starts the transfer. Once the transfer is completed, the program either receives an interrupt from the SD controller or monitors the BUSY status to see if the transfer is complete. There are four types of transfers:
+
+\begin{description}
+    \item[INIT] for initializing the SD controller. A program will very rarely need to call this.
+
+    \item[DIRECT] for sending data directly over the SPI interface to the SD card. This is only needed if the program needs to access functionality on the card the SD controller does not support.
+
+    \item[READ] to read 512 bytes of data from the SD card
+
+    \item[WRITE] to write 512 bytes of data to the SD card
+\end{description}
+
+\section{Reading from the SD Card}
+To read from an SD card, a program needs to:
+\begin{enumerate}
+    \item Set the tranfer type to READ
+    \item Set the SD Address Register with the address of the desired memory block
+    \item Set the START flag to begin the transfer
+    \item Wait for the transfer to complete (either poll BUSY or wait for an interrupt)
+    \item Read bytes from RXR until RCR is 0
+\end{enumerate}
+
+\section{Writing to the SD Card}
+To write to an SD card, a program needs to:
+\begin{enumerate}
+    \item Set the tranfer type to WRITE
+    \item Set the SD Address Register with the address of the desired memory block
+    \item Write the 512 bytes to store in the block to TXR
+    \item Set the START flag to begin the transfer
+    \item Wait for the transfer to complete (either poll BUSY or wait for an interrupt)
+\end{enumerate}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xDD00+ & R & VER & \multicolumn{4}{|c|}{VER\_MAJ} & \multicolumn{4}{|c|}{VER\_MIN} \\ \hline
+            \verb+0xDD01+ & R/W & SCR & \multicolumn{7}{|c|}{---} & RESET \\ \hline
+            \verb+0xDD02+ & R/W & XTR & \multicolumn{6}{|c|}{---} & \multicolumn{2}{|c|}{XFER\_TYPE} \\ \hline
+            \verb+0xDD03+ & R/W & XCR & \multicolumn{7}{|c|}{---} & START \\ \hline
+            \verb+0xDD04+ & R & XSR & \multicolumn{7}{|c|}{---} & BUSY \\ \hline
+            \verb+0xDD05+ & R & XSR & \multicolumn{2}{|c|}{---} & \multicolumn{2}{|c|}{WRITE\_ERR} & \multicolumn{2}{|c|}{READ\_ERR}
+                & \multicolumn{2}{|c|}{INIT\_ERR}\\ \hline
+            \verb+0xDD06+ & R/W & DAR & DA7 & DA6 & DA5 & DA4 & DA3 & DA2 & DA1 & DA0 \\ \hline
+
+            \verb+0xDD07+ & R/W & \multirow{4}{*}{SAR} & SA7 & SA6 & SA5 & SA4 & SA3 & SA2 & SA1 & SA0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xDD08+ & R/W &  & SA15 & SA14 & SA13 & SA12 & SA11 & SA10 & SA9 & SA8 \\  \cline{1-2}\cline{4-11}
+            \verb+0xDD09+ & R/W &  & SA23 & SA22 & SA21 & SA20 & SA19 & SA18 & SA17 & SA16 \\  \cline{1-2}\cline{4-11}
+            \verb+0xDD0A+ & R/W &  & SA31 & SA30 & SA29 & SA28 & SA27 & SA26 & SA25 & SA24 \\ \hline
+
+            \verb+0xDD0B+ & R/W & SCLK & \multicolumn{8}{|c|}{SPI\_CLK} \\ \hline
+
+            \verb+0xDD10+ & R & RXR & RX7 & RX6 & RX5 & RX4 & RX3 & RX2 & RX1 & RX0 \\ \hline
+            \verb+0xDD12+ & R & \multirow{2}{*}{RCR} & RC15 & RC14 & RC13 & RC12 & RC11 & RC10 & RC9 & RC8 \\  \cline{1-2}\cline{4-11}
+            \verb+0xDD13+ & R & & RC7 & RC6 & RC5 & RC4 & RC3 & RC2 & RC1 & RC0 \\ \hline
+            \verb+0xDD14+ & R & RFCR & \multicolumn{7}{|c|}{---} & RX\_CLR \\ \hline
+
+            \verb+0xDD20+ & W & TXR & TX7 & TX6 & TX5 & TX4 & TX3 & TX2 & TX1 & TX0 \\ \hline
+            \verb+0xDD24+ & R & TFCR & \multicolumn{7}{|c|}{---} & TX\_CLR \\ \hline
+        \end{tabular}
+
+    \end{center}
+    \caption{VIA Registers}
+    \label{tab:via_reg}
+\end{table}
+
+\begin{description}
+    \item[VER] contains the version of the SD controller, broken up into a major version number and a minor version number
+
+    \item[SCR] is the SD control register. There is just one flag here: RESET. If set, this will cause the controller to reset itself.
+
+    \item[XTR] is the transfer type register. The SD controller supports four types of transfers: direct access (\verb+00+), initialization (\verb+01+), read from the SD card (\verb+10+), and write to the SD card (\verb+11+).
+
+    \item[XCR] is the transfer control register. There is just one flag: START. When set, this begins the transfer. It will clear itself when the transfer is done.
+
+    \item[XSR] is the transfer status register. There is one flag: BUSY. When set, the controller is busy with a transfer.
+
+    \item[XER] is the transfer error register. This contains three fields that describes any error condition for the transfer type that applies.
+
+    \item[DAR] is the register used to send and recieve data for a direct access transfer. This direct access feature is for low-level access to the SPI interface on the SD card and allows for access to more general SD cards than the higher level transfers can use.
+
+    \item[SAR] is the SD address register. This is a 32-bit address for the block of data on the SD card to read or write.
+
+    \item[SCLK] is the SPI clock register. It sets the speed of the SPI bus after SD intialization has completed.
+
+    \item[RXR] is the received data register. All data read from the SD card will be read into a 512 byte FIFO and can be read by the CPU through this register.
+
+    \item[RCR] is the 16-bit count of the number of bytes available to read from the receive FIFO. Note that the count is in big-endian format.
+
+    \item[RFCR] is the receive FIFO control register. There is one flag: RX\_CLR. When set, it will force the receive FIFO to clear. The flag will clear itself.
+
+    \item[TXR] is the transmission data register. All data written to the SD card will be written into a 512 byte FIFO through this register.
+
+    \item[TFCR] is the receive FIFO control register. There is one flag: TX\_CLR. When set, it will force the transmit FIFO to clear. The flag will clear itself.
+
+\end{description}
