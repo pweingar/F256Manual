@@ -1,6 +1,6 @@
 This project is for managing the documentation for the Foenix F256jr 8-bit computer.
 
-* [PDF](tex/c256jr_um.pdf)
+* [PDF](tex/f256jr_ref.pdf)
 * [Examples](examples)
 
 This project is for the reference manual for the F256jr. When finished, it will contain a full user's manual and example code.

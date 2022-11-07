@@ -165,3 +165,51 @@ As an example, let's say we wanted to have a fancy ``F'' for character 0:
 \end{table}
 
 The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x30, 0x7C, 0x60, 0xC0, 0xC0. We would store that sequence in I/O page 0, starting at 0xC000 (0x1F), through 0xC007 (0xC0). After that was set, any time the byte 0x00 is written to screen memory, the glyph ``F'' would be displayed in that position.
+
+\section{Text Cursor}
+
+\jr\ has a text mode cursor. The text mode cursor is implemented as a character which is displayed in a $(x, y)$ position on the screen, visually replacing the character ordinarily at that position. It may be displayed continuously, or it may flash at one of four rates. When flashing, that position in the text screen will alternate between the text cursor and the character at that position in the text matrix. The color for the text cursor comes from the color for the position on the screen as specified in the color matrix. In other words, the text cursor does not have its own color.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD010+ & R/W & CCR & \multicolumn{2}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
+            \verb+0xDC12+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
+            \verb+0xDC14+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \hline
+            \verb+0xDC15+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
+            \verb+0xDC16+ & R/W & \multirow{2}{*}{CURY} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \hline
+            \verb+0xDC17+ & R/W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Text Cursor Registers}
+    \label{tab:txt_crsr_reg}
+\end{table}
+
+\begin{description}
+    \item[ENABLE] if this flag is set (1), the cursor is enabled
+
+    \item[FLASH\_EN] if this flag is set (1), the cursor will flash. If clear (0), it will just be steady
+
+    \item[RATE] these two bits set the rate at which the cursor flashes (see table:~\label{tab:txt_crsr_rates})
+
+    \item[CCH] the character code for the cursor character to display
+
+    \item[CURX] the column number (16-bit) for the cursor
+
+    \item[CURY] the row number (16-bit) for the cursor
+\end{description}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|} \hline
+            RATE1 & RATE0 & Rate \\\hline\hline
+            0 & 0 & 1s \\ \hline
+            0 & 1 & $1/2$s \\ \hline
+            1 & 0 & $1/4$s \\ \hline
+            1 & 1 & $1/5$s \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Text Cursor Flash Rates}
+    \label{tab:txt_crsr_rates}
+\end{table}

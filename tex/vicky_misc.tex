@@ -1,0 +1,91 @@
+\chapter{Miscellaneous Features of TinyVicky}
+
+\section{The Border}
+
+The \jr's display can have a border, which overlays all the other display elements. The border can have any color which TinyVicky can display, and can have a width from 0 to 31 pixels. The border can also be turned off, leaving the full display for graphics or text.
+
+When using graphics modes, the border simply hides the graphics elements underneath it. For text mode, things are a little different. The text display will be shifted so that the character at $(0, 0)$ is still the upper-left character. The layout of the text and color matrixes do not change, however. Cells that are under the right side or bottom of the border will still be in the matrixes but will not be displayed. Another way to put it is that, if the text resolution is 80 characters wide, it will remain 80 characters per line even if the border is on and only 76 characters are displayed.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD004+ & R/W & BRDR\_CTRL & --- & \multicolumn{3}{|c|}{SCROLL\_X} & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
+            \verb+0xD005+ & R/W & BRDR\_BLUE & \multicolumn{8}{|c|}{Blue component of border color} \\ \hline
+            \verb+0xD006+ & R/W & BRDR\_GREEN & \multicolumn{8}{|c|}{Green component of border color} \\ \hline
+            \verb+0xD007+ & R/W & BRDR\_RED & \multicolumn{8}{|c|}{Red component of border color} \\ \hline
+            \verb+0xD008+ & R/W & BRDR\_WIDTH & \multicolumn{3}{|c|}{---} & \multicolumn{5}{|c|}{SIZE\_X} \\ \hline
+            \verb+0xD009+ & R/W & BRDR\_HEIGHT & \multicolumn{3}{|c|}{---} & \multicolumn{5}{|c|}{SIZE\_Y} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Border Registers}
+    \label{tab:brdr_reg}
+\end{table}
+
+\begin{description}
+    \item[ENABLE] when set (1), the border will be displayed
+
+    \item[SCROLL\_X] the number of pixels the border should be shifted in the horizontal direction
+
+    \item[BBR] the amount of blue in the border (0 = none, 255 = maximum amount)
+
+    \item[BGR] the amount of green in the border (0 = none, 255 = maximum amount)
+
+    \item[BRR] the amount of red in the border (0 = none, 255 = maximum amount)
+
+    \item[SIZE\_X] the width of the left and right sides of the border in pixels (from 0 to 31)
+
+    \item[SIZE\_X] the height of top and bottom of the border in pixels (from 0 to 31)
+\end{description}
+
+\section{Background Color}
+
+In text mode, the background color is determined by the color matrix and the text color LUTs. For the graphics modes, however, a background color is specified separately. There are three registers to specify the background color's red, green, and blue components (see table:~\ref{tab:back_reg}). This is the color that will be displayed in graphics modes, if all the layers specify that a given pixel has the color 0 (which is always the transparent pixel color).
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD00D+ & R/W & BGND\_BLUE & \multicolumn{8}{|c|}{Blue component of background color} \\ \hline
+            \verb+0xD00E+ & R/W & BGND\_GREEN & \multicolumn{8}{|c|}{Green component of background color} \\ \hline
+            \verb+0xD00F+ & R/W & BGND\_RED & \multicolumn{8}{|c|}{Red component of background color} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Background Color Registers}
+    \label{tab:back_reg}
+\end{table}
+
+\section{Line Interrupt and Beam Position}
+
+TinyVicky can trigger an interrupt when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD018+ & W & LINT\_CTRL & \multicolumn{7}{|c|}{---} & ENABLE \\ \hline
+            \verb+0xD019+ & W & \multirow{2}{*}{LINT\_L} & L7 & L6 & L5 & L4 & L3 & L2 & L1 & L0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD01A+ & W &  & \multicolumn{4}{|c|}{---} & L11 & L10 & L9 & L8 \\ \hline
+            \verb+0xD01B+ & W & --- & \multicolumn{8}{|c|}{Reserved} \\ \hline
+
+            \verb+0xD018+ & R & \multirow{2}{*}{RAST\_COL} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\  \cline{1-2}\cline{4-11}
+            \verb+0xD019+ & R & & \multicolumn{4}{|c|}{---} & X11 & X10 & X9 & X8 \\ \hline
+            \verb+0xD01A+ & R & \multirow{2}{*}{RAST\_ROW} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\  \cline{1-2}\cline{4-11}
+            \verb+0xD01B+ & R & & \multicolumn{4}{|c|}{---} & Y11 & Y10 & Y9 & Y8 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Line Interrupt and Beam Position Registers}
+    \label{tab:lint_reg}
+\end{table}
+
+\begin{description}
+    \item[ENABLE] if set (1), TinyVicky will trigger line interrupts (write only)
+
+    \item[LINT\_L] the line number (12 bits) on which to trigger the next line interrupt (write only)
+
+    \item[RAST\_COL] the number (12 bits) of the current pixel being drawn (read only)
+
+    \item[RAST\_ROW] the number (12 bits) of the current line being drawn (read only)
+\end{description}
+
+\section{Gamma Correction}
