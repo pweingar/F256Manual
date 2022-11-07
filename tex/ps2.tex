@@ -1,1 +1,35 @@
 \chapter{PS/2 Keyboard and Mouse}
+
+The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. A simple PS/2 keyboard controller is included in the \jr. The controller emulates the classic Intel 8042 keyboard controller.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD640+ & R & RXD & \multicolumn{8}{|c|}{RX\_DATA} \\ \hline
+            \verb+0xD640+ & W & TXR & \multicolumn{8}{|c|}{TX\_DATA} \\ \hline
+            \verb+0xD644+ & R & STAT & PE & TE & \multicolumn{2}{|c|}{---} & CMD\_DAT & SYSFLAG & RXF & TXF \\ \hline
+            \verb+0xD644+ & W & CMD & \multicolumn{8}{|c|}{COMMAND} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Registers}
+    \label{tab:uart_reg}
+\end{table}
+
+\begin{description}
+    \item[RXD] Data returned by either the keyboard or the controller
+
+    \item[TXD] Data to be sent to the keyboard or the controller
+
+    \item[STAT] Status register of the controller:
+    \begin{description}
+        \item[PE] Parity Error
+        \item[TE] Timeout Error
+        \item[CMD\_DAT] 0 = data written to the data register is for the PS/2 device. 1 = data is for the controller
+        \item[SYSFLAG] System flag
+        \item[RXF] If set, receive FIFO contains data
+        \item[TXF] If set, transmit FIFO is full
+    \end{description}
+
+    \item[CMD] Commands to the controller (not the keyboard) are written here
+\end{description}

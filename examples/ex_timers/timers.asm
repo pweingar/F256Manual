@@ -51,10 +51,6 @@ start:      sei                         ; Turn off interrupts
             sta INT_PEND_0              ; Clear all pending interrupts
             sta INT_PEND_1
 
-            lda #TM_CTRL_CLEAR          ; Clear timer 1
-            sta TM1_CTRL
-            stz TM1_CTRL
-
             lda #TM_CMP_CTRL_CLR        ; Set the counter to reclear on reaching the target
             sta TM1_CMP_CTRL
 
@@ -62,6 +58,13 @@ start:      sei                         ; Turn off interrupts
             sta TM1_CMP_L
             stz TM1_CMP_M
             stz TM1_CMP_H
+
+            stz TM1_VALUE_L
+            stz TM1_VALUE_M
+            stz TM1_VALUE_H
+
+            lda #TM_CTRL_CLEAR          ; Clear timer 1
+            sta TM1_CTRL
 
             ; Enable counting, counting up, clearing on reaching the target, and triggering interrupts
             lda #TM_CTRL_ENABLE | TM_CTRL_UP_DOWN | TM_CTRL_INTEN
@@ -102,6 +105,8 @@ save_count: stx counter
             jsr prhex
             lda time_tmp
             jsr prhex
+
+            stz MMU_IO_CTRL             ; Switch to I/O Page 0
 
             cli                         ; Restore interrupts
 

@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -a --mw65c02 --intel-hex --list=timers.lst --labels=timers.lbl -o timers.hex timers.asm
-; Thu Nov 03 13:58:03 2022
+; Sun Nov 06 20:51:46 2022
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -38,6 +38,11 @@
 =$d00e					VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
 =$d00f					VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
 =$d010					VKY_CRSR_CTRL = $D010           ; Vicky Text Cursor Control
+=$d012					VKY_CRSR_CHAR = $D012
+=$d014					VKY_CRSR_X_L = $D014            ; Cursor X position
+=$d015					VKY_CRSR_X_H = $D015
+=$d016					VKY_CRSR_Y_L = $D016            ; Cursor Y position
+=$d017					VKY_CRSR_Y_H = $D017
 =$d100					VKY_BM0_CTRL = $D100            ; Bitmap #0 Control Register
 =$d101					VKY_BM0_ADDR_L = $D101          ; Bitmap #0 Address bits 7..0
 =$d102					VKY_BM0_ADDR_M = $D102          ; Bitmap #0 Address bits 15..8
@@ -46,6 +51,8 @@
 =$d109					VKY_BM1_ADDR_L = $D109          ; Bitmap #1 Address bits 7..0
 =$d10a					VKY_BM1_ADDR_M = $D10A          ; Bitmap #1 Address bits 15..8
 =$d10b					VKY_BM1_ADDR_H = $D10B          ; Bitmap #1 Address bits 17..16
+=$d800					VKY_TXT_FGLUT = $D800           ; Text foreground CLUT
+=$d840					VKY_TXT_BGLUT = $D840           ; Text background CLUT
 =$d000					VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0
 =$d400					VKY_GR_CLUT_1 = $D400           ; Graphics LUT #1
 =$d800					VKY_GR_CLUT_2 = $D800           ; Graphics LUT #2
@@ -123,7 +130,7 @@
 .e000	78		sei		start:      sei                         ; Turn off interrupts
 .e001	20 81 ff	jsr $ff81	            jsr ok_cint                 ; Initialize the screen
 .e004	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
-.e006	a9 86		lda #$86	            lda #<my_int                ; Set my_int as the interrupt handler
+.e006	a9 8e		lda #$8e	            lda #<my_int                ; Set my_int as the interrupt handler
 .e008	8d fe ff	sta $fffe	            sta irq
 .e00b	a9 e0		lda #$e0	            lda #>my_int
 .e00d	8d ff ff	sta $ffff	            sta irq+1
@@ -133,92 +140,95 @@
 .e017	8d 67 d6	sta $d667	            sta INT_MASK_1              ; Disable all group 1 interrupts
 .e01a	8d 60 d6	sta $d660	            sta INT_PEND_0              ; Clear all pending interrupts
 .e01d	8d 61 d6	sta $d661	            sta INT_PEND_1
-.e020	a9 02		lda #$02	            lda #TM_CTRL_CLEAR          ; Clear timer 1
-.e022	8d 58 d6	sta $d658	            sta TM1_CTRL
-.e025	9c 58 d6	stz $d658	            stz TM1_CTRL
-.e028	a9 01		lda #$01	            lda #TM_CMP_CTRL_CLR        ; Set the counter to reclear on reaching the target
-.e02a	8d 5c d6	sta $d65c	            sta TM1_CMP_CTRL
-.e02d	a9 78		lda #$78	            lda #120                    ; Set comparison value to 120 (~2 seconds beat)
-.e02f	8d 5d d6	sta $d65d	            sta TM1_CMP_L
-.e032	9c 5e d6	stz $d65e	            stz TM1_CMP_M
-.e035	9c 5f d6	stz $d65f	            stz TM1_CMP_H
-.e038	a9 89		lda #$89	            lda #TM_CTRL_ENABLE | TM_CTRL_UP_DOWN | TM_CTRL_INTEN
-.e03a	8d 58 d6	sta $d658	            sta TM1_CTRL
-.e03d	ad 59 d6	lda $d659	            lda TM1_VALUE_L             ; Initialize our copy of the timer
-.e040	85 82		sta $82		            sta time_tmp
-.e042	ad 5a d6	lda $d65a	            lda TM1_VALUE_M
-.e045	85 83		sta $83		            sta time_tmp+1
-.e047	ad 5b d6	lda $d65b	            lda TM1_VALUE_H
-.e04a	85 84		sta $84		            sta time_tmp+2
-.e04c	64 80		stz $80		            stz counter                 ; Set the counter for the spinner to 0
-.e04e	64 81		stz $81		            stz trigger                 ; Make sure the trigger is off
-.e050	58		cli		            cli                         ; Enable interrupts
-.e051	78		sei		loop:       sei                         ; Ignore interrupts for the moment
-.e052	a9 93		lda #$93	            lda #$93                    ; CBM CLS code
-.e054	20 d2 ff	jsr $ffd2	            jsr ok_cout
-.e057	a6 80		ldx $80		            ldx counter                 ; Print a little spinner character for each interrupt
-.e059	e8		inx		            inx
-.e05a	e0 04		cpx #$04	            cpx #4
-.e05c	d0 02		bne $e060	            bne save_count
-.e05e	a2 00		ldx #$00	            ldx #0
-.e060	86 80		stx $80		save_count: stx counter
-.e062	bd db e0	lda $e0db,x	            lda spinner,x
-.e065	20 d2 ff	jsr $ffd2	            jsr ok_cout
-.e068	a9 20		lda #$20	            lda #' '                    ; Print a space
-.e06a	20 d2 ff	jsr $ffd2	            jsr ok_cout
-.e06d	a5 84		lda $84		            lda time_tmp+2              ; Print our copy of the timer
-.e06f	20 b2 e0	jsr $e0b2	            jsr prhex
-.e072	a5 83		lda $83		            lda time_tmp+1
-.e074	20 b2 e0	jsr $e0b2	            jsr prhex
-.e077	a5 82		lda $82		            lda time_tmp
-.e079	20 b2 e0	jsr $e0b2	            jsr prhex
-.e07c	58		cli		            cli                         ; Restore interrupts
-.e07d	cb		wai		wait:       wai                         ; Wait for an interrupt
-.e07e	a9 01		lda #$01	            lda #$01                    ; Wait for trigger bit 0 to be set
-.e080	14 81		trb $81		            trb trigger
-.e082	f0 f9		beq $e07d	            beq wait                    ; If not set, keep waiting
-.e084	80 cb		bra $e051	            bra loop                    ; Otherwise, print out the new timer value
-.e086					my_int:
-.e086	48		pha		            pha                         ; Save the value of the interrupted code's accumulator
-.e087	a5 01		lda $01		            lda MMU_IO_CTRL             ; Save the interrupted I/O page
-.e089	48		pha		            pha
-.e08a	64 01		stz $01		            stz MMU_IO_CTRL             ; Go back to I/O page 0
-.e08c	ad 60 d6	lda $d660	            lda INT_PEND_0              ; Only process interrupt if it's from TIMER1
-.e08f	29 20		and #$20	            and #INT05_TIMER_1
-.e091	c9 20		cmp #$20	            cmp #INT05_TIMER_1
-.e093	d0 13		bne $e0a8	            bne skip_irq
-.e095	ad 59 d6	lda $d659	            lda TM1_VALUE_L             ; Just copy the time over
-.e098	85 82		sta $82		            sta time_tmp
-.e09a	ad 5a d6	lda $d65a	            lda TM1_VALUE_M
-.e09d	85 83		sta $83		            sta time_tmp+1
-.e09f	ad 5b d6	lda $d65b	            lda TM1_VALUE_H
-.e0a2	85 84		sta $84		            sta time_tmp+2
-.e0a4	a9 01		lda #$01	            lda #$01                    ; Trigger the printing of the result
-.e0a6	85 81		sta $81		            sta trigger
-.e0a8	a9 ff		lda #$ff	skip_irq:   lda #$FF
-.e0aa	8d 60 d6	sta $d660	            sta INT_PEND_0              ; Clear the interrupt
-.e0ad	68		pla		            pla                         ; Restore the original I/O page
-.e0ae	85 01		sta $01		            sta MMU_IO_CTRL
-.e0b0	68		pla		            pla                         ; Restore the value of the interrupted code's accumulator
-.e0b1	40		rti		            rti
-.e0b2					prhex:
-.e0b2	48		pha		            pha
-.e0b3	4a		lsr a		            lsr a
-.e0b4	4a		lsr a		            lsr a
-.e0b5	4a		lsr a		            lsr a
-.e0b6	4a		lsr a		            lsr a
-.e0b7	29 0f		and #$0f	            and #$0F
-.e0b9	aa		tax		            tax
-.e0ba	bd cb e0	lda $e0cb,x	            lda hexdigits,x
-.e0bd	20 d2 ff	jsr $ffd2	            jsr ok_cout
-.e0c0	68		pla		            pla
-.e0c1	29 0f		and #$0f	            and #$0F
-.e0c3	aa		tax		            tax
-.e0c4	bd cb e0	lda $e0cb,x	            lda hexdigits,x
-.e0c7	20 d2 ff	jsr $ffd2	            jsr ok_cout
-.e0ca	60		rts		            rts
->e0cb	30 31 32 33 34 35 36 37		hexdigits:  .text "0123456789ABCDEF"
->e0d3	38 39 c1 c2 c3 c4 c5 c6
->e0db	2d 5c 7c 2f			spinner:    .byte $2D, $5C, $7C, $2F
+.e020	a9 01		lda #$01	            lda #TM_CMP_CTRL_CLR        ; Set the counter to reclear on reaching the target
+.e022	8d 5c d6	sta $d65c	            sta TM1_CMP_CTRL
+.e025	a9 78		lda #$78	            lda #120                    ; Set comparison value to 120 (~2 seconds beat)
+.e027	8d 5d d6	sta $d65d	            sta TM1_CMP_L
+.e02a	9c 5e d6	stz $d65e	            stz TM1_CMP_M
+.e02d	9c 5f d6	stz $d65f	            stz TM1_CMP_H
+.e030	9c 59 d6	stz $d659	            stz TM1_VALUE_L
+.e033	9c 5a d6	stz $d65a	            stz TM1_VALUE_M
+.e036	9c 5b d6	stz $d65b	            stz TM1_VALUE_H
+.e039	a9 02		lda #$02	            lda #TM_CTRL_CLEAR          ; Clear timer 1
+.e03b	8d 58 d6	sta $d658	            sta TM1_CTRL
+.e03e	a9 89		lda #$89	            lda #TM_CTRL_ENABLE | TM_CTRL_UP_DOWN | TM_CTRL_INTEN
+.e040	8d 58 d6	sta $d658	            sta TM1_CTRL
+.e043	ad 59 d6	lda $d659	            lda TM1_VALUE_L             ; Initialize our copy of the timer
+.e046	85 82		sta $82		            sta time_tmp
+.e048	ad 5a d6	lda $d65a	            lda TM1_VALUE_M
+.e04b	85 83		sta $83		            sta time_tmp+1
+.e04d	ad 5b d6	lda $d65b	            lda TM1_VALUE_H
+.e050	85 84		sta $84		            sta time_tmp+2
+.e052	64 80		stz $80		            stz counter                 ; Set the counter for the spinner to 0
+.e054	64 81		stz $81		            stz trigger                 ; Make sure the trigger is off
+.e056	58		cli		            cli                         ; Enable interrupts
+.e057	78		sei		loop:       sei                         ; Ignore interrupts for the moment
+.e058	a9 93		lda #$93	            lda #$93                    ; CBM CLS code
+.e05a	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e05d	a6 80		ldx $80		            ldx counter                 ; Print a little spinner character for each interrupt
+.e05f	e8		inx		            inx
+.e060	e0 04		cpx #$04	            cpx #4
+.e062	d0 02		bne $e066	            bne save_count
+.e064	a2 00		ldx #$00	            ldx #0
+.e066	86 80		stx $80		save_count: stx counter
+.e068	bd e3 e0	lda $e0e3,x	            lda spinner,x
+.e06b	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e06e	a9 20		lda #$20	            lda #' '                    ; Print a space
+.e070	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e073	a5 84		lda $84		            lda time_tmp+2              ; Print our copy of the timer
+.e075	20 ba e0	jsr $e0ba	            jsr prhex
+.e078	a5 83		lda $83		            lda time_tmp+1
+.e07a	20 ba e0	jsr $e0ba	            jsr prhex
+.e07d	a5 82		lda $82		            lda time_tmp
+.e07f	20 ba e0	jsr $e0ba	            jsr prhex
+.e082	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
+.e084	58		cli		            cli                         ; Restore interrupts
+.e085	cb		wai		wait:       wai                         ; Wait for an interrupt
+.e086	a9 01		lda #$01	            lda #$01                    ; Wait for trigger bit 0 to be set
+.e088	14 81		trb $81		            trb trigger
+.e08a	f0 f9		beq $e085	            beq wait                    ; If not set, keep waiting
+.e08c	80 c9		bra $e057	            bra loop                    ; Otherwise, print out the new timer value
+.e08e					my_int:
+.e08e	48		pha		            pha                         ; Save the value of the interrupted code's accumulator
+.e08f	a5 01		lda $01		            lda MMU_IO_CTRL             ; Save the interrupted I/O page
+.e091	48		pha		            pha
+.e092	64 01		stz $01		            stz MMU_IO_CTRL             ; Go back to I/O page 0
+.e094	ad 60 d6	lda $d660	            lda INT_PEND_0              ; Only process interrupt if it's from TIMER1
+.e097	29 20		and #$20	            and #INT05_TIMER_1
+.e099	c9 20		cmp #$20	            cmp #INT05_TIMER_1
+.e09b	d0 13		bne $e0b0	            bne skip_irq
+.e09d	ad 59 d6	lda $d659	            lda TM1_VALUE_L             ; Just copy the time over
+.e0a0	85 82		sta $82		            sta time_tmp
+.e0a2	ad 5a d6	lda $d65a	            lda TM1_VALUE_M
+.e0a5	85 83		sta $83		            sta time_tmp+1
+.e0a7	ad 5b d6	lda $d65b	            lda TM1_VALUE_H
+.e0aa	85 84		sta $84		            sta time_tmp+2
+.e0ac	a9 01		lda #$01	            lda #$01                    ; Trigger the printing of the result
+.e0ae	85 81		sta $81		            sta trigger
+.e0b0	a9 ff		lda #$ff	skip_irq:   lda #$FF
+.e0b2	8d 60 d6	sta $d660	            sta INT_PEND_0              ; Clear the interrupt
+.e0b5	68		pla		            pla                         ; Restore the original I/O page
+.e0b6	85 01		sta $01		            sta MMU_IO_CTRL
+.e0b8	68		pla		            pla                         ; Restore the value of the interrupted code's accumulator
+.e0b9	40		rti		            rti
+.e0ba					prhex:
+.e0ba	48		pha		            pha
+.e0bb	4a		lsr a		            lsr a
+.e0bc	4a		lsr a		            lsr a
+.e0bd	4a		lsr a		            lsr a
+.e0be	4a		lsr a		            lsr a
+.e0bf	29 0f		and #$0f	            and #$0F
+.e0c1	aa		tax		            tax
+.e0c2	bd d3 e0	lda $e0d3,x	            lda hexdigits,x
+.e0c5	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e0c8	68		pla		            pla
+.e0c9	29 0f		and #$0f	            and #$0F
+.e0cb	aa		tax		            tax
+.e0cc	bd d3 e0	lda $e0d3,x	            lda hexdigits,x
+.e0cf	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e0d2	60		rts		            rts
+>e0d3	30 31 32 33 34 35 36 37		hexdigits:  .text "0123456789ABCDEF"
+>e0db	38 39 c1 c2 c3 c4 c5 c6
+>e0e3	2d 5c 7c 2f			spinner:    .byte $2D, $5C, $7C, $2F
 
 ;******  End of listing

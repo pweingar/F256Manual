@@ -1,1 +1,84 @@
 \chapter{Serial and Wi-Fi Port}
+
+The \jr\ has a simple UART for serial communications. This UART can be used to provide an RS-232 serial connection (via an IDC header on the board compatible with IDC to DB-9 cables) or a Wi-Fi serial connection using an ESP Feather adapter board. The UART is compatible with the standard 16750.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \multicolumn{11}{|c|}{DLAB = 0} \\ \hline
+            \verb+0xD630+ & R & RXD & \multicolumn{8}{|c|}{RX\_DATA} \\ \hline
+            \verb+0xD630+ & W & TXR & \multicolumn{8}{|c|}{TX\_DATA} \\ \hline
+            \verb+0xD631+ & R/W & IER & \multicolumn{4}{|c|}{---} & STATUS & ERROR & TX\_EMPTY & RX\_AVAIL \\ \hline
+            \verb+0xD632+ & R & ISR & \multicolumn{4}{|c|}{---} & STATUS & ERROR & TX\_EMPTY & RX\_AVAIL \\ \hline
+            \verb+0xD632+ & W & FCR & \multicolumn{2}{|c|}{RXT} & FIFO64 & --- & --- & TX\_RST & RX\_RST & FIFO\_EN \\ \hline
+            \verb+0xD633+ & R/W & LCR & DLAB & --- & \multicolumn{3}{|c|}{PARITY} & STOP & \multicolumn{2}{|c|}{DATA} \\ \hline
+            \verb+0xD634+ & R/W & MCR & \multicolumn{3}{|c|}{---} & LOOP & OUT2 & OUT1 & RTS & DTR \\ \hline
+            \verb+0xD635+ & R & LSR & ERROR & TEMT & THRE & BI & FE & PE & OE & DR \\ \hline
+            \verb+0xD636+ & R/W & MSR & DCD & RI & DSR & CTS & DDCD & TERI & DDSR & DCTS \\ \hline
+            \verb+0xD637+ & R & SPR & \multicolumn{8}{|c|}{scratch data} \\ \hline\hline
+
+            \multicolumn{11}{|c|}{DLAB = 1} \\ \hline
+            \verb+0xD630+ & R/W & DLL & DIV7 & DIV6 & DIV5 & DIV4 & DIV3 & DIV2 & DIV1 & DIV0 \\ \hline
+            \verb+0xD631+ & R/W & DLH & DIV15 & DIV14 & DIV13 & DIV12 & DIV11 & DIV10 & DIV9 & DIV8 \\ \hline
+            \verb+0xD632+ & W & PSD & \multicolumn{8}{|c|}{prescaler division} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Registers}
+    \label{tab:uart_reg}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|} \hline
+            LCR1 & LCR0 & Length \\ \hline\hline
+            0 & 0 & 5 \\ \hline
+            0 & 1 & 6 \\ \hline
+            1 & 0 & 7 \\ \hline
+            1 & 1 & 8 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Data Length}
+    \label{tab:uart_data}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|} \hline
+            LCR2 & Stop Bits \\ \hline\hline
+            0 & 1 \\ \hline
+            1 & 1.5 or 2 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Stop Bits}
+    \label{tab:uart_stop}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|} \hline
+            LCR5 & LCR4 & LCR3 & Parity \\ \hline\hline
+            --- & --- & 0 & NONE \\ \hline
+            0 & 0 & 1 & ODD \\ \hline
+            0 & 1 & 1 & EVEN \\ \hline
+            1 & 0 & 1 & MARK \\ \hline
+            1 & 1 & 1 & SPACE \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Parity}
+    \label{tab:uart_parity}
+\end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|} \hline
+            FCR7 & FCR6 & Trigger Level (bytes) \\ \hline\hline
+            0 & 0 & 1 \\ \hline
+            0 & 1 & 4 \\ \hline
+            1 & 0 & 8 \\ \hline
+            1 & 1 & 14 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART RX FIFO Trigger}
+    \label{tab:uart_rx_trig}
+\end{table}

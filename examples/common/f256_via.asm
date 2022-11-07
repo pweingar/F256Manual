@@ -1,0 +1,8 @@
+;;;
+;;; The Jr's VIA
+;;;
+
+VIA_IORB = $DC00
+VIA_IORA = $DC01
+VIA_DDRB = $DC02
+VIA_DDRA = $DC03

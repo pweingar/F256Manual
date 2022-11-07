@@ -1,0 +1,106 @@
+
+; 64tass Turbo Assembler Macro V1.55.2200 listing file
+; 64tass -a --mw65c02 --intel-hex --list=via.lst --labels=via.lbl -o via.hex via.asm
+; Sun Nov 06 20:27:49 2022
+
+;Offset	;Hex		;Monitor	;Source
+
+;******  Processing input file: via.asm
+
+
+;******  Processing file: ../common/f256jr.asm
+
+=$0000					MMU_MEM_CTRL = $0000            ; MMU Memory Control Register
+=$0001					MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+=$00					MMU_IO_PAGE_0 = $00
+=$01					MMU_IO_PAGE_1 = $01
+=$02					MMU_IO_TEXT = $02
+=$03					MMU_IO_COLOR = $03
+=$0008					MMU_MEM_BANK_0 = $0008          ; MMU Edit Register for bank 0 ($0000 - $1FFF)
+=$0009					MMU_MEM_BANK_1 = $0009          ; MMU Edit Register for bank 1 ($2000 - $3FFF)
+=$000a					MMU_MEM_BANK_2 = $000A          ; MMU Edit Register for bank 2 ($4000 - $5FFF)
+=$000b					MMU_MEM_BANK_3 = $000B          ; MMU Edit Register for bank 3 ($6000 - $7FFF)
+=$000c					MMU_MEM_BANK_4 = $000C          ; MMU Edit Register for bank 4 ($8000 - $9FFF)
+=$000d					MMU_MEM_BANK_5 = $000D          ; MMU Edit Register for bank 5 ($A000 - $BFFF)
+=$000e					MMU_MEM_BANK_6 = $000E          ; MMU Edit Register for bank 6 ($C000 - $DFFF)
+=$000f					MMU_MEM_BANK_7 = $000F          ; MMU Edit Register for bank 7 ($E000 - $FFFF)
+=$d000					VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
+=$d001					VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
+=$d002					VKY_LAYER_CTRL_0 = $D002        ; Vicky Layer Control Register 0
+=$d003					VKY_LAYER_CTRL_1 = $D003        ; Vicky Layer Control Register 1
+=$d004					VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
+=$d005					VKY_BRDR_COL_B = $D005          ; Vicky Border Color -- Blue
+=$d006					VKY_BRDR_COL_G = $D006          ; Vicky Border Color -- Green
+=$d007					VKY_BRDR_COL_R = $D007          ; Vicky Border Color -- Red
+=$d008					VKY_BRDR_VERT = $D008           ; Vicky Border vertical thickness in pixels
+=$d009					VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
+=$d00d					VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
+=$d00e					VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
+=$d00f					VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
+=$d010					VKY_CRSR_CTRL = $D010           ; Vicky Text Cursor Control
+=$d012					VKY_CRSR_CHAR = $D012
+=$d014					VKY_CRSR_X_L = $D014            ; Cursor X position
+=$d015					VKY_CRSR_X_H = $D015
+=$d016					VKY_CRSR_Y_L = $D016            ; Cursor Y position
+=$d017					VKY_CRSR_Y_H = $D017
+=$d100					VKY_BM0_CTRL = $D100            ; Bitmap #0 Control Register
+=$d101					VKY_BM0_ADDR_L = $D101          ; Bitmap #0 Address bits 7..0
+=$d102					VKY_BM0_ADDR_M = $D102          ; Bitmap #0 Address bits 15..8
+=$d103					VKY_BM0_ADDR_H = $D103          ; Bitmap #0 Address bits 17..16
+=$d108					VKY_BM1_CTRL = $D108            ; Bitmap #1 Control Register
+=$d109					VKY_BM1_ADDR_L = $D109          ; Bitmap #1 Address bits 7..0
+=$d10a					VKY_BM1_ADDR_M = $D10A          ; Bitmap #1 Address bits 15..8
+=$d10b					VKY_BM1_ADDR_H = $D10B          ; Bitmap #1 Address bits 17..16
+=$d800					VKY_TXT_FGLUT = $D800           ; Text foreground CLUT
+=$d840					VKY_TXT_BGLUT = $D840           ; Text background CLUT
+=$d000					VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0
+=$d400					VKY_GR_CLUT_1 = $D400           ; Graphics LUT #1
+=$d800					VKY_GR_CLUT_2 = $D800           ; Graphics LUT #2
+=$dc00					VKY_GR_CLUT_3 = $DC00           ; Graphics LUT #3
+
+;******  Return to file: via.asm
+
+
+;******  Processing file: ../common/f256_via.asm
+
+=$dc00					VIA_IORB = $DC00
+=$dc01					VIA_IORA = $DC01
+=$dc02					VIA_DDRB = $DC02
+=$dc03					VIA_DDRA = $DC03
+
+;******  Return to file: via.asm
+
+=$ff81					ok_cint = $FF81
+=$ffd2					ok_cout = $FFD2
+>0080					value:      .byte ?                     ; Variable to store the previous value of the joystick
+>0081					prv:        .byte ?
+>fffc	00 e0				reset:  .word <>start
+>fffe					irq:    .word ?
+.e000	20 81 ff	jsr $ff81	start:      jsr ok_cint                 ; Set up the screen
+.e003	a9 ff		lda #$ff	            lda #$FF                    ; Set the previous value to $FF
+.e005	85 80		sta $80		            sta value
+.e007	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
+.e009	a9 00		lda #$00	            lda #$00                    ; Set VIA Port A to input
+.e00b	8d 02 dc	sta $dc02	            sta VIA_DDRB
+.e00e	a9 93		lda #$93	loop:       lda #147                    ; Print the CBM clear screen code
+.e010	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e013	a5 80		lda $80		            lda value                   ; Copy the value to prv
+.e015	85 81		sta $81		            sta prv
+.e017	a2 08		ldx #$08	            ldx #8                      ; Loop for all eight bits
+.e019	06 81		asl $81		loop2:      asl prv                     ; Shift MSB into the carry
+.e01b	90 07		bcc $e024	            bcc is0                     ; If it's 0, print '0'
+.e01d	a9 31		lda #$31	            lda #'1'                    ; Otherwise, print '1'
+.e01f	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e022	80 05		bra $e029	            bra repeat                  ; And go to the next bit
+.e024	a9 30		lda #$30	is0:        lda #'0'                    ; Print '0'
+.e026	20 d2 ff	jsr $ffd2	            jsr ok_cout
+.e029	ca		dex		repeat:     dex                         ; Count down
+.e02a	d0 ed		bne $e019	            bne loop2                   ; Repeat until we've done all 8 bits
+.e02c	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
+.e02e	ad 00 dc	lda $dc00	wait:       lda VIA_IORB                ; Get the status of port A
+.e031	c5 80		cmp $80		            cmp value                   ; Is it different from before?
+.e033	f0 f9		beq $e02e	            beq wait                    ; Yes: keep waiting
+.e035	85 80		sta $80		            sta value                   ; Save this value as the previous one
+.e037	80 d5		bra $e00e	            bra loop                    ; And go back to waiting for the joystick
+
+;******  End of listing
