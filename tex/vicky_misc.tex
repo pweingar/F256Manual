@@ -1,5 +1,29 @@
 \chapter{Miscellaneous Features of TinyVicky}
 
+\section{DIP Switches}
+
+\jr\ has eight DIP switches on the board, which can be used to configure various options. The DIP switches are present on a single register (see table:~\ref{tab:dip_reg}). The DIP switches ground their signals when placed in their ``on'' positions. So a true or asserted value is 0, while the false or de-asserted value is 1.
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD670+ & R & GAMMA & USER2 & USER1 & USER0 & \multicolumn{4}{|c|}{BOOT} \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{DIP Switch Register}
+    \label{tab:dip_reg}
+\end{table}
+
+There are five fields of switches:
+\begin{description}
+    \item[GAMMA] this is a dedicated switch to indicate if gamma correction should be turned on (0) or not (1)
+
+    \item[USER0, USER1, USER2] these three switches are reserved for use by the operating system or programs. On is 0, off is 1.
+
+    \item[BOOT] these four switches provide information to the operating system for boot options.
+\end{description}
+
 \section{The Border}
 
 The \jr's display can have a border, which overlays all the other display elements. The border can have any color which TinyVicky can display, and can have a width from 0 to 31 pixels. The border can also be turned off, leaving the full display for graphics or text.
@@ -89,3 +113,14 @@ TinyVicky can trigger an interrupt when the display has reached a given raster l
 \end{description}
 
 \section{Gamma Correction}
+
+TinyVicky has the ability to apply gamma correction to the video signal. This allows users to adjust their images to match their monitors. Activating gamma correction is done by setting the GAMMA flag in the Vicky master control register (see table:~\ref{tab:vky_master_ctrl_reg}). When enabled, colors will be adjusted through the gamma look up tables. There are three tables: blue is at 0xC000, green is at 0xC400, and red is at 0xC800.
+
+The way that the gamma look up tables work is very straight forward. When drawing a pixel, the separate color components are used as indexes into their respective gamma LUTs, and the value in the LUT is used as the new component value. For instance, if a pixel's color is $(r, g, b)$, then the new color is:
+\begin{verbatim}
+    r_corrected = gamma_red[r]
+    g_corrected = gamma_green[g]
+    b_corrected = gamma_blue[b]
+\end{verbatim}
+
+On power up, TinyVicky sets up a default gamma correction of 1.8, although software (either the user's program or the operating system) has to turn on gamma correction to use it.

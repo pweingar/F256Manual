@@ -99,9 +99,17 @@ The top of the board has several connectors and other features that should be ex
     \label{fig:top}
 \end{figure}
 
-\section{Set Up}
+\section{System Architecture}
 
-\section{DIP Switches}
+For being so small, the \jr\ has a lot of components to it, so it is worth mapping out the over all structure of the computer. One of the main things to note is that most of what makes the \jr\ the \jr\ is the FPGA TinyVicky. TinyVicky provides the MMU, the various text and graphics engines, most of the I/O devices, controllers for the sound chips, and the controller for the first 256KB of SRAM. The CPU, VIA, RTC, flash memory, and expansion RAM are separate from TinyVicky, although TinyVicky is still responsible for translating CPU addresses to the appropriate chip selection logic and bank selection. One of the most important aspects of this architecture is that, while the first 256KB of SRAM is accessible to both the CPU and TinyVicky, TinyVicky cannot access the data in the flash or in any expansion RAM.
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.80]{images/f256jr_layout.pdf}
+    \end{center}
+    \caption{F256jr Internal Architecture}
+    \label{fig:arch}
+\end{figure}
 
 \input{memory.tex}
 \input{text.tex}

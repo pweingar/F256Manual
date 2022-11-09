@@ -59,6 +59,18 @@ While a sprite can be assigned to any of four layers, this layer is only used fo
 
 The best practice for assigning sprites is to place the images that need to be on top in the first sprites and those that need to be in the back in the higher numbered sprites. Use the LAYER field for the sprites to control how the sprites layer with the tile maps and bitmaps.
 
+\section{Sprite Positioning}
+
+The coordinate system for sprites is similar to that for bitmap graphics, but it is offset by 32 pixels in both the horizontal and vertical directions. There is a sort of margin area around the entire displayed screen that a sprite can be in and be either partially or completely hidden from view. The horizontal coordinate for a sprite ranges from 0 to 352. The vertical coordinate can range from 0 to 232 or 272, depending on the vertical resolution. For a sprite to have its top-left corner in the top-left of the screen, its position would need to be $(32, 32)$. This coordinate system is the same for all sprites, regardless of their size. Figure:~\ref{fig:sprite_positions} shows how the coordinate system is arranged.
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{images/SpritePositions.pdf}
+    \end{center}
+    \caption{Sprite Positions}
+    \label{fig:sprite_positions}
+\end{figure}
+
 \example{Displaying a Sprite}
 In this example, we'll just put a ball on the screen. First, the program needs to set up TinyVicky to be in sprite mode with no border and a light purple background:
 

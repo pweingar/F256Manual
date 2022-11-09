@@ -2,6 +2,75 @@
 
 \section{Interval Timers}
 
+The \jr\ provides two 24-bit timers. The two timers work on different clocks: timer 0 works off the CPU clock (6.29 MHz), while timer 1 works off the start-of-frame timing (either 60 Hz or 70 Hz, depending on the resolution). The timers have a few features in how they time things:
+
+\begin{itemize}
+    \item they can count up from 0 or down from a starting value
+
+    \item they can be set to trigger an interrupt on a comparison value
+
+    \item they can either reload a start value or reset the value to 0 on reaching the target value
+\end{itemize}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+			\verb+D650+ & W & T0\_CTR & INT\_EN & \multicolumn{3}{|c|}{---} & UP & CLR & LD & EN \\ \hline
+			\verb+D650+ & R & T0\_STAT & \multicolumn{7}{|c|}{---} & EQ \\ \hline
+
+			\verb+D651+ & R/W & \multirow{3}{*}{T0\_VAL} & V7 & V6 & V5 & V4 & V3 & V2 & V1 & V0 \\ \cline{1-2}\cline{4-11}
+			\verb+D652+ & R/W &  & V15 & V14 & V13 & V12 & V11 & V10 & V9 & V8 \\ \cline{1-2}\cline{4-11}
+			\verb+D653+ & R/W &  & V23 & V22 & V21 & V20 & V19 & V18 & V7 & V6 \\ \hline
+
+			\verb+D654+ & R/W & T0\_CMP\_CTR & \multicolumn{6}{|c|}{---} & RELD & RECLR \\ \hline
+
+			\verb+D655+ & R/W & \multirow{3}{*}{T0\_CMP} & C7 & C6 & C5 & C4 & C3 & C2 & C1 & C0 \\ \cline{1-2}\cline{4-11}
+			\verb+D656+ & R/W &  & C15 & C14 & C13 & C12 & C11 & C10 & C9 & C8 \\ \cline{1-2}\cline{4-11}
+			\verb+D657+ & R/W &  & C23 & C22 & C21 & C20 & C19 & C18 & C17 & C16 \\ \hline\hline
+
+			\verb+D658+ & W & T1\_CTR & INT\_EN & \multicolumn{3}{|c|}{---} & UP & CLR & LD & EN \\ \hline
+			\verb+D658+ & R & T1\_STAT & \multicolumn{7}{|c|}{---} & EQ \\ \hline
+
+			\verb+D659+ & R/W & \multirow{3}{*}{T1\_VAL} & V7 & V6 & V5 & V4 & V3 & V2 & V1 & V0 \\ \cline{1-2}\cline{4-11}
+			\verb+D65A+ & R/W &  & V15 & V14 & V13 & V12 & V11 & V10 & V9 & V8 \\ \cline{1-2}\cline{4-11}
+			\verb+D65B+ & R/W &  & V23 & V22 & V21 & V20 & V19 & V18 & V7 & V6 \\ \hline
+
+			\verb+D65C+ & R/W & T1\_CMP\_CTR & \multicolumn{6}{|c|}{---} & RELD & RECLR \\ \hline
+
+			\verb+D65D+ & R/W & \multirow{3}{*}{T1\_CMP} & C7 & C6 & C5 & C4 & C3 & C2 & C1 & C0 \\ \cline{1-2}\cline{4-11}
+			\verb+D65E+ & R/W &  & C15 & C14 & C13 & C12 & C11 & C10 & C9 & C8 \\ \cline{1-2}\cline{4-11}
+			\verb+D65F+ & R/W &  & C23 & C22 & C21 & C20 & C19 & C18 & C17 & C16 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Timer Registers}
+    \label{tab:timer_reg}
+\end{table}
+
+There are five registers for each timer:
+\begin{description}
+    \item[CTR] the master control register for the timer. There are five flags:
+        \begin{description}
+            \item[INT\_EN] if set, the timer will trigger an interrupt on reaching the target value
+
+            \item[UP] if set, the timer will count up. If clear, it will count down.
+
+            \item[CLR] if set, the timer will reset to 0
+
+            \item[LD] if set, the timer will be set to the last value written to VAL
+
+            \item[EN] if set, the timer will count clock ticks
+        \end{description}
+
+    \item[STAT] this register (read on the same address as CTR) has just one flag EQ, which indicates if the timer has reached the target value
+
+    \item[VAL] when read, gives the current value of the timer. When written, sets the value to use when loading the timer.
+
+    \item[CMP\_CTR] this register contains two flags to control what happens when the target value is reached. When RECLR is set, the timer will return to 0 on reaching the target value. When RELD is set, the timer will be set to the last value written to VAL.
+
+    \item[CMP] this register contains the target value for comparison
+\end{description}
+
 \section{Real Time Clock}
 
 For programs needing to keep track of time, \jr\ provides a real time clock chip (RTC), the bq4802. This chip, keeps track of the year (including century), month, day, hour (in 12 or 24 hour mode), minute, and second. The coin cell battery on the \jr\ motherboard is to provide power to the RTC so it can continue tracking time even when the \jr\ is turned off or unplugged. Additionally, the RTC can send interrupts to the CPU, either periodically or at a specific time.

@@ -1,0 +1,35 @@
+\chapter{IEC Serial Port}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD680+ & R & IEC\_IN & \multicolumn{4}{|c|}{---} & SREQ & ATN & CLK & DATA \\ \hline
+            \verb+0xDC01+ & R/W & IEC\_OUT & SREQ & RST & --- ATN & --- & --- & CLK & DATA\\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{VIA Registers}
+    \label{tab:via_reg}
+\end{table}
+
+IEC_INPUT_PORT  = $D680 ; Read Only, this is the Value on the BUS
+IEC_DATA_i  = $01
+IEC_CLK_i   = $02
+IEC_ATN_i   = $10
+IEC_SREQ_i  = $80
+
+; IEC Output PORT
+; Bit[0] IEC_DATA_o
+; Bit[1] IEC_CLK_o
+; Bit[2] Always 0
+; Bit[3] Always 0
+; Bit[4] IEC_ATN_o
+; Bit[5] Always 0
+; Bit[6] Always 0
+; Bit[7] IEC_SREQ_o
+IEC_OUTPUT_PORT = $D681 ; Read and Write, When you read you read back the value written
+IEC_DATA_o  = $01
+IEC_CLK_o   = $02
+IEC_ATN_o   = $10
+IEC_RST_o   = $40 ; REV B - ONLY
+IEC_SREQ_o  = $80
