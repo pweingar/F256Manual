@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -a --mw65c02 --intel-hex --list=via.lst --labels=via.lbl -o via.hex via.asm
-; Sun Nov 06 20:27:49 2022
+; Thu Nov 10 10:44:50 2022
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -81,8 +81,8 @@
 .e005	85 80		sta $80		            sta value
 .e007	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
 .e009	a9 00		lda #$00	            lda #$00                    ; Set VIA Port A to input
-.e00b	8d 02 dc	sta $dc02	            sta VIA_DDRB
-.e00e	a9 93		lda #$93	loop:       lda #147                    ; Print the CBM clear screen code
+.e00b	8d 03 dc	sta $dc03	            sta VIA_DDRA
+.e00e	a9 93		lda #$93	loop1:      lda #147                    ; Print the CBM clear screen code
 .e010	20 d2 ff	jsr $ffd2	            jsr ok_cout
 .e013	a5 80		lda $80		            lda value                   ; Copy the value to prv
 .e015	85 81		sta $81		            sta prv
@@ -97,10 +97,10 @@
 .e029	ca		dex		repeat:     dex                         ; Count down
 .e02a	d0 ed		bne $e019	            bne loop2                   ; Repeat until we've done all 8 bits
 .e02c	64 01		stz $01		            stz MMU_IO_CTRL             ; Switch to I/O Page 0
-.e02e	ad 00 dc	lda $dc00	wait:       lda VIA_IORB                ; Get the status of port A
+.e02e	ad 01 dc	lda $dc01	wait:       lda VIA_IORA                ; Get the status of port A
 .e031	c5 80		cmp $80		            cmp value                   ; Is it different from before?
 .e033	f0 f9		beq $e02e	            beq wait                    ; Yes: keep waiting
 .e035	85 80		sta $80		            sta value                   ; Save this value as the previous one
-.e037	80 d5		bra $e00e	            bra loop                    ; And go back to waiting for the joystick
+.e037	80 d5		bra $e00e	            bra loop1                   ; And go back to waiting for the joystick
 
 ;******  End of listing

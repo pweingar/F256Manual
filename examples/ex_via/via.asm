@@ -36,9 +36,9 @@ start:      jsr ok_cint                 ; Set up the screen
             stz MMU_IO_CTRL             ; Switch to I/O Page 0
 
             lda #$00                    ; Set VIA Port A to input
-            sta VIA_DDRB
+            sta VIA_DDRA
 
-loop:       lda #147                    ; Print the CBM clear screen code
+loop1:      lda #147                    ; Print the CBM clear screen code
             jsr ok_cout
 
             lda value                   ; Copy the value to prv
@@ -60,10 +60,10 @@ repeat:     dex                         ; Count down
 
             stz MMU_IO_CTRL             ; Switch to I/O Page 0
 
-wait:       lda VIA_IORB                ; Get the status of port A
+wait:       lda VIA_IORA                ; Get the status of port A
             cmp value                   ; Is it different from before?
             beq wait                    ; Yes: keep waiting
 
             sta value                   ; Save this value as the previous one
 
-            bra loop                    ; And go back to waiting for the joystick
+            bra loop1                   ; And go back to waiting for the joystick
