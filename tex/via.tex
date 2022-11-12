@@ -59,7 +59,7 @@ A complete description of the VIA would be rather long, so this guide will merel
 
     \item[SR] is the shift register. Serial input may be read here, or data may be written here to be shifted out.
 
-    \item[ACR] Auxillary Control Register. Contains fields to control the function of timer 1, timer 2, the shift register, and how Port A and Port B latch data.
+    \item[ACR] Auxiliary Control Register. Contains fields to control the function of timer 1, timer 2, the shift register, and how Port A and Port B latch data.
 
     \item[PCR] Peripheral Control Register. Contains fields to control how the CA1, CA2, CB1, and CB2 handshake pins are used.
 
@@ -73,7 +73,15 @@ A complete description of the VIA would be rather long, so this guide will merel
 
 \section{Joystick Support}
 
-The \jr\ has two IDC headers compatible with standard IDC to DB-9 cables and which may be used to connect Atari style joysticks. Joystick header 0 is wired to the pins of Port A, and joystick header 1 is connected to Port B. The various joystick switches are connected to the ports in same manner as on the C-64, with the exception that more buttons are supported (see table:~\ref{tab:via_joystick}).
+The \jr\ has two IDC headers that can be connected to a DB-9 socket to allow Atari style joysticks to be used (see figure:~\ref{fig:joystick_ports} for the pinouts). Joystick header 0 is wired to the pins of Port B, and joystick header 1 is connected to Port A. The various joystick switches are connected to the ports in same manner as on the C-64, with the exception that more buttons are supported (see table:~\ref{tab:via_joystick}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{images/f256jr_joystick_pinout.pdf}
+    \end{center}
+    \caption{Joystick Port Pinouts}
+    \label{fig:joystick_ports}
+\end{figure}
 
 In order to use the joysticks, the DDR bits for the ports must be set to 0 for input. Then the input/output register for the port may be read. If a button or switch is closed on the joystick, the corresponding bit in the I/O register will be clear (0). If the button is not pressed, the bit will be set (1).
 
@@ -83,9 +91,74 @@ As a reminder: be aware that the WDC65C22 on the \jr\ is being used with a 3 vol
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
             7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline
-            \multicolumn{2}{|c|}{---} & BUTTON1 & BUTTON0 & RIGHT & LEFT & DOWN & UP \\ \hline
+            --- & BUTTON2 & BUTTON1 & BUTTON0 & RIGHT & LEFT & DOWN & UP \\ \hline
         \end{tabular}
     \end{center}
     \caption{Joystick Flags}
     \label{tab:via_joystick}
 \end{table}
+
+\example{Displaying Joystick 1}
+In this example, we will poll joystick 1 and print out the state of all the buttons by printing the byte we read from the joystick port as a simple binary number. The example will try to be a little bit smart by only printing the value when the value has changed. NOTE: this example expects OpenKernal to be installed, and will call two of its routines for initializing the screen and printing a character.
+
+First, we initialize the screen, the variable we use to track the old value of the joystick port, and the VIA (setting port A to be an input port):
+\begin{verbatim}
+ok_cint = $FF81                         ; OpenKernal routine to initialize the screen
+ok_cout = $FFD2                         ; OpenKernal routine to print a character in A
+
+; Variables
+
+* = $0080
+
+value:      .byte ?                     ; Variable to store the previous value of the joystick
+prv:        .byte ?                     ; Copy of value for printing
+
+* = $e000
+
+start:      jsr ok_cint                 ; Set up the screen
+
+            lda #$FF                    ; Set the previous value to $FF
+            sta value
+
+            stz MMU_IO_CTRL             ; Switch to I/O Page 0
+
+            lda #$00                    ; Set VIA Port A to input
+            sta VIA_DDRA
+\end{verbatim}
+
+Next, we print the OpenKernal code to clear the screen, and we print out the byte in \verb+value+ as a binary number.
+
+\begin{verbatim}
+loop1:      lda #147                    ; Print the CBM clear screen code
+            jsr ok_cout
+
+            lda value                   ; Copy the value to prv
+            sta prv
+
+            ldx #8                      ; Loop for all eight bits
+loop2:      asl prv                     ; Shift MSB into the carry
+            bcc is0                     ; If it's 0, print '0'
+
+            lda #'1'                    ; Otherwise, print '1'
+            jsr ok_cout
+            bra repeat                  ; And go to the next bit
+
+is0:        lda #'0'                    ; Print '0'
+            jsr ok_cout
+
+repeat:     dex                         ; Count down
+            bne loop2                   ; Repeat until we've done all 8 bits
+\end{verbatim}
+
+Next, we read the value of port A. If it is different from \verb+value+, we save it to \verb+value+ and go back to print the byte we read. Otherwise, we keep waiting and polling the joystick port.
+
+\begin{verbatim}
+            stz MMU_IO_CTRL             ; Switch to I/O Page 0
+
+wait:       lda VIA_IORA                ; Get the status of port A
+            cmp value                   ; Is it different from before?
+            beq wait                    ; Yes: keep waiting
+
+            sta value                   ; Save this value as the previous one
+            bra loop1                   ; And go to print it
+\end{verbatim}
