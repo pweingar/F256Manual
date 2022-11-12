@@ -1,5 +1,5 @@
 ;;;
-;;; Example of a free running timer
+;;; Example of polling joystick 1
 ;;;
 
 .include "../common/f256jr.asm"         ; Include register definitions for the F256jr
@@ -17,7 +17,7 @@ ok_cout = $FFD2
 * = $0080
 
 value:      .byte ?                     ; Variable to store the previous value of the joystick
-prv:        .byte ?
+prv:        .byte ?                     ; Copy of value for printing
 
 ; Point the reset vector to the start of code to kick start it
 
@@ -65,5 +65,4 @@ wait:       lda VIA_IORA                ; Get the status of port A
             beq wait                    ; Yes: keep waiting
 
             sta value                   ; Save this value as the previous one
-
-            bra loop1                   ; And go back to waiting for the joystick
+            bra loop1                   ; And go to print it
