@@ -1,15 +1,19 @@
 \documentclass[oneside]{book}
+\usepackage{datetime2}
+\DTMsetdatestyle{ddmmyyyy}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=blue}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,linkcolor=black}
 \usepackage{amssymb}
 \usepackage{notomath}
 \usepackage[T1]{fontenc}
-\usepackage[a4paper, margin=0.5in]{geometry}
+\usepackage[letterpaper,inner=1.5in,outer=1.0in,top=0.75in,bottom=0.75in,twoside]{geometry}
 \usepackage{multirow}
 \usepackage{graphbox}
 \usepackage{sectsty}
 \usepackage[Bjornstrup]{fncychap}
 \definecolor{darkblue}{rgb}{0.1, 0.0, 0.6}
+\definecolor{silver}{rgb}{0.85, 0.85, 0.85}
 \ChNumVar{\color{darkblue}\fontsize{76}{80}\usefont{OT1}{pzc}{m}{n}\selectfont}
 \ChTitleVar{\color{darkblue}\raggedleft\Huge\sffamily\bfseries}
 \allsectionsfont{\color{darkblue}\bfseries\sffamily}
@@ -20,7 +24,19 @@
 
 \title{Foenix \jr\ Reference Manual}
 \author{Peter Weingartner}
-\maketitle
+\begin{titlepage}
+    \colorbox{silver}{\makebox[\textwidth][r]{
+    \shortstack{
+        \vspace{3cm} \\
+        \color{darkblue}\bfseries\sffamily\Huge Foenix \jr\ Reference Manual}} \\
+    }
+
+    \vfill
+
+    \hfill\mbox{\color{darkblue}\bfseries\sffamily\Large Peter Weingartner}
+
+    \hfill\mbox{\color{darkblue}\bfseries\sffamily\large \today}
+\end{titlepage}
 
 \tableofcontents
 \listoftables
@@ -127,7 +143,7 @@ For being so small, the \jr\ has a lot of components to it, so it is worth mappi
 \input{uart.tex}
 \input{dma.tex}
 \input{sysctrl.tex}
-\input{memory_map.tex}
 \input{debug.tex}
+\input{memory_map.tex}
 
 \end{document}
