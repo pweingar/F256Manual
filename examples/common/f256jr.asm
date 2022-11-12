@@ -49,6 +49,12 @@ VKY_CRSR_X_H = $D015
 VKY_CRSR_Y_L = $D016            ; Cursor Y position
 VKY_CRSR_Y_H = $D017
 
+VKY_LINE_CTRL = $D018           ; Control register for the line interrupt
+VKY_LINE_ENABLE = $01
+VKY_LINE_NBR_L = $D019          ; Line number target low byte
+VKY_LINE_NBR_H = $D01A          ; Line number target high byte
+
+
 ;;
 ;; Bitmap Registers
 ;;

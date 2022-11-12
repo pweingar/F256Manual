@@ -81,7 +81,7 @@ In text mode, the background color is determined by the color matrix and the tex
 
 \section{Line Interrupt and Beam Position}
 
-TinyVicky can trigger an interrupt when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
+TinyVicky can trigger a SOL interrupt (see table:~\ref{tab:interrupts}) when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
 
 \begin{table}[h]
     \begin{center}
@@ -105,12 +105,174 @@ TinyVicky can trigger an interrupt when the display has reached a given raster l
 \begin{description}
     \item[ENABLE] if set (1), TinyVicky will trigger line interrupts (write only)
 
-    \item[LINT\_L] the line number (12 bits) on which to trigger the next line interrupt (write only)
+    \item[LINT\_L] the line number (12 bits) on which to trigger the next line interrupt (write only). The top of the display is line 0, and the bottom of the screen is 400 for $320 \times 200$ mode, and 480 for $320 \times 240$ mode.
 
     \item[RAST\_COL] the number (12 bits) of the current pixel being drawn (read only)
 
     \item[RAST\_ROW] the number (12 bits) of the current line being drawn (read only)
 \end{description}
+
+\example{Changing Border with the Line}
+In this example, we will play with a split-screen style effect changing the color of the border so that the top and bottom borders are blue while the left and right borders are red. To do this, we will use the line interrupt twice for each frame: once when we are on the line just below the last line of the top border, and once when we are on the first line of the bottom border.
+
+To make this work, the example has a single \verb+state+ variable, which will track which color border is being rendered. It will enable the line interrupt, and then set the line number to wait for. When that interrupt comes in, it will check the state variable, setting the border color and new line number based on \verb+state+. It will also flip \verb+state+ to the other value (0 or 1).
+
+\begin{verbatim}
+INT_PEND_0 = $D660              ; Pending register for interrupts 0 - 7
+INT_PEND_1 = $D661              ; Pending register for interrupts 8 - 15
+INT_MASK_0 = $D666              ; Mask register for interrupts 0 - 7
+INT_MASK_1 = $D667              ; Mask register for interrupts 8 - 15
+INT01_VKY_SOL = $02
+
+MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+
+VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
+VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
+VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
+VKY_BRDR_COL_B = $D005          ; Vicky Border Color -- Blue
+VKY_BRDR_COL_G = $D006          ; Vicky Border Color -- Green
+VKY_BRDR_COL_R = $D007          ; Vicky Border Color -- Red
+VKY_BRDR_VERT = $D008           ; Vicky Border vertical thickness in pixels
+VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
+
+VIRQ = $FFFE
+
+LINE0 = 16                      ; Start at line 16 (first line on the text display)
+LINE1 = 480 - 16                ; End on line 464 (last line of text display)
+
+;
+; Variables
+;
+* = $0080
+
+state       .byte ?             ; Variable to track which color we should use
+
+;
+; Code
+;
+* = $e000
+
+start:      ; Disable IRQ handling
+            sei
+
+            ; Go back to I/O page 0
+            stz MMU_IO_CTRL
+
+            ; Load my IRQ handler into the IRQ vector
+            ; NOTE: this code just takes over IRQs completely. It could save
+            ;       the pointer to the old handler and chain to it when it had
+            ;       handled its interrupt. But what is proper really depends on
+            ;       what the program is trying to do.
+            lda #<my_handler
+            sta VIRQ
+            lda #>my_handler
+            sta VIRQ+1
+
+            ; Mask off all but the SOL interrupt
+            lda #$ff
+            sta INT_MASK_1
+            and #~INT01_VKY_SOL
+            sta INT_MASK_0
+
+            ; Clear all pending interrupts
+            lda #$ff
+            sta INT_PEND_0
+            sta INT_PEND_1
+
+            ; Make sure we're in text mode
+            lda #$01                ; enable TEXT
+            sta VKY_MSTR_CTRL_0     ; Save that to VICKY master control register 0
+            stz VKY_MSTR_CTRL_1
+
+            ; Set the border
+            lda #$01                ; Enable the border
+            sta VKY_BRDR_CTRL
+
+            lda #16                 ; Make it 16 pixels wide
+            sta VKY_BRDR_VERT
+            sta VKY_BRDR_HORI
+
+            lda #$80                ; Make it cyan to start with
+            sta VKY_BRDR_COL_B
+            sta VKY_BRDR_COL_G
+            stz VKY_BRDR_COL_R
+
+            lda #$01                ; Turn on the line interrupt
+            sta VKY_LINE_CTRL
+
+            lda #<LINE0             ; set the line to interrupt on
+            sta VKY_LINE_NBR_L
+            lda #>LINE0
+            sta VKY_LINE_NBR_H
+
+            stz state               ; Start in state 0
+
+            ; Re-enable IRQ handling
+            cli
+
+loop:       ; Just loop forever... a real program will do stuff here
+            nop
+            bra loop
+
+;
+; A simple interrupt handler
+;
+my_handler: .proc
+            pha
+
+            ; Save the system control register
+            lda MMU_IO_CTRL
+            pha
+
+            ; Switch to I/O page 0
+            stz MMU_IO_CTRL
+
+            ; Check for SOL flag
+            lda #INT01_VKY_SOL
+            bit INT_PEND_0
+            beq return              ; If it's zero, exit the handler
+
+            ; Yes: clear the flag for SOL
+            sta INT_PEND_0
+
+            lda state               ; Check the state
+            beq is_zero
+
+            stz state               ; If state 1: Set the state to 0
+
+            lda #<LINE0             ; Set the line to interrupt on
+            sta VKY_LINE_NBR_L
+            lda #>LINE0
+            sta VKY_LINE_NBR_H
+
+            lda #$80                ; Make the border blue
+            sta VKY_BRDR_COL_B
+            stz VKY_BRDR_COL_G
+            stz VKY_BRDR_COL_R
+            bra return
+
+is_zero:    lda #$01                ; Set the state to 1
+            sta state
+
+            lda #<LINE1             ; set the line to interrupt on
+            sta VKY_LINE_NBR_L
+            lda #>LINE1
+            sta VKY_LINE_NBR_H
+
+            lda #$80                ; Make the border red
+            sta VKY_BRDR_COL_R
+            stz VKY_BRDR_COL_G
+            stz VKY_BRDR_COL_B
+
+            ; Restore the system control register
+return:     pla
+            sta MMU_IO_CTRL
+
+            ; Return to the original code
+            pla
+            rti
+            .pend
+\end{verbatim}
 
 \section{Gamma Correction}
 
