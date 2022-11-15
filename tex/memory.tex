@@ -8,8 +8,8 @@ To understand how it all works, we first need to look at how RAM and flash memor
 	\begin{center}
 		\begin{tabular}{| l | l | l |} \hline
 			Start & End & Memory Type \\ \hline\hline
-		  	\verb+0x00000+ & \verb+0x2FFFF+ & System RAM (256 KB)\\ \hline
-			\verb+0x30000+ & \verb+0x7FFFF+ & Reserved for future use (256 KB)\\ \hline
+		  	\verb+0x00000+ & \verb+0x3FFFF+ & System RAM (256 KB)\\ \hline
+			\verb+0x40000+ & \verb+0x7FFFF+ & Reserved for future use (256 KB)\\ \hline
 		  	\verb+0x80000+ & \verb+0xFFFFF+ & Flash Memory (512 KB) \\ \hline
 		\end{tabular}
 	\end{center}
@@ -91,7 +91,7 @@ In this example, we will set up LUT 1 so that the first six banks of CPU memory 
 
     ldx #0        ; Start at bank 0
 l1: txa           ; First 6 banks will just be the first banks of RAM
-    sta $0010,x   ; Set the LUT mapping for this bank
+    sta $0008,x   ; Set the LUT mapping for this bank
     inx           ; Move to the next bank
     cpx #6        ; Until we get to bank 6
     bne l1
