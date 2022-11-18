@@ -95,6 +95,8 @@ Each command and response packet includes an LRC check byte, which is simply the
             \verb+0x11+ & Erase flash memory \\ \hline
             \verb+0x12+ & Erase flash sector \\ \hline
             \verb+0x13+ & Program flash sector \\ \hline
+            \verb+0x90+ & Set the MMU to boot in RAM (\jr\ Rev A only) \\ \hline
+            \verb+0x91+ & Set the MMU to boot in flash (\jr\ Rev A only) \\ \hline
             \verb+0xFE+ & Fetch the revision number of the debug interface \\ \hline
         \end{tabular}
     \end{center}

@@ -28,6 +28,29 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_reg}
 \end{table}
 
+\begin{description}
+    \item[RXD] (read only) register contains data from the receive FIFO
+
+    \item[TXR] (write only) writing a byte stores it in the transmission FIFO to be sent over the serial connection
+
+    \item[IER] this is the interrupt enable register. There are flags for each of the four conditions that the UART can use to trigger an interrupt
+
+    \item[ISR] this is the interrupt status register. There are flags for each of the four conditions that can trigger an interrupt
+
+    \item[FCR] FIFO control register. This register controls the FIFOs for transmission and receiving:
+        \begin{description}
+            \item[RXT] sets the number of characters in the receive FIFO to trigger an interrupt. See table:~\ref{tab:uart_rx_trig}.
+
+            \item[FIFO64]
+
+            \item[TX\_RST] if set, clear the transmition FIFO
+
+            \item[RX\_RST] if set, clear the receive FIFO
+
+            \item[FIFO\_EN] if set, the FIFOs are enabled. Otherwise, only a single character can be waiting to send or pending a read
+        \end{description}
+\end{description}
+
 \begin{table}[h]
     \begin{center}
         \begin{tabular}{|c|c|c|} \hline
@@ -82,3 +105,28 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \caption{UART RX FIFO Trigger}
     \label{tab:uart_rx_trig}
 \end{table}
+
+\begin{table}[h]
+    \begin{center}
+        \begin{tabular}{|c|c|c|} \hline
+            BPS & Divisor \\ \hline\hline
+            300 & 5,244 \\ \hline
+            600 & 2,622 \\ \hline
+            1,200 & 1,311 \\ \hline
+            1,800 & 874 \\ \hline
+            2,000 & 786 \\ \hline
+            2,400 & 655 \\ \hline
+            3,600 & 437 \\ \hline
+            4,800 & 327 \\ \hline
+            9,600 & 163 \\ \hline
+            19,200 & 81 \\ \hline
+            38,400 & 40 \\ \hline
+            57,600 & 27 \\ \hline
+            115,200 & 13 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{UART Divisors}
+    \label{tab:uart_divisors}
+\end{table}
+
+BPS	Divisor
