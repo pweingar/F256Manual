@@ -17,7 +17,7 @@ The simplified interface works off the idea of a transfer. The program wanting t
 \section{Reading from the SD Card}
 To read from an SD card, a program needs to:
 \begin{enumerate}
-    \item Set the tranfer type to READ
+    \item Set the transfer type to READ
     \item Set the SD Address Register with the address of the desired memory block
     \item Set the START flag to begin the transfer
     \item Wait for the transfer to complete (either poll BUSY or wait for an interrupt)
@@ -27,7 +27,7 @@ To read from an SD card, a program needs to:
 \section{Writing to the SD Card}
 To write to an SD card, a program needs to:
 \begin{enumerate}
-    \item Set the tranfer type to WRITE
+    \item Set the transfer type to WRITE
     \item Set the SD Address Register with the address of the desired memory block
     \item Write the 512 bytes to store in the block to TXR
     \item Set the START flag to begin the transfer
@@ -65,7 +65,7 @@ To write to an SD card, a program needs to:
 
     \end{center}
     \caption{VIA Registers}
-    \label{tab:via_reg}
+    \label{tab:sdc_reg}
 \end{table}
 
 \begin{description}
@@ -81,20 +81,20 @@ To write to an SD card, a program needs to:
 
     \item[XER] is the transfer error register. This contains three fields that describes any error condition for the transfer type that applies.
 
-    \item[DAR] is the register used to send and recieve data for a direct access transfer. This direct access feature is for low-level access to the SPI interface on the SD card and allows for access to more general SD cards than the higher level transfers can use.
+    \item[DAR] is the register used to send and receive data for a direct access transfer. This direct access feature is for low-level access to the SPI interface on the SD card and allows for access to more general SD cards than the higher level transfers can use.
 
     \item[SAR] is the SD address register. This is a 32-bit address for the block of data on the SD card to read or write.
 
-    \item[SCLK] is the SPI clock register. It sets the speed of the SPI bus after SD intialization has completed.
+    \item[SCLK] is the SPI clock register. It sets the speed of the SPI bus after SD initialization has completed.
 
     \item[RXR] is the received data register. All data read from the SD card will be read into a 512 byte FIFO and can be read by the CPU through this register.
 
-    \item[RCR] is the 16-bit count of the number of bytes available to read from the receive FIFO. Note that the count is in big-endian format.
+    \item[RCR] is the 16-bit count of the number of bytes available to read from the reception FIFO. Note that the count is in big-endian format.
 
-    \item[RFCR] is the receive FIFO control register. There is one flag: RX\_CLR. When set, it will force the receive FIFO to clear. The flag will clear itself.
+    \item[RFCR] is the reception FIFO control register. There is one flag: RX\_CLR. When set, it will force the reception FIFO to clear. The flag will clear itself.
 
     \item[TXR] is the transmission data register. All data written to the SD card will be written into a 512 byte FIFO through this register.
 
-    \item[TFCR] is the receive FIFO control register. There is one flag: TX\_CLR. When set, it will force the transmit FIFO to clear. The flag will clear itself.
+    \item[TFCR] is the reception FIFO control register. There is one flag: TX\_CLR. When set, it will force the transmission FIFO to clear. The flag will clear itself.
 
 \end{description}

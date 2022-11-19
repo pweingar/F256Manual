@@ -12,7 +12,7 @@ The \jr\ provides two 24-bit timers. The two timers work on different clocks: ti
     \item they can either reload a start value or reset the value to 0 on reaching the target value
 \end{itemize}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -77,7 +77,7 @@ For programs needing to keep track of time, \jr\ provides a real time clock chip
 
 The RTC is relatively straightforward to use, but one potentially tricky thing to keep in mind is that there is a specific procedure to follow when reading or writing the date-time. As well as the registers the CPU can access, the RTC has internal registers which are constantly updating as time progresses. Normally, the internal registers update their external counterparts, but this should not be allowed to happen while the CPU is getting or setting the externally facing registers. So, to access the external registers, the program must first disable the automatic updates to the external registers. Then it can read or write the external registers. Then it can re-enable the automatic updates. If the program has changed the registers, when updates are re-enabled the data in the external registers will be sent to the internal registers in one action. This keeps the time information consistent.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| c | c | c || c | c | c | c | c | c | c | c |} \hline
 			Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
@@ -140,7 +140,7 @@ The Control register has four bits which change how the RTC operates:
 
 The Rates register controls the watchdog timer and the periodic interrupt. The watchdog timer is not really relevant to the \jr, but it monitors for activity and raises an interrupt if activity has not been seen within a certain amount of time (specified by the WD field). The periodic interrupt will be raised repeatedly, the period of which is set by the RS field (see table~\ref{tab:rtc_rs}).
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| c | c | c | c | c |} \hline
 			RS3 & RS2 & RS1 & RS0 & Period \\ \hline\hline

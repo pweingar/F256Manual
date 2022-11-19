@@ -5,7 +5,7 @@ One of the ways to get software and data onto the \jr\ is through the USB debug 
 Three are three main tools available to provide user access to the debug port:
 
 \begin{description}
-    \item[Foenix IDE] A full featured emulator and development tool for the Foenix line of computers. Among the many tools provided by the IDE is a built-in GUI tool to upload and download data to the \jr\ and program the flash. The main limitation of the IDE is that it was written in .NET and uses features that are available under under the Windows API.
+    \item[Foenix IDE] A full-featured emulator and development tool for the Foenix line of computers. Among the many tools provided by the IDE is a built-in GUI tool to upload and download data to the \jr\ and program the flash. The main limitation of the IDE is that it was written in .NET and uses features that are available under the Windows API.
 
     \item[Foenix Uploader Tool] A stand-alone version of just the uploader tool from the Foenix IDE. This tool is more limited (it may only support binary files) and is tailored to specific machines.
 
@@ -25,11 +25,11 @@ The USB debug port is accessed over the USB Serial protocol. Data is sent from t
     \item The \jr\ replies and sends a reset signal to the CPU
 \end{enumerate}
 
-The commands sent from the host PC are in the form of command packets show in table~\ref{tab:debug_cmd_packet}. The command codes them selves are listed in table~\ref{tab:debug_commands}. The \jr\ will respond to each command packet with a response packet as shown in table~\ref{tab:debug_resp_packet}. The size of a packet can vary depending on the command. Some commands and responses include no actual data payload bytes. Others will transfer actual data and will include however many bytes of payload are needed.
+The commands sent from the host PC are in the form of command packets show in table~\ref{tab:debug_cmd_packet}. The command codes themselves are listed in table~\ref{tab:debug_commands}. The \jr\ will respond to each command packet with a response packet as shown in table~\ref{tab:debug_resp_packet}. The size of a packet can vary depending on the command. Some commands and responses include no actual data payload bytes. Others will transfer actual data and will include however many bytes of payload are needed.
 
-Each command and response packet includes an LRC check byte, which is simply the exclusive-or of all the bytes in the packet, with the exception of the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
+Each command and response packet includes an LRC check byte, which is simply the exclusive-or of all the bytes in the packet, except for the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|l|} \hline
             Offset & Size & Name \\ \hline\hline
@@ -59,7 +59,7 @@ Each command and response packet includes an LRC check byte, which is simply the
     \item[LRC check byte] This byte provides for simple error checking on the packet transmission.
 \end{description}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|l|} \hline
             Offset & Size & Purpose \\ \hline\hline
@@ -83,7 +83,7 @@ Each command and response packet includes an LRC check byte, which is simply the
     \item[LRC check byte] This byte provides for simple error checking on the packet transmission.
 \end{description}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|l|} \hline
             Command & Purpose \\ \hline\hline

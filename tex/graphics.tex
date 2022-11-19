@@ -14,7 +14,7 @@ The \jr\ provides three separate graphics engines, providing programs with a cho
 
 The graphics modes use a color lookup system similar to text mode to determine colors. The pixel data for a tile, bitmap, or sprite is composed of bytes, where each byte specifies the color of that pixel. The byte serves as an index into a color lookup table where the red, green, and blue components of the desired color are stored (see figure:~\ref{fig:bitmap_colors}). As with text, the color components are bytes and specify an intensity from 0 (none of that primary color) to 255 (as much of that primary color as possible). Also, as with text, there is a fourth byte that is reserved for future use, meaning that each color takes up four bytes in the CLUT. In short, the byte order of a graphics CLUT entry is exactly the same as for a text CLUT.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{images/bitmaps.pdf}
     \end{center}
@@ -24,7 +24,7 @@ The graphics modes use a color lookup system similar to text mode to determine c
 
 However, there is a key difference from text mode. In text mode, there are two colors (foreground and background), and each color is one out of sixteen possibilities. With graphics modes, there are 256 possibilities. So a CLUT with only 16 entries will not work. There are therefore separate CLUTs for graphics. TinyVicky provides for four separate graphics CLUTs with 256 entries. Each graphic object on the screen specifies which graphics CLUT it will use for its colors. These CLUTs may be found in I/O page 0 (see table:~\ref{tab:graph_cluts}).
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|l|} \hline
             Address & R/W & Purpose \\\hline\hline
@@ -101,7 +101,7 @@ Now, what happens if two sprites take up the same position or if a program displ
 
 TinyVicky provides for seven layers, but they are split up a bit. Three of the layers are for bitmaps and tile maps. Only one bitmap or tile map can be placed in any of those three layers. The other four layers are for sprites only. Any sprite can be assigned to any of the sprite layers, and there can be multiple sprites in a layer. The sprite layers are interleaved with the bitmap and tile map layers (see figure:~\ref{fig:layers}).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{images/Layers.pdf}
     \end{center}
@@ -111,7 +111,7 @@ TinyVicky provides for seven layers, but they are split up a bit. Three of the l
 
 Bitmaps and tile maps are assigned to their layers using the layer control registers (see table:~\ref{tab:bm_tm_layers}). The three fields LAYER0, LAYER1, and LAYER2 in the layer registers are three bit values, which indicate which graphical element to assign to that layer (see table:~\ref{tab:bm_tm_layer_codes}).
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
@@ -123,7 +123,7 @@ Bitmaps and tile maps are assigned to their layers using the layer control regis
     \label{tab:bm_tm_layers}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|l|} \hline
             Code & Layer \\ \hline\hline

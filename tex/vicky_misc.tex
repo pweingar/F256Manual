@@ -4,7 +4,7 @@
 
 \jr\ has eight DIP switches on the board, which can be used to configure various options. The DIP switches are present on a single register (see table:~\ref{tab:dip_reg}). The DIP switches ground their signals when placed in their ``on'' positions. So a true or asserted value is 0, while the false or de-asserted value is 1.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -30,7 +30,7 @@ The \jr's display can have a border, which overlays all the other display elemen
 
 When using graphics modes, the border simply hides the graphics elements underneath it. For text mode, things are a little different. The text display will be shifted so that the character at $(0, 0)$ is still the upper-left character. The layout of the text and color matrixes do not change, however. Cells that are under the right side or bottom of the border will still be in the matrixes but will not be displayed. Another way to put it is that, if the text resolution is 80 characters wide, it will remain 80 characters per line even if the border is on and only 76 characters are displayed.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -66,7 +66,7 @@ When using graphics modes, the border simply hides the graphics elements underne
 
 In text mode, the background color is determined by the color matrix and the text color LUTs. For the graphics modes, however, a background color is specified separately. There are three registers to specify the background color's red, green, and blue components (see table:~\ref{tab:back_reg}). This is the color that will be displayed in graphics modes, if all the layers specify that a given pixel has the color 0 (which is always the transparent pixel color).
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -83,7 +83,7 @@ In text mode, the background color is determined by the color matrix and the tex
 
 TinyVicky can trigger a SOL interrupt (see table:~\ref{tab:interrupts}) when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline

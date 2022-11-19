@@ -28,7 +28,7 @@ There are several differences with tile maps, however:
 
 There are three tile maps supported by TinyVicky, each of which has 13 bytes worth of registers (see table:~\ref{tab:tilemap_reg}). Tile map 0 starts at 0xD200. Tile map 1 starts at 0xD20C. Tile map 2 starts at 0xD218.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
@@ -85,7 +85,7 @@ One way tile maps get their flexibility is that, where text mode uses 8-bit byte
 
 This attribute system makes tiles very powerful. Effectively, a single tile map can display 1,024 completely unique shapes at one time by using all eight tile sets. Also, since the CLUT is set for each tile in the attributes, the number of tiles needed can be reduced by clever use of recoloring.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
             15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
@@ -113,7 +113,7 @@ Essentially, a tile set is just a bitmap, but of a smaller size and arranged in 
 As with bitmaps and sprites, the pixels of the tiles are each an individual byte. The contents of the byte (0 -- 255) serving as an index into a color lookup table. The pixels are also laid out in left-to-right and top-to-bottom order, just as with bitmaps and individual sprites.
 
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
             & \multicolumn{16}{|c|}{128 or 256 pixels} \\ \hline
@@ -142,7 +142,7 @@ As with bitmaps and sprites, the pixels of the tiles are each an individual byte
 
 TinyVicky supports eight separate tile sets. Each one has a single three byte address register, which provides the address to the tile set pixel data, and a configuration register (see table:~\ref{tab:tile_set_addr}). To use them, a program simply stores the address of the pixel data to use into the appropriate address register. The configuration register contains a single SQUARE flag, which indicates the layout of the tile set image. If SQUARE is set (1), the tile set image is square ($128 \times 128$ pixels for $8 \times 8$ tiles or $256 \times 256$ pixels for $16 \times 16$ tiles). If SQUARE is clear (0), the tile set image is vertical ($8 \times 2,048$ pixels for $8 \times 8$ tiles, or $16 \times 4,096$ pixels for $16 \times 16$ tiles).
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Tile Set & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline

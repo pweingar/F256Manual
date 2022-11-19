@@ -14,7 +14,7 @@ The CODEC commands are based around a number of registers. Each command is reall
 
 The registers for the CODEC on the \jr\ are:
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|l|} \hline
 			Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 & Purpose \\ \hline \hline
@@ -53,7 +53,7 @@ The \jr\ has support for dual SN76489 (PSG) sound chips, emulated in the FPGA. T
 
 Access to each PSG is through a single memory address, but that single address allows the CPU to write a value to eight different internal registers. For each tone generator, there is a ten bit frequency (which takes two bytes to set), and a four bit ``attenuation'' or volume level. For the noise generator, there is a noise control register and a noise attenuation register.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|l|} \hline
 			R2 & R1 & R0 & Channel & Purpose \\ \hline \hline
@@ -73,7 +73,7 @@ Access to each PSG is through a single memory address, but that single address a
 
 There are four basic formats of bytes that can be written to the port:
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|l|} \hline
 			D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 & Purpose \\ \hline \hline
@@ -134,7 +134,7 @@ To turn it off later, we just need to write:
 
 Noise works differently from tones, since it is random. The noise generator on the PSG can produce two styles of noise determined by the FB bit: white noise (FB = 1), and periodic (FB = 0). The noise has a sort of frequency, based on either the system clock or the current output of tone 3. This frequency is set using the F1 and F0 bits:
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|l|} \hline
 			F1 & F0 & Frequency \\ \hline \hline
@@ -176,7 +176,7 @@ The SID chip provides three independent voices (so it can play three notes at on
 The type of wave form produced by a voice is controlled by the NOISE, PULSE, SAW, and TRI bits. If NOISE is set to 1, the output is random noise. If PULSE is set, a square wave is produced. If SAW is set, a saw tooth wave is produced. If TRI is set, the voice produces a triangle wave. If PULSE is set, the duty cycle of the square wave (or pulse width, if you prefer) is set by the PW bits according to the formula
 ${\rm PW} / 40.95$ (expressed as a percent).
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
 			Voice & Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline

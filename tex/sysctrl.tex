@@ -2,9 +2,9 @@
 
 \section{The Buzzer and Status LEDs}
 
-The \jr\ has several software controllable LEDs. There are the SD card access LED and the power LED, but there are also two status LEDs on the board which may be controlled either manually or set to flash automatically. All the LEDs under ``manual'' control can be controlled by setting or clearing their relevant flags in the SYS0 register (0xD6A0) (see table:~\ref{tab:sys_ctrl_reg}). The power LED is controlled by PWR\_LED. The SD card LED is controlled by SD\_LED.
+The \jr\ has several software-controllable LEDs. There are the SD card access LED and the power LED, but there are also two status LEDs on the board which may be controlled either manually or set to flash automatically. All the LEDs under ``manual'' control can be controlled by setting or clearing their relevant flags in the SYS0 register (0xD6A0) (see table:~\ref{tab:sys_ctrl_reg}). The power LED is controlled by PWR\_LED. The SD card LED is controlled by SD\_LED.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -24,7 +24,7 @@ The two status LEDs on the board are a little more complex. They may be in manua
 
 For the PC speaker, there is the BUZZ flag. By toggling BUZZ, a program can tweak the speaker and make a noise.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|} \hline
             RATE1 & RATE0 & Rate \\\hline\hline
@@ -42,7 +42,7 @@ For the PC speaker, there is the BUZZ flag. By toggling BUZZ, a program can twea
 
 A program can trigger a system reset. This can be done by writing the value \verb+0xDE+ to \verb+0xD6A2+ and the value \verb+AD+ to \verb+0xD6A3+ to validate that a reset is really intended (see table:~\ref{tab:sys_reset}), and then setting the most significant bit (RESET) of \verb+0xD6A0+ to actually trigger the reset.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -58,7 +58,7 @@ A program can trigger a system reset. This can be done by writing the value \ver
 
 The \jr\ has a built-in pseudo-random number generator that produces 16-bit random numbers (see table:~\ref{tab:rng_reg}). To use the random number generator, a program just sets the enable flag and then reads the random numbers from RNDL and RNDH (0xD6A4 and 0xD6A5). The program can set the seed value to better randomize the numbers by storing a seed value in those same locations and then toggling SEED\_LD (set to load the seed value then reclear).
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -86,11 +86,11 @@ The \jr\ has a built-in pseudo-random number generator that produces 16-bit rand
 
 \section{Machine ID and Version Information}
 
-Nine registers are set aside to identify the machine, the version of the printed circuit board, and the version of the FPGA. See table~\ref{tab:machine_id_ver} for the various registers. All of the registers are read-only, and only the chip information will change over the course of the machine's life span. The machine ID contains a four-bit code that is common between all the Foenix machines (see table:~\label{tab:machine_ids}).
+Nine registers are set aside to identify the machine, the version of the printed circuit board, and the version of the FPGA. See table~\ref{tab:machine_id_ver} for the various registers. All of the registers are read-only, and only the chip information will change over the course of the machine's life span. The machine ID contains a four-bit code that is common between all the Foenix machines (see table~\ref{tab:machine_ids}).
 
 For the \jr, the machine ID will be 2.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -111,7 +111,7 @@ For the \jr, the machine ID will be 2.
     \label{tab:machine_id_ver}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|} \hline
             MID3 & MID2 & MID1 & MID0 & Machine \\\hline\hline

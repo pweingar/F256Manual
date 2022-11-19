@@ -4,7 +4,7 @@ The \jr\ has 256 KB of system RAM which can be used for programs, data, and grap
 
 To understand how it all works, we first need to look at how RAM and flash memory are handled by the \jr. Because there are 768 KB of total storage on the system, the system has a 20-bit address bus to manage the memory. RAM and flash have address on that 20-bit bus as shown in table~\ref{tab:memory}.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| l | l | l |} \hline
 			Start & End & Memory Type \\ \hline\hline
@@ -17,11 +17,11 @@ To understand how it all works, we first need to look at how RAM and flash memor
 	\label{tab:memory}
 \end{table}
 
-This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, a bank number there is 7 bits. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
+This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, a bank number there are 7 bits. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
 
 The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |} \hline
 			Bank & A[15..13] & Start & End \\ \hline\hline
@@ -41,7 +41,7 @@ The \jr's MMU supports up to four LUTs, only one of which is active at any given
 
 Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as the rest can, or it can be mapped to I/O registers, which are not memory mapped in the same way as RAM and flash. All I/O devices on the \jr\ therefore live within 0xC000 through 0xDFFF on the CPU, but only if the MMU is set to map I/O to bank 6. There is quite a lot of I/O to access on the \jr, so there are four different banks of I/O registers and memory that can be mapped to bank 6 (see table~\ref{tab:io_banks}).
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| l | l |} \hline
 			I/O Bank & Purpose \\ \hline\hline
@@ -57,7 +57,7 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 
 The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active LUT, edit a LUT, and control bank 6:
 
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| c | c | c || c | c | c | c | c | c | c | c |} \hline
 			Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
@@ -74,7 +74,7 @@ The MMU is controlled through two main registers, which are always at locations 
 
 	\item[EDIT\_EN] if set (1), this bit allows a LUT to be edited by the program, and memory addresses 0x0010 - 0x0017 will be used by the LUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
 
-	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being editted and will appear in memory addresses 0x0010 - 0x0017.
+	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being edited and will appear in memory addresses 0x0010 - 0x0017.
 
 	\item[IO\_DISABLE] if set (1), bank 6 is mapped like any other memory bank. If clear (0), bank 6 is mapped to I/O memory.
 
@@ -107,11 +107,11 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 
 \section*{MMU Boot Configuration}
 
-While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be editted, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
+While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be edited, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
 
 When the \jr\ powers on, it initializes the LUTs in two different ways. The ``boot from RAM'' LUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' LUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x7E000 -- 0x7FFFF). After the LUTs are initialized, the \jr\ checks to see which of the two sets of LUTs should be used and enables them. The memory LUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the LUTs are related and how they are initialized on power up.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{images/MemoryLUTSelection.pdf}
     \end{center}
@@ -121,4 +121,4 @@ When the \jr\ powers on, it initializes the LUTs in two different ways. The ``bo
 
 How the \jr\ decides which set of LUTs to use depends upon the board. The older, RevA boards have a command available over the USB debug port that switches the active LUTs on the fly. The newer, RevB boards have a jumper to choose between the LUTs.
 
-NOTE: the memory LUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the LUTs except when directed by a program. Pressing the RESET button does not re-initialize the LUTs. This means that a program should not assume the LUTs are set to any particular value on reset, unless the operating system is initializing the LUTs. A program running as an operating system or even just taking complete control over the board should always iniitalize the LUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the LUTs, but a program will not always be starting from a complete power cycle.
+NOTE: the memory LUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the LUTs except when directed by a program. Pressing the RESET button does not re-initialize the LUTs. This means that a program should not assume the LUTs are set to any particular value on reset, unless the operating system is initializing the LUTs. A program running as an operating system or even just taking complete control over the board should always initialize the LUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the LUTs, but a program will not always be starting from a complete power cycle.

@@ -1,0 +1,4 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QPeter Weingartner\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QFoenix Reference Manual Peter Weingartner [][r] Foenix Reference Manual\\E$"}
+{"rule":"PREPOSITION_VERB","sentence":"^\\QWhen set, it will force the receive FIFO to clear.\\E$"}
+{"rule":"PREPOSITION_VERB","sentence":"^\\Q[RCR] is the 16-bit count of the number of bytes available to read from the receive FIFO.\\E$"}

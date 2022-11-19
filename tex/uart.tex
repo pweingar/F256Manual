@@ -2,7 +2,7 @@
 
 The \jr\ has a simple UART for serial communications. This UART can be used to provide an RS-232 serial connection (via an IDC header on the board compatible with IDC to DB-9 cables) or a Wi-Fi serial connection using an ESP Feather adapter board. The UART is compatible with the standard 16750.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -51,7 +51,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
         \end{description}
 \end{description}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|} \hline
             LCR1 & LCR0 & Length \\ \hline\hline
@@ -65,7 +65,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_data}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|} \hline
             LCR2 & Stop Bits \\ \hline\hline
@@ -77,7 +77,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_stop}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|} \hline
             LCR5 & LCR4 & LCR3 & Parity \\ \hline\hline
@@ -92,7 +92,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_parity}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|} \hline
             FCR7 & FCR6 & Trigger Level (bytes) \\ \hline\hline
@@ -106,7 +106,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_rx_trig}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|} \hline
             BPS & Divisor \\ \hline\hline
@@ -129,4 +129,3 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
     \label{tab:uart_divisors}
 \end{table}
 
-BPS	Divisor
