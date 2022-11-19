@@ -55,6 +55,8 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 	\label{tab:io_banks}
 \end{table}
 
+The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active LUT, edit a LUT, and control bank 6:
+
 \begin{table}[h]
 	\begin{center}
 		\begin{tabular}{| c | c | c || c | c | c | c | c | c | c | c |} \hline
@@ -66,8 +68,6 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 	\caption{MMU Registers}
 	\label{tab:mmu_registers}
 \end{table}
-
-The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active LUT, edit a LUT, and control bank 6:
 
 \begin{description}
 	\item[ACT\_LUT] these two bits specify which LUT (0 - 3) is used to translate CPU bus address to system bus addresses.
@@ -104,3 +104,21 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
     lda #$01      ; Turn off LUT editting, and switch to LUT#1
     sta $0000
 \end{verbatim}
+
+\section*{MMU Boot Configuration}
+
+While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be editted, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
+
+When the \jr\ powers on, it initializes the LUTs in two different ways. The ``boot from RAM'' LUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' LUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x7E000 -- 0x7FFFF). After the LUTs are initialized, the \jr\ checks to see which of the two sets of LUTs should be used and enables them. The memory LUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the LUTs are related and how they are initialized on power up.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{images/MemoryLUTSelection.pdf}
+    \end{center}
+    \caption{MMU Boot Configuration}
+    \label{fig:lut_choice}
+\end{figure}
+
+How the \jr\ decides which set of LUTs to use depends upon the board. The older, RevA boards have a command available over the USB debug port that switches the active LUTs on the fly. The newer, RevB boards have a jumper to choose between the LUTs.
+
+NOTE: the memory LUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the LUTs except when directed by a program. Pressing the RESET button does not re-initialize the LUTs. This means that a program should not assume the LUTs are set to any particular value on reset, unless the operating system is initializing the LUTs. A program running as an operating system or even just taking complete control over the board should always iniitalize the LUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the LUTs, but a program will not always be starting from a complete power cycle.

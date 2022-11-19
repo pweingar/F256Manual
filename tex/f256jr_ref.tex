@@ -19,7 +19,7 @@
 \allsectionsfont{\color{darkblue}\bfseries\sffamily}
 \newcommand{\jr}{F256jr}
 \newcommand{\microsec}{$\mu$s}
-\newcommand{\example}[1]{\subsection{Example: #1}}
+\newcommand{\example}[1]{\subsection*{Example: #1}}
 \begin{document}
 
 \title{Foenix \jr\ Reference Manual}
@@ -41,92 +41,7 @@
 \tableofcontents
 \listoftables
 
-\chapter{Introduction}
-
-This manual is meant to be as complete as possible an introduction to the various hardware features of the \jr. In it, I will attempt to explain each of the major subsystems of the \jr\ and provide simple but practical examples of their use.
-
-One thing this manual will not provide is a tutorial in programming the 65C02 processor at the heart of the \jr. There are plenty of excellent books and videos explaining how the processor works and how to do assembly programming. While examples will generally be written in assembly, I will try to annotate them fully so that what is happening is very clear even to the novice assembly language coder.
-
-\chapter{\jr\ Basics}
-
-\section{Features}
-
-\section{Ports}
-
-The connectors of the back of the \jr\ from left to right are (see figure:~\ref{fig:rear}):
-
-\begin{description}
-    \item[Audio Line Out] the stereo audio output. These are standard RCA style line level outputs.
-
-    \item[SD Card Slot] for standard SD cards for storage of files and programs.
-
-    \item[DVI Monitor Port] for output to your monitor. This can be connected to the DVI input of a monitor or run through a simple DVI-VGA connector to use with an older VGA input.
-
-    \item[IEC Serial Port] supports the Commodore serial bus. A Commodore disk drive (1541, 1571, 1581, {\it etc.}), a Commodore compatible serial printer, or other device supporting the Commodore serial bus can be connected here.
-\end{description}
-
-\begin{figure}[ht]
-    \begin{center}
-        \includegraphics[scale=0.75]{images/f256_render_annotated_back.pdf}
-    \end{center}
-    \caption{F256jr Rear Connectors}
-    \label{fig:rear}
-\end{figure}
-
-The top of the board has several connectors and other features that should be explained (see figure:~\ref{fig:top}):
-
-\begin{description}
-    \item[Power In] this is a standard ITX/ATX style power connector. Pretty much any PC power supply should work here, and a Pico-ATX style power adapter is more than sufficient.
-
-    \item[Debug USB Port] this provides access to the debug interface of the \jr\ for a desktop computer. You can use it to upload data to the \jr's memory or examine the memory. There is a Mini USB B connector on the board, but there is also a header that can be used to connect the USB jack on some cases to the board.
-
-    \item[Case Buttons and LEDs] this collection of headers is used to connect the power and reset button from the case as well as the power LED and SD access LED.
-
-    \item[Joystick Ports] these connectors can be used with a standard IDC to DB-9 adapter cable (such as was used by some PCs to provide RS-232 serial ports) to provide Atari style joystick connectors.
-
-    \item[DIP Switches] these switches allow you to manage certain aspects of the \jr. In particular, you can control gamma correction and some boot options, depending on the kernel installed.
-
-    \item[Stereo SIDs] out of the box, these will be bare sockets, but they are where you would install your SID chips or SID emulators. The sockets support the original 6581, the lower voltage 8581, and the different replacements like the SwinSID, ARMSID, and BackSID.
-
-    \item[Wi-Fi Module] this optional module works with the built-in serial port to allow for Wi-Fi access, if a program or operating system supports it.
-
-    \item[RS-232 Port] this IDC header works with a standard IDC to DB-9 adapter cable to provide an RS-232 serial port. The same serial port is used for this port as is used by the Wi-Fi module, so only one of the two can be used at a time.
-
-    \item[GPIO] this header provides access to the I/O pins of the WDC65C22 VIA. The pin assignments are compatible with the Commodore C64 keyboard connector.
-
-    \item[Expansion Port] for future expansion. This is a PCI-E style connector with a custom pinout. In the future, it might be used for memory expansion or other devices.
-
-    \item[Clock Battery] this CR2032 cell holder provides power for the real time clock chip.
-
-    \item[FPGA JTAG Port] this connector is used to apply any future updates to the FPGA. A special adapter would need to be used to connect to this port.
-
-    \item[Gamepad Ports] this header provides access for an NES or SNES style gameport interface.
-
-    \item[Case Audio Port] this header provides access to the headphone and microphone signals to connect to a PC case.
-
-    \item[Headphone Out] this is a standard headphone adapter port that can be used if the case does not provide headphone output.
-\end{description}
-
-\begin{figure}[ht]
-    \begin{center}
-        \includegraphics[scale=0.75]{images/f256_render_annotated_top.pdf}
-    \end{center}
-    \caption{F256jr Top View}
-    \label{fig:top}
-\end{figure}
-
-\section{System Architecture}
-
-For being so small, the \jr\ has a lot of components to it, so it is worth mapping out the over all structure of the computer. One of the main things to note is that most of what makes the \jr\ the \jr\ is the FPGA TinyVicky. TinyVicky provides the MMU, the various text and graphics engines, most of the I/O devices, controllers for the sound chips, and the controller for the first 256KB of SRAM. The CPU, VIA, RTC, flash memory, and expansion RAM are separate from TinyVicky, although TinyVicky is still responsible for translating CPU addresses to the appropriate chip selection logic and bank selection. One of the most important aspects of this architecture is that, while the first 256KB of SRAM is accessible to both the CPU and TinyVicky, TinyVicky cannot access the data in the flash or in any expansion RAM.
-
-\begin{figure}[ht]
-    \begin{center}
-        \includegraphics[scale=0.80]{images/f256jr_layout.pdf}
-    \end{center}
-    \caption{F256jr Internal Architecture}
-    \label{fig:arch}
-\end{figure}
-
+\input{introduction.tex}
 \input{memory.tex}
 \input{text.tex}
 \input{graphics.tex}
