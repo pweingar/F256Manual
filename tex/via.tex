@@ -14,32 +14,46 @@ The \jr\ includes a Western Design Center WDC65C22 versatile interface adapter o
 
 On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3 volt logic instead of the 5 volt logic used in older 8-bit machines.
 
-A complete description of the VIA would be rather long, so this guide will merely list out the register addresses and provide a quick break-down on the register functions. For a complete description, please see the data sheet from Western Design Center.
+A complete description of the VIA would be rather long, so this guide will merely list out the register addresses and provide a quick break-down on the register functions. For a complete description, please see the data sheet from Western Design Center. See table~\ref{tab:via_reg} for a listing of all the VIA registers.
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
-            Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xDC00+ & R/W & IORB & PB7 & PB6 & PB5 & PB4 & PB3 & PB2 & PB1 & PB0 \\ \hline
-            \verb+0xDC01+ & R/W & IORA & PA7 & PA6 & PA5 & PA4 & PA3 & PA2 & PA1 & PA0 \\ \hline
-            \verb+0xDC02+ & R/W & DDRB & DDRB7 & DDRB6 & DDRB5 & DDRB4 & DDRB3 & DDRB2 & DDRB1 & DDRB0 \\ \hline
-            \verb+0xDC03+ & R/W & DDRA & DDRA7 & DDRA6 & DDRA5 & DDRA4 & DDRA3 & DDRA2 & DDRA1 & DDRA0 \\ \hline
-            \verb+0xDC04+ & R/W & T1C\_L & T1C7 & T1C6 & T1C5 & T1C4 & T1C3 & T1C2 & T1C1 & T1C0 \\ \hline
-            \verb+0xDC05+ & R/W & T1C\_H & T1C15 & T1C14 & T1C13 & T1C12 & T1C11 & T1C10 & T1C9 & T1C8 \\ \hline
-            \verb+0xDC06+ & R/W & T1L\_L & T1L7 & T1L6 & T1L5 & T1L4 & T1L3 & T1L2 & T1L1 & T1L0 \\ \hline
-            \verb+0xDC07+ & R/W & T1L\_H & T1L15 & T1L14 & T1L13 & T1L12 & T1L11 & T1L10 & T1L9 & T1L8 \\ \hline
-            \verb+0xDC08+ & R/W & T2C\_L & T2C7 & T2C6 & T2C5 & T2C4 & T2C3 & T2C2 & T2C1 & T2C0 \\ \hline
-            \verb+0xDC09+ & R/W & T2C\_H & T2C15 & T2C14 & T2C13 & T2C12 & T2C11 & T2C10 & T2C9 & T2C8\\ \hline
-            \verb+0xDC0A+ & R/W & SR & SR7 & SR6 & SR5 & SR4 & SR3 & SR2 & SR1 & SR0 \\ \hline
-            \verb+0xDC0B+ & R/W & ACR & \multicolumn{2}{|c|}{T1\_CTRL} & T2\_CTRL & \multicolumn{3}{|c|}{SR\_CTRL} & PBL\_EN & PAL\_EN \\ \hline
-            \verb+0xDC0C+ & R/W & PCR & \multicolumn{3}{|c|}{CB2\_CTRL} & CB1\_CTRL & \multicolumn{3}{|c|}{CA2\_CTRL} & CA1\_CTRL \\ \hline
-            \verb+0xDC0D+ & R/W & IFR & IRQF & T1F & T2F & CB1F & CB2F & SRF & CA1F & CA2F \\ \hline
-            \verb+0xDC0E+ & R/W & IER & SET & T1E & T2E & CB1E & CB2E & SRE & CA1E & CA2E \\ \hline
-            \verb+0xDC0F+ & R/W & IOPA2 & PA7 & PA6 & PA5 & PA4 & PA3 & PA2 & PA1 & PA0 \\ \hline
+        \begin{tabular}{|c|c|c|l|} \hline
+            Address & R/W & Name & Purpose \\\hline\hline
+            \verb+0xDC00+ & R/W & IORB & Port B data \\\hline
+            \verb+0xDC01+ & R/W & IORA & Port A data \\\hline
+            \verb+0xDC02+ & R/W & DDRB & Port B Data Direction Register \\\hline
+            \verb+0xDC03+ & R/W & DDRA & Port A Data Direction Register \\\hline
+            \verb+0xDC04+ & R/W & T1C\_L & Timer 1 Counter Low \\\hline
+            \verb+0xDC05+ & R/W & T1C\_H & Timer 1 Counter High \\\hline
+            \verb+0xDC06+ & R/W & T1L\_L & Timer 1 Latch Low \\\hline
+            \verb+0xDC07+ & R/W & T1L\_H & Timer 1 Latch High \\\hline
+            \verb+0xDC08+ & R/W & T2C\_L & Timer 2 Counter Low \\\hline
+            \verb+0xDC09+ & R/W & T2C\_H & Timer 2 Counter High \\\hline
+            \verb+0xDC0A+ & R/W & SDR & Serial Data Register \\\hline
+            \verb+0xDC0B+ & R/W & ACR & Auxiliary Control Register \\\hline
+            \verb+0xDC0C+ & R/W & PCR & Peripheral Control Register \\\hline
+            \verb+0xDC0D+ & R/W & IFR & Interrupt Flag Register \\\hline
+            \verb+0xDC0E+ & R/W & IER & Interrupt Enable Register \\\hline
+            \verb+0xDC0F+ & R/W & IORA2 & Port A data (no handshake) \\\hline
         \end{tabular}
     \end{center}
     \caption{VIA Registers}
     \label{tab:via_reg}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+            Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            ACR & \multicolumn{2}{|c|}{T1\_CTRL} & T2\_CTRL & \multicolumn{3}{|c|}{SR\_CTRL} & PBL\_EN & PAL\_EN \\\hline
+            PCR & \multicolumn{3}{|c|}{CB2\_CTRL} & CB1\_CTRL & \multicolumn{3}{|c|}{CA2\_CTRL} & CA1\_CTRL \\\hline
+            IFR & IRQF & T1F & T2F & CB1F & CB2F & SRF & CA1F & CA2F \\\hline
+            IER & SET & T1E & T2E & CB1E & CB2E & SRE & CA1E & CA2E \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{VIA Control Registers}
+    \label{tab:via_ctrl_reg}
 \end{table}
 
 \begin{description}
@@ -51,23 +65,23 @@ A complete description of the VIA would be rather long, so this guide will merel
 
     \item[DDRB] Data Direction Register for Port B. Each bit configures the corresponding pin to be input (0) or output (1).
 
-    \item[T1C] Timer 1 counter value
+    \item[T1C\_L, T1C\_H] Timer 1 counter value
 
-    \item[T1L] Timer 1 latch
+    \item[T1L\_L, T1L\_H] Timer 1 latch
 
-    \item[T2C] Timer 2 counter value
+    \item[T2C\_L, T2C\_H] Timer 2 counter value
 
-    \item[SR] is the shift register. Serial input may be read here, or data may be written here to be shifted out.
+    \item[SDR] is the shift register. Serial input may be read here, or data may be written here to be shifted out.
 
-    \item[ACR] Auxiliary Control Register. Contains fields to control the function of timer 1, timer 2, the shift register, and how Port A and Port B latch data.
+    \item[ACR] Auxiliary Control Register. Contains fields to control the function of timer 1, timer 2, the shift register, and how Port A and Port B latch data. See table~\ref{tab:via_ctrl_reg} for details.
 
-    \item[PCR] Peripheral Control Register. Contains fields to control how the CA1, CA2, CB1, and CB2 handshake pins are used.
+    \item[PCR] Peripheral Control Register. Contains fields to control how the CA1, CA2, CB1, and CB2 handshake pins are used. See table~\ref{tab:via_ctrl_reg} for details.
 
-    \item[IFR] Interrupt Flag Register. Contains flags indicating which condition triggered an interrupt request. Possible conditions are timer 1, timer 2, CB1, CB2, CA1, CA2, and shift register complete.
+    \item[IFR] Interrupt Flag Register. Contains flags indicating which condition triggered an interrupt request. Possible conditions are timer 1, timer 2, CB1, CB2, CA1, CA2, and shift register complete. See table~\ref{tab:via_ctrl_reg} for details.
 
-    \item[IER] Interrupt Enable Register. Contains flags to enable or disable interrupts based on the different possible conditions.
+    \item[IER] Interrupt Enable Register. Contains flags to enable or disable interrupts based on the different possible conditions. See table~\ref{tab:via_ctrl_reg} for details.
 
-    \item[IOPA2] Same as IOPA except that the built-in handshaking capability is not used.
+    \item[IORA2] Same as IOPA except that the built-in handshaking capability is not used.
 
 \end{description}
 
