@@ -1,8 +1,8 @@
 \chapter{Sound}
 
-The \jr\ supports two different sound chips, although only one is built-in. The built-in sound chip is the SN76489 (called the ``PGS'' here), which was used by many vintage machines including the TI99/4A, the BBC Micro, the IBM PCjr, and the Tandy 1000. On the \jr, the PSG is implemented as two stereo PSGs in the FPGA. The other chip supported is the Commodore SID chip (6581 or 8580). The SID is not installed by default, but the board comes with two sockets for SID chips. The \jr\ supports the original 6581, the lower voltage 8580, and the modern SID replacement projects.
+The \jr\ supports two different sound chips, although only one is built-in. The built-in sound chip is the SN76489 (called the ``PSG'' here), which was used by many vintage machines including the TI99/4A, the BBC Micro, the IBM PCjr, and the Tandy 1000. On the \jr, the PSG is implemented as two stereo PSGs in the FPGA. The other chip supported is the Commodore SID chip (6581 or 8580). The SID is not installed by default, but the board comes with two sockets for SID chips. The \jr\ supports the original 6581, the lower voltage 8580, and the modern SID replacement projects.
 
-\section{CODEC}
+\section*{CODEC}
 
 The \jr\ (and indeed all the Foenix computers up to this point) makes use of a WM8776 CODEC chip. You can think of the CODEC as the central switchboard for audio on the \jr. The CODEC chip has inputs for several different audio channels (both analog and digital), and each audio device on the \jr\ is routed to an input on the CODEC. The CODEC then has outputs for audio line level and headphones. The CODEC will convert analog inputs to digital, mix all the audio inputs according to its settings, and then convert the resulting digital audio to analog and drive the outputs. With the CODEC, you can turn on and off the various input channels, control the volume, and mute or enable the different outputs.
 
@@ -10,9 +10,9 @@ The CODEC is a rather complex chip with many features, and the full details are 
 
 Raw access to the CODEC chip is fairly complex. Fortunately, the FPGA on the \jr\ provides three registers to simply access for programs. The FPGA takes care of the actual timing of transmitting data to the CODEC, serializing the data correctly, and so on. All the program needs to know about are the correct format for the 16-bit command words that are sent to the CODEC, and then a status register to monitor.
 
-The CODEC commands are based around a number of registers. Each command is really just writing values to those registers. The command words are 16-bits wide, with the 7 most significant bits being the number of the register to write, and the 9 least significant bits being the data to write. For instance, there is a register to enable and disable the headphone output. Bit 0 of the register controls whether or not the headphone output is enabled (0 = enabled, 1 = disabled). The register number is 13. So, to disable the output on the headphones, we would need to write \verb+000000001+ to register 13. The register number in binary is \verb+0001101+, So the command word we would need to send is \verb+0001101000000001\+ or \verb+0x1A01+.
+The CODEC commands are based around a number of registers. Each command is really just writing values to those registers. The command words are 16-bits wide, with the 7 most significant bits being the number of the register to write, and the 9 least significant bits being the data to write. For instance, there is a register to enable and disable the headphone output. Bit 0 of the register controls whether or not the headphone output is enabled (0 = enabled, 1 = disabled). The register number is 13. So, to disable the output on the headphones, we would need to write \verb+000000001+ to register 13. The register number in binary is \verb+0001101+, So the command word we would need to send is \verb+0001101000000001+ or \verb+0x1A01+.
 
-The registers for the CODEC on the \jr\ are:
+The registers for the CODEC on the \jr\ are shown in table~\ref{tab:codec_registers}.
 
 \begin{table}[ht]
 	\begin{center}
@@ -35,19 +35,19 @@ So to mute the headphones, we would issue the following:
 \begin{verbatim}
 wait:  lda $D622    ; Wait for the CODEC to be ready
        and #$01
-	   cmp #$01
-       beq wait 	; Bit 0 = 1, CODEC is still busy... keep waiting
+       cmp #$01
+       beq wait     ; Bit 0 = 1, CODEC is still busy... keep waiting
 
-	   lda #$01		; Set command to %0001101000000001, or R13 <- 000000001
-	   sta $D620
-	   lda #$1A
-	   sta $D621
+       lda #$01     ; Set command to %0001101000000001, or R13 <- 000000001
+       sta $D620
+       lda #$1A
+       sta $D621
 
-	   lda #$01		; Trigger the transmission of the command to the CODEC
-	   sta $D622
+       lda #$01     ; Trigger the transmission of the command to the CODEC
+       sta $D622
 \end{verbatim}
 
-\section{Using the PSGs}
+\section*{Using the PSGs}
 
 The \jr\ has support for dual SN76489 (PSG) sound chips, emulated in the FPGA. The SN76489 was used in several vintage machines, including the TI-99/4A, BBC Micro, IBM PCjr, and Tandy 1000. The chip provides three independent square-wave tone generators and a single noise generator. Each tone generator can produce tones of several frequencies in 16 different volume levels. The noise generator can produce two different types of noise in three different tones at 16 different volume levels.
 
@@ -71,7 +71,7 @@ Access to each PSG is through a single memory address, but that single address a
 	\label{tab:psg_registers}
 \end{table}
 
-There are four basic formats of bytes that can be written to the port:
+There are four basic formats of bytes that can be written to the port, as shown in table~\ref{tab:psg_commands}.
 
 \begin{table}[ht]
 	\begin{center}
@@ -89,11 +89,11 @@ There are four basic formats of bytes that can be written to the port:
 
 Note: there is a PSG sound device for the left stereo channel and one for the right. The left channel PSG can be accessed at 0xD600, and the right channel at 0xD610. Both are in I/O page 0.
 
-\subsection{Attenuation}
+\subsection*{Attenuation}
 
 All the channels support attenuation or volume control. The PSG expresses the loudness of the sound with how much it is attenuated or dampened. Therefore, an attenuation of 0 will be the loudest sound, while an attenuation of 15 will make the channel silent.
 
-\subsection{Tones}
+\subsection*{Tones}
 
 Each of the three sound channels generates simple square waves. The frequency generated depends upon the system clock driving the chip and the number provided in the frequency register. The relationship is:
 \[
@@ -130,7 +130,7 @@ To turn it off later, we just need to write:
     sta $D610       ; Send it to right PSG
 \end{verbatim}
 
-\subsection{Noise}
+\subsection*{Noise}
 
 Noise works differently from tones, since it is random. The noise generator on the PSG can produce two styles of noise determined by the FB bit: white noise (FB = 1), and periodic (FB = 0). The noise has a sort of frequency, based on either the system clock or the current output of tone 3. This frequency is set using the F1 and F0 bits:
 
@@ -167,7 +167,7 @@ To turn it off later, we just need to write:
     sta $D610       ; Send it to right PSG
 \end{verbatim}
 
-\section{Using the SIDs}
+\section*{Using the SIDs}
 
 The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips that can be installed on the \jr\ (see table~\ref{tab:sid_registers}).
 
@@ -186,9 +186,7 @@ ${\rm PW} / 40.95$ (expressed as a percent).
             & 3 & W & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-11}
             & 4 & W & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-11}
             & 5 & W & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-11}
-            & 6 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
-
-            \multicolumn{11}{c}{} \\ \hline
+            & 6 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline\hline
 
             \multirow{7}{*}{V2} & 7 & W & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0\\ \cline{2-11}
             & 8 & W & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-11}
@@ -196,9 +194,7 @@ ${\rm PW} / 40.95$ (expressed as a percent).
             & 10 & W & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-11}
             & 11 & W & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-11}
             & 12 & W & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-11}
-            & 13 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
-
-            \multicolumn{11}{c}{} \\ \hline
+            & 13 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline\hline
 
             \multirow{7}{*}{V3} & 14 & W & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0 \\ \cline{2-11}
             & 15 & W & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-11}
@@ -206,9 +202,7 @@ ${\rm PW} / 40.95$ (expressed as a percent).
             & 17 & W & \multicolumn{4}{|c|}{X} & PW11 & PW10 & PW9 & PW8 \\ \cline{2-11}
             & 18 & W & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-11}
             & 19 & W & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-11}
-            & 20 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline
-
-            \multicolumn{11}{c}{} \\ \hline
+            & 20 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline\hline
 
             \multirow{4}{*}{} & 21 & W & \multicolumn{5}{|c|}{X} & FC2 & FC1 & FC0 \\ \cline{2-11}
             & 22 & W & FC10 & FC9 & FC8 & FC7 & FC6 & FC5 & FC4 & FC3 \\ \cline{2-11}
@@ -236,7 +230,7 @@ F = 16.404f_{\rm out}
 \]
 For example: concert A, which is 440 Hz, would be: $F = 16.405 \times 440 \approx 7218$. So, to play a concert A, you would set the frequency to 7218, or 0x1C32.
 
-Each of the three voices has a sound ``envelope'' which changes the volume of the sound during the duration of the note. There are four phases to the sound envelope: attack, decay, sustain, and release (ADSR). When the note first starts playing (that is, the GATE bit for the voice is set to 1), it starts at the attack phase when the volume starts at zero and goes up to the current maximum volume. How fast this happens is determined by the attack rate (ATK3-0 in the registers). Once the volume reaches the maximum, the volume goes down again to the sustain volume. This phase is called decay, and the speed at which the volume drops is determined by the DCY3-0 register values. Next, the envelope enters the sustain phase, where the volume is held steady at the sustain level (STN3-0). It stays here until the note is to stop playing (GATE is set to 0). At this point, the envelope enters the release stage, where the volume drops back to zero at the release rate (RLS3-0).
+Each of the three voices has a sound ``envelope'' which changes the volume of the sound during the duration of the note. There are four phases to the sound envelope: attack, decay, sustain, and release (ADSR). When the note first starts playing (that is, the GATE bit for the voice is set to 1), it starts at the attack phase when the volume starts at zero and goes up to the current maximum volume (which is controlled by VOL3-0). How fast this happens is determined by the attack rate (ATK3-0 in the registers). Once the volume reaches the maximum, the volume goes down again to the sustain volume. This phase is called decay, and the speed at which the volume drops is determined by the DCY3-0 register values. Next, the envelope enters the sustain phase, where the volume is held steady at the sustain level (STN3-0). It stays here until the note is to stop playing (GATE is set to 0). At this point, the envelope enters the release stage, where the volume drops back to zero at the release rate (RLS3-0).
 
 The ADSR envelope allows the SID chip to mimic the qualities of various musical instruments or shape various sound effects. For instance, a pipe organ's notes are typically either on or off, so the attack, decay, and release rates would be set to be instantaneous, and the sustain level would be set to full. A piano, on the other hand tends to have a sharp, somewhat percussive sound at the beginning with the note holding a long time on release if not dampened.
 
@@ -248,10 +242,16 @@ While the different voices are independent, they can be set to alter one another
 \item Voice 3 $\rightarrow$ Voice 1
 \end{itemize}
 
-\subsection{Ring Modulation}
+\subsection*{Ring Modulation}
 
 If a voice's RING bit is set and the voice is set to use the triangle wave form (TRI is set), then the triangle wave will be replaced by the combination of the two voice's frequencies. So if the RING bit of voice 1 is set, the result will be the ring modulation of voice 1 and voice 3. Ring modulation tends to produce harmonics and overtones and can be used for bell like sounds.
 
-\subsection{Synchronization}
+\subsection*{Synchronization}
 
 If a voice's SYNC bit is set, the frequency it produces will be synchronized to the controlling voice. So if voice 1's SYNC bit is set, its frequency will be synchronized to voice 3.
+
+NOTE: Voice 3 can be muted by setting MUTEV3. This is useful to have the wave forms generated by voice 3 be used for ring modulation and synchronization without having voice 3's wave forms being actually audible.
+
+\subsection*{Filtering}
+
+The SID chip can apply a filter to the audio before sending it out for amplification. The filter works at an adjustable frequency and may be used as either a high-pass filter (if HIGH is set), a low-pass filter (if LOW is set), or as a band-pass filter (if BAND is set). The filter frequency is set by the bits FC0-10. The filter may be applied or not to each voice independently. Bits FILTV1, FILTV2, and FILTV3 control whether the filter is applied to voices 1, 2, and 3 respectively. Finally, a resonance effect may be tuned on the filter using the RES0-3 bits: 0 indicates no resonance, and 15 indicates maximum resonance.

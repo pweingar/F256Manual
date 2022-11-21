@@ -11,7 +11,7 @@ The display on the \jr\ is managed by TinyVicky, which is the smaller member of 
 
 The bitmap, sprite, and tile engines are considered graphics modes. TinyVicky will let you display either text by itself, a mix of the graphics modes by themselves, or text overlaid on top of the graphics modes.
 
-\section{Text Matrix}
+\section*{Text Matrix}
 
 The memory for the characters to display on the screen is the text matrix, which is stored in I/O page 2. When this I/O page is swapped into the CPU address space, it appears at 0xC000. Each byte of memory corresponds to a single character on the screen in left to right, top to bottom order. The byte at 0xC000 is the upper left corner of the screen, the byte at 0xC001 is the next character to the right, and so on. The number of bytes per line is set by the base resolution of the screen, but is generally 80. When a border is displayed, while that limits the number of characters displayed, the layout in memory remains the same.
 
@@ -34,7 +34,7 @@ The text screen has two core resolutions, tied to the refresh rate of the screen
 
 Note: this example does not set the font or the color, so depending on how your \jr\ is initialized, you may not see an actual ``A'' on the screen.
 
-\section{Text Color LUTs}
+\section*{Text Color LUTs}
 
 Characters in TinyVicky text mode have two colors: the foreground and the background. The foreground and background colors are picked for each character out of two different palettes of 16 colors each. The colors in the palettes are picked from the full range of colors \jr\ can produce, which is more than 16 million colors. This is all managed through two color lookup tables (LUTs) provided by TinyVicky: a text foreground color LUT, and a text background color LUT.
 
@@ -68,7 +68,7 @@ Each LUT is a list of 16 entries. Each entry is a set of four bytes: blue, green
     \label{tab:text_luts}
 \end{table}
 
-\section{Color Matrix}
+\section*{Color Matrix}
 
 The way that text color is selected for each character is through the color matrix. This section of memory is in I/O page 3 and starts at 0xC000 when page 3 is swapped into the CPU's address space. The layout is precisely the same as the text matrix (e.g. the character at 0xC123 in the text matrix has its color information at 0xC123 in the color matrix).
 
@@ -103,7 +103,7 @@ Let's say the color value at 0xC123 is 0x45. This means that the foreground colo
     sta $0001
 \end{verbatim}
 
-\section{Entering Text Mode}
+\section*{Entering Text Mode}
 
 Whether text mode is being displayed (and in what resolution) is controlled by the VICKY Master Control Registers (see table~\ref{tab:vky_master_ctrl_reg}). For now, we're going to ignore most of the bits, which are used by other display modes. For text mode, we really only care about the TEXT bit, which needs to be set to turn on the text display. The resolution is controlled by DBL\_Y, DBL\_X, and CLK\_70. If we set 0xD000 to 0x01 and 0xD001 to 0x00, that will put us into text mode at $80 \times 60$.
 
@@ -142,7 +142,7 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
     \item[DBL\_Y] if set, text mode characters will be twice as high (240 or 200 pixels, depending on CLK\_70)
 \end{description}
 
-\section{Text Fonts}
+\section*{Text Fonts}
 
 Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
 
@@ -166,7 +166,7 @@ As an example, let's say we wanted to have a fancy ``F'' for character 0:
 
 The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x30, 0x7C, 0x60, 0xC0, 0xC0. We would store that sequence in I/O page 0, starting at 0xC000 (0x1F), through 0xC007 (0xC0). After that was set, any time the byte 0x00 is written to screen memory, the glyph ``F'' would be displayed in that position.
 
-\section{Text Cursor}
+\section*{Text Cursor}
 
 \jr\ has a text mode cursor. The text mode cursor is implemented as a character which is displayed in a $(x, y)$ position on the screen, visually replacing the character ordinarily at that position. It may be displayed continuously, or it may flash at one of four rates. When flashing, that position in the text screen will alternate between the text cursor and the character at that position in the text matrix. The color for the text cursor comes from the color for the position on the screen as specified in the color matrix. In other words, the text cursor does not have its own color.
 
@@ -174,11 +174,11 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD010+ & R/W & CCR & \multicolumn{2}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
+            \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
             \verb+0xDC12+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
-            \verb+0xDC14+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \hline
+            \verb+0xDC14+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
             \verb+0xDC15+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
-            \verb+0xDC16+ & R/W & \multirow{2}{*}{CURY} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \hline
+            \verb+0xDC16+ & R/W & \multirow{2}{*}{CURY} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-2}\cline{4-11}
             \verb+0xDC17+ & R/W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
         \end{tabular}
     \end{center}

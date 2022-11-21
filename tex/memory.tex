@@ -70,11 +70,11 @@ The MMU is controlled through two main registers, which are always at locations 
 \end{table}
 
 \begin{description}
-	\item[ACT\_LUT] these two bits specify which LUT (0 - 3) is used to translate CPU bus address to system bus addresses.
+	\item[ACT\_LUT] these two bits specify which LUT (0--3) is used to translate CPU bus address to system bus addresses.
 
-	\item[EDIT\_EN] if set (1), this bit allows a LUT to be edited by the program, and memory addresses 0x0010 - 0x0017 will be used by the LUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
+	\item[EDIT\_EN] if set (1), this bit allows a LUT to be edited by the program, and memory addresses 0x0008--0x0010 will be used by the LUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
 
-	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being edited and will appear in memory addresses 0x0010 - 0x0017.
+	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being edited and will appear in memory addresses 0x0008--0x0010.
 
 	\item[IO\_DISABLE] if set (1), bank 6 is mapped like any other memory bank. If clear (0), bank 6 is mapped to I/O memory.
 

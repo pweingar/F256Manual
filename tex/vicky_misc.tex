@@ -1,6 +1,6 @@
 \chapter{Miscellaneous Features of TinyVicky}
 
-\section{DIP Switches}
+\section*{DIP Switches}
 
 \jr\ has eight DIP switches on the board, which can be used to configure various options. The DIP switches are present on a single register (see table:~\ref{tab:dip_reg}). The DIP switches ground their signals when placed in their ``on'' positions. So a true or asserted value is 0, while the false or de-asserted value is 1.
 
@@ -24,7 +24,7 @@ There are five fields of switches:
     \item[BOOT] these four switches provide information to the operating system for boot options.
 \end{description}
 
-\section{The Border}
+\section*{The Border}
 
 The \jr's display can have a border, which overlays all the other display elements. The border can have any color which TinyVicky can display, and can have a width from 0 to 31 pixels. The border can also be turned off, leaving the full display for graphics or text.
 
@@ -51,18 +51,18 @@ When using graphics modes, the border simply hides the graphics elements underne
 
     \item[SCROLL\_X] the number of pixels the border should be shifted in the horizontal direction
 
-    \item[BBR] the amount of blue in the border (0 = none, 255 = maximum amount)
+    \item[BRDR\_BLUE] the amount of blue in the border (0 = none, 255 = maximum amount)
 
-    \item[BGR] the amount of green in the border (0 = none, 255 = maximum amount)
+    \item[BRDR\_GREEN] the amount of green in the border (0 = none, 255 = maximum amount)
 
-    \item[BRR] the amount of red in the border (0 = none, 255 = maximum amount)
+    \item[BRDR\_RED] the amount of red in the border (0 = none, 255 = maximum amount)
 
     \item[SIZE\_X] the width of the left and right sides of the border in pixels (from 0 to 31)
 
     \item[SIZE\_X] the height of top and bottom of the border in pixels (from 0 to 31)
 \end{description}
 
-\section{Background Color}
+\section*{Background Color}
 
 In text mode, the background color is determined by the color matrix and the text color LUTs. For the graphics modes, however, a background color is specified separately. There are three registers to specify the background color's red, green, and blue components (see table:~\ref{tab:back_reg}). This is the color that will be displayed in graphics modes, if all the layers specify that a given pixel has the color 0 (which is always the transparent pixel color).
 
@@ -79,7 +79,7 @@ In text mode, the background color is determined by the color matrix and the tex
     \label{tab:back_reg}
 \end{table}
 
-\section{Line Interrupt and Beam Position}
+\section*{Line Interrupt and Beam Position}
 
 TinyVicky can trigger a SOL interrupt (see table:~\ref{tab:interrupts}) when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
 
@@ -274,7 +274,7 @@ return:     pla
             .pend
 \end{verbatim}
 
-\section{Gamma Correction}
+\section*{Gamma Correction}
 
 TinyVicky has the ability to apply gamma correction to the video signal. This allows users to adjust their images to match their monitors. Activating gamma correction is done by setting the GAMMA flag in the Vicky master control register (see table:~\ref{tab:vky_master_ctrl_reg}). When enabled, colors will be adjusted through the gamma look up tables. There are three tables: blue is at 0xC000, green is at 0xC400, and red is at 0xC800.
 

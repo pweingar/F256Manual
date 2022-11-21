@@ -1,4 +1,4 @@
-\section{Bitmaps}
+\section*{Bitmaps}
 
 TinyVicky allows for three full screen bitmaps to be displayed at once. These bitmaps are either $320 \times 200$ or $320 \times 240$, depending on the value of the CLK\_70 bit of the master control register. A bitmap's pixel data contains either 64,000 bytes, or 76,800 bytes of data. In both cases, the pixel data is arranged from left to right and top to bottom. The first 320 bytes are the pixels of the first line (with the first pixel being the left-most). The second 320 bytes are the second line, and so on. Additionally, the bitmaps can independently use any of the four graphics CLUTs to specify the colors for those indexes. TinyVicky provides registers for each bitmap set the CLUT and the address of the bitmap:
 

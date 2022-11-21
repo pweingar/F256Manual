@@ -12,15 +12,16 @@ Three are three main tools available to provide user access to the debug port:
     \item[FoenixMgr] A script written in Python 3 which provides command line access on the host computer to the debug port. It supports files in Intel HEX, Motorola SREC, raw binary, PGX, and PGZ files. It should run on any computer or operating system that can run Python 3 and provide sufficient access to USB serial interfaces. It runs under Windows and Linux definitely and may be able to run under Mac OS X eventually.
 \end{description}
 
-\section{Debug Protocol}
+\section*{Debug Protocol}
 
 The USB debug port is accessed over the USB Serial protocol. Data is sent from the host computer to the \jr\ using data packets, each one of which is a command. The general process is:
 
 \begin{enumerate}
     \item Host PC sends the command to enter debug mode
     \item The \jr\ replies
-    \item Host PC sends one or more command packets
+    \item Host PC sends a command packet
     \item The \jr\ replies
+    \item The host repeats from step 3 until finished
     \item Host PC send the command to exit debug mode
     \item The \jr\ replies and sends a reset signal to the CPU
 \end{enumerate}
@@ -104,7 +105,7 @@ Each command and response packet includes an LRC check byte, which is simply the
     \label{tab:debug_commands}
 \end{table}
 
-\section{Flash Sectors}
+\section*{Flash Sectors}
 Individual blocks or sectors of flash may be erased or programmed without affecting the rest of flash memory. This can be done through the commands \verb+0x12+ to erase flash sectors and \verb+0x13+ to program them from RAM. The packets for sectors are a little different from the others. The main difference is that third byte of the packet (ordinarily the high byte of the address) is the number of the sector to program, and addresses are limited to 16-bits. Each sector is a 4KB block, with 0 being the first 4KB of flash, 1 being the second 4KB of flash, and so on.
 
 The flash of the \jr\ has a limitation that the smallest block of flash that can be erased is 8KB, so when erasing sectors, two sectors must be erased, not just one. And the sector pairs must be aligned to 8KB. So sector 0 and sector 1 would be erased together, but not sector 1 and sector 2 (although sectors 0 -- 3 would be fine).

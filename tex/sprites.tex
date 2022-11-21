@@ -6,21 +6,22 @@ A program for the \jr\ can use up to 64 sprites, each one of which is controlled
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
-            Offset & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
-            0 & W & Sprite Control & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{LAYER} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
-            1 & W & \multirow{3}{*}{Sprite Address} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
-            2 & W &  & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
-            3 & W &  & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
-            4 & W & \multirow{2}{*}{Sprite X} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
-            5 & W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
-            6 & W & \multirow{2}{*}{Sprite Y} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-2}\cline{4-11}
-            7 & W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
+            0 & W & --- & \multicolumn{2}{|c|}{SIZE} & \multicolumn{2}{|c|}{LAYER} & \multicolumn{2}{|c|}{LUT} & ENABLE \\ \hline
+            1 & W & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
+            2 & W & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
+            3 & W & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            4 & W & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \hline
+            5 & W & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
+            6 & W & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \hline
+            7 & W & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Sprite Registers for a Single Sprite}
     \label{tab:sp_reg}
 \end{table}
+
 These registers manage seven fields:
 
 \begin{description}
@@ -53,13 +54,13 @@ These registers manage seven fields:
     \label{tab:sp_sizes}
 \end{table}
 
-\section{Sprite, Layers, and Display Priority}
+\section*{Sprite, Layers, and Display Priority}
 
 While a sprite can be assigned to any of four layers, this layer is only used for determining how the sprite interacts with bitmap or tile map graphics and not how sprites layer with each other. When sprites ``collide,'' a built-in sprite priority order is used to determine which sprite determines a pixel's color. When two sprites are both trying to set the color of a pixel on the screen, the sprite with the lowest number is the one that determines the color. For example, if sprite 0 and sprite 5 are in the same location, it is sprite 0 that will display in the foreground. The sprite layers {\em cannot} be used to change this.
 
 The best practice for assigning sprites is to place the images that need to be on top in the first sprites and those that need to be in the back in the higher numbered sprites. Use the LAYER field for the sprites to control how the sprites layer with the tile maps and bitmaps.
 
-\section{Sprite Positioning}
+\section*{Sprite Positioning}
 
 The coordinate system for sprites is similar to that for bitmap graphics, but it is offset by 32 pixels in both the horizontal and vertical directions. There is a sort of margin area around the entire displayed screen that a sprite can be in and be either partially or completely hidden from view. The horizontal coordinate for a sprite ranges from 0 to 352. The vertical coordinate can range from 0 to 232 or 272, depending on the vertical resolution. For a sprite to have its top-left corner in the top-left of the screen, its position would need to be $(32, 32)$. This coordinate system is the same for all sprites, regardless of their size. Figure:~\ref{fig:sprite_positions} shows how the coordinate system is arranged.
 

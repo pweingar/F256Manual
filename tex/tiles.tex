@@ -14,7 +14,7 @@ There are several differences with tile maps, however:
 
     \item A tile map can be scrolled smoothly horizontally or vertically.
 
-    \item A tile may use 256 colors in its pixels as opposed to text mode's two-color characters. In particular, this means that a tile set uses one byte per pixel, with that byte's value being an index into a CLUT (as with bitmaps and sprites), where text mode fonts are one {\em bit} per pixel choosing between a foreground and background color.
+    \item A tile may use 256 colors in its pixels as opposed to text mode's two-color characters. This means that a tile set uses one byte per pixel, with that byte's value being an index into a CLUT (as with bitmaps and sprites), where text mode fonts are one {\em bit} per pixel choosing between a foreground and background color.
 
     \item The tile map system allows for up to eight different tile sets to be used at the same time, where text mode has a single font.
 
@@ -24,14 +24,14 @@ There are several differences with tile maps, however:
 \end{itemize}
 
 
-\section{Tile Maps}
+\section*{Tile Maps}
 
 There are three tile maps supported by TinyVicky, each of which has 13 bytes worth of registers (see table:~\ref{tab:tilemap_reg}). Tile map 0 starts at 0xD200. Tile map 1 starts at 0xD20C. Tile map 2 starts at 0xD218.
 
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
-            Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             0 & W & \multicolumn{3}{|c|}{---} & TILE\_SIZE & \multicolumn{3}{|c|}{---} & ENABLE \\ \hline
             1 & W & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \hline
             2 & W & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \hline
@@ -88,7 +88,7 @@ This attribute system makes tiles very powerful. Effectively, a single tile map 
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
-            15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+            15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \multicolumn{3}{|c|}{---} & \multicolumn{2}{|c|}{CLUT} & \multicolumn{3}{|c|}{SET} & \multicolumn{8}{|c|}{TILE NUMBER} \\ \hline
         \end{tabular}
     \end{center}
@@ -96,7 +96,7 @@ This attribute system makes tiles very powerful. Effectively, a single tile map 
     \label{tab:tile_bits}
 \end{table}
 
-\subsection{Scrolling}
+\subsection*{Scrolling}
 
 Tile maps can scroll across the screen both horizontally and vertically. The position of the tile map on the screen is controlled through the registers at offsets 8, 9, and 10. The horizontal position is controlled by DIR\_X, X, and SSX. The vertical position is controlled by DIR\_Y, Y, and SSY. The bits X and Y set the position in units of tiles. That is, the number in X[9..0] specifies how many complete tile columns the tile map is moved left or right. Likewise, Y[9..0] specifies how many tile rows the tile map is moved up or down. The SSX and SSY bits are used to specify how many rows of pixels within a tile the tile map is to move. SSX and SSY are therefore ``smooth scroll'' registers. They have a small trick to their use, however:
 
@@ -106,12 +106,11 @@ Finally, DIR\_X and DIR\_Y are used to control the direction of the scrolling. I
 
 To make sure that scrolling will work properly, the tile map needs to be at least as big as the full screen (even if it is largely ``empty''), and there should be blank columns to the left and the right and blank rows above and below. That is, it is best to leave an empty margin all the way around your working tile map.
 
-\section{Tile Sets}
+\section*{Tile Sets}
 
-Essentially, a tile set is just a bitmap, but of a smaller size and arranged in a particular way. If the smaller ($8 \times 8$) tiles are used, the tile set image is 128 pixels wide by 128 pixels tall. If the larger ($16 \times 16$) tiles are used, the tile set image is 256 pixels wide by 256 pixels tall. The image is then divided up into 256 equal sizes squares; that is 16 squares by 16 squares. Each square area of the tile set image is the image data for a particular tile. The tiles are arranged left-to-right and top-to-bottom. Tile 0 is in the upper left of the image and tile 255 is in the lower right. Table~\ref{tab:tile_set_layout} shows graphically how they are arranged.
+Essentially, a tile set is just a bitmap, but of a smaller size and arranged in a specific pattern. A tile set can be either a linear arrangement of tiles or a square arrangement of tiles. In the linear arrangement, the image is one tile wide by 256 tiles high. So for $8 \times 8$ tiles, the tile set is 8 pixels wide by 2,048 pixels high. For $16 \times 16$ tiles, the tile set is 16 pixels wide by 4,096 pixels high. The tiles are arranged vertically, so the first 8 or 16 (depending on tile size) rows are tile 0, the second set of rows are tile 1, and so on. For the square arrangement, the tile set is either 128 pixels wide by 128 pixels high (for $8 \times 8$ tiles), or it is 256 pixels wide by 256 pixels high (for $16 \times 16$ tiles). In both cases, the tiles are laid out left to right and top to bottom in a grid that is 16 tiles wide by 16 tiles high (see table~\ref{tab:tile_set_layout}).
 
 As with bitmaps and sprites, the pixels of the tiles are each an individual byte. The contents of the byte (0 -- 255) serving as an index into a color lookup table. The pixels are also laid out in left-to-right and top-to-bottom order, just as with bitmaps and individual sprites.
-
 
 \begin{table}[ht]
     \begin{center}
@@ -184,7 +183,7 @@ TinyVicky supports eight separate tile sets. Each one has a single three byte ad
             \verb+0xD29C+ & W & \multirow{4}{*}{7} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
             \verb+0xD29D+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
             \verb+0xD29E+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
-            \verb+0xD29F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
+            \verb+0xD29F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline
         \end{tabular}
     \end{center}
     \caption{Tile Set Registers}

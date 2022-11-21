@@ -1,9 +1,12 @@
 \chapter{Interrupt Controller}
 
 The 65C02 has two interrupts: non-maskable interrupts (NMI) for high priority events, and the regular interrupt request line (IRQ) for normal priority events. Currently, the C256 series of computers do not use NMI for any purpose, so the only interrupt is the IRQ line. There are many devices on the \jr\ which can trigger interrupts, so to save the interrupt handler the chore of querying each device in turn, the \jr\ provides an interrupt controller module.
+
 The individual devices route their interrupt request signals to the interrupt controller. When an interrupt comes in, the controller knows which device it is and decides whether to forward the interrupt to the CPU. The interrupt handler can then query the interrupt handler to see which device or devices have interrupts pending and can then acknowledge them once they have been properly handled.
 
 The interrupt controller provides two sets of registers to provide its functionality: interrupt masks, and interrupt pending. The mask registers provide a mask flag for every possible interrupt. If the flag is true (1), the interrupt from that device is masked, and an interrupt coming in from it will not trigger an IRQ on the processor. The pending register provides a pending flag for every possible interrupt. If the flag is true (1) on a read, the device has requested an interrupt, if false (0) there is no interrupt pending from the device. Setting a flag in a pending register to 1 will acknowledge the interrupt and cause the controller to drop the pending flag. Writing a 0 to a flag will have no effect.
+
+The interrupt controller registers are divided on the \jr\ into two groups: 0 and 1. Group 0 represents seven of the interrupts: two video interrupts, two PS/2 controller interrupts, two timer interrupts, and the DMA interrupt. Group 1 represents the other interrupts: UART, real time clock, VIA, and the SD card controller.
 
 NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate from the mask flags). For example, the 65C22 VIA has an interrupt enable bit in one of its registers and will not send an interrupt to the \jr's interrupt controller if that bit is not enabled. For such devices, the interrupt enable flag on the device must be set and the corresponding mask bit in the interrupt controller must be clear in order for interrupts to be sent to the CPU. Other devices, like VICKY, do not have a separate enable flag. In their case, only their corresponding mask bits must be cleared to enable their interrupts.
 
@@ -12,11 +15,9 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 		\begin{tabular}{| c | c | c | c | l |} \hline
             Mask & Pending & Bit & Name & Purpose \\ \hline\hline
 
-            \multirow{8}{*}{{\tt 0xD666}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt
-			\footnote{Occurs once per vertical blanking period. The frequency of this interrupt will vary with the display resolution.} \\ \cline{3-5}
+            \multirow{8}{*}{{\tt 0xD666}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \cline{3-5}
 
-            & & \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt
-			\footnote{Occurs when the raster line has reached a preset target line.} \\ \cline{3-5}
+            & & \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt \\ \cline{3-5}
 
             & & \verb+0x04+ & INT\_PS2\_KBD & PS/2 keyboard event \\ \cline{3-5}
 
@@ -26,7 +27,7 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 
             & & \verb+0x20+ & INT\_TIMER\_1 & TIMER1 has reached its target value \\ \cline{3-5}
 
-            & & \verb+0x40+ & INT\_DMA & DMA has completed \\ \cline{3-5}
+            & & \verb+0x40+ & RESERVED & \\ \cline{3-5}
 
             & & \verb+0x80+ & RESERVED & \\ \hline
 
@@ -50,6 +51,8 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 	\caption{Interrupts}
 	\label{tab:interrupts}
 \end{table}
+
+The Start Of Frame (SOF) and Start of Line (SOL) interrupts could use some further explanation. The SOF interrupt is raised at the beginning of the vertical blanking period, when the raster has reached the bottom of the screen and starts to return to the top. This interrupt is raised either 60 times a second or 70 times a second, depending on the value of CLK\_70 (see table~\ref{tab:vky_master_ctrl_reg}), which sets the base resolution of the screen. The SOF interrupt is good for timing updates to graphics (like placement of sprites) to avoid screen tearing. It can also be used for rough timing of events, provided the code takes into account the fact that the timing changes with screen resolution. The Start of Line interrupt is raised when the raster line has reached a target line (see table~\ref{tab:lint_reg}). When the interrupt is raised, the raster is in the process of drawing the screen and has reached the desired target line.
 
 As an example of working with the interrupt controller, let's try using the SOF interrupt to alter the character in the upper left corner.
 
