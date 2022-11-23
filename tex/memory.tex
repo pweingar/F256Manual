@@ -13,11 +13,11 @@ To understand how it all works, we first need to look at how RAM and flash memor
 		  	\verb+0x80000+ & \verb+0xFFFFF+ & Flash Memory (512 KB) \\ \hline
 		\end{tabular}
 	\end{center}
-	\caption{C256jr memory layout}
+	\caption{\jr\ memory layout}
 	\label{tab:memory}
 \end{table}
 
-This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, a bank number there are 7 bits. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
+This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, the upper 7 bits are used to address the correct 8 KB bank in the full system memory. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
 
 The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
 

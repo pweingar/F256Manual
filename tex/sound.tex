@@ -78,7 +78,7 @@ There are four basic formats of bytes that can be written to the port, as shown 
 		\begin{tabular}{|c|c|c|c|c|c|c|c|l|} \hline
 			D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 & Purpose \\ \hline \hline
 			1 & R2 & R1 & R0 & F3 & F2 & F1 & F0 & Set the low four bits of the frequency \\ \hline
-			0 & X & F9 & F8 & F7 & F6 & F5 & F4 & Set the high seven bits of the frequency \\ \hline
+			0 & X & F9 & F8 & F7 & F6 & F5 & F4 & Set the high six bits of the frequency \\ \hline
 			1 & 1 & 1 & 0 & X & FB & F1 & F0 & Set the type and frequency of the noise generator \\ \hline
 			1 & R2 & R1 & R0 & A3 & A2 & A1 & A0 & Set the attenuation (four bits) \\ \hline
 		\end{tabular}
@@ -118,7 +118,7 @@ So, let us say we want channel 1 to produce a concert A, which is 440Hz at maxim
     sta $D600       ; Send it to left PSG
     sta $D610       ; Send it to right PSG
 
-    lda #$0F        ; %00001111 = Set the high 7 bits of the frequency
+    lda #$0F        ; %00001111 = Set the high 6 bits of the frequency
     sta $D600       ; Send it to left PSG
     sta $D610       ; Send it to right PSG
 \end{verbatim}
