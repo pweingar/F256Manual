@@ -97,7 +97,7 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
     bne l1
 
     lda #$40      ; Bank 7 maps to $80000, first bank of flash
-    sta $0017
+    sta $000f
 
     stz $0001     ; Bank 6 should be I/O bank 0
 

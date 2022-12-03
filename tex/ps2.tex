@@ -6,10 +6,11 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD640+ & R & RXD & \multicolumn{8}{|c|}{RX\_DATA} \\ \hline
-            \verb+0xD640+ & W & TXR & \multicolumn{8}{|c|}{TX\_DATA} \\ \hline
-            \verb+0xD644+ & R & STAT & PE & TE & \multicolumn{2}{|c|}{---} & CMD\_DAT & SYSFLAG & RXF & TXF \\ \hline
-            \verb+0xD644+ & W & CMD & \multicolumn{8}{|c|}{COMMAND} \\ \hline
+            \verb+0xD640+ & W & KBD\_CTRL & \multicolumn{6}{|c|}{---} & WR & RD \\\hline
+            \verb+0xD641+ & W & KBD\_OUT & \multicolumn{8}{|l|}{Data to send to keyboard} \\ \hline
+            \verb+0xD642+ & R & KBD\_SCAN & \multicolumn{8}{|l|}{Pure scan code from keyboard} \\ \hline
+            \verb+0xD643+ & R & KBD\_ASCII & \multicolumn{8}{|l|}{ASCII character codes from the keyboard} \\ \hline
+            \verb+0xD644+ & R & KBD\_STAT & TX\_ACK & TX\_NAK & \multicolumn{2}{|c|}{---} & REL & PRS & SHFT & RDY \\ \hline
         \end{tabular}
     \end{center}
     \caption{UART Registers}
@@ -17,19 +18,12 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
 \end{table}
 
 \begin{description}
-    \item[RXD] Data returned by either the keyboard or the controller
-
-    \item[TXD] Data to be sent to the keyboard or the controller
-
-    \item[STAT] Status register of the controller:
-    \begin{description}
-        \item[PE] Parity Error
-        \item[TE] Timeout Error
-        \item[CMD\_DAT] 0 = data written to the data register is for the PS/2 device. 1 = data is for the controller
-        \item[SYSFLAG] System flag
-        \item[RXF] If set, receive FIFO contains data
-        \item[TXF] If set, transmit FIFO is full
-    \end{description}
-
-    \item[CMD] Commands to the controller (not the keyboard) are written here
+    \item[WR]
+    \item[RD]
+    \item[TX\_ACK] when 1, the code sent to the keyboard has been acknowledged
+    \item[TX\_NAK] when 1, the code sent to the keyboard has resulted in an error
+    \item[REL] when 1, the key has been released
+    \item[PRS] when 1, key is pressed
+    \item[SHFT] when 1, one the shift key is pressed
+    \item[RDY] when 1, Data to be read (will clear after you set the Read Strobe)   
 \end{description}
