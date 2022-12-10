@@ -4,16 +4,34 @@
     \begin{center}
         \begin{tabular}{|c|l|} \hline
             Address & Purpose \\ \hline\hline
+            \verb+0x000000+ & \multirow{2}{*}{System RAM for programs, data, and graphics (512 KB)} \\ \cline{1-1}
+            \verb+0x07FFFF+ & \\ \hline
+            \verb+0x080000+ & \multirow{2}{*}{Flash memory (512 KB)} \\ \cline{1-1}
+            \verb+0x0FFFFF+ & \\ \hline
+            \verb+0x100000+ & \multirow{2}{*}{Expansion RAM for programs, and data (256 KB)} \\ \cline{1-1}
+            \verb+0x13FFFF+ & \\ \hline
+            \verb+0x140000+ & \multirow{2}{*}{Reserved} \\ \cline{1-1}
+            \verb+0x1FFFFF+ & \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{System Memory Map for the \jr}
+    \label{tab:sys_mem_map}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|l|} \hline
+            Address & Purpose \\ \hline\hline
             \verb+0x00000+ & \multirow{2}{*}{System RAM for programs, data, and graphics (256 KB)} \\ \cline{1-1}
             \verb+0x3FFFF+ & \\ \hline
-            \verb+0x40000+ & \multirow{2}{*}{Reserved (256 KB)} \\ \cline{1-1}
+            \verb+0x40000+ & Reserved \\ \cline{1-1}
             \verb+0x7FFFF+ & \\ \hline
             \verb+0x80000+ & \multirow{2}{*}{Flash memory (512 KB)} \\ \cline{1-1}
             \verb+0xFFFFF+ & \\ \hline
         \end{tabular}
     \end{center}
-    \caption{System Memory Map for the \jr}
-    \label{tab:sys_mem_map}
+    \caption{System Memory Map for the \jr\ RevA}
+    \label{tab:sys_mem_map_reva}
 \end{table}
 
 \begin{table}[ht]

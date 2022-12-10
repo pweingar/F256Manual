@@ -1,23 +1,25 @@
 \chapter{Memory Management}
 
-The \jr\ has 256 KB of system RAM which can be used for programs, data, and graphics. It also has 512 KB of read-only flash memory that can be used by whatever operating system is installed. Now, the 65C02 CPU at the heart of the \jr\ has an address space of only 64 KB, so how can it access all this memory, not to mention the I/O devices on the system? The answer is paging. The \jr\ has a special memory management unit (MMU) that can swap banks of memory or I/O registers into and out of the memory space of the CPU.
+The \jr\ has 512 KB of system RAM which can be used for programs, data, and graphics. It also has 512 KB of read-only flash memory that can be used by whatever operating system is installed. Finally, the \jr\ comes with an expansion port and allows for 256KB of expansion RAM to be added. Now, the 65C02 CPU at the heart of the \jr\ has an address space of only 64 KB, so how can it access all this memory, not to mention the I/O devices on the system? The answer is paging. The \jr\ has a special memory management unit (MMU) that can swap banks of memory or I/O registers into and out of the memory space of the CPU.
 
-To understand how it all works, we first need to look at how RAM and flash memory are handled by the \jr. Because there are 768 KB of total storage on the system, the system has a 20-bit address bus to manage the memory. RAM and flash have address on that 20-bit bus as shown in table~\ref{tab:memory}.
+To understand how it all works, we first need to look at how RAM and flash memory are handled by the \jr. Because there are 1,280 KB of total storage on the system, the system has a 21-bit address bus to manage the memory. RAM and flash have address on that 21-bit bus as shown in table~\ref{tab:memory}.
 
 \begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{| l | l | l |} \hline
 			Start & End & Memory Type \\ \hline\hline
-		  	\verb+0x00000+ & \verb+0x3FFFF+ & System RAM (256 KB)\\ \hline
-			\verb+0x40000+ & \verb+0x7FFFF+ & Reserved for future use (256 KB)\\ \hline
-		  	\verb+0x80000+ & \verb+0xFFFFF+ & Flash Memory (512 KB) \\ \hline
+		  	\verb+0x000000+ & \verb+0x07FFFF+ & System RAM (512 KB)\\ \hline
+			\verb+0x080000+ & \verb+0x0FFFFF+ & Flash Memory (512 KB) \\ \hline
+			\verb+0x100000+ & \verb+0x13FFFF+ & Expansion RAM (256 KB)\\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{\jr\ memory layout}
 	\label{tab:memory}
 \end{table}
 
-This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 20 bits, the upper 7 bits are used to address the correct 8 KB bank in the full system memory. So a LUT must provide a 7-bit system bank number for each 3-bit bank number provided by the CPU.
+This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 21 bits, the upper 8 bits are used to address the correct 8 KB bank in the full system memory. So a LUT must provide a 8-bit system bank number for each 3-bit bank number provided by the CPU.
+
+NOTE: The original RevA developer's board has a different memory map from the RevB. The RevA does not include an expansion slot and has only 256KB of system RAM. See table~\ref{tab:sys_mem_map_reva} for the overall memory map of the RevA board. Additionally, the RevA bus is only 20-bits wide, and the memory LUTs are only 7 bits wide.
 
 The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
 
@@ -110,7 +112,7 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 
 While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be edited, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
 
-When the \jr\ powers on, it initializes the LUTs in two different ways. The ``boot from RAM'' LUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' LUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x7E000 -- 0x7FFFF). After the LUTs are initialized, the \jr\ checks to see which of the two sets of LUTs should be used and enables them. The memory LUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the LUTs are related and how they are initialized on power up.
+When the \jr\ powers on, it initializes the LUTs in two different ways. The ``boot from RAM'' LUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' LUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x07E000 -- 0x07FFFF). After the LUTs are initialized, the \jr\ checks to see which of the two sets of LUTs should be used and enables them. The memory LUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the LUTs are related and how they are initialized on power up.
 
 \begin{figure}[ht]
     \begin{center}
