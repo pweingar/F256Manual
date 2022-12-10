@@ -106,6 +106,7 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 \end{verbatim}
 
 \section*{MMU Boot Configuration}
+\label{pg:mmu_boot_config}
 
 While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be edited, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
 

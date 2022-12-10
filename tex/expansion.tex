@@ -1,0 +1,47 @@
+\chapter{Expansion Connector}
+
+
+The \jr\ RevB includes a PCIe x1 style expansion connector. This expansion connector is designed to support both RAM expansion and game style ROM cartridges. The pin assignments for the expansion connector can be seen in figure~\ref{fig:port_expansion}, while the size information for the card itself can be seen in figure~\ref{fig:port_expan_size}.
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.75]{images/f256_port_expansion.pdf}
+    \end{center}
+    \caption{Expansion Port}
+    \label{fig:port_expansion}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=6in]{images/pci.png}
+    \end{center}
+    \caption{Expansion Port Physical Size}
+    \label{fig:port_expan_size}
+\end{figure}
+
+% \begin{table}[ht]
+%     \begin{center}
+%         \begin{tabular}{|c||l|c|c||l|}\cline{1-2}\cline{4-5}
+%             B1 & C02\_ADDR4 & \hspace{2em} & A1 & /RST\_IN \\\cline{1-2}\cline{4-5}
+%             B2 & C02\_ADDR3 & & A2 & C02\_ADDR5 \\\cline{1-2}\cline{4-5}
+%             B3 & C02\_ADDR2 & & A3 & C02\_ADDR6 \\\cline{1-2}\cline{4-5}
+%             B4 & C02\_ADDR1 & & A4 & C02\_ADDR7 \\\cline{1-2}\cline{4-5}
+%             B5 & C02\_ADDR0 & & A5 & C02\_ADDR8 \\\cline{1-2}\cline{4-5}
+%             B6 & /CS\_RAM & & A6 & /OE \\\cline{1-2}\cline{4-5}
+%             B7 & C02\_D0 & & A7 & C02\_D7 \\\cline{1-2}\cline{4-5}
+%             B8 & C02\_D1 & & A8 & C02\_D6 \\\cline{1-2}\cline{4-5}
+%             B9 & +3.3V & & A9 & GND \\\cline{1-2}\cline{4-5}
+%             B10 & GND & & A10 & +3.3V \\\cline{1-2}\cline{4-5}
+%             B11 & C02\_D2 & & A11 & C02\_D5 \\\cline{1-2}\cline{4-5}
+%             B12 & C02\_D3 & & A12 & C02\_D4 \\\cline{1-2}\cline{4-5}
+%             B13 & R/W & & A13 & C02\_ADDR9 \\\cline{1-2}\cline{4-5}
+%             B14 & RAM\_ADDR17 & & A14 & C02\_ADDR10 \\\cline{1-2}\cline{4-5}
+%             B15 & RAM\_ADDR16 & & A15 & C02\_ADDR11 \\\cline{1-2}\cline{4-5}
+%             B16 & RAM\_ADDR15 & & A16 & C02\_ADDR12 \\\cline{1-2}\cline{4-5}
+%             B17 & RAM\_ADDR14 & & A17 & /CRT\_IRQ \\\cline{1-2}\cline{4-5}
+%             B18 & RAM\_ADDR13 & & A18 & C02\_PHI2 \\\cline{1-2}\cline{4-5}
+%         \end{tabular}
+%     \end{center}
+%     \caption{Expansion Connector Pinout}
+%     \label{tab:expansion}
+% \end{table}
