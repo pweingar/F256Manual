@@ -1,6 +1,6 @@
 \chapter{PS/2 Keyboard and Mouse}
 
-The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. A simple PS/2 keyboard controller is included in the \jr. The controller emulates the classic Intel 8042 keyboard controller.
+The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. This port is accessed through five registers, which provide very simple access to a PS/2 device. The \jr\ does not have a full PS/2 controller, but instead provides mostly raw access to the data stream. It does make some attempt to translate set 2 scan codes to ASCII character code, although raw scan codes may be read instead.
 
 \begin{table}[h]
     \begin{center}

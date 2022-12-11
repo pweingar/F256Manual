@@ -143,6 +143,7 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
 \end{description}
 
 \section*{Text Fonts}
+\label{sec:text_font}
 
 Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
 

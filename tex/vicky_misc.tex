@@ -275,6 +275,7 @@ return:     pla
 \end{verbatim}
 
 \section*{Gamma Correction}
+\label{sec:gamma}
 
 TinyVicky has the ability to apply gamma correction to the video signal. This allows users to adjust their images to match their monitors. Activating gamma correction is done by setting the GAMMA flag in the Vicky master control register (see table:~\ref{tab:vky_master_ctrl_reg}). When enabled, colors will be adjusted through the gamma look up tables. There are three tables: blue is at 0xC000, green is at 0xC400, and red is at 0xC800.
 

@@ -24,7 +24,7 @@
             Address & Purpose \\ \hline\hline
             \verb+0x00000+ & \multirow{2}{*}{System RAM for programs, data, and graphics (256 KB)} \\ \cline{1-1}
             \verb+0x3FFFF+ & \\ \hline
-            \verb+0x40000+ & Reserved \\ \cline{1-1}
+            \verb+0x40000+ &  \multirow{2}{*}{Reserved} \\ \cline{1-1}
             \verb+0x7FFFF+ & \\ \hline
             \verb+0x80000+ & \multirow{2}{*}{Flash memory (512 KB)} \\ \cline{1-1}
             \verb+0xFFFFF+ & \\ \hline
@@ -37,7 +37,7 @@
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|l|} \hline
-            Bank & Purpose \\ \hline\hline
+            Bank & Address & Purpose \\ \hline\hline
             \multirow{10}{*}{0} & \verb+0x0000+ & MMU Memory Control Register \\ \cline{2-3}
             & \verb+0x0001+ & MMU I/O Control Register \\ \cline{2-3}
             & \verb+0x0002+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
@@ -80,14 +80,14 @@
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|c|l|} \hline
-            Start & End & Purpose \\ \hline\hline
-            \verb+0xC000+ & \verb+0xC7FF+ & Text Mode Font Memory \\ \hline
-            \verb+0xC800+ & \verb+0xCFFF+ & Reserved \\ \hline
-            \verb+0xD000+ & \verb+0xD3FF+ & Graphics Color LUT 0 \\ \hline
-            \verb+0xD400+ & \verb+0xD7FF+ & Graphics Color LUT 1 \\ \hline
-            \verb+0xD800+ & \verb+0xDBFF+ & Graphics Color LUT 2 \\ \hline
-            \verb+0xDC00+ & \verb+0xDFFF+ & Graphics Color LUT 3 \\ \hline
+        \begin{tabular}{|c|c|l|l|} \hline
+            Start & End & Purpose & Page \\ \hline\hline
+            \verb+0xC000+ & \verb+0xC7FF+ & Text Mode Font Memory & \pageref{sec:text_font} \\ \hline
+            \verb+0xC800+ & \verb+0xCFFF+ & Reserved & \\ \hline
+            \verb+0xD000+ & \verb+0xD3FF+ & Graphics Color LUT 0 & \multirow{4}{*}{\pageref{tab:graph_cluts}} \\ \cline{1-3}
+            \verb+0xD400+ & \verb+0xD7FF+ & Graphics Color LUT 1 & \\ \cline{1-3}
+            \verb+0xD800+ & \verb+0xDBFF+ & Graphics Color LUT 2 & \\ \cline{1-3}
+            \verb+0xDC00+ & \verb+0xDFFF+ & Graphics Color LUT 3 & \\ \hline
         \end{tabular}
     \end{center}
     \caption{Memory Map for I/O Page 1}

@@ -17,11 +17,21 @@ To understand how it all works, we first need to look at how RAM and flash memor
 	\label{tab:memory}
 \end{table}
 
-This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 21 bits, the upper 8 bits are used to address the correct 8 KB bank in the full system memory. So a LUT must provide a 8-bit system bank number for each 3-bit bank number provided by the CPU.
+This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 21 bits, the upper 8 bits are used to address the correct 8 KB bank in the full system memory. So a MLUT must provide a 8-bit system bank number for each 3-bit bank number provided by the CPU. Figure~\ref{fig:mmu_address_xlate} shows the translation of a CPU address to a full system address through the currently selected memory MLUT.
 
-NOTE: The original RevA developer's board has a different memory map from the RevB. The RevA does not include an expansion slot and has only 256KB of system RAM. See table~\ref{tab:sys_mem_map_reva} for the overall memory map of the RevA board. Additionally, the RevA bus is only 20-bits wide, and the memory LUTs are only 7 bits wide.
+\begin{leftbar}
+NOTE: The original RevA developer's board has a different memory map from the RevB. The RevA does not include an expansion slot and has only 256KB of system RAM. See table~\ref{tab:sys_mem_map_reva} for the overall memory map of the RevA board. Additionally, the RevA bus is only 20-bits wide, and the memory MLUTs are only 7 bits wide.
+\end{leftbar}
 
-The \jr's MMU supports up to four LUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a LUT on the fly.
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics{images/mmu_address_xlate.pdf}
+    \end{center}
+    \caption{MMU Address Translation}
+    \label{fig:mmu_address_xlate}
+\end{figure}
+
+The \jr's MMU supports up to four MLUTs, only one of which is active at any given moment. This allows programs to define four different memory layouts and switch between them quickly, without having to alter a MLUT on the fly.
 
 \begin{table}[ht]
 	\begin{center}
@@ -48,7 +58,7 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 		\begin{tabular}{| l | l |} \hline
 			I/O Bank & Purpose \\ \hline\hline
 			0 & Low level I/O registers \\ \hline
-			1 & Text display font memory and graphics color LUTs \\ \hline
+			1 & Text display font memory and graphics color MLUTs \\ \hline
 			2 & Text display character matrix \\ \hline
 			3 & Text display color matrix \\ \hline
 		\end{tabular}
@@ -57,7 +67,7 @@ Of the eight CPU memory banks, one is special. Bank 6 can be mapped to memory as
 	\label{tab:io_banks}
 \end{table}
 
-The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active LUT, edit a LUT, and control bank 6:
+The MMU is controlled through two main registers, which are always at locations 0x0000 and 0x0001 in the CPU's address space (see table~\ref{tab:mmu_registers}). These registers allow programs to select an active MLUT, edit a MLUT, and control bank 6:
 
 \begin{table}[ht]
 	\begin{center}
@@ -72,28 +82,28 @@ The MMU is controlled through two main registers, which are always at locations 
 \end{table}
 
 \begin{description}
-	\item[ACT\_LUT] these two bits specify which LUT (0--3) is used to translate CPU bus address to system bus addresses.
+	\item[ACT\_LUT] these two bits specify which MLUT (0--3) is used to translate CPU bus address to system bus addresses.
 
-	\item[EDIT\_EN] if set (1), this bit allows a LUT to be edited by the program, and memory addresses 0x0008--0x0010 will be used by the LUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
+	\item[EDIT\_EN] if set (1), this bit allows a MLUT to be edited by the program, and memory addresses 0x0008--0x0010 will be used by the MLUT being edited. If clear (0), those memory locations will be standard memory locations and will be mapped like the rest of bank 0.
 
-	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which LUT (0 - 3) is being edited and will appear in memory addresses 0x0008--0x0010.
+	\item[EDIT\_LUT] if EDIT\_EN is set, these two bits will specify which MLUT (0 - 3) is being edited and will appear in memory addresses 0x0008--0x0010.
 
 	\item[IO\_DISABLE] if set (1), bank 6 is mapped like any other memory bank. If clear (0), bank 6 is mapped to I/O memory.
 
 	\item[IO\_PAGE] if IO\_DISABLE is clear, these two bits specify which bank of I/O memory (0 - 3) is mapped to bank 6.
 \end{description}
 
-\example{Setting up a LUT}
+\example{Setting up a MLUT}
 
-In this example, we will set up LUT 1 so that the first six banks of CPU memory map to the first banks of RAM, bank 7 of CPU memory maps to the first bank of flash memory, and bank 6 maps to the first I/O bank.
+In this example, we will set up MLUT 1 so that the first six banks of CPU memory map to the first banks of RAM, bank 7 of CPU memory maps to the first bank of flash memory, and bank 6 maps to the first I/O bank.
 
 \begin{verbatim}
-    lda #$90      ; Active LUT = 0, Edit LUT#1
+    lda #$90      ; Active MLUT = 0, Edit MLUT#1
     sta $0000
 
     ldx #0        ; Start at bank 0
 l1: txa           ; First 6 banks will just be the first banks of RAM
-    sta $0008,x   ; Set the LUT mapping for this bank
+    sta $0008,x   ; Set the MLUT mapping for this bank
     inx           ; Move to the next bank
     cpx #6        ; Until we get to bank 6
     bne l1
@@ -103,16 +113,16 @@ l1: txa           ; First 6 banks will just be the first banks of RAM
 
     stz $0001     ; Bank 6 should be I/O bank 0
 
-    lda #$01      ; Turn off LUT editing, and switch to LUT#1
+    lda #$01      ; Turn off MLUT editing, and switch to MLUT#1
     sta $0000
 \end{verbatim}
 
 \section*{MMU Boot Configuration}
 \label{pg:mmu_boot_config}
 
-While the MMU registers allow the MMU to select one of four memory LUTs to be used for address translation or to be edited, in fact the \jr's MMU actually has eight LUTs in two sets of four. At any given time, only one of those sets of four LUTs is active. One set of LUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
+While the MMU registers allow the MMU to select one of four memory MLUTs to be used for address translation or to be edited, in fact the \jr's MMU actually has eight MLUTs in two sets of four. At any given time, only one of those sets of four MLUTs is active. One set of MLUTs is the ``boot from RAM'' set, and the other is the ``boot from flash'' set. As the names imply, one set is meant to allow you to boot the \jr\ to run code you have loaded into RAM (useful for development and debugging), while the other is meant to be used to boot up an operating system you have loaded into flash memory (useful for just running programs and playing games).
 
-When the \jr\ powers on, it initializes the LUTs in two different ways. The ``boot from RAM'' LUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' LUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x07E000 -- 0x07FFFF). After the LUTs are initialized, the \jr\ checks to see which of the two sets of LUTs should be used and enables them. The memory LUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the LUTs are related and how they are initialized on power up.
+When the \jr\ powers on, it initializes the MLUTs in two different ways. The ``boot from RAM'' MLUTs are initialized so the 64KB of CPU address space is simply mapped to the first 64KB of system RAM. The ``boot from flash'' MLUTs are initialized to be the same, except that the last bank of CPU address space (0xE000 -- 0xFFFF) is mapped to the last bank of flash memory (0x07E000 -- 0x07FFFF). After the MLUTs are initialized, the \jr\ checks to see which of the two sets of MLUTs should be used and enables them. The memory MLUTs that are not selected are completely ignored. See figure ~\ref{fig:lut_choice} to see how the MLUTs are related and how they are initialized on power up.
 
 \begin{figure}[ht]
     \begin{center}
@@ -122,6 +132,8 @@ When the \jr\ powers on, it initializes the LUTs in two different ways. The ``bo
     \label{fig:lut_choice}
 \end{figure}
 
-How the \jr\ decides which set of LUTs to use depends upon the board. The older, RevA boards have a command available over the USB debug port that switches the active LUTs on the fly. The newer, RevB boards have a jumper to choose between the LUTs.
+How the \jr\ decides which set of MLUTs to use depends upon the board. The older, RevA boards have a command available over the USB debug port that switches the active MLUTs on the fly. The newer, RevB boards have a jumper to choose between the MLUTs.
 
-NOTE: the memory LUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the LUTs except when directed by a program. Pressing the RESET button does not re-initialize the LUTs. This means that a program should not assume the LUTs are set to any particular value on reset, unless the operating system is initializing the LUTs. A program running as an operating system or even just taking complete control over the board should always initialize the LUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the LUTs, but a program will not always be starting from a complete power cycle.
+\begin{leftbar}
+	NOTE: the memory MLUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the MLUTs except when directed by a program. Pressing the RESET button does not re-initialize the MLUTs. This means that a program should not assume the MLUTs are set to any particular value on reset, unless the operating system is initializing the MLUTs. A program running as an operating system or even just taking complete control over the board should always initialize the MLUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the MLUTs, but a program will not always be starting from a complete power cycle.
+\end{leftbar}
