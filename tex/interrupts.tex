@@ -15,7 +15,7 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 		\begin{tabular}{| c | c | c | c | l |} \hline
             Mask & Pending & Bit & Name & Purpose \\ \hline\hline
 
-            \multirow{8}{*}{{\tt 0xD666}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \cline{3-5}
+            \multirow{8}{*}{{\tt 0xD66C}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \cline{3-5}
 
             & & \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt \\ \cline{3-5}
 
@@ -31,7 +31,7 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 
             & & \verb+0x80+ & RESERVED & \\ \hline
 
-            \multirow{8}{*}{{\tt 0xD667}} & \multirow{8}{*}{{\tt 0xD661}} & \verb+0x01+ & INT\_UART & The UART is ready to receive or send data \\ \cline{3-5}
+            \multirow{8}{*}{{\tt 0xD66D}} & \multirow{8}{*}{{\tt 0xD661}} & \verb+0x01+ & INT\_UART & The UART is ready to receive or send data \\ \cline{3-5}
 
             & & \verb+0x02+ & RESERVED & \\ \cline{3-5}
 
@@ -71,8 +71,8 @@ VIRQ = $FFFE
 
 INT_PEND_0 = $D660  ; Pending register for interrupts 0 - 7
 INT_PEND_1 = $D661  ; Pending register for interrupts 8 - 15
-INT_MASK_0 = $D666  ; Mask register for interrupts 0 - 7
-INT_MASK_1 = $D667  ; Mask register for interrupts 8 - 15
+INT_MASK_0 = $D66C  ; Mask register for interrupts 0 - 7
+INT_MASK_1 = $D66D  ; Mask register for interrupts 8 - 15
 
 start:      ; Disable IRQ handling
             sei
