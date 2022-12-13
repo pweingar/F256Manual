@@ -176,11 +176,11 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
             \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
-            \verb+0xDC12+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
-            \verb+0xDC14+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
-            \verb+0xDC15+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
-            \verb+0xDC16+ & R/W & \multirow{2}{*}{CURY} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-2}\cline{4-11}
-            \verb+0xDC17+ & R/W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
+            \verb+0xD012+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
+            \verb+0xD014+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD015+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
+            \verb+0xD016+ & R/W & \multirow{2}{*}{CURY} & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD017+ & R/W &  & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Text Cursor Registers}
