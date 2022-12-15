@@ -144,7 +144,7 @@ Bitmaps and tile maps are assigned to their layers using the layer control regis
 As an example of how to use layers, we can set things up for future examples by putting bitmap 0 in the front layer (0), tile map 0 in the next layer (1), and bitmap 1 in the back layer (2).
 
 \begin{verbatim}
-    lda #$20            ; Layer 0 = BM 0, Layer 1 = TM 0
+    lda #$40            ; Layer 0 = BM 0, Layer 1 = TM 0
     sta VKY_LAYER_CTRL_0
     lda #$01            ; Layer 2 = BM 1
     sta VKY_LAYER_CTRL_1

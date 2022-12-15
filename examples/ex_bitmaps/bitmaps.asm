@@ -92,7 +92,7 @@ lut_done:
             stz VKY_BKG_COL_G
             stz VKY_BKG_COL_B
 
-            lda #$20            ; Layer 0 = BM 0, Layer 1 = TM 0
+            lda #$40            ; Layer 0 = BM 0, Layer 1 = TM 0
             sta VKY_LAYER_CTRL_0
             lda #$01            ; Layer 2 = BM 1
             sta VKY_LAYER_CTRL_1
