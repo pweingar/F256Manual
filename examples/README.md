@@ -13,3 +13,4 @@ This folder contains complete, runnable programs based on the examples in the te
 * [PSG](ex_psg) -- How to make sound using the built-in PSG audio
 * [VIA](ex_via) -- Using the VIA to read the joystick port
 * [RTC](ex_rtc) -- Using the real time clock
+* [DMA](ex_dma) -- Using the DMA engine to fill the screen and draw a filled rectangle

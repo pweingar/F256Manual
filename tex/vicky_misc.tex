@@ -310,11 +310,11 @@ The calculation of the address for a particular pixel can be somewhat involved, 
             
             \verb+0xD308+ & R & \multirow{2}{*}{XY\_OFFS} & O7 & O6 & O5 & O4 & O3 & O2 & O1 & O0 \\ \cline{1-2}\cline{4-11}
             \verb+0xD309+ & R & & O15 & O14 & O13 & O12 & O11 & O10 & O9 & O8 \\ \hline
-            \verb+0xD308+ & R & XY\_BANK & B7 & B6 & B5 & B4 & B3 & B2 & B1 & B0 \\ \hline
+            \verb+0xD30A+ & R & XY\_BANK & B7 & B6 & B5 & B4 & B3 & B2 & B1 & B0 \\ \hline
 
-            \verb+0xD309+ & R & \multirow{3}{*}{XY\_AD} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
-            \verb+0xD30A+ & R & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
-            \verb+0xD30B+ & R & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
+            \verb+0xD30B+ & R & \multirow{3}{*}{XY\_AD} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD30C+ & R & & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
+            \verb+0xD30D+ & R & & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \hline
         \end{tabular}
     \end{center}
     \caption{Bitmap Coordinate Calculator}
@@ -326,3 +326,5 @@ The calculation performed is simply:
     {\rm XY\_AD} = ({\rm XY\_BASE}) + ({\rm XY\_POSY} \times 320) + ({\rm XY\_POSX})
 \]
 where XY\_BASE is the address of the pixel at $(0, 0)$, XY\_POSY is the $y$ coordinate of the pixel, XY\_POSX is the $x$, coordinate of the pixel, and XY\_AD is the system address of the pixel. The block then breaks that address down into the MMU bank number for that address (XY\_BANK) and the offset to the pixel in that bank (XY\_OFFS).
+
+An example of 

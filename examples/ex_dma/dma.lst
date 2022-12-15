@@ -1,0 +1,229 @@
+
+; 64tass Turbo Assembler Macro V1.55.2200 listing file
+; 64tass -a --mw65c02 --intel-hex --list=dma.lst --labels=dma.lbl -o dma.hex dma.asm
+; Wed Dec 14 19:30:35 2022
+
+;Offset	;Hex		;Monitor	;Source
+
+;******  Processing input file: dma.asm
+
+
+;******  Processing file: ../common/f256jr.asm
+
+=$0000					MMU_MEM_CTRL = $0000            ; MMU Memory Control Register
+=$0001					MMU_IO_CTRL = $0001             ; MMU I/O Control Register
+=$00					MMU_IO_PAGE_0 = $00
+=$01					MMU_IO_PAGE_1 = $01
+=$02					MMU_IO_TEXT = $02
+=$03					MMU_IO_COLOR = $03
+=$0008					MMU_MEM_BANK_0 = $0008          ; MMU Edit Register for bank 0 ($0000 - $1FFF)
+=$0009					MMU_MEM_BANK_1 = $0009          ; MMU Edit Register for bank 1 ($2000 - $3FFF)
+=$000a					MMU_MEM_BANK_2 = $000A          ; MMU Edit Register for bank 2 ($4000 - $5FFF)
+=$000b					MMU_MEM_BANK_3 = $000B          ; MMU Edit Register for bank 3 ($6000 - $7FFF)
+=$000c					MMU_MEM_BANK_4 = $000C          ; MMU Edit Register for bank 4 ($8000 - $9FFF)
+=$000d					MMU_MEM_BANK_5 = $000D          ; MMU Edit Register for bank 5 ($A000 - $BFFF)
+=$000e					MMU_MEM_BANK_6 = $000E          ; MMU Edit Register for bank 6 ($C000 - $DFFF)
+=$000f					MMU_MEM_BANK_7 = $000F          ; MMU Edit Register for bank 7 ($E000 - $FFFF)
+=$d000					VKY_MSTR_CTRL_0 = $D000         ; Vicky Master Control Register 0
+=$d001					VKY_MSTR_CTRL_1 = $D001         ; Vicky Master Control Register 1
+=$d002					VKY_LAYER_CTRL_0 = $D002        ; Vicky Layer Control Register 0
+=$d003					VKY_LAYER_CTRL_1 = $D003        ; Vicky Layer Control Register 1
+=$d004					VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
+=$d005					VKY_BRDR_COL_B = $D005          ; Vicky Border Color -- Blue
+=$d006					VKY_BRDR_COL_G = $D006          ; Vicky Border Color -- Green
+=$d007					VKY_BRDR_COL_R = $D007          ; Vicky Border Color -- Red
+=$d008					VKY_BRDR_VERT = $D008           ; Vicky Border vertical thickness in pixels
+=$d009					VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
+=$d00d					VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
+=$d00e					VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
+=$d00f					VKY_BKG_COL_R = $D00F           ; Vicky Graphics Background Color Red Component
+=$d010					VKY_CRSR_CTRL = $D010           ; Vicky Text Cursor Control
+=$d012					VKY_CRSR_CHAR = $D012
+=$d014					VKY_CRSR_X_L = $D014            ; Cursor X position
+=$d015					VKY_CRSR_X_H = $D015
+=$d016					VKY_CRSR_Y_L = $D016            ; Cursor Y position
+=$d017					VKY_CRSR_Y_H = $D017
+=$d018					VKY_LINE_CTRL = $D018           ; Control register for the line interrupt
+=$01					VKY_LINE_ENABLE = $01
+=$d019					VKY_LINE_NBR_L = $D019          ; Line number target low byte
+=$d01a					VKY_LINE_NBR_H = $D01A          ; Line number target high byte
+=$d100					VKY_BM0_CTRL = $D100            ; Bitmap #0 Control Register
+=$d101					VKY_BM0_ADDR_L = $D101          ; Bitmap #0 Address bits 7..0
+=$d102					VKY_BM0_ADDR_M = $D102          ; Bitmap #0 Address bits 15..8
+=$d103					VKY_BM0_ADDR_H = $D103          ; Bitmap #0 Address bits 17..16
+=$d108					VKY_BM1_CTRL = $D108            ; Bitmap #1 Control Register
+=$d109					VKY_BM1_ADDR_L = $D109          ; Bitmap #1 Address bits 7..0
+=$d10a					VKY_BM1_ADDR_M = $D10A          ; Bitmap #1 Address bits 15..8
+=$d10b					VKY_BM1_ADDR_H = $D10B          ; Bitmap #1 Address bits 17..16
+=$d800					VKY_TXT_FGLUT = $D800           ; Text foreground CLUT
+=$d840					VKY_TXT_BGLUT = $D840           ; Text background CLUT
+=$d000					VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0
+=$d400					VKY_GR_CLUT_1 = $D400           ; Graphics LUT #1
+=$d800					VKY_GR_CLUT_2 = $D800           ; Graphics LUT #2
+=$dc00					VKY_GR_CLUT_3 = $DC00           ; Graphics LUT #3
+
+;******  Return to file: dma.asm
+
+
+;******  Processing file: ../common/f256_dma.asm
+
+=$df00					DMA_CTRL = $DF00
+=$80					DMA_CTRL_START = $80
+=$08					DMA_CTRL_INT_EN = $08
+=$04					DMA_CTRL_FILL = $04
+=$02					DMA_CTRL_2D = $02
+=$01					DMA_CTRL_ENABLE = $01
+=$df01					DMA_STATUS = $DF01
+=$80					DMA_STAT_BUSY = $80
+=$df01					DMA_FILL_VAL = $DF01
+=$df04					DMA_SRC_ADDR = $DF04
+=$df08					DMA_DST_ADDR = $DF08
+=$df0c					DMA_COUNT = $DF0C
+=$df0c					DMA_WIDTH = $DF0C
+=$df0e					DMA_HEIGHT = $DF0E
+=$df10					DMA_STRIDE_SRC = $DF10
+=$df12					DMA_STRIDE_DST = $DF12
+
+;******  Return to file: dma.asm
+
+
+;******  Processing file: ../common/f256_xymath.asm
+
+=$d301					XY_BASE = $D301         ; Starting address of the bitmap
+=$d304					XY_POS_X = $D304        ; X-coordinate desired
+=$d306					XY_POS_Y = $D306        ; Y-coordinate desired
+=$d308					XY_OFFSET = $D308       ; Offset within an MMU bank of the pixel for (X, Y)
+=$d30a					XY_BANK = $D30A         ; MMU bank containing the pixel for (X, Y)
+=$d30b					XY_ADDRESS = $D30B      ; System address of the pixel for (X, Y)
+
+;******  Return to file: dma.asm
+
+=$10000					bitmap_base = $10000        ; The base address of our bitmap
+=320					bitmap_width = 320
+=240					bitmap_height = 240
+=76800					bitmap_size = bitmap_width*bitmap_height
+>fffc	00 e0				reset:  .word <>start
+>0080					pointer     .word ?             ; A pointer we'll use
+.e000	78		sei		start:      sei                 ; Turn off interrupts
+.e001	a9 01		lda #$01	            lda #$01            ; Set the I/O page to #1
+.e003	85 01		sta $01		            sta MMU_IO_CTRL
+.e005	a9 00		lda #$00	            lda #<VKY_GR_CLUT_0 ; pointer will be used to point to a particular LUT entry
+.e007	85 80		sta $80		            sta pointer
+.e009	a9 d0		lda #$d0	            lda #>VKY_GR_CLUT_0
+.e00b	85 81		sta $81		            sta pointer+1
+.e00d	a2 00		ldx #$00	            ldx #0              ; Start with blue = 0
+.e00f	a0 00		ldy #$00	lut_loop:   ldy #0              ; And start at the offset for blue
+.e011	8a		txa		            txa                 ; Take the current blue color level
+.e012	91 80		sta ($80),y	            sta (pointer),y     ; Set the blue component
+.e014	c8		iny		            iny
+.e015	a9 00		lda #$00	            lda #0
+.e017	91 80		sta ($80),y	            sta (pointer),y     ; Set the green component to 0
+.e019	c8		iny		            iny
+.e01a	8a		txa		            txa                 ; Get the blue component again
+.e01b	49 ff		eor #$ff	            eor #$ff            ; And compute the 2's complement of it
+.e01d	1a		inc a		            inc a
+.e01e	91 80		sta ($80),y	            sta (pointer),y     ; Set the red component
+.e020	c8		iny		            iny
+.e021	e8		inx		            inx                 ; Go to the next color
+.e022	f0 0f		beq $e033	            beq lut_done        ; If we are back to black, we're done with the LUT
+.e024	18		clc		            clc                 ; Move pointer to the next LUT entry (+ 4)
+.e025	a5 80		lda $80		            lda pointer
+.e027	69 04		adc #$04	            adc #4
+.e029	85 80		sta $80		            sta pointer
+.e02b	a5 81		lda $81		            lda pointer+1
+.e02d	69 00		adc #$00	            adc #0
+.e02f	85 81		sta $81		            sta pointer+1
+.e031	80 dc		bra $e00f	            bra lut_loop
+.e033					lut_done:
+.e033	64 01		stz $01		            stz MMU_IO_CTRL     ; Go back to I/O page #0
+.e035	a9 0c		lda #$0c	            lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
+.e037	8d 00 d0	sta $d000	            sta VKY_MSTR_CTRL_0 ; Save that to VICKY master control register 0
+.e03a	9c 01 d0	stz $d001	            stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+.e03d	a9 00		lda #$00	            lda #$00            ; Turn off the border
+.e03f	8d 04 d0	sta $d004	            sta VKY_BRDR_CTRL
+.e042	9c 0f d0	stz $d00f	            stz VKY_BKG_COL_R   ; Set background color to black
+.e045	9c 0e d0	stz $d00e	            stz VKY_BKG_COL_G
+.e048	9c 0d d0	stz $d00d	            stz VKY_BKG_COL_B
+.e04b	a9 20		lda #$20	            lda #$20            ; Layer 0 = BM 0, Layer 1 = TM 0
+.e04d	8d 02 d0	sta $d002	            sta VKY_LAYER_CTRL_0
+.e050	a9 01		lda #$01	            lda #$01            ; Layer 2 = BM 1
+.e052	8d 03 d0	sta $d003	            sta VKY_LAYER_CTRL_1
+.e055	9c 08 d1	stz $d108	            stz VKY_BM1_CTRL    ; Make sure bitmap 1 is turned off
+.e058	a9 01		lda #$01	            lda #$01            ; Use graphics LUT #0, and enable bitmap
+.e05a	8d 00 d1	sta $d100	            sta VKY_BM0_CTRL
+.e05d	a9 00		lda #$00	            lda #<bitmap_base   ; Set the low byte of the bitmap's address
+.e05f	8d 01 d1	sta $d101	            sta VKY_BM0_ADDR_L
+.e062	a9 00		lda #$00	            lda #>bitmap_base   ; Set the middle byte of the bitmap's address
+.e064	8d 02 d1	sta $d102	            sta VKY_BM0_ADDR_M
+.e067	a9 01		lda #$01	            lda #`bitmap_base   ; Set the upper two bits of the bitmap's address
+.e069	29 03		and #$03	            and #$03
+.e06b	8d 03 d1	sta $d103	            sta VKY_BM0_ADDR_H
+.e06e	a9 05		lda #$05	            lda #DMA_CTRL_FILL | DMA_CTRL_ENABLE
+.e070	8d 00 df	sta $df00	            sta DMA_CTRL
+.e073	a9 ff		lda #$ff	            lda #$ff
+.e075	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with 0
+.e078	a9 00		lda #$00	            lda #<bitmap_base   ; Our bitmap will be the destination
+.e07a	8d 08 df	sta $df08	            sta DMA_DST_ADDR
+.e07d	a9 00		lda #$00	            lda #>bitmap_base
+.e07f	8d 09 df	sta $df09	            sta DMA_DST_ADDR+1
+.e082	a9 01		lda #$01	            lda #`bitmap_base
+.e084	29 03		and #$03	            and #$03
+.e086	8d 0a df	sta $df0a	            sta DMA_DST_ADDR+2
+.e089	a9 00		lda #$00	            lda #<bitmap_size   ; We will write 640*480 bytes
+.e08b	8d 0c df	sta $df0c	            sta DMA_COUNT
+.e08e	a9 2c		lda #$2c	            lda #>bitmap_size
+.e090	8d 0d df	sta $df0d	            sta DMA_COUNT+1
+.e093	a9 01		lda #$01	            lda #`bitmap_size
+.e095	8d 0e df	sta $df0e	            sta DMA_COUNT+2
+.e098	ad 00 df	lda $df00	            lda DMA_CTRL
+.e09b	09 80		ora #$80	            ora #DMA_CTRL_START
+.e09d	8d 00 df	sta $df00	            sta DMA_CTRL
+.e0a0	ad 01 df	lda $df01	wait_dma:   lda DMA_STATUS      ; Wait until DMA is not busy
+.e0a3	29 80		and #$80	            and #DMA_STAT_BUSY
+.e0a5	c9 80		cmp #$80	            cmp #DMA_STAT_BUSY
+.e0a7	f0 f7		beq $e0a0	            beq wait_dma
+.e0a9	9c 00 df	stz $df00	            stz DMA_CTRL
+.e0ac	a9 07		lda #$07	            lda #DMA_CTRL_FILL | DMA_CTRL_2D | DMA_CTRL_ENABLE
+.e0ae	8d 00 df	sta $df00	            sta DMA_CTRL
+.e0b1	a9 00		lda #$00	            lda #<bitmap_base   ; Give the coordinate math unit the base address
+.e0b3	8d 01 d3	sta $d301	            sta XY_BASE
+.e0b6	a9 00		lda #$00	            lda #>bitmap_base
+.e0b8	8d 02 d3	sta $d302	            sta XY_BASE+1
+.e0bb	a9 01		lda #$01	            lda #`bitmap_base
+.e0bd	29 03		and #$03	            and #$03
+.e0bf	8d 03 d3	sta $d303	            sta XY_BASE+2
+.e0c2	a9 64		lda #$64	            lda #100             ; Set (x,y) of the rectangle to (100, 40)
+.e0c4	8d 04 d3	sta $d304	            sta XY_POS_X
+.e0c7	9c 05 d3	stz $d305	            stz XY_POS_X+1
+.e0ca	a9 28		lda #$28	            lda #40
+.e0cc	8d 06 d3	sta $d306	            sta XY_POS_Y
+.e0cf	9c 07 d3	stz $d307	            stz XY_POS_Y+1
+.e0d2	ad 0b d3	lda $d30b	            lda XY_ADDRESS      ; Get the address of the upper left corner of the rectangle
+.e0d5	8d 08 df	sta $df08	            sta DMA_DST_ADDR    ; And use it as the DMA address
+.e0d8	ad 0c d3	lda $d30c	            lda XY_ADDRESS+1
+.e0db	8d 09 df	sta $df09	            sta DMA_DST_ADDR+1
+.e0de	ad 0d d3	lda $d30d	            lda XY_ADDRESS+2
+.e0e1	8d 0a df	sta $df0a	            sta DMA_DST_ADDR+2
+.e0e4	a9 30		lda #$30	            lda #$30
+.e0e6	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with 128
+.e0e9	a9 64		lda #$64	            lda #100            ; Size of rectangle is (100,30)
+.e0eb	8d 0c df	sta $df0c	            sta DMA_WIDTH
+.e0ee	9c 0d df	stz $df0d	            stz DMA_WIDTH+1
+.e0f1	a9 1e		lda #$1e	            lda #30
+.e0f3	8d 0e df	sta $df0e	            sta DMA_HEIGHT
+.e0f6	9c 0f df	stz $df0f	            stz DMA_HEIGHT+1
+.e0f9	a9 40		lda #$40	            lda #<bitmap_width
+.e0fb	8d 12 df	sta $df12	            sta DMA_STRIDE_DST
+.e0fe	a9 01		lda #$01	            lda #>bitmap_width
+.e100	8d 13 df	sta $df13	            sta DMA_STRIDE_DST+1
+.e103	ad 00 df	lda $df00	            lda DMA_CTRL
+.e106	09 80		ora #$80	            ora #DMA_CTRL_START
+.e108	8d 00 df	sta $df00	            sta DMA_CTRL
+.e10b	ad 01 df	lda $df01	wait_dma2d: lda DMA_STATUS      ; Wait until DMA is not busy
+.e10e	29 80		and #$80	            and #DMA_STAT_BUSY
+.e110	c9 80		cmp #$80	            cmp #DMA_STAT_BUSY
+.e112	f0 f7		beq $e10b	            beq wait_dma2d
+.e114	ea		nop		done:       nop                 ; Lock up here
+.e115	80 fd		bra $e114	            bra done
+
+;******  End of listing

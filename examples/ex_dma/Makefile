@@ -9,4 +9,4 @@ runhex: dma.hex
 	python $(FOENIXMGR)/FoenixMgr/fnxmgr.py --upload dma.hex
 
 %.hex: %.asm
-	$(AS) $(ASFLAGS) --intel-hex -o $@ $<
+	$(AS) $(ASFLAGS) --intel-hex --list=dma.lst --labels=dma.lbl -o $@ $<

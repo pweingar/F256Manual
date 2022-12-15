@@ -2,15 +2,19 @@
 ;;; Example code to show how to use the DMA features with bitmaps
 ;;;
 
-.include "../common/f256jr.asm"     ; Include register definitions for the F256jr
-.include "../common/f256_dma.asm"   ; Include the DMA registers
+.include "../common/f256jr.asm"         ; Include register definitions for the F256jr
+.include "../common/f256_dma.asm"       ; Include the DMA registers
+.include "../common/f256_xymath.asm"    ; Include the coordinate math registers
 
 ;
 ; Definitions
 ;
 
 bitmap_base = $10000        ; The base address of our bitmap
-bitmap_size = 640*480
+bitmap_width = 320
+bitmap_height = 240
+bitmap_size = bitmap_width*bitmap_height
+
 
 ; Point the reset vector to the start of code to kick start it
 
@@ -114,10 +118,15 @@ lut_done:
             and #$03
             sta VKY_BM0_ADDR_H
 
-            ; Fill the bitmap with 0
+;
+; Fill the bitmap with 0
+;
+
+            lda #DMA_CTRL_FILL | DMA_CTRL_ENABLE
+            sta DMA_CTRL
 
             lda #$ff
-            sta DMA_CTRL_FILL   ; We will fill the screen with 0
+            sta DMA_FILL_VAL    ; We will fill the screen with $FF
 
             lda #<bitmap_base   ; Our bitmap will be the destination
             sta DMA_DST_ADDR
@@ -131,13 +140,76 @@ lut_done:
             sta DMA_COUNT
             lda #>bitmap_size
             sta DMA_COUNT+1
+            lda #`bitmap_size
+            sta DMA_COUNT+2
 
-            lda #DMA_CTRL_FILL | DMA_CTRL_ENABLE | DMA_CTRL_START
+            lda DMA_CTRL
+            ora #DMA_CTRL_START
             sta DMA_CTRL
 
 wait_dma:   lda DMA_STATUS      ; Wait until DMA is not busy
-            bit #DMA_STAT_BUSY
-            bne wait_dma
+            and #DMA_STAT_BUSY
+            cmp #DMA_STAT_BUSY
+            beq wait_dma
+
+            stz DMA_CTRL        ; Turn off the DMA engine
+
+;
+; Draw a filled rectangle
+;
+
+            lda #DMA_CTRL_FILL | DMA_CTRL_2D | DMA_CTRL_ENABLE
+            sta DMA_CTRL
+
+            ;
+            ; Calculate starting address based on address of bitmap and (X,Y)
+            ;
+
+            lda #<bitmap_base   ; Give the coordinate math unit the base address
+            sta XY_BASE
+            lda #>bitmap_base
+            sta XY_BASE+1
+            lda #`bitmap_base
+            and #$03
+            sta XY_BASE+2
+
+            lda #100             ; Set (x,y) of the rectangle to (100, 40)
+            sta XY_POS_X    
+            stz XY_POS_X+1
+            lda #40
+            sta XY_POS_Y
+            stz XY_POS_Y+1
+
+            lda XY_ADDRESS      ; Get the address of the upper left corner of the rectangle
+            sta DMA_DST_ADDR    ; And use it as the DMA address
+            lda XY_ADDRESS+1
+            sta DMA_DST_ADDR+1
+            lda XY_ADDRESS+2
+            sta DMA_DST_ADDR+2
+
+            lda #$30
+            sta DMA_FILL_VAL    ; We will fill the screen with $30     
+
+            lda #100            ; Size of rectangle is (100,30)
+            sta DMA_WIDTH
+            stz DMA_WIDTH+1
+            lda #30
+            sta DMA_HEIGHT
+            stz DMA_HEIGHT+1
+
+            lda #<bitmap_width  ; Set the width of the destination bitmap for 2D DMA
+            sta DMA_STRIDE_DST
+            lda #>bitmap_width
+            sta DMA_STRIDE_DST+1
+
+            lda DMA_CTRL
+            ora #DMA_CTRL_START
+            sta DMA_CTRL
+
+wait_dma2d: lda DMA_STATUS      ; Wait until DMA is not busy
+            and #DMA_STAT_BUSY
+            cmp #DMA_STAT_BUSY
+            beq wait_dma2d
 
 done:       nop                 ; Lock up here
             bra done
