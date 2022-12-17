@@ -9,12 +9,12 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
             \multicolumn{11}{|c|}{DLAB = 0} \\ \hline
             \verb+0xD630+ & R & RXD & \multicolumn{8}{|c|}{RX\_DATA} \\ \hline
             \verb+0xD630+ & W & TXR & \multicolumn{8}{|c|}{TX\_DATA} \\ \hline
-            \verb+0xD631+ & R/W & IER & \multicolumn{4}{|c|}{---} & STATUS & ERROR & TX\_EMPTY & RX\_AVAIL \\ \hline
-            \verb+0xD632+ & R & ISR & \multicolumn{4}{|c|}{---} & STATUS & ERROR & TX\_EMPTY & RX\_AVAIL \\ \hline
-            \verb+0xD632+ & W & FCR & \multicolumn{2}{|c|}{RXT} & FIFO64 & --- & --- & TX\_RST & RX\_RST & FIFO\_EN \\ \hline
+            \verb+0xD631+ & R/W & IER & \multicolumn{4}{|c|}{---} & STAT & ERR & TXE & RXA \\ \hline
+            \verb+0xD632+ & R & ISR & \multicolumn{4}{|c|}{---} & STAT & ERR & TXE & RXA \\ \hline
+            \verb+0xD632+ & W & FCR & \multicolumn{2}{|c|}{RXT} & FIFO64 & --- & --- & TXR & RXR & FIFOE \\ \hline
             \verb+0xD633+ & R/W & LCR & DLAB & --- & \multicolumn{3}{|c|}{PARITY} & STOP & \multicolumn{2}{|c|}{DATA} \\ \hline
             \verb+0xD634+ & R/W & MCR & \multicolumn{3}{|c|}{---} & LOOP & OUT2 & OUT1 & RTS & DTR \\ \hline
-            \verb+0xD635+ & R & LSR & ERROR & TEMT & THRE & BI & FE & PE & OE & DR \\ \hline
+            \verb+0xD635+ & R & LSR & ERR & TEMT & THRE & BI & FE & PE & OE & DR \\ \hline
             \verb+0xD636+ & R/W & MSR & DCD & RI & DSR & CTS & DDCD & TERI & DDSR & DCTS \\ \hline
             \verb+0xD637+ & R & SPR & \multicolumn{8}{|c|}{scratch data} \\ \hline\hline
 
@@ -35,7 +35,7 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
 
     \item[IER] this is the interrupt enable register. There are flags for each of the four conditions that the UART can use to trigger an interrupt
 
-    \item[ISR] this is the interrupt status register. There are flags for each of the four conditions that can trigger an interrupt
+    \item[ISR] this is the interrupt STAT register. There are flags for each of the four conditions that can trigger an interrupt
 
     \item[FCR] FIFO control register. This register controls the FIFOs for transmission and receiving:
         \begin{description}
@@ -43,11 +43,11 @@ The \jr\ has a simple UART for serial communications. This UART can be used to p
 
             \item[FIFO64]
 
-            \item[TX\_RST] if set, clear the transmition FIFO
+            \item[TXR] if set, clear the transmition FIFO
 
-            \item[RX\_RST] if set, clear the receive FIFO
+            \item[RXR] if set, clear the receive FIFO
 
-            \item[FIFO\_EN] if set, the FIFOs are enabled. Otherwise, only a single character can be waiting to send or pending a read
+            \item[FIFOE] if set, the FIFOs are enabled. Otherwise, only a single character can be waiting to send or pending a read
         \end{description}
 \end{description}
 
