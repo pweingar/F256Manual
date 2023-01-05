@@ -179,7 +179,7 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
+            \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_DIS & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
             \verb+0xD012+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
             \verb+0xD014+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
             \verb+0xD015+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
@@ -194,7 +194,7 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
 \begin{description}
     \item[ENABLE] if this flag is set (1), the cursor is enabled
 
-    \item[FLASH\_EN] if this flag is set (1), the cursor will flash. If clear (0), it will just be steady
+    \item[FLASH\_DIS] if this flag is set (1), the cursor will not flash. If clear (0), it will flash.
 
     \item[RATE] these two bits set the rate at which the cursor flashes (see table~\ref{tab:txt_crsr_rates})
 
