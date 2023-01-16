@@ -112,7 +112,7 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \verb+0xD000+ & R/W & X & GAMMA & SPRITE & TILE & BITMAP & GRAPH & OVRLY & TEXT \\ \hline
-            \verb+0xD001+ & R/W & \multicolumn{3}{|c|}{X} & FON\_OVLY & MON\_SLP & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
+            \verb+0xD001+ & R/W & \multicolumn{3}{|c|}{---} & FON\_OVLY & MON\_SLP & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
         \end{tabular}
     \end{center}
     \caption{VICKY Master Control Registers}
@@ -145,6 +145,10 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
     
     \item[FON\_OVLY] if clear (0), only the text foreground color will be displayed when text overlays graphics (all background colors will be completely transparent). If set (1), both foreground and background colors will be displayed, except that background color 0 will be transparent. 
 \end{description}
+
+\begin{leftbar}
+	NOTE: The \jr\ RevA board does not support the MON\_SLP or FON\_OVLY register bits or functions.
+\end{leftbar}
 
 \section*{Text Fonts}
 \label{sec:text_font}

@@ -23,7 +23,10 @@
             \verb+0xD680+ & \verb+0xD68F+ & IEC Controller & \pageref{tab:via_reg} \\ \hline
             \verb+0xD690+ & \verb+0xD69F+ & Real Time Clock & \pageref{tab:rtc_registers} \\ \hline
             \verb+0xD6A0+ & \verb+0xD6AF+ & System Control Registers & \pageref{sec:sysctrl} \\ \hline
-            \verb+0xD6B0+ & \verb+0xD7FF+ & Reserved & \\ \hline
+            \verb+0xD6B0+ & \verb+0xD6DF+ & Reserved & \\ \hline
+            \verb+0xD6E0+ & \verb+0xD6EA+ & Mouse Pointer Registers & \pageref{tab:mouse_reg} \\ \hline
+            \verb+0xD6EB+ & \verb+0xD7EF+ & PCB Version Register & \pageref{tab:machine_id_ver} \\ \hline
+            \verb+0xD6EF+ & \verb+0xD7FF+ & Reserved & \\ \hline
             \verb+0xD800+ & \verb+0xD83F+ & Text Foreground Color LUT & \multirow{2}{*}{\pageref{tab:text_luts}} \\ \cline{1-3}
             \verb+0xD840+ & \verb+0xD87F+ & Text Background Color LUT & \\ \hline
             \verb+0xD880+ & \verb+0xD8FF+ & Reserved & \\ \hline
@@ -31,6 +34,8 @@
             \verb+0xDB00+ & \verb+0xDBFF+ & Reserved & \\ \hline
             \verb+0xDC00+ & \verb+0xDCFF+ & 65C22 VIA Control Registers & \pageref{tab:via_reg}\\ \hline
             \verb+0xDD00+ & \verb+0xDDFF+ & SD Card Controller & \pageref{tab:ps2_reg} \\ \hline
+            \verb+0xDE00+ & \verb+0xDE1F+ & Integer Math Coprocessor & \pageref{sec:int_math_copro} \\ \hline
+            \verb+0xDE20+ & \verb+0xDEFF+ & Reserved & \\ \hline
             \verb+0xDF00+ & \verb+0xDF13+ & DMA Controller & \pageref{tab:dma_reg} \\ \hline
         \end{tabular}
         \caption{I/O Page 0 Addresses}

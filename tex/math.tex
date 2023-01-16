@@ -1,0 +1,58 @@
+\chapter{Integer Math Coprocessor}
+\label{sec:int_math_copro}
+
+The \jr\ includes a built-in math coprocessor for integer math. This coprocessor provides fast 16-bit multiplication and division in both signed and unsigned forms. The use of this coprocessor is straightforward: both operands are written to the appropriate registers and then the result is read for the corresponding answer register. The math units are completely separate blocks using separate registers, so they function independently of each other.
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|} \hline
+            Address & R/W & Name & Data \\\hline\hline
+            \verb+0xDE00+ & W & MULU\_A\_L & Unsigned A (bits 7--0) \\ \hline
+            \verb+0xDE01+ & W & MULU\_A\_H & Unsigned A (bits 15--8) \\ \hline
+            \verb+0xDE02+ & W & MULU\_B\_L & Unsigned B (bits 7--0) \\ \hline
+            \verb+0xDE03+ & W & MULU\_B\_H & Unsigned B (bits 15--8) \\ \hline
+            \verb+0xDE04+ & R & MULU\_LL & Unsigned $A \times B$  (bits 7--0) \\ \hline
+            \verb+0xDE05+ & R & MULU\_LH & Unsigned $A \times B$  (bits 15--8) \\ \hline
+            \verb+0xDE06+ & R & MULU\_HL & Unsigned $A \times B$  (bits 23--16) \\ \hline
+            \verb+0xDE07+ & R & MULU\_HH & Unsigned $A \times B$  (bits 31--24) \\ \hline\hline
+
+            \verb+0xDE08+ & W & MULS\_A\_L & Signed A (bits 7--0) \\ \hline
+            \verb+0xDE09+ & W & MULS\_A\_H & Signed A (bits 15--8) \\ \hline
+            \verb+0xDE0A+ & W & MULS\_B\_L & Signed B (bits 7--0) \\ \hline
+            \verb+0xDE0B+ & W & MULS\_B\_H & Signed B (bits 15--8) \\ \hline
+            \verb+0xDE0C+ & R & MULS\_LL & Signed $A \times B$  (bits 7--0) \\ \hline
+            \verb+0xDE0D+ & R & MULS\_LH & Signed $A \times B$  (bits 15--8) \\ \hline
+            \verb+0xDE0E+ & R & MULS\_HL & Signed $A \times B$  (bits 23--16) \\ \hline
+            \verb+0xDE0F+ & R & MULS\_HH & Signed $A \times B$  (bits 31--24) \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Math Multiplication Registers}
+    \label{tab:math_mult_reg}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|} \hline
+            Address & R/W & Name & Data \\\hline\hline
+            \verb+0xDE10+ & W & DIVU\_A\_L & Unsigned A (bits 7--0) \\ \hline
+            \verb+0xDE11+ & W & DIVU\_A\_H & Unsigned A (bits 15--8) \\ \hline
+            \verb+0xDE12+ & W & DIVU\_B\_L & Unsigned B (bits 7--0) \\ \hline
+            \verb+0xDE13+ & W & DIVU\_B\_H & Unsigned B (bits 15--8) \\ \hline
+            \verb+0xDE14+ & R & DIVU\_QUO\_L & Unsigned Quotient $A / B$ (bits 7--0) \\ \hline
+            \verb+0xDE15+ & R & DIVU\_QUO\_H & Quotient $A / B$ (bits 15--8) \\ \hline
+            \verb+0xDE16+ & R & DIVU\_REM\_L & Unsigned Remainder $A / B$ (bits 7--0) \\ \hline
+            \verb+0xDE17+ & R & DIVU\_REM\_H & Unsigned Remainder $A / B$ (bits 15-8) \\ \hline\hline
+
+            \verb+0xDE18+ & W & DIVS\_A\_L & Signed A (bits 7--0) \\ \hline
+            \verb+0xDE19+ & W & DIVS\_A\_H & Signed A (bits 15--8) \\ \hline
+            \verb+0xDE1A+ & W & DIVS\_B\_L & Signed B (bits 7--0) \\ \hline
+            \verb+0xDE1B+ & W & DIVS\_B\_H & Signed B (bits 15--8) \\ \hline
+            \verb+0xDE1C+ & R & DIVS\_QUO\_L & Signed Quotient $A / B$ (bits 7--0) \\ \hline
+            \verb+0xDE1D+ & R & DIVS\_QUO\_H & Signed Quotient $A / B$ (bits 15--8) \\ \hline
+            \verb+0xDE1E+ & R & DIVS\_REM\_L & Signed Remainder $A / B$ (bits 7--0) \\ \hline
+            \verb+0xDE1F+ & R & DIVS\_REM\_H & Signed Remainder $A / B$ (bits 15-8) \\ \hline\hline
+        \end{tabular}
+    \end{center}
+    \caption{Math Division Registers}
+    \label{tab:math_div_reg}
+\end{table}

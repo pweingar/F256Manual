@@ -1,35 +1,29 @@
 \chapter{IEC Serial Port}
 
+The \jr\ had an IEC serial port included (this is the Commodore serial port variation of the IEEE-488 interface). There are two registers supporting the IEC port. There is a read-only register that shows the current state of the individual lines on the serial bus, and there is a read/write register that can be used to control the various lines as well as how IEC interrupts are handled.
+
 \begin{table}[h]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD680+ & R & IEC\_IN & \multicolumn{4}{|c|}{---} & SREQ & ATN & CLK & DATA \\ \hline
-            \verb+0xDC01+ & R/W & IEC\_OUT & SREQ & RST & --- ATN & --- & --- & CLK & DATA\\ \hline
+            \verb+0xD680+ & R & IEC\_IN & SREQ\_i & \multicolumn{4}{|c|}{---} & ATN\_i & CLK\_i & DATA\_i \\ \hline
+            \verb+0xDC01+ & R/W & IEC\_OUT & SREQ\_o & RST\_o & NMI\_EN & ATN\_o & --- & --- & CLK\_o & DATA\_o \\ \hline
         \end{tabular}
     \end{center}
-    \caption{VIA Registers}
-    \label{tab:via_reg}
+    \caption{IEC Registers}
+    \label{tab:iec_reg}
 \end{table}
 
-IEC_INPUT_PORT  = $D680 ; Read Only, this is the Value on the BUS
-IEC_DATA_i  = $01
-IEC_CLK_i   = $02
-IEC_ATN_i   = $10
-IEC_SREQ_i  = $80
-
-; IEC Output PORT
-; Bit[0] IEC_DATA_o
-; Bit[1] IEC_CLK_o
-; Bit[2] Always 0
-; Bit[3] Always 0
-; Bit[4] IEC_ATN_o
-; Bit[5] Always 0
-; Bit[6] Always 0
-; Bit[7] IEC_SREQ_o
-IEC_OUTPUT_PORT = $D681 ; Read and Write, When you read you read back the value written
-IEC_DATA_o  = $01
-IEC_CLK_o   = $02
-IEC_ATN_o   = $10
-IEC_RST_o   = $40 ; REV B - ONLY
-IEC_SREQ_o  = $80
+\begin{description}
+    \item[DATA\_i] Reflects the current state of the DATA line on the IEC bus. 
+    \item[CLK\_i] Reflects the current state of the CLK line on the IEC bus.
+    \item[ATN\_i] Reflects the current state of the ATN line on the IEC bus.
+    \item[SREQ\_i] Reflects the current state of the SREQ line on the IEC bus.
+    
+    \item[DATA\_o] Sets the DATA line on the IEC bus. 
+    \item[CLK\_o] Sets the CLK line on the IEC bus.
+    \item[ATN\_o] Sets the ATN line on the IEC bus.
+    \item[SREQ\_o] Sets the SREQ line on the IEC bus.
+    \item[RST\_o] Resets the IEC bus and the SIDs. This works on the RevB and F256K. 
+    \item[NMI\_EN] If set (1), the IEC interrupts will trigger an NMI interrupt. If clear (0), the IEC interrupts will trigger an IRQ interrupt.  
+\end{description}
