@@ -164,7 +164,16 @@ TinyVicky supports eight separate tile sets. Each one has a single three byte ad
             \verb+0xD28D+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
             \verb+0xD28E+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
             \verb+0xD28F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline\hline
+        \end{tabular}
+    \end{center}
+    \caption{Tile Set 0--3 Registers}
+    \label{tab:tile_set_addr}
+\end{table}
 
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & Tile Set & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \verb+0xD290+ & W & \multirow{4}{*}{4} & AD7 & AD6 & AD5 & AD4 & AD3 & AD2 & AD1 & AD0 \\ \cline{1-2}\cline{4-11}
             \verb+0xD291+ & W &                    & AD15 & AD14 & AD13 & AD12 & AD11 & AD10 & AD9 & AD8 \\ \cline{1-2}\cline{4-11}
             \verb+0xD292+ & W &                    & \multicolumn{6}{|c|}{---} & AD17 & AD16 \\ \cline{1-2}\cline{4-11}
@@ -186,8 +195,8 @@ TinyVicky supports eight separate tile sets. Each one has a single three byte ad
             \verb+0xD29F+ & W &                    & \multicolumn{4}{|c|}{---} & SQUARE & \multicolumn{3}{|c|}{---} \\ \hline
         \end{tabular}
     \end{center}
-    \caption{Tile Set Registers}
-    \label{tab:tile_set_addr}
+    \caption{Tile Set Registers 4--7}
+    \label{tab:tile_set_addr_4_7}
 \end{table}
 
 \example{A Simple Tile Map}

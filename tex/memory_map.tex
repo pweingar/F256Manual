@@ -56,6 +56,16 @@
             & \verb+0x5FFF+ & \\ \hline
             \multirow{2}{*}{3} & \verb+0x6000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
             & \verb+0x7FFF+ & \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{CPU Memory Map for the \jr\ (Banks 0--3)}
+    \label{tab:cpu_mem_map}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Bank & Address & Purpose \\ \hline\hline
             \multirow{2}{*}{4} & \verb+0x8000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
             & \verb+0x9FFF+ & \\ \hline
             \multirow{2}{*}{5} & \verb+0xA000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
@@ -72,8 +82,8 @@
             &\verb+0xFFFF+ & \\ \hline
         \end{tabular}
     \end{center}
-    \caption{CPU Memory Map for the \jr}
-    \label{tab:cpu_mem_map}
+    \caption{CPU Memory Map for the \jr\ (Banks 4--7)}
+    \label{tab:cpu_mem_map_4_7}
 \end{table}
 
 \input{io_page_0_tab.tex}

@@ -6,8 +6,8 @@ The \jr\ had an IEC serial port included (this is the Commodore serial port vari
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD680+ & R & IEC\_IN & SREQ\_i & \multicolumn{4}{|c|}{---} & ATN\_i & CLK\_i & DATA\_i \\ \hline
-            \verb+0xDC01+ & R/W & IEC\_OUT & SREQ\_o & RST\_o & NMI\_EN & ATN\_o & --- & --- & CLK\_o & DATA\_o \\ \hline
+            \verb+0xD680+ & R & IEC\_I & SRQ\_i & \multicolumn{4}{|c|}{---} & ATN\_i & CLK\_i & DAT\_i \\ \hline
+            \verb+0xDC01+ & R/W & IEC\_O & SRQ\_o & RST\_o & NMI\_EN & ATN\_o & --- & --- & CLK\_o & DAT\_o \\ \hline
         \end{tabular}
     \end{center}
     \caption{IEC Registers}
@@ -15,15 +15,15 @@ The \jr\ had an IEC serial port included (this is the Commodore serial port vari
 \end{table}
 
 \begin{description}
-    \item[DATA\_i] Reflects the current state of the DATA line on the IEC bus. 
+    \item[DAT\_i] Reflects the current state of the DATA line on the IEC bus. 
     \item[CLK\_i] Reflects the current state of the CLK line on the IEC bus.
     \item[ATN\_i] Reflects the current state of the ATN line on the IEC bus.
-    \item[SREQ\_i] Reflects the current state of the SREQ line on the IEC bus.
+    \item[SRQ\_i] Reflects the current state of the SREQ line on the IEC bus.
     
-    \item[DATA\_o] Sets the DATA line on the IEC bus. 
+    \item[DAT\_o] Sets the DATA line on the IEC bus. 
     \item[CLK\_o] Sets the CLK line on the IEC bus.
     \item[ATN\_o] Sets the ATN line on the IEC bus.
-    \item[SREQ\_o] Sets the SREQ line on the IEC bus.
+    \item[SRQ\_o] Sets the SREQ line on the IEC bus.
     \item[RST\_o] Resets the IEC bus and the SIDs. This works on the RevB and F256K. 
     \item[NMI\_EN] If set (1), the IEC interrupts will trigger an NMI interrupt. If clear (0), the IEC interrupts will trigger an IRQ interrupt.  
 \end{description}

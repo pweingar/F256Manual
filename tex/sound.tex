@@ -4,7 +4,7 @@ The \jr\ supports two different sound chips, although only one is built-in. The 
 
 \section*{CODEC}
 
-The \jr\ (and indeed all the Foenix computers up to this point) makes use of a WM8776 CODEC chip. You can think of the CODEC as the central switchboard for audio on the \jr. The CODEC chip has inputs for several different audio channels (both analog and digital), and each audio device on the \jr\ is routed to an input on the CODEC. The CODEC then has outputs for audio line level and headphones. The CODEC will convert analog inputs to digital, mix all the audio inputs according to its settings, and then convert the resulting digital audio to analog and drive the outputs. With the CODEC, you can turn on and off the various input channels, control the volume, and mute or enable the different outputs.
+The \jr\ (and indeed all the Foenix computers up to this point) makes use of a WM8776 CODEC chip. You can think of the CODEC as the central switchboard for audio on the \jr. The CODEC chip has inputs for several audio channels (both analog and digital), and each audio device on the \jr\ is routed to an input on the CODEC. The CODEC then has outputs for audio line level and headphones. The CODEC will convert analog inputs to digital, mix all the audio inputs according to its settings, and then convert the resulting digital audio to analog and drive the outputs. With the CODEC, you can turn on and off the various input channels, control the volume, and mute or enable the different outputs.
 
 The CODEC is a rather complex chip with many features, and the full details are really beyond the scope of this document. Most programs for the \jr\ will not need to use it or will only use it in very specific ways. Therefore, this document will really just show how to access it and initialize it and then leave a reference to the data sheet for the chip that has the complete data on the chip.
 
@@ -195,7 +195,16 @@ ${\rm PW} / 40.95$ (expressed as a percent).
             & 11 & W & NOISE & PULSE & SAW & TRI & TEST & RING & SYNC & GATE \\ \cline{2-11}
             & 12 & W & ATK3 & ATK2 & ATK1 & ATK0 & DLY3 & DLY2 & DLY1 & DLY0 \\ \cline{2-11}
             & 13 & W & STN3 & STN2 & STN1 & STN0 & RLS3 & RLS2 & RLS1 & RLS0 \\ \hline\hline
+		\end{tabular}
+	\end{center}
+	\caption{SID V1 and V2 Registers}
+	\label{tab:sid_registers}
+\end{table}
 
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
+			Voice & Offset & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \multirow{7}{*}{V3} & 14 & W & F7 & F6 & F5 & F4 & F3 & F2 & F1 & F0 \\ \cline{2-11}
             & 15 & W & F15 & F14 & F13 & F12 & F11 & F10 & F9 & F8 \\ \cline{2-11}
             & 16 & W & PW7 & PW6 & PW5 & PW4 & PW3 & PW2 & PW1 & PW0 \\ \cline{2-11}
@@ -210,8 +219,8 @@ ${\rm PW} / 40.95$ (expressed as a percent).
             & 24 & W & MUTEV3 & HIGH & BAND & LOW & VOL3 & VOL2 & VOL1 & VOL0 \\ \hline
 		\end{tabular}
 	\end{center}
-	\caption{SID Registers}
-	\label{tab:sid_registers}
+	\caption{SID V3 and Miscellaneous Registers}
+	\label{tab:sid_registers_v3_global}
 \end{table}
 
 The frequency of the waveform is set by the bits \verb+F[15..0]+. This number sets the actual frequency according the the formula:
