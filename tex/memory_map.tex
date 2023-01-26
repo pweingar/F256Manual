@@ -56,6 +56,16 @@
             & \verb+0x5FFF+ & \\ \hline
             \multirow{2}{*}{3} & \verb+0x6000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
             & \verb+0x7FFF+ & \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{CPU Memory Map for the \jr\ (Banks 0--3)}
+    \label{tab:cpu_mem_map}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|l|} \hline
+            Bank & Address & Purpose \\ \hline\hline
             \multirow{2}{*}{4} & \verb+0x8000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
             & \verb+0x9FFF+ & \\ \hline
             \multirow{2}{*}{5} & \verb+0xA000+ & \multirow{2}{*}{RAM or Flash} \\ \cline{2-2}
@@ -72,8 +82,8 @@
             &\verb+0xFFFF+ & \\ \hline
         \end{tabular}
     \end{center}
-    \caption{CPU Memory Map for the \jr}
-    \label{tab:cpu_mem_map}
+    \caption{CPU Memory Map for the \jr\ (Banks 4--7)}
+    \label{tab:cpu_mem_map_4_7}
 \end{table}
 
 \input{io_page_0_tab.tex}
@@ -82,8 +92,8 @@
     \begin{center}
         \begin{tabular}{|c|c|l|l|} \hline
             Start & End & Purpose & Page \\ \hline\hline
-            \verb+0xC000+ & \verb+0xC7FF+ & Text Mode Font Memory & \pageref{sec:text_font} \\ \hline
-            \verb+0xC800+ & \verb+0xCFFF+ & Reserved & \\ \hline
+            \verb+0xC000+ & \verb+0xC7FF+ & Text Mode Font Set 0 Memory & \pageref{sec:text_font} \\ \hline
+            \verb+0xC800+ & \verb+0xCFFF+ & Text Mode Font Set 1 Memory & \pageref{sec:text_font} \\ \hline
             \verb+0xD000+ & \verb+0xD3FF+ & Graphics Color LUT 0 & \multirow{4}{*}{\pageref{tab:graph_cluts}} \\ \cline{1-3}
             \verb+0xD400+ & \verb+0xD7FF+ & Graphics Color LUT 1 & \\ \cline{1-3}
             \verb+0xD800+ & \verb+0xDBFF+ & Graphics Color LUT 2 & \\ \cline{1-3}

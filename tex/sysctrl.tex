@@ -91,14 +91,23 @@ Nine registers are set aside to identify the machine, the version of the printed
 
 For the \jr, the machine ID will be 2.
 
+\begin{leftbar}
+	NOTE: The \jr\ RevA board does not support the PCB major and minor revision number registers or the PCB date code registers.
+\end{leftbar}
+
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD6A7+ & R & MID & \multicolumn{4}{|c|}{---} & \multicolumn{4}{|c|}{ID} \\ \hline
+            \verb+0xD6A7+ & R & MID & \multicolumn{4}{|c|}{---} & \multicolumn{4}{|c|}{ID} \\ \hline\hline
 
             \verb+0xD6A8+ & R & PCBID0 & \multicolumn{8}{|c|}{ASCII character 0: ``A''} \\ \hline
             \verb+0xD6A9+ & R & PCBID1 & \multicolumn{8}{|c|}{ASCII character 1: ``0''} \\ \hline
+            \verb+0xD6EB+ & R & PCBMA & \multicolumn{8}{|c|}{PCB Major Rev (ASCII)} \\ \hline
+            \verb+0xD6EB+ & R & PCBMI & \multicolumn{8}{|c|}{PCB Minor Rev (ASCII)} \\ \hline
+            \verb+0xD6EB+ & R & PCBD & \multicolumn{8}{|c|}{PCB Day (BCD)} \\ \hline
+            \verb+0xD6EB+ & R & PCBM & \multicolumn{8}{|c|}{PCB Month (BCD)} \\ \hline
+            \verb+0xD6EB+ & R & PCBY & \multicolumn{8}{|c|}{PCB Year (BCD)} \\ \hline\hline
 
             \verb+0xD6AA+ & R & CHSV0 & \multicolumn{8}{|c|}{Chip subversion in BCD (low)} \\ \hline
             \verb+0xD6AB+ & R & CHSV1 & \multicolumn{8}{|c|}{Chip subversion in BCD (high)} \\ \hline

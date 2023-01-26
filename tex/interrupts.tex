@@ -14,42 +14,54 @@ NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate f
 	\begin{center}
 		\begin{tabular}{| c | c | c | c | l |} \hline
             Mask & Pending & Bit & Name & Purpose \\ \hline\hline
-
             \multirow{8}{*}{{\tt 0xD66C}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \cline{3-5}
-
             & & \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt \\ \cline{3-5}
-
             & & \verb+0x04+ & INT\_PS2\_KBD & PS/2 keyboard event \\ \cline{3-5}
-
             & & \verb+0x08+ & INT\_PS2\_MOUSE & PS/2 mouse event \\ \cline{3-5}
-
             & & \verb+0x10+ & INT\_TIMER\_0 & TIMER0 has reached its target value \\ \cline{3-5}
-
             & & \verb+0x20+ & INT\_TIMER\_1 & TIMER1 has reached its target value \\ \cline{3-5}
-
             & & \verb+0x40+ & RESERVED & \\ \cline{3-5}
-
             & & \verb+0x80+ & RESERVED & \\ \hline
+        \end{tabular}
+    \end{center}
+	\caption{Interrupts Group 0}
+	\label{tab:interrupts}
+\end{table}
 
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | l |} \hline
+            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
             \multirow{8}{*}{{\tt 0xD66D}} & \multirow{8}{*}{{\tt 0xD661}} & \verb+0x01+ & INT\_UART & The UART is ready to receive or send data \\ \cline{3-5}
-
             & & \verb+0x02+ & RESERVED & \\ \cline{3-5}
-
             & & \verb+0x04+ & RESERVED & \\ \cline{3-5}
-
             & & \verb+0x08+ & RESERVED & \\ \cline{3-5}
-
             & & \verb+0x10+ & INT\_RTC & Event from the real time clock chip \\ \cline{3-5}
-
             & & \verb+0x20+ & INT\_VIA & Event from the 65C22 VIA chip \\ \cline{3-5}
-
             & & \verb+0x40+ & INT\_IEC & Event from the IEC serial bus \\ \cline{3-5}
-
             & & \verb+0x80+ & INT\_SDC\_INS & User has inserted an SD card \\ \hline
         \end{tabular}
     \end{center}
-	\caption{Interrupts}
-	\label{tab:interrupts}
+	\caption{Interrupts Group 1}
+	\label{tab:interrupts_1}
+\end{table}
+
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | l |} \hline
+            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
+            \multirow{8}{*}{{\tt 0xD66E}} & \multirow{8}{*}{{\tt 0xD662}} & \verb+0x01+ & IEC\_DATA\_i & IEC Data In \\ \cline{3-5}
+            & & \verb+0x02+ & IEC\_CLK\_i & IEC Clock In  \\ \cline{3-5}
+            & & \verb+0x04+ & IEC\_ATN\_i & IEC ATN In  \\ \cline{3-5}
+            & & \verb+0x08+ & IEC\_SREQ\_i & IEC REQ In  \\ \cline{3-5}
+            & & \verb+0x10+ & RESERVED & \\ \cline{3-5}
+            & & \verb+0x20+ & RESERVED & \\ \cline{3-5}
+            & & \verb+0x40+ & RESERVED & \\ \cline{3-5}
+            & & \verb+0x80+ & RESERVED & \\ \hline
+        \end{tabular}
+    \end{center}
+	\caption{Interrupts Group 2}
+	\label{tab:interrupts_2}
 \end{table}
 
 The Start Of Frame (SOF) and Start of Line (SOL) interrupts could use some further explanation. The SOF interrupt is raised at the beginning of the vertical blanking period, when the raster has reached the bottom of the screen and starts to return to the top. This interrupt is raised either 60 times a second or 70 times a second, depending on the value of CLK\_70 (see table~\ref{tab:vky_master_ctrl_reg}), which sets the base resolution of the screen. The SOF interrupt is good for timing updates to graphics (like placement of sprites) to avoid screen tearing. It can also be used for rough timing of events, provided the code takes into account the fact that the timing changes with screen resolution. The Start of Line interrupt is raised when the raster line has reached a target line (see table~\ref{tab:lint_reg}). When the interrupt is raised, the raster is in the process of drawing the screen and has reached the desired target line.

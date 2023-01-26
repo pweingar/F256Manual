@@ -4,7 +4,32 @@ This manual is meant to be as complete as possible an introduction to the variou
 
 One thing this manual will not provide is a tutorial in programming the 65C02 processor at the heart of the \jr. There are plenty of excellent books and videos explaining how the processor works and how to do assembly programming. While examples will generally be written in assembly, I will try to annotate them fully so that what is happening is very clear even to the novice assembly language coder.
 
-Several of chapters in this manual include example assembly code to show how the various features of the \jr\ work. While the code included in the text should be runnable, the complete examples can be found on the Github repository that hosts the manual itself. Most of the examples are able to run on their own, but a few of them expect there to be some sort of operating system providing text display routines compatible with the old Commodore kernel. The examples were all written on a machine using OpenKERNAL, which was written for the \jr, but really anything that provides the CINT and CHROUT calls should work fine. Of course, the examples could be tweaked without too much trouble to run on essentially any operating system.
+Several of chapters in this manual include example assembly code to show how the various features of the \jr\ work. While the code included in the text should be executable, the complete examples can be found on the Github repository that hosts the manual itself. Most of the examples are able to run on their own, but a few of them expect there to be some sort of operating system providing text display routines compatible with the old Commodore kernel. The examples were all written on a machine using OpenKERNAL, which was written for the \jr, but really anything that provides the CINT and CHROUT calls should work fine. Of course, the examples could be tweaked without too much trouble to run on essentially any operating system.
+
+\subsection*{A Note on Notation}
+
+Important side notes are called out with a black bar in the margin. These notes generally call out key differences between the different versions of the \jr\ and may have some important considerations for programs that need to run on all versions.
+
+Example code in this manual is presented as assembly language. While the code is fairly generic 65C02 assembly code, the code was tested using the 64TASS assembler, and there points of 64TASS syntax that are worth explaining.
+
+\begin{itemize}
+\item Numeric literals are in decimal unless prefixed by the dollar sign (\$)
+\item There are several math and logical operators that can be used to calculate a numeric literal value at assembly time: \verb|+| adds numbers, \verb+-+ subtracts, \verb+*+ multiplies, \verb+|+ calculates the bitwise OR of two values, and \verb+~+ computes the bitwise NOT or negation of a value.
+\item The \verb+.byte+ directive stores a set of 8-bit values into the assembled code. The directive takes a list of values puts them into the assembled code as bytes.
+\item The \verb+.word+ directive stores a set of 16-bit values into the assembled code. The directive takes a list of values and treats them as 16-bit (even if they are less than 256).
+\item There are special operators for selecting specific bit ranges from a number to allow the assembly code to write the number byte-by-byte. The less than character (\verb+<+) selects bits 0--7. The greater than character (\verb+>+) selects bits 8--15. The back tick character (\verb+`+) selects bits 16--23. For example:
+\end{itemize}
+
+\begin{verbatim}
+    SAMPLE = $123456
+
+    lda #<SAMPLE
+    sta $0800           ; Store $56 to $0800
+    lda #>SAMPLE
+    sta $0801           ; Store $34 to $0801
+    lda #`SAMPLE
+    sta $0802           ; Store $12 to $0802
+\end{verbatim}
 
 \section*{About the Machine}
 
@@ -66,7 +91,7 @@ The top of the board has several connectors and other features that should be ex
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics[scale=0.75]{images/f256_render_annotated_top.pdf}
+        \includegraphics[scale=0.55]{images/f256_render_annotated_top.pdf}
     \end{center}
     \caption{F256jr Top View}
     \label{fig:top}
@@ -78,7 +103,7 @@ For being so small, the \jr\ has a lot of components to it, so it is worth mappi
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics[scale=0.80]{images/f256jr_layout.pdf}
+        \includegraphics[scale=0.55]{images/f256jr_layout.pdf}
     \end{center}
     \caption{F256jr Internal Architecture}
     \label{fig:arch}

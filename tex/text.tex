@@ -112,7 +112,7 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \verb+0xD000+ & R/W & X & GAMMA & SPRITE & TILE & BITMAP & GRAPH & OVRLY & TEXT \\ \hline
-            \verb+0xD001+ & R/W & \multicolumn{5}{|c|}{X} & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
+            \verb+0xD001+ & R/W & \multicolumn{2}{|c|}{---} & FON\_SET & FON\_OVLY & MON\_SLP & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
         \end{tabular}
     \end{center}
     \caption{VICKY Master Control Registers}
@@ -140,12 +140,24 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
     \item[DBL\_X] if set, text mode characters will be twice as wide (320 pixels)
 
     \item[DBL\_Y] if set, text mode characters will be twice as high (240 or 200 pixels, depending on CLK\_70)
+    
+    \item[MON\_SLP] if set, the monitor SYNC signal will be turned off, putting the monitor to sleep
+    
+    \item[FON\_OVLY] if clear (0), only the text foreground color will be displayed when text overlays graphics (all background colors will be completely transparent). If set (1), both foreground and background colors will be displayed, except that background color 0 will be transparent. 
+    
+    \item[FON\_SET] if set (1), the text font displayed will be font set 1. If clear (0), the text font displayed will be font set 0.
 \end{description}
+
+\begin{leftbar}
+	NOTE: The \jr\ RevA board does not support the MON\_SLP or FON\_OVLY register bits or functions.
+\end{leftbar}
 
 \section*{Text Fonts}
 \label{sec:text_font}
 
-Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
+Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. TinyVicky provides for two font sets, and which one is used for text mode is controlled by the FON\_SET bit in the Vicky Master Control Register. Only one will be in use at any given time in normal operation. Font set 0 is from 0xC000 through 0xC7FF. Font set 1 is from 0xC800 through 0xCFFF.
+
+The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
 
 As an example, let's say we wanted to have a fancy ``F'' for character 0:
 
@@ -175,7 +187,7 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_EN & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
+            \verb+0xD010+ & R/W & CCR & \multicolumn{4}{|c|}{---} & FLASH\_DIS & \multicolumn{2}{|c|}{RATE} & ENABLE \\ \hline
             \verb+0xD012+ & R/W & CCH & \multicolumn{8}{|c|}{Cursor character} \\ \hline
             \verb+0xD014+ & R/W & \multirow{2}{*}{CURX} & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\ \cline{1-2}\cline{4-11}
             \verb+0xD015+ & R/W &  & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\ \hline
@@ -190,7 +202,7 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
 \begin{description}
     \item[ENABLE] if this flag is set (1), the cursor is enabled
 
-    \item[FLASH\_EN] if this flag is set (1), the cursor will flash. If clear (0), it will just be steady
+    \item[FLASH\_DIS] if this flag is set (1), the cursor will not flash. If clear (0), it will flash.
 
     \item[RATE] these two bits set the rate at which the cursor flashes (see table~\ref{tab:txt_crsr_rates})
 

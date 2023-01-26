@@ -2,7 +2,7 @@
 
 The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. This port is accessed through five registers, which provide very simple access to a PS/2 device. The \jr\ does not have a full PS/2 controller, but instead provides mostly raw access to the data stream. It does make some attempt to translate set 2 scan codes to ASCII character code, although raw scan codes may be read instead.
 
-\begin{table}[h]
+\begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
@@ -26,4 +26,44 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
     \item[PRS] when 1, key is pressed
     \item[SHFT] when 1, one the shift key is pressed
     \item[RDY] when 1, Data to be read (will clear after you set the Read Strobe)   
+\end{description}
+
+\section*{Mouse Support}
+
+The \jr\ provides special support for a PS\\2 mouse, including support for a hardware mouse pointer.
+
+This is currently done with magic, the details of which will be made apparent when the stars are in proper alignment.
+
+\subsection*{Mouse Pointer}
+
+The \jr\ provides for a grayscale hardware mouse pointer. The pointer is a $16 \times 16$ grayscale image of 256 levels. Each pixel of the image is a single byte. The bitmap data is stored in the address range 0xCC00--0xCFFF.
+
+The position of the mouse pointer is controlled in one of two ways. In the default approach (MODE = 0), the system software will monitor mouse movements, determine the mouse position programmatically, and set the TinyVicky mouse position registers directly. In the legacy approach (MODE = 1), the system software will receive the three byte PS/2 mouse data packet and set the TinyVicky mouse PS2\_BYTE registers. In this legacy mode, TinyVicky will interpret the mouse packets and track the mouse position for the system. This approach is less work for the system software, but is less flexible.
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
+            \verb+0xD6E0+ & W & \multicolumn{6}{|c|}{---} & MODE & EN \\\hline
+            \verb+0xD6E2+ & RW & X7 & X6 & X5 & X4 & X3 & X2 & X1 & X0 \\\hline
+            \verb+0xD6E3+ & RW & X15 & X14 & X13 & X12 & X11 & X10 & X9 & X8 \\\hline
+            \verb+0xD6E4+ & RW & Y7 & Y6 & Y5 & Y4 & Y3 & Y2 & Y1 & Y0 \\\hline
+            \verb+0xD6E5+ & RW & Y15 & Y14 & Y13 & Y12 & Y11 & Y10 & Y9 & Y8 \\\hline
+            \verb+0xD6E6+ & W & \multicolumn{8}{|c|}{PS2\_BYTE\_0} \\\hline
+            \verb+0xD6E7+ & W & \multicolumn{8}{|c|}{PS2\_BYTE\_1} \\\hline
+            \verb+0xD6E8+ & W & \multicolumn{8}{|c|}{PS2\_BYTE\_2} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Mouse Pointer Registers}
+    \label{tab:mouse_reg}
+\end{table}
+
+\begin{description}
+    \item[EN] if set (1), the mouse pointer is displayed. If clear (0), the mouse pointer is not displayed
+    \item[MODE] if clear (0), the mouse position is specified by setting the X and Y registers. If set (1), the program must pass along the 3 byte PS/2 mouse packet to the packet registers (this is a legacy mode).
+    \item[X] this is the X coordinate of the mouse and both readable and writable if MODE is clear (0)
+    \item[Y] this is the Y coordinate of the mouse and both readable and writable if MODE is clear (0)
+    \item[PS2\_BYTE\_0] the first byte of the PS/2 mouse message packet. Only used if MODE is set (1).
+    \item[PS2\_BYTE\_1] the second byte of the PS/2 mouse message packet. Only used if MODE is set (1).
+    \item[PS2\_BYTE\_2] the third byte of the PS/2 mouse message packet. Only used if MODE is set (1).
 \end{description}

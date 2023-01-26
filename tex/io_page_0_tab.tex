@@ -12,18 +12,32 @@
             \verb+0xD300+ & \verb+0xD3FF+ & Reserved & \\ \hline
             \verb+0xD400+ & \verb+0xD4FF+ & SID Left & \multirow{2}{*}{\pageref{tab:sid_registers}} \\ \cline{1-3}
             \verb+0xD500+ & \verb+0xD5FF+ & SID Right & \\ \hline
-            \verb+0xD600+ & \verb+0xD60F+ & PSG Left & \multirow{2}{*}{\pageref{tab:psg_registers}} \\ \cline{1-3}
-            \verb+0xD610+ & \verb+0xD61F+ & PSG Right & \\ \hline
+            \verb+0xD600+ & \verb+0xD60F+ & PSG Left & \multirow{3}{*}{\pageref{tab:psg_registers}} \\ \cline{1-3}
+            \verb+0xD610+ & \verb+0xD61F+ & PSG Right & \\ \cline{1-3}
+            \verb+0xD620+ & \verb+0xD62F+ & PSG Left and Right & \\ \hline
             \verb+0xD620+ & \verb+0xD62F+ & CODEC & \pageref{tab:codec_registers} \\ \hline
             \verb+0xD630+ & \verb+0xD63F+ & UART & \pageref{tab:uart_reg} \\ \hline
             \verb+0xD640+ & \verb+0xD64F+ & PS/2 Interface & \pageref{tab:ps2_reg} \\ \hline
             \verb+0xD650+ & \verb+0xD65F+ & Timers & \pageref{tab:timer_reg} \\ \hline
             \verb+0xD660+ & \verb+0xD66F+ & Interrupt Controller & \pageref{tab:interrupts} \\ \hline
             \verb+0xD670+ & \verb+0xD67F+ & DIP Switch & \pageref{tab:dip_reg} \\ \hline
+        \end{tabular}
+        \caption{I/O Page 0 Addresses (0xC000--0xD67F)}
+        \label{tab:io_page_0}
+    \end{center}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|l|l|} \hline
+            Start & End & Purpose & Page \\ \hline \hline
             \verb+0xD680+ & \verb+0xD68F+ & IEC Controller & \pageref{tab:via_reg} \\ \hline
             \verb+0xD690+ & \verb+0xD69F+ & Real Time Clock & \pageref{tab:rtc_registers} \\ \hline
             \verb+0xD6A0+ & \verb+0xD6AF+ & System Control Registers & \pageref{sec:sysctrl} \\ \hline
-            \verb+0xD6B0+ & \verb+0xD7FF+ & Reserved & \\ \hline
+            \verb+0xD6B0+ & \verb+0xD6DF+ & Reserved & \\ \hline
+            \verb+0xD6E0+ & \verb+0xD6EA+ & Mouse Pointer Registers & \pageref{tab:mouse_reg} \\ \hline
+            \verb+0xD6EB+ & \verb+0xD7EF+ & PCB Version Register & \pageref{tab:machine_id_ver} \\ \hline
+            \verb+0xD6EF+ & \verb+0xD7FF+ & Reserved & \\ \hline
             \verb+0xD800+ & \verb+0xD83F+ & Text Foreground Color LUT & \multirow{2}{*}{\pageref{tab:text_luts}} \\ \cline{1-3}
             \verb+0xD840+ & \verb+0xD87F+ & Text Background Color LUT & \\ \hline
             \verb+0xD880+ & \verb+0xD8FF+ & Reserved & \\ \hline
@@ -31,9 +45,11 @@
             \verb+0xDB00+ & \verb+0xDBFF+ & Reserved & \\ \hline
             \verb+0xDC00+ & \verb+0xDCFF+ & 65C22 VIA Control Registers & \pageref{tab:via_reg}\\ \hline
             \verb+0xDD00+ & \verb+0xDDFF+ & SD Card Controller & \pageref{tab:ps2_reg} \\ \hline
+            \verb+0xDE00+ & \verb+0xDE1F+ & Integer Math Coprocessor & \pageref{sec:int_math_copro} \\ \hline
+            \verb+0xDE20+ & \verb+0xDEFF+ & Reserved & \\ \hline
             \verb+0xDF00+ & \verb+0xDF13+ & DMA Controller & \pageref{tab:dma_reg} \\ \hline
         \end{tabular}
-        \caption{I/O Page 0 Addresses}
-        \label{tab:io_page_0}
+        \caption{I/O Page 0 Addresses (0xD680--0xDF13)}
+        \label{tab:io_page_0_1}
     \end{center}
 \end{table}

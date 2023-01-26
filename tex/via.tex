@@ -12,7 +12,7 @@ The \jr\ includes a Western Design Center WDC65C22 versatile interface adapter o
     \item Two independent timer counters
 \end{itemize}
 
-On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3 volt logic instead of the 5 volt logic used in older 8-bit machines.
+On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3.3 volt logic instead of the 5 volt logic used in older 8-bit machines.
 
 A complete description of the VIA would be rather long, so this guide will merely list out the register addresses and provide a quick break-down on the register functions. For a complete description, please see the data sheet from Western Design Center. See table~\ref{tab:via_reg} for a listing of all the VIA registers.
 
@@ -91,7 +91,7 @@ The \jr\ has two IDC headers that can be connected to a DB-9 socket to allow Ata
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics{images/f256jr_joystick_pinout.pdf}
+        \includegraphics[scale=0.65]{images/f256_port_joystick.pdf}
     \end{center}
     \caption{Joystick Port Pinouts}
     \label{fig:joystick_ports}
@@ -99,7 +99,7 @@ The \jr\ has two IDC headers that can be connected to a DB-9 socket to allow Ata
 
 In order to use the joysticks, the DDR bits for the ports must be set to 0 for input. Then the input/output register for the port may be read. If a button or switch is closed on the joystick, the corresponding bit in the I/O register will be clear (0). If the button is not pressed, the bit will be set (1).
 
-As a reminder: be aware that the WDC65C22 on the \jr\ is being used with a 3 volt supply. This means that any device plugged into the joystick ports should be 3 volt tolerant and should not raise any pin above 3 volts. Otherwise damage could occur.
+As a reminder: be aware that the WDC65C22 on the \jr\ is being used with a 3.3 volt supply. This means that any device plugged into the joystick ports should be 3.3 volt tolerant and should not raise any pin above 3.3 volts. Otherwise damage could occur.
 
 \begin{table}[ht]
     \begin{center}

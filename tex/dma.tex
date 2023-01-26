@@ -14,7 +14,7 @@ Rectangular data (or ``2D'') is a bit more complicated and is meant to be workin
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
             \verb+0xDF00+ & R/W & START & \multicolumn{3}{|c|}{---} & INT\_EN & FILL & 2D & ENABLE \\ \hline
             \verb+0xDF01+ & W & FD7 & FD6 & FD5 & FD4 & FD3 & FD2 & FD1 & FD0 \\ \hline
-            \verb+0xDF01+ & R & BUSD & \multicolumn{7}{|c|}{---}  \\ \hline\hline
+            \verb+0xDF01+ & R & BUSY & \multicolumn{7}{|c|}{---}  \\ \hline\hline
 
             \verb+0xDF04+ & R/W & SA7 & SA6 & SA5 & SA4 & SA3 & SA2 & SA1 & SA0 \\ \hline
             \verb+0xDF05+ & R/W & SA15 & SA14 & SA13 & SA12 & SA11 & SA10 & SA9 & SA8 \\ \hline
@@ -22,8 +22,17 @@ Rectangular data (or ``2D'') is a bit more complicated and is meant to be workin
 
             \verb+0xDF08+ & R/W & DA7 & DA6 & DA5 & DA4 & DA3 & DA2 & DA1 & DA0 \\ \hline
             \verb+0xDF09+ & R/W & DA15 & DA14 & DA13 & DA12 & DA11 & DA10 & DA9 & DA8 \\ \hline
-            \verb+0xDF0A+ & R/W & \multicolumn{6}{|c|}{---} & DA17 & DA16 \\ \hline\hline
+            \verb+0xDF0A+ & R/W & \multicolumn{6}{|c|}{---} & DA17 & DA16 \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{DMA Registers (Part 1)}
+    \label{tab:dma_reg}
+\end{table}
 
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+            Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
             \verb+0xDF0C+ & R/W & CNT7 & CNT6 & CNT5 & CNT4 & CNT3 & CNT2 & CNT1 & CNT0 \\ \hline
             \verb+0xDF0D+ & R/W & CNT15 & CNT14 & CNT13 & CNT12 & CNT11 & CNT10 & CNT9 & CNT8 \\ \hline
             \verb+0xDF0E+ & R/W & \multicolumn{6}{|c|}{---} & CNT17 & CNT16 \\ \hline\hline
@@ -40,9 +49,10 @@ Rectangular data (or ``2D'') is a bit more complicated and is meant to be workin
             \verb+0xDF13+ & R/W & SD15 & SD14 & SD13 & SD12 & SD11 & SD10 & SD9 & SD8 \\ \hline
         \end{tabular}
     \end{center}
-    \caption{DMA Registers}
-    \label{tab:dma_reg}
+    \caption{DMA Registers (Part 2)}
+    \label{tab:dma_reg_2}
 \end{table}
+
 
 \begin{description}
     \item[START] set to trigger the DMA
@@ -57,7 +67,7 @@ Rectangular data (or ``2D'') is a bit more complicated and is meant to be workin
 
     \item[FD] the byte to be written to memory when FILL is set
 
-    \item[BUSD] status bit set when DMA is buSD copying data
+    \item[BUSY] status bit set when DMA is busy copying data
 
     \item[SA] the 18 bit source address (must be a location in the first 256KB of RAM). Only relevant when FILL is clear.
 
