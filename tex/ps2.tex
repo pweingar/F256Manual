@@ -40,10 +40,6 @@ The \jr\ provides for a grayscale hardware mouse pointer. The pointer is a $16 \
 
 The position of the mouse pointer is controlled in one of two ways. In the default approach (MODE = 0), the system software will monitor mouse movements, determine the mouse position programmatically, and set the TinyVicky mouse position registers directly. In the legacy approach (MODE = 1), the system software will receive the three byte PS/2 mouse data packet and set the TinyVicky mouse PS2\_BYTE registers. In this legacy mode, TinyVicky will interpret the mouse packets and track the mouse position for the system. This approach is less work for the system software, but is less flexible.
 
-\begin{leftbar}
-	NOTE: The \jr\ RevA board does not support the mouse pointer registers.
-\end{leftbar}
-
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline

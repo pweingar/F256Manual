@@ -112,7 +112,7 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline\hline
             \verb+0xD000+ & R/W & X & GAMMA & SPRITE & TILE & BITMAP & GRAPH & OVRLY & TEXT \\ \hline
-            \verb+0xD001+ & R/W & \multicolumn{3}{|c|}{---} & FON\_OVLY & MON\_SLP & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
+            \verb+0xD001+ & R/W & \multicolumn{2}{|c|}{---} & FON\_SET & FON\_OVLY & MON\_SLP & DBL\_Y & DBL\_X & CLK\_70 \\ \hline
         \end{tabular}
     \end{center}
     \caption{VICKY Master Control Registers}
@@ -144,6 +144,8 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
     \item[MON\_SLP] if set, the monitor SYNC signal will be turned off, putting the monitor to sleep
     
     \item[FON\_OVLY] if clear (0), only the text foreground color will be displayed when text overlays graphics (all background colors will be completely transparent). If set (1), both foreground and background colors will be displayed, except that background color 0 will be transparent. 
+    
+    \item[FON\_SET] if set (1), the text font displayed will be font set 1. If clear (0), the text font displayed will be font set 0.
 \end{description}
 
 \begin{leftbar}
@@ -153,7 +155,9 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
 \section*{Text Fonts}
 \label{sec:text_font}
 
-Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
+Character shapes (or ``glyphs,'' if you prefer) are defined in font memory, which is in I/O page 1 and starts at 0xC000. TinyVicky provides for two font sets, and which one is used for text mode is controlled by the FON\_SET bit in the Vicky Master Control Register. Only one will be in use at any given time in normal operation. Font set 0 is from 0xC000 through 0xC7FF. Font set 1 is from 0xC800 through 0xCFFF.
+
+The \jr\ treats each character as a square of pixels, 8 pixels on a side. A pixel may be either in the foreground color for the character or in the background color for the character. The way this is managed is that each character has a sequence of eight bytes in the font memory. Each byte represents a row in the character, and each bit represents a pixel in the row ($\blacksquare$ for foreground, $\square$ for background).
 
 As an example, let's say we wanted to have a fancy ``F'' for character 0:
 
