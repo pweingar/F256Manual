@@ -99,7 +99,7 @@ For the \jr, the machine ID will be 2.
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD6A7+ & R & MID & \multicolumn{4}{|c|}{---} & \multicolumn{4}{|c|}{ID} \\ \hline\hline
+            \verb+0xD6A7+ & R & MID & \multicolumn{3}{|c|}{---} & \multicolumn{5}{|c|}{ID} \\ \hline\hline
 
             \verb+0xD6A8+ & R & PCBID0 & \multicolumn{8}{|c|}{ASCII character 0: ``A''} \\ \hline
             \verb+0xD6A9+ & R & PCBID1 & \multicolumn{8}{|c|}{ASCII character 1: ``0''} \\ \hline
@@ -123,20 +123,21 @@ For the \jr, the machine ID will be 2.
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|} \hline
-            MID3 & MID2 & MID1 & MID0 & Machine \\\hline\hline
-            0 & 0 & 0 & 0 & C256 FMX \\ \hline
-            0 & 0 & 0 & 1 & C256 U \\ \hline
-            0 & 0 & 1 & 0 & F256jr \\ \hline
-            0 & 0 & 1 & 1 & A2560 Dev \\ \hline
-            0 & 1 & 0 & 0 & Gen X \\ \hline
-            0 & 1 & 0 & 1 & C256 U+ \\ \hline
-            0 & 1 & 1 & 0 & Reserved \\ \hline
-            0 & 1 & 1 & 1 & Reserved \\ \hline
-            1 & 0 & 0 & 0 & A2560 X \\ \hline
-            1 & 0 & 0 & 1 & A2560 U \\ \hline
-            1 & 0 & 1 & 0 & A2560 M \\ \hline
-            1 & 0 & 1 & 1 & A2560 K \\ \hline
+        \begin{tabular}{|c|c|c|c|c|c|} \hline
+            MID4 & MID3 & MID2 & MID1 & MID0 & Machine \\\hline\hline
+            0 & 0 & 0 & 0 & 0 & C256 FMX \\ \hline
+            0 & 0 & 0 & 0 & 1 & C256 U \\ \hline
+            0 & 0 & 0 & 1 & 0 & F256jr \\ \hline
+            1 & 0 & 0 & 1 & 0 & F256K \\ \hline
+            0 & 0 & 0 & 1 & 1 & A2560 Dev \\ \hline
+            0 & 0 & 1 & 0 & 0 & Gen X \\ \hline
+            0 & 0 & 1 & 0 & 1 & C256 U+ \\ \hline
+            0 & 0 & 1 & 1 & 0 & Reserved \\ \hline
+            0 & 0 & 1 & 1 & 1 & Reserved \\ \hline
+            0 & 1 & 0 & 0 & 0 & A2560 X \\ \hline
+            0 & 1 & 0 & 0 & 1 & A2560 U \\ \hline
+            0 & 1 & 0 & 1 & 0 & A2560 M \\ \hline
+            0 & 1 & 0 & 1 & 1 & A2560 K \\ \hline
         \end{tabular}
     \end{center}
     \caption{Machine IDs}
