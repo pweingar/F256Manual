@@ -4,64 +4,95 @@ The 65C02 has two interrupts: non-maskable interrupts (NMI) for high priority ev
 
 The individual devices route their interrupt request signals to the interrupt controller. When an interrupt comes in, the controller knows which device it is and decides whether to forward the interrupt to the CPU. The interrupt handler can then query the interrupt handler to see which device or devices have interrupts pending and can then acknowledge them once they have been properly handled.
 
-The interrupt controller provides two sets of registers to provide its functionality: interrupt masks, and interrupt pending. The mask registers provide a mask flag for every possible interrupt. If the flag is true (1), the interrupt from that device is masked, and an interrupt coming in from it will not trigger an IRQ on the processor. The pending register provides a pending flag for every possible interrupt. If the flag is true (1) on a read, the device has requested an interrupt, if false (0) there is no interrupt pending from the device. Setting a flag in a pending register to 1 will acknowledge the interrupt and cause the controller to drop the pending flag. Writing a 0 to a flag will have no effect.
+Each interrupt that the interrupt controller manages belongs to one of three separate groups. Each group manages at most eight interrupts, and each interrupt within that group has its own bit within the group. That bit is used in the four registers that control the interrupts for that group (see table \ref{tab:int_reg}). The four different registers for each group are:
 
-The interrupt controller registers are divided on the \jr\ into two groups: 0 and 1. Group 0 represents seven of the interrupts: two video interrupts, two PS/2 controller interrupts, two timer interrupts, and the DMA interrupt. Group 1 represents the other interrupts: UART, real time clock, VIA, and the SD card controller.
+\begin{description}
+    \item[PENDING] In this register, there are eight flags, one for each interrupt in the group. When reading the register, if the flag is set, the interrupt controller has received that interrupt. When writing to the register, setting a flag will clear the pending status of the interrupt.
+    \item[POLARITY] This register, together with EDGE, controls how the interrupt controller interprets the inputs to recognize an interrupt condition (see table \ref{tab:int_pol_edge}).
+    \item[EDGE] This register, together with POLARITY, controls how the interrupt controller interprets the inputs to recognize an interrupt condition (see table \ref{tab:int_pol_edge}).
+    \item[MASK] This register controls whether interrupts asserted by the devices will trigger an IRQ. If an interrupt's flag is set in the MASK register, then the interrupt will be ignored. If the flag is clear, the interrupt being asserted by the device will trigger an IRQ on the processor.
+\end{description}
+
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{|c|c|c|} \hline
+            Group & Address & Name \\ \hline\hline
+            \multirow{4}{*}{0} & 0xD660 & INT\_PENDING\_0 \\ \cline{2-3}
+                               & 0xD664 & INT\_POLARITY\_0 \\ \cline{2-3}
+                               & 0xD668 & INT\_EDGE\_0 \\ \cline{2-3}
+                               & 0xD66C & INT\_MASK\_0 \\ \hline\hline
+
+            \multirow{4}{*}{1} & 0xD661 & INT\_PENDING\_1 \\ \cline{2-3}
+                               & 0xD665 & INT\_POLARITY\_1 \\ \cline{2-3}
+                               & 0xD669 & INT\_EDGE\_1 \\ \cline{2-3}
+                               & 0xD66D & INT\_MASK\_1 \\ \hline\hline
+
+            \multirow{4}{*}{2} & 0xD662 & INT\_PENDING\_2 \\ \cline{2-3}
+                               & 0xD666 & INT\_POLARITY\_2 \\ \cline{2-3}
+                               & 0xD66A & INT\_EDGE\_2 \\ \cline{2-3}
+                               & 0xD66E & INT\_MASK\_2 \\ \hline
+        \end{tabular}
+    \end{center}
+	\caption{Interrupt Registers}
+	\label{tab:int_reg}
+\end{table}
+
+The interrupt controller registers are divided on the \jr\ into three groups: 0, 1, and 2. Group 0 represents seven of the interrupts: two video interrupts, two PS/2 controller interrupts, two timer interrupts, and the DMA interrupt. Group 1 represents the other interrupts: UART, real time clock, VIA, and the SD card controller. Group 2 represents interrupts used by the IEC serial port. See tables \ref{tab:int_group_0}, \ref{tab:int_group_1}, and \ref{tab:int_group_2} to see how device interrupts are assigned to their groups.
 
 NOTE: Some devices on the \jr\ have their own interrupt enable flags (separate from the mask flags). For example, the 65C22 VIA has an interrupt enable bit in one of its registers and will not send an interrupt to the \jr's interrupt controller if that bit is not enabled. For such devices, the interrupt enable flag on the device must be set and the corresponding mask bit in the interrupt controller must be clear in order for interrupts to be sent to the CPU. Other devices, like VICKY, do not have a separate enable flag. In their case, only their corresponding mask bits must be cleared to enable their interrupts.
 
 \begin{table}[ht]
 	\begin{center}
-		\begin{tabular}{| c | c | c | c | l |} \hline
-            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
-            \multirow{8}{*}{{\tt 0xD66C}} & \multirow{8}{*}{{\tt 0xD660}} & \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \cline{3-5}
-            & & \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt \\ \cline{3-5}
-            & & \verb+0x04+ & INT\_PS2\_KBD & PS/2 keyboard event \\ \cline{3-5}
-            & & \verb+0x08+ & INT\_PS2\_MOUSE & PS/2 mouse event \\ \cline{3-5}
-            & & \verb+0x10+ & INT\_TIMER\_0 & TIMER0 has reached its target value \\ \cline{3-5}
-            & & \verb+0x20+ & INT\_TIMER\_1 & TIMER1 has reached its target value \\ \cline{3-5}
-            & & \verb+0x40+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x80+ & RESERVED & \\ \hline
+		\begin{tabular}{|c|c|l|} \hline
+            Bit & Name & Purpose \\ \hline\hline
+            \verb+0x01+ & INT\_VKY\_SOF & TinyVicky Start Of Frame interrupt. \\ \hline
+            \verb+0x02+ & INT\_VKY\_SOL & TinyVicky Start Of Line interrupt \\ \hline
+            \verb+0x04+ & INT\_PS2\_KBD & PS/2 keyboard event \\ \hline
+            \verb+0x08+ & INT\_PS2\_MOUSE & PS/2 mouse event \\ \hline
+            \verb+0x10+ & INT\_TIMER\_0 & TIMER0 has reached its target value \\ \hline
+            \verb+0x20+ & INT\_TIMER\_1 & TIMER1 has reached its target value \\ \hline
+            \verb+0x40+ & RESERVED & \\ \hline
+            \verb+0x80+ & Cartridge & Interrupt asserted by the cartidge \\ \hline
         \end{tabular}
     \end{center}
-	\caption{Interrupts Group 0}
-	\label{tab:interrupts}
+	\caption{Interrupt Group 0 Bit Assignments}
+	\label{tab:int_group_0}
 \end{table}
 
 \begin{table}[ht]
 	\begin{center}
-		\begin{tabular}{| c | c | c | c | l |} \hline
-            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
-            \multirow{8}{*}{{\tt 0xD66D}} & \multirow{8}{*}{{\tt 0xD661}} & \verb+0x01+ & INT\_UART & The UART is ready to receive or send data \\ \cline{3-5}
-            & & \verb+0x02+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x04+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x08+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x10+ & INT\_RTC & Event from the real time clock chip \\ \cline{3-5}
-            & & \verb+0x20+ & INT\_VIA & Event from the 65C22 VIA chip \\ \cline{3-5}
-            & & \verb+0x40+ & INT\_IEC & Event from the IEC serial bus \\ \cline{3-5}
-            & & \verb+0x80+ & INT\_SDC\_INS & User has inserted an SD card \\ \hline
+		\begin{tabular}{|c|c|l|} \hline
+            Bit & Name & Purpose \\ \hline\hline
+            \verb+0x01+ & INT\_UART & The UART is ready to receive or send data \\ \hline
+            \verb+0x02+ & RESERVED & \\ \hline
+            \verb+0x04+ & RESERVED & \\ \hline
+            \verb+0x08+ & RESERVED & \\ \hline
+            \verb+0x10+ & INT\_RTC & Event from the real time clock chip \\ \hline
+            \verb+0x20+ & INT\_VIA0 & Event from the 65C22 VIA chip \\ \hline
+            \verb+0x40+ & INT\_VIA1 & F256K Only: Local keyboard \\ \hline
+            \verb+0x80+ & INT\_SDC\_INS & User has inserted an SD card \\ \hline
         \end{tabular}
     \end{center}
-	\caption{Interrupts Group 1}
-	\label{tab:interrupts_1}
+	\caption{Interrupt Group 1 Bit Assignments}
+	\label{tab:int_group_1}
 \end{table}
 
 \begin{table}[ht]
 	\begin{center}
-		\begin{tabular}{| c | c | c | c | l |} \hline
-            Mask & Pending & Bit & Name & Purpose \\ \hline\hline
-            \multirow{8}{*}{{\tt 0xD66E}} & \multirow{8}{*}{{\tt 0xD662}} & \verb+0x01+ & IEC\_DATA\_i & IEC Data In \\ \cline{3-5}
-            & & \verb+0x02+ & IEC\_CLK\_i & IEC Clock In  \\ \cline{3-5}
-            & & \verb+0x04+ & IEC\_ATN\_i & IEC ATN In  \\ \cline{3-5}
-            & & \verb+0x08+ & IEC\_SREQ\_i & IEC REQ In  \\ \cline{3-5}
-            & & \verb+0x10+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x20+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x40+ & RESERVED & \\ \cline{3-5}
-            & & \verb+0x80+ & RESERVED & \\ \hline
+		\begin{tabular}{|c|c|l|} \hline
+            Bit & Name & Purpose \\ \hline\hline
+            \verb+0x01+ & IEC\_DATA\_i & IEC Data In \\ \hline
+            \verb+0x02+ & IEC\_CLK\_i & IEC Clock In  \\ \hline
+            \verb+0x04+ & IEC\_ATN\_i & IEC ATN In  \\ \hline
+            \verb+0x08+ & IEC\_SREQ\_i & IEC SREQ In  \\ \hline
+            \verb+0x10+ & RESERVED & \\ \hline
+            \verb+0x20+ & RESERVED & \\ \hline
+            \verb+0x40+ & RESERVED & \\ \hline
+            \verb+0x80+ & RESERVED & \\ \hline
         \end{tabular}
     \end{center}
-	\caption{Interrupts Group 2}
-	\label{tab:interrupts_2}
+	\caption{Interrupt Group 2 Bit Assignment}
+	\label{tab:int_group_2}
 \end{table}
 
 The Start Of Frame (SOF) and Start of Line (SOL) interrupts could use some further explanation. The SOF interrupt is raised at the beginning of the vertical blanking period, when the raster has reached the bottom of the screen and starts to return to the top. This interrupt is raised either 60 times a second or 70 times a second, depending on the value of CLK\_70 (see table~\ref{tab:vky_master_ctrl_reg}), which sets the base resolution of the screen. The SOF interrupt is good for timing updates to graphics (like placement of sprites) to avoid screen tearing. It can also be used for rough timing of events, provided the code takes into account the fact that the timing changes with screen resolution. The Start of Line interrupt is raised when the raster line has reached a target line (see table~\ref{tab:lint_reg}). When the interrupt is raised, the raster is in the process of drawing the screen and has reached the desired target line.
@@ -174,3 +205,22 @@ return:     pla
             pla
             rti
 \end{verbatim}
+
+\subsection*{Polarity and Edge Controls}
+The POLARITY and EDGE registers work together to control how the interrupt controller recognizes an interrupt condition from the input signal. The EDGE register controls if the interrupt is triggered by the transition of the signal between high and low, and POLARITY controls which direction or logic level is the triggering condition. Table \ref{tab:int_pol_edge} lists how the two work together to choose the specific condition.
+
+For groups 0 and 1, these registers are really not needed, and they should be left in their default settings. For group 2, these registers will be more useful for recognizing changes to the IEC input lines.
+
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{|c|c|l|} \hline
+            EDGE & POLARITY & Function \\\hline\hline
+            0    & 0        & Interrupt is triggered if input line is LOW \\\hline
+            0    & 1        & Interrupt is triggered if input line is HIGH \\\hline
+            1    & 0        & Interrupt is triggered when the input transitions from HIGH to LOW \\\hline
+            1    & 1        & Interrupt is triggered when the input transitions from LOW to HIGH \\\hline
+        \end{tabular}
+    \end{center}
+	\caption{Interrupt Polarity and Edge Function}
+	\label{tab:int_pol_edge}
+\end{table}

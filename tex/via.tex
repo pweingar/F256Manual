@@ -1,4 +1,5 @@
 \chapter{Versatile Interface Adapter}
+\label{chap_via}
 
 The \jr\ includes a Western Design Center WDC65C22 versatile interface adapter or VIA. The VIA provides several useful features for I/O and timing:
 
@@ -13,6 +14,10 @@ The \jr\ includes a Western Design Center WDC65C22 versatile interface adapter o
 \end{itemize}
 
 On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3.3 volt logic instead of the 5 volt logic used in older 8-bit machines.
+
+\begin{leftbar}
+    NOTE: While the \jr\ has a single VIA, the F256K has two VIA chips. The second VIA chip is located at 0xDB00. The purpose of this second VIA is to manage the built-in keyboard of the F256K. The keyboard/GPIO header pins on the \jr\ are moved to VIA1 and include some additional I/O pins. See page \pageref{sec_f256k_kbd} for a more complete description of the keyboard.
+\end{leftbar}
 
 A complete description of the VIA would be rather long, so this guide will merely list out the register addresses and provide a quick break-down on the register functions. For a complete description, please see the data sheet from Western Design Center. See table~\ref{tab:via_reg} for a listing of all the VIA registers.
 

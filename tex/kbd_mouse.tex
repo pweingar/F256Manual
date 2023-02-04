@@ -1,31 +1,33 @@
-\chapter{PS/2 Keyboard and Mouse}
+\chapter{Keyboard and Mouse}
 
-The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. This port is accessed through five registers, which provide very simple access to a PS/2 device. The \jr\ does not have a full PS/2 controller, but instead provides mostly raw access to the data stream. It does make some attempt to translate set 2 scan codes to ASCII character code, although raw scan codes may be read instead.
+The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. This port is accessed through five registers, which provide very simple access to a PS/2 device. The \jr\ does not have a full PS/2 controller, but instead provides mostly raw access to the data stream. It does make some attempt to translate set 2 scan codes to ASCII character code, although raw scan codes may be read instead. See table \ref{tab:ps2_reg} for details.
 
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD640+ & W & KBD\_CTRL & \multicolumn{6}{|c|}{---} & WR & RD \\\hline
-            \verb+0xD641+ & W & KBD\_OUT & \multicolumn{8}{|l|}{Data to send to keyboard} \\ \hline
-            \verb+0xD642+ & R & KBD\_SCAN & \multicolumn{8}{|l|}{Pure scan code from keyboard} \\ \hline
-            \verb+0xD643+ & R & KBD\_ASCII & \multicolumn{8}{|l|}{ASCII character codes from the keyboard} \\ \hline
-            \verb+0xD644+ & R & KBD\_STAT & TX\_ACK & TX\_NAK & \multicolumn{2}{|c|}{---} & REL & PRS & SHFT & RDY \\ \hline
+            \verb+0xD640+ & W & PS2\_CTRL & \multicolumn{2}{|c|}{---} & MCLR & KCLR & M\_WR & --- & K\_WR & --- \\\hline
+            \verb+0xD641+ & W & PS2\_OUT & \multicolumn{8}{|l|}{Data to send to keyboard} \\ \hline
+            \verb+0xD642+ & R & KBD\_IN & \multicolumn{8}{|l|}{Data from the keyboard input FIFO} \\ \hline
+            \verb+0xD643+ & R & MS\_IN & \multicolumn{8}{|l|}{Data from the mouse input FIFO} \\ \hline
+            \verb+0xD644+ & R & PS2\_STAT & K\_AK & K\_NK & M\_AK & M\_NK & \multicolumn{2}{|c|}{---} & MEMP & KEMP \\ \hline
         \end{tabular}
     \end{center}
-    \caption{UART Registers}
+    \caption{PS/2 Port Registers}
     \label{tab:ps2_reg}
 \end{table}
 
 \begin{description}
-    \item[WR]
-    \item[RD]
-    \item[TX\_ACK] when 1, the code sent to the keyboard has been acknowledged
-    \item[TX\_NAK] when 1, the code sent to the keyboard has resulted in an error
-    \item[REL] when 1, the key has been released
-    \item[PRS] when 1, key is pressed
-    \item[SHFT] when 1, one the shift key is pressed
-    \item[RDY] when 1, Data to be read (will clear after you set the Read Strobe)   
+    \item[K\_WR] set to 1 then 0 to send a byte written on PS2\_OUT to the keyboard
+    \item[M\_WR] set to 1 then 0 to send a byte written on PS2\_OUT to the mouse
+    \item[KCLR] set to 1 then 0 to clear the keyboard input FIFO queue.
+    \item[MCLR] set to 1 then 0 to clear the mouse input FIFO queue. 
+    \item[K\_AK] when 1, the code sent to the keyboard has been acknowledged
+    \item[K\_NK] when 1, the code sent to the keyboard has resulted in an error
+    \item[M\_AK] when 1, the code sent to the keyboard has been acknowledged
+    \item[M\_NK] when 1, the code sent to the keyboard has resulted in an error
+    \item[KEMP] when 1, the keyboard input FIFO is empty
+    \item[MEMP] when 1, the mouse input FIFO is empty 
 \end{description}
 
 \section*{Mouse Support}
@@ -67,3 +69,16 @@ The position of the mouse pointer is controlled in one of two ways. In the defau
     \item[PS2\_BYTE\_1] the second byte of the PS/2 mouse message packet. Only used if MODE is set (1).
     \item[PS2\_BYTE\_2] the third byte of the PS/2 mouse message packet. Only used if MODE is set (1).
 \end{description}
+
+\section*{F256K Keyboard}
+\label{sec_f256k_kbd}
+
+\begin{leftbar}
+    NOTE: this section pertains to the F256K only and is not relevant to the \jr.
+\end{leftbar}
+
+The F256K includes a second WDC65C22 VIA chip at 0xDB00 on I/O page 0 (see page \pageref{chap_via} for details on the VIAs) which manages the keyboard input from the F256K's built-in keyboard. The F256K's keyboard is a matrix keyboard. Except for the RESTORE key, all keys on the keyboard are arranged in a matrix with the columns assigned to VIA1's P xxx pins and the rows assigned to VIA1's P xxx pins. VIA0's PB7 pin is also used for xxx.
+
+\begin{leftbar}
+    TODO: flesh this out properly and include a schematic of the matrix.
+\end{leftbar}
