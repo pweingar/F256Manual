@@ -81,7 +81,7 @@ In text mode, the background color is determined by the color matrix and the tex
 
 \section*{Line Interrupt and Beam Position}
 
-TinyVicky can trigger a SOL interrupt (see table:~\ref{tab:interrupts}) when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
+TinyVicky can trigger a SOL interrupt (see table:~\ref{tab:int_group_0}) when the display has reached a given raster line. This can be useful for split-screen style effects or other programming tricks that work off of partitioning the screen into separate areas. To use this feature, a program would enable the line interrupt and set a register to the number of the line on the screen when the interrupt should be triggered. In addition to setting a line interrupt, there are two 12-bit registers that allow the program to see what line and column is TinyVicky is currently drawing. The addresses for all these registers overlap. The line interrupt registers are write-only, and the current beam position registers are read only (see table:~\ref{tab:lint_reg})
 
 \begin{table}[ht]
     \begin{center}
