@@ -87,7 +87,7 @@ There are four basic formats of bytes that can be written to the port, as shown 
 	\label{tab:psg_commands}
 \end{table}
 
-Note: there is a PSG sound device for the left stereo channel and one for the right. The left channel PSG can be accessed at 0xD600, and the right channel at 0xD610. Both are in I/O page 0. There is also a sound ``device'' for managing the left and right PSGs together, which starts at 0xD620. The combined registers work in the same way as the left and right PSGs. Writing to the combined registers is equivlent to writing to the left and right channel registers simulataneously.
+Note: there is a PSG sound device for the left stereo channel and one for the right. The left channel PSG can be accessed at 0xD600, and the right channel at 0xD610. Both are in I/O page 0. There is also a sound ``device'' for managing the left and right PSGs together, which starts at 0xD608. The combined registers work in the same way as the left and right PSGs. Writing to the combined registers is equivalent to writing to the left and right channel registers simultaneously.
 
 \subsection*{Attenuation}
 
