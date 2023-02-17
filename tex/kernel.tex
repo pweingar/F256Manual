@@ -1,0 +1,563 @@
+\chapter{The TinyCore 65c02 MicroKernel F256(K) Edition}
+
+The TinyCore 6502 MicroKernel for the Foenix F256/F256K line of computers is a powerful alternative to the typical BIOS style kernels that come with most 8-bit computers.  This kernel offers the following features:
+
+\begin{itemize}
+    \item An event-based programming model for real-time games and VMs.
+    \item A network stack supporting multiple concurrent TCP and UDP sockets.
+    \item Drivers for optional ESP8266 based wifi modules.
+    \item Drivers for IEC drives.
+    \item Drivers for Fat32 formatted SD Cards.
+    \item Support for PS2 keyboards, Foenix keyboards, and CBM keyboards
+    \item Support for PS2 scroll mice.
+    \item Preemptive kernel multi-tasking (no need to yield). 
+\end{itemize}
+
+The TinyCore 65c02 MicroKernel is Copyright 2022 Jessie Oberreuter
+The Fat32 library is Copyright 2020 Frank van den Hoef and Michael Steil  
+
+There's a lot of love in here; I hope you will enjoy using it as much as I have enjoyed writing it! --- Gadget.
+
+\section*{Setup and Installation}
+
+\subsection*{Getting the Kernel}
+
+Kernel binaries may be obtained from either of the following repos: 
+
+\begin{itemize}
+    \item  https://github.com/ghackwrench/F256\_Jr\_Kernel\_DOS
+    \item  https://github.com/paulscottrobson/superbasic
+\end{itemize}
+
+The `ghackwrench' repo contains the latest release.  The `paulscottrobson' repo contains the latest version verified to work with SuperBASIC.
+
+\subsection*{Flashing the Kernel}
+
+The kernel consists of four 8k blocks which must be flashed into the last four blocks of the F256.  Using the F256 Programmer Tool (Windows), the kernel needs to be flashed into Flash Blocks 0x3C--0x3F.  Alternately, the SuperBASIC repo contains a script which uses a python based loader to install SuperBASIC along with the Kernel.
+
+\subsection*{DIP Switches}
+
+The kernel assigns the DIP switches as follows:
+
+\begin{enumerate}
+\item Enable boot-from-RAM
+\item Reserved (potentially for SNES gamepad support)
+\item Enable SLIP based networking
+\item Feather board installed ({\it e.g.} Huzzah 8266 WiFi)
+\item SIDs are installed
+\item F256: CBM keyboard installed; F256k: audio expansion installed.
+\item ON: 640x480, OFF: 640x400 ({\em not yet implemented})
+\item Enable gamma color correction
+\end{enumerate}
+
+When boot-from-RAM is enabled, the kernel will search the first 48k of RAM for pre-loaded programs before starting the first program on the expansion cartridge or the first program in flash.
+
+\subsection*{Support Software}
+
+\begin{itemize}
+    \item The superbasic repo contains a powerful BASIC programming language which has been ported to run on the MicroKernel.
+    \item The Kernel\_DOS repo includes a simple DOS CLI which demonstrates most kernel functions.
+    \item The Kernel\_DOS repo also contains library and config files for compiling C programs with cc65 for use with the MicroKernel.
+\end{itemize}
+
+\section*{Memory Model}
+
+The F256 series machines minimally reserve addresses 0x00 and 0x01 for memory and I/O control.  Programs may optionally enable additional hardware registers from 0x08--0x0f.
+
+The MicroKernel uses 16 bytes of the Zero page, from 0xf0--0xff, for the \verb+kernel.args+ struct.  Kernel calls do not expect their arguments to come in registers.  Instead, all kernel arguments are passed by writing them to variables in \verb+kernel.args+.  The \verb+A+ register is used by all kernel calls.  The \verb+X+ and \verb+Y+ registers, however, are always preserved.  All kernel calls clear the carry on success and set the carry on failure.  A few calls return a stream id in \verb+A+ as a convenience, but most of the time, \verb+A+ should just be considered undefined upon return from the kernel.
+
+Outside of the above, user programs are free to use all addresses up to 0xC000 as they wish.
+
+0xC000--0xDFFF is the I/O window.  The I/O window can be disabled to reveal RAM underneath, but programs should refrain from doing so, as this RAM is used by the kernel.  Programs are generally free to use the hardware as they see fit, but note that, by default, the kernel takes ownership of the PS2 ports, the frame interrupt, and the RTC interrupt, and will take ownership of the serial port if either the SLIP or Feather DIP switches are set.
+
+0xE000--0xFFFF contains the kernel itself.  The kernel is considerably larger than 8kB, but it uses the F256 MMU hardware to keep its footprint in the user's memory map to a relative minimum.
+
+The F256 machines support four concurrent memory maps.  The kernel reserves map zero for itself, and map one for the Fat32 drivers; user programs are run from map three.  Map two is potentially reserved for a hypervisor. 
+
+The kernel uses only two 8k blocks of RAM: block 6 (nominally at 0xC000), and block 7 (nominally at 0xE000).  Everything else is free for use by user software.
+
+\section*{Startup}
+
+On power-on or reset, the kernel initializes the hardware according to the DIP switches and then searches various memory regions for the first program to run.  If DIP1 is on, it first checks RAM blocks 1--5 for a pre-loaded binary.  After that, it searches the expansion RAM/ROM blocks, and, finally, the on-board flash blocks. The first block found with a valid header will be mapped into MMU 3 and started.  The header must appear at the very start of the block and contains the following fields:
+
+\begin{verbatim}
+Byte  0    signature: 0xF2
+Byte  1    signature: 0x56
+Byte  2    the size of program in 8k blocks
+Byte  3    the starting slot of the program (ie where to map it)
+Bytes 4-5  the start address of the program
+Bytes 6-9  reserved
+Bytes 10-  the zero-terminated name of the program.
+\end{verbatim}
+
+\section*{Programming}
+
+With a 65c02 installed, the F256 machines can generally be treated as simple 6502 machines.  Programs have full access to the RAM from 0x0000--0xBFFF, and full access to I/O from 0xC000--0xDFFF.  More adventurous programs can enable the MMU registers and bank additional memory into any 8k slot below 0xC000.  Really adventurous programs are free to disable interrupts, map out the kernel, and take complete control over the machine.  Programs wishing to use the kernel, however, should be sure to keep interrupts enabled as much as possible, call \verb+NextEvent+ often enough that the kernel doesn't run out of event objects, and refrain from trashing MMU LUT0, MMU LUT1, and the RAM between 0xC000 and 0xFFFF.
+
+The kernel interfaces are described below using their symbolic names.  The actual values and addresses must be obtained by including either \verb+api.asm+ or \verb+api.h+ in your project.
+
+\section*{Events}
+
+The F256 machines were designed for games, and the 6502 TinyCore MicroKernel was designed to match.
+
+Games generally run in a simple loop:
+
+\begin{enumerate}
+    \item Update the screen
+    \item Read the controls
+    \item Update the game state
+    \item Goto 1
+\end{enumerate}
+
+The kernel supports this mode of operation by replacing step 2 above (read the controls) with a generic kernel call: \verb+NextEvent+.  \verb+NextEvent+ gets the next I/O event from the kernel's queue and copies it into a user provided buffer.  
+
+\subsection*{Setup}
+
+Events are 8-byte packets.  Each packet contains four common bytes, and up to four event-specific bytes.  The user's buffer for these bytes may be placed anywhere, but since they are accessed frequently, the zero page is a good place.
+
+Before a program can receive events, it must tell the kernel where events should be copied.  It does this by writing the address of an 8-byte buffer into the kernel's \verb+arg+ block:
+
+\begin{verbatim}
+		.section zp
+event		.dstruct	 kernel.event.event\_t
+		.send
+
+		.section code
+
+init\_events
+
+		lda     #<event
+		sta     kernel.args.events+0
+		lda     #>event
+		sta     kernel.args.events+1
+		rts
+\end{verbatim}
+
+\subsection*{Handling}
+For games, and other real-time applications, a program will typically contain a single "handle\_events" routine:
+
+\begin{verbatim}
+handle\_events
+
+          ; Peek at the queue to see if anything is pending
+            lda		kernel.events.pending  ; Negated count
+            bpl		\_done
+
+	  ; Get the next event.
+	    jsr		kernel.NextEvent
+	    bcs		\_done
+
+          ; Handle the event
+            jsr		\_dispatch
+            
+          ; Continue until the queue is drained.
+            bra		handle\_events
+            
+\_done       rts
+
+\_dispatch
+
+          ; Get the event's type
+            lda		event.type
+    					
+	  ; Call the appropriate handler
+
+	    cmp		#kernel.event.key.PRESSED
+	    beq		\_key\_pressed
+
+	    cmp		#kernel.event.mouse.DELTA
+	    beq		\_mouse\_moved
+			
+	    ...
+	    rts     ; Anything not handled can be ignored.
+\end{verbatim}
+
+Other types of programs may eschew the use of a single central event handler, and instead work the queue only when waiting for events, and then only to handle the event types expected for the operation.  The F256 cc65 kernel library does just this: when waiting for keypresses, it only handles key events; when waiting for data from a file, it only handles file.DATA/EOF/ERROR events and ignores all others.  This approach is considerably simpler but also considerably less powerful.
+
+\subsection*{Event types}
+
+Events belong to one of two categories: {\em Solicited Events} and {\em Unsolicited Events}.
+
+{\em Solicited Events} are events which are generated in response to I/O requests ({\it e.g.} file Open/Read/Close calls).  {\em Unsolicited Events} are generated by external devices such as keyboards, joysticks, and mice.  {\em Unsolicited Events} are also generated whenever packets are received from the network.
+
+\subsubsection*{Solicited Events}
+
+The {\em solicited events} are described in the {\em Kernel Calls} section below.  The documentation for each kernel call that queues an event includes a description of the possible events.
+
+\subsubsection*{Unsolicited Events}
+
+\begin{verbatim}
+event.key.PRESSED
+event.key.RELEASED
+\end{verbatim}
+
+These events occur whenever a key is pressed or released:
+
+\begin{itemize}
+    \item \verb+event.key.keyboard+ contains the id of the keyboard.
+    \item \verb+event.key.raw+ contains the raw key-code (see \verb+kernel/keys.asm+).
+    \item \verb+event.key.flags+ is negative if this is a meta (non-ascii) key.
+    \item \verb+event.key.ascii+ contains the ascii interpretation if available.
+\end{itemize}
+
+\begin{verbatim}
+event.mouse.DELTA
+\end{verbatim}
+
+This event is generated every time the mouse is moved or a button changes state.
+
+\begin{itemize}
+\item \verb+event.mouse.delta.x+ contains the x delta.
+\item \verb+event.mouse.delta.y+ contains the y delta.
+\item \verb+event.mouse.delta.z+ contains the z (scroll) delta.
+\item \verb+event.mouse.delta.buttons+ contains the button bits.
+\end{itemize}
+
+The buttons are encoded as follows:
+
+\begin{itemize}
+\item Bit 0 (1) is the inner-most button
+\item Bit 1 (2) is the middle button
+\item Bit 2 (4) is the outer-most button
+\end{itemize}
+
+The bits are set when the button is pressed and cleared when the button is released.
+
+To change the ``handedness'' of the mouse, simply place it in whichever hand you prefer, and double-click!  
+
+\begin{verbatim}
+event.mouse.CLICKS
+\end{verbatim}
+
+This event reports mouse click (press-and-release) events.  Whenever a mouse button is pressed, the kernel starts a 500ms timer and counts the number of times each button is both pressed and released.  At the end of the 500ms, the counts are reported:
+
+\begin{itemize}
+\item \verb+event.mouse.clicks.inner+ contains the count of inner clicks.
+\item \verb+event.mouse.clicks.middle+ contains the count of middle clicks.
+\item \verb+event.mouse.clicks.outer+ contains the count of outer clicks.
+\end{itemize}
+
+A report of all zeros indicates that a press-and-hold is in progress; programs should consult the most recent event.\verb+mouse.DELTA+ event to determine which button(s) are being held. 
+
+\begin{verbatim}
+event.JOYSTICK+
+\end{verbatim}
+
+This event returns the state of the ``buttons'' for each of the two joysticks whenever either's state changes:
+
+\begin{itemize}
+\item \verb+event.joystick.joy0+ contains the bits for Joystick 0.
+\item \verb+event.joystick.joy1+ contains the bits for Joystick 1.
+\end{itemize}
+
+The bits are set when the associated switch is pressed, and clear when released.
+
+\begin{verbatim}
+event.TCP
+event.UDP
+event.ICMP
+\end{verbatim}
+
+These events are generated whenever a network packet of the given type is received.  For TCP and UDP packets, a program can use the \verb+kernel.Net.Match+ call to see if the packet matches an open socket.  Non-matching UDP packets can be ignored; network aware programs should respond to unmatched TCP packets by calling \verb+kernel.Net.TCP.Reject+. TCP and UDP payloads may be read by calling \verb+kernel.Net.TCP.Recv+ and \verb+kernel.Net.UDP.Recv+ respectively.  For ICMP packets, programs can get the raw data by calling \verb+kernel.ReadData+.   
+
+
+\section*{Kernel Calls}
+
+\subsection*{Generic Calls}
+
+\subsubsection*{NextEvent}
+
+Copies the next event from the kernel's event queue into a user provided event buffer.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.events+ points to an 8-byte buffer.  
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set if no events are pending.
+\end{itemize}
+
+\paragraph{Effect}
+
+\begin{itemize}
+\item If there is an event in the queue, it is copied into the provided buffer.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item \verb+kernel.args.events+ is a reserved field in the argument block; nothing else uses this space, so you need only initialize this pointer once on startup.
+\item \verb+kernel.args.pending+ contains the count of pending events (negated for ease of testing with BIT).  You can save considerable CPU time by testing \verb+kernel.args.pending+ and only calling \verb+NextEvent+ if it is non-zero.
+\item The kernel reports almost everything through events.  Consider keeping the event buffer in the zeropage for efficient access.
+\end{itemize}
+
+
+\subsection*{ReadData}
+Copies data from the kernel buffer associated with the current event into the user's address space.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.buf+ points to a user buffer.
+\item \verb+kernel.args.buflen+ contains the number of bytes to copy (0=256).
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared.
+\end{itemize}
+
+\paragraph{Effect}
+
+\begin{itemize}
+\item The contents of the current event's primary buffer are copied into the provided user buffer.
+\item If the event doesn't contain a buffer, zeros are copied.
+\end{itemize}
+
+\subsection*{ReadExt}
+Copies extended data from the kernel buffer associated with the current event into the user's address space.
+
+\paragraph{Input}
+
+\begin{itemize} 
+\item \verb+kernel.args.buf+ points to a user buffer.
+\item \verb+kernel.args.buflen+ contains the number of bytes to copy (0=256).
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared.
+\end{itemize}
+
+\paragraph{Effect}
+
+\begin{itemize}
+\item The contents of the current event's primary buffer are copied into the provided user buffer.
+\item If the event doesn't contain an extended data buffer, zeros are copied.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Events with extended data are relatively rare.  Typical examples include file meta-information and bytes 256...511 of a 512 byte raw-sector read. 
+\end{itemize}
+
+
+\subsection*{Yield}
+
+Yields the CPU to the kernel.  This is typically used to expedite the processing of network packets.  It is never required.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item none
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item none
+\end{itemize}
+
+\paragraph{Effects}
+
+\begin{itemize}
+\item none
+\end{itemize}
+
+
+\subsection*{RunBlock}
+
+Transfers execution to the program found in the given memory block.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.run.block_id+ contains the number of the block to execute.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item On success, the call doesn't return.
+\item Carry set on error (block doesn't contain a program).
+\end{itemize}
+
+
+\subsection*{RunNamed}
+Transfers execution to the first program found with the given name.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.buf+ points to a buffer containing the name of the program to run.
+\item \verb+kernel.args.buflen+ contains the length of the name. 
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item On success, the call doesn't return.
+\item Carry set on error (a program with the provided name was not found).
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The name match is case-insensitive.
+\end{itemize}
+
+
+\section*{FileSystem Calls}
+
+\subsection*{FileSystem.MkFS}
+Creates a new filesystem on the given device.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.fs.mkfs.drive+ contains the device number (0 = SD, 1 = IEC \#8, 2 = IEC \#9)
+\item \verb+kernel.args.fs.mkfs.label+ points to a buffer containing the new drive label.
+\item \verb+kernel.args.fs.mkfs.label_len+ contains the length of the label buffer (0=0).
+\item \verb+kernel.args.fs.mkfs.cookie+ contains a user-provided cookie for matching against completion events.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (device doesn't exist, kernel is out of streams).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item The kernel will queue an \verb+event.fs.CREATED+ event on success.
+\item The kernel will queue an \verb+event.fs.ERROR+ event on failure.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item This is presently an atomic, blocking call on both IEC and Fat32, and it can take a {\em long} time to complete.  While running, your program will not be able to work the event queue, so pretty much the whole system will grind to a halt.  Until this changes, it's best if interactive programs and operating systems avoid this call.  
+\end{itemize}
+
+\section*{File Calls}
+
+\subsection*{Open}
+Opens a file for read, append, or create/overwrite.  The file should not be concurrently opened in another stream.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.open.drive+ contains the drive ID (0 = SD card, 1 = IEC \#8, 2 = IEC \#9).
+\item \verb+kernel.args.file.open.fname+ points to the name of the file.
+\item \verb+kernel.args.file.open.fname_len+ contains the length of the name.
+\item \verb+kernel.args.file.open.mode+ contains the access mode (0 = read, 1 = write, 2 = append). 
+\item \verb+kernel.args.file.open.cookie+ contains an optional, user provided value which will be returned in subsequent events related to this file.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success, and \verb+A+ contains the stream ID for the file.
+\item Carry set if the drive isn't found, or if the kernel lacks sufficient resources to complete the call.
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On a successful open/create/append, the kernel will queue a \verb+file.OPENED+ event.
+\item For read or append, if the file does not exist, the kernel will queue a \verb+file.NOT_FOUND+ event.
+\item File events contain the stream id (in \verb+event.file.stream+) and the user supplied cookie (in\\ \verb+event.file.cookie+).
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The kernel supports a maximum of 20 concurrently opened files (including directories and rename/delete operations) across all devices.
+\item The IEC driver supports a maximum of 8 concurrently opened files (not counting directories and rename/delete operations) per device. 
+\item Fat32 preserves case when creating files, and uses case-insensitive matching when opening files.
+\item IEC devices vary in their handling of case.  Users will just need to live with this.
+\item Unlike other kernel calls, most file operations are blocking.  In the case of IEC, this is due to the fact that an interrupt driven interface was not available at the time of writing (it is now, so IEC can be improved).  In the case of Fat32, the fat32.s package we're using contains its own, blocking SPI stack (which may be replaced in the future).  Fortunately, most operations are fast enough that events won't be dropped.
+\item The kernel does not lock files and does not check to see if a file is already in use.  Should you attempt to concurrently open the file in two or more streams, the resulting behavior is entirely up to the device (IEC) or the file-system driver (fat32.s).  The above statement that the file should not be concurrently opened should be treated as a strong warning. 
+\item {\em Open for append is not yet implemented}
+\end{itemize}
+
+
+\subsection*{File.Read}
+Reads bytes from a file opened for reading.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.read.stream+ contains the stream ID of the file (the stream is returned in the \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
+\item \verb+kernel.args.file.read.buflen+ contains the requested number of bytes to read.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (file is not opened for reading, file is in the EOF state, the kernel is out of event objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On a successful read, the kernel will queue an \verb+event.file.DATA+ event (see \verb+ReadData+). \\ \verb+event.file.data.requested+ contains the number of bytes requested;  \verb+event.file.data.read+ contains the number of bytes actually read.
+\item On EOF, the kernel will queue an \verb+event.file.EOF+ event.
+\item On error, the kernel will queue an \verb+event.file.ERROR+ event.
+\item In all cases, the event will also contain the stream id in \verb+event.file.stream+ and the the user's cookie in \verb+event.file.cookie+.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item As with POSIX, the kernel may return fewer bytes than requested.  This is not an error, and does not imply that the file has reached EOF (the kernel will queue an \verb+event.file.EOF+ on EOF).  When this happens, the user is expected to simply call \verb+File.Read+ again to get more data.
+
+\item IEC devices don't report file-not-found until a read is attempted.  To work around this issue, when talking to an IEC device, File.Open performs a one-byte read during the open.  This single byte is later returned in the file's first \verb+event.file.DATA+ response (it does not attempt to merge this byte into the next full read).  
+
+\item To reduce the risk of losing events while reading data from IEC devices, IEC read transfers are artificially limited to 64 bytes at a time.  This limit may be lifted once we have interrupt driven IEC transfers.
+\end{itemize}
+
+\subsection*{File.Write}
+Writes bytes to a file opened for writing.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.write.stream+ contains the stream ID of the file (the stream is returned in the \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
+\item \verb+kernel.args.file.write.buf+ points to the buffer to write.
+\item \verb+kernel.args.file.write.buflen+ contains the requested number of bytes to write.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (file is not opened for writing, the kernel is out of event objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On a successful write, the kernel will queue an \verb+event.file.WROTE+ event. \\ \verb+event.file.wrote.requested+ contains the number of bytes requested; \\ \verb+event.file.wrote.wrote+ contains the number of bytes actually written.
+\item On error, the kernel will queue an \verb+event.file.ERROR+ event.
+\item In all cases, the event will also contain the stream id in \verb+event.file.stream+ and the user's cookie in \verb+event.file.cookie+.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item As with POSIX, the kernel may write fewer bytes than requested.  This is not an error.  When it happens, the user is expected to simply call \verb+File.Write+ again to write more data.
+
+\item To reduce the risk of losing events while reading data from IEC devices, IEC write transfers are artificially limited to 64 bytes at a time.  This limit may be lifted once we have interrupt driven IEC transfers.
+\end{itemize}
