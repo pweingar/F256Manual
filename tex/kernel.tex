@@ -1,5 +1,10 @@
 \chapter{The TinyCore 65c02 MicroKernel F256(K) Edition}
+\label{chp:kernel}
 
+\begin{leftbar}
+  NOTE: This chapter was written by Jessie Oberreuter to describe her MicroKernel for the F256 family and is covered under her project's copyright. It is included here by her kind permission. The link to get the API files and sample code for the kernel is listed below and in the References chapter at the end of the manual.
+\end{leftbar}
+  
 The TinyCore 6502 MicroKernel for the Foenix F256/F256K line of computers is a powerful alternative to the typical BIOS style kernels that come with most 8-bit computers.  This kernel offers the following features:
 
 \begin{itemize}
@@ -118,58 +123,60 @@ Events are 8-byte packets.  Each packet contains four common bytes, and up to fo
 Before a program can receive events, it must tell the kernel where events should be copied.  It does this by writing the address of an 8-byte buffer into the kernel's \verb+arg+ block:
 
 \begin{verbatim}
-		.section zp
-event		.dstruct	 kernel.event.event\_t
-		.send
+    .section zp
+event   .dstruct	 kernel.event.event_t
+    .send
 
-		.section code
+    .section code
 
-init\_events
+init_events
 
-		lda     #<event
-		sta     kernel.args.events+0
-		lda     #>event
-		sta     kernel.args.events+1
-		rts
+    lda     #<event
+    sta     kernel.args.events+0
+    lda     #>event
+    sta     kernel.args.events+1
+    rts
 \end{verbatim}
 
 \subsection*{Handling}
 For games, and other real-time applications, a program will typically contain a single "handle\_events" routine:
 
 \begin{verbatim}
-handle\_events
+handle_events
 
-          ; Peek at the queue to see if anything is pending
-            lda		kernel.events.pending  ; Negated count
-            bpl		\_done
+    ; Peek at the queue to see if anything is pending
+    lda		kernel.events.pending  ; Negated count
+    bpl		_done
 
-	  ; Get the next event.
-	    jsr		kernel.NextEvent
-	    bcs		\_done
+    ; Get the next event.
+    jsr		kernel.NextEvent
+    bcs		_done
 
-          ; Handle the event
-            jsr		\_dispatch
+    ; Handle the event
+    jsr		_dispatch
             
-          ; Continue until the queue is drained.
-            bra		handle\_events
+    ; Continue until the queue is drained.
+    bra		handle_events
             
-\_done       rts
+_done
 
-\_dispatch
+    rts
 
-          ; Get the event's type
-            lda		event.type
+_dispatch
+
+    ; Get the event's type
+    lda		event.type
     					
-	  ; Call the appropriate handler
+    ; Call the appropriate handler
 
-	    cmp		#kernel.event.key.PRESSED
-	    beq		\_key\_pressed
+    cmp		#kernel.event.key.PRESSED
+    beq		_key_pressed
 
-	    cmp		#kernel.event.mouse.DELTA
-	    beq		\_mouse\_moved
+    cmp		#kernel.event.mouse.DELTA
+    beq		_mouse_moved
 			
-	    ...
-	    rts     ; Anything not handled can be ignored.
+    ...
+    rts     ; Anything not handled can be ignored.
 \end{verbatim}
 
 Other types of programs may eschew the use of a single central event handler, and instead work the queue only when waiting for events, and then only to handle the event types expected for the operation.  The F256 cc65 kernel library does just this: when waiting for keypresses, it only handles key events; when waiting for data from a file, it only handles file.DATA/EOF/ERROR events and ignores all others.  This approach is considerably simpler but also considerably less powerful.
@@ -560,4 +567,528 @@ Writes bytes to a file opened for writing.
 \item As with POSIX, the kernel may write fewer bytes than requested.  This is not an error.  When it happens, the user is expected to simply call \verb+File.Write+ again to write more data.
 
 \item To reduce the risk of losing events while reading data from IEC devices, IEC write transfers are artificially limited to 64 bytes at a time.  This limit may be lifted once we have interrupt driven IEC transfers.
+\end{itemize}
+
+\subsection*{File.Close}
+Closes an open file.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.close.stream+ contains the stream ID of the file.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (kernel is out of event objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item The kernel will always queue an \verb+event.file.CLOSED+, even if an I/O error occurs during the close.  The event will contain the stream id in \verb+event.file.stream+ and the user's cookie in \verb+event.file.cookie+.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The kernel will always queue an \verb+event.file.CLOSED+, even if an I/O error occurs during the close.
+\item Upon a successful call to \verb+File.Close+, no further operations should be attempted on the given stream (the stream ID will be returned to the kernel's free pool for use by subsequent file operations).
+\end{itemize}
+
+\subsection*{File.Rename}
+Renames a file.  The file should not be in use.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.rename.drive+ contains the drive ID (0 = SD, 1 = IEC \#8, 2 = IEC \#9)
+\item \verb+kernel.args.file.rename.cookie+ contains a user supplied cookie for matching the completed event.
+\item \verb+kernel.args.file.rename.old+ points to a file path containing the name of the file to rename.
+\item \verb+kernel.args.file.rename.old_len+ contains the length of the path above.
+\item \verb+kernel.args.file.rename.new+ points to the new name for the file ({\em NOT} a new {\em path}!)
+\item \verb+kernel.args.file.rename.new_len+ contains the length of the new name above.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (device not found; kernel out of events).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On successful completion, the kernel will queue a \verb+file.RENAMED+ event.
+\item On failure, the kernel will queue a \verb+file.ERROR+ event.
+\item In either case, \verb+event.file.cookie+ will contain the cookie supplied above.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Rename semantics are up to the device (in the case of IEC) or the fat32.s driver (in the case of Fat32).  The kernel doesn't even look at the arguments to see if they are sane.  This means you may or may not be able to, say, change the case of letters in a filename with a single rename call; you may need to rename to a temp name, and then rename to the case-corrected name.
+
+\item Similarly, the kernel doesn't actually check if the file is in-use or not.  Whether this matters is up to the device or file-system driver; treat the above statement that the file should not be in use as a strong recommendation. 
+
+\item Rename is {\em NOT} a `move'.  You can only rename a file in place.  If you want to move it, you will need to copy and then delete.
+\end{itemize}
+
+\subsection*{File.Delete}
+Deletes a file.  The file should not be in use.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.file.delete.drive+ contains the drive ID (0 = SD, 1 = IEC \#8, 2 = IEC \#9)
+\item \verb+kernel.args.file.delete.cookie+ contains a user supplied cookie for matching the completed event.
+\item \verb+kernel.args.file.delete.fname+ points to a file path containing the name of the file to delete.
+\item \verb+kernel.args.file.delete.fname_len+ contains the length of the path above.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (device not found; kernel out of events).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On successful completion, the kernel will queue a \verb+file.DELETED+ event.
+\item On failure, the kernel will queue a \verb+file.ERROR+ event.
+\item In either case, \verb+event.file.cookie+ will contain the cookie supplied above.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Case matching is up to the device (IEC) or the file-system driver (fat32.s).
+\item Delete semantics are up to the device (in the case of IEC) or the fat32.s driver (in the case of Fat32).  The kernel doesn't even look at the path to see if it is sane. 
+
+\item Similarly, the kernel doesn't actually check if the file is in-use or not.  Whether this matters is up to the device or file-system driver; treat the above statement that the file should not be in use as a strong recommendation. 
+\end{itemize}
+
+\section*{Directory Calls}
+
+\subsection*{Directory.Open}
+Opens a directory for reading.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.directory.open.drive+ contains the device id (0 = SD, 1 = IEC \#8, 2 = IEC \#9).
+\item \verb+kernel.args.directory.open.path+ points to a buffer containing the path.
+\item \verb+kernel.args.directory.open.lan_len+ contains the length of the path above.  May be zero for the root directory.
+\item \verb+kernel.args.directory.open.cookie+ contains a user-supplied cookie for matching the completed event.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success; \verb+A+ contains the stream id.
+\item Carry set on error (device not found, kernel out of event or stream objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item On successful completion, the kernel will queue an \verb+event.directory.OPENED+ event.
+\item On error, the kernel will queue an \verb+event.directory.ERROR+ event.
+\item In either case, \verb+event.directory.cookie+ will contain the above cookie.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The IEC protocol only supports reading one directory per device at a time.  The kernel does not, however, prevent you from trying.  Consider yourself warned.
+\end{itemize}
+
+\subsection*{Directory.Read}
+Reads the next directory element (volume name entry, file entry, bytes-free entry).
+
+\paragraph{Input} 
+
+\begin{itemize}
+\item \verb+kernel.args.directory.stream+ contains the stream id.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (EOF has occurred or the kernel is out of event objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item The first read will generally queue an \verb+event.directory.VOLUME+ event. \\ \verb+event.directory.volume.len+ will contain the length of the volume name. Call \verb+ReadData+ to retrieve the volume name.
+
+\item Subsequent reads will generally queue an \verb+event.directory.FILE+ event. \\ \verb+event.directory.file.len+ will contain the length of the filename.  \verb+ReadData+ will retrieve the file name; \verb+ReadExt+ will retrieve the meta-data (presently just the sector count).
+
+\item The last read before EOF will generally queue an \verb+event.directory.FREE+ event. \\ \verb+event.directory.free.free+ will contain the number of free sectors on the device.
+
+\item The final read will queue an \verb+event.directory.EOF+ event.
+
+\item Should an error occur while reading the directory, the kernel will queue an \\ \verb+event.directory.ERROR+ event.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The IEC protocol does not support multiple concurrent directory reads.
+\item Attempting to open files while reading an IEC directory have been known to result in directory read errors (cc65 errata). 
+\item SD2IEC devices cap the sectors-free report at 65535 sectors.
+\end{itemize}
+
+
+\subsection*{Directory.Close}
+
+\paragraph{Input} 
+
+\begin{itemize}
+\item \verb+kernel.args.directory.stream+ contains the stream id.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (kernel is out of event objects).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item The kernel will always queue an \verb+event.directory.CLOSED+ event, even if an error should occur.
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Do not attempt to make further calls against the same stream id after calling \verb+Directory.Close+---the stream will be returned to the kernel for allocation to subsequent file operations.
+\end{itemize}
+
+\section*{Network Calls---Generic}
+
+\subsection*{Network.Match}
+Determines if the packet in the current event belongs to the provided socket.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to either a TCP or UDP socket.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared if the socket matches the packet.
+\item Carry set if the socket does not match the packet.
+\end{itemize}
+
+\section*{Network Calls---UDP}
+
+\subsection*{Network.UDP.Init}
+Initializes a UDP socket in the user's address space.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to a 32 byte UDP socket structure.
+\item \verb+kernel.args.net.dest_ip+ contains the destination address.
+\item \verb+kernel.args.net.src_port+ contains the desired source port.
+\item \verb+kernel.args.net.dest_port+ contains the desired destination port.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry clear (always succeeds).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Opening a UDP socket {\em does not} create a packet filter for the particular socket.  Instead, ALL UDP packets received by the kernel are queued as events; it is up to the user program to accept or ignore each in turn.
+\end{itemize}
+
+\subsection*{Network.UDP.Send}
+Writes data to a UDP socket.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to a 32 byte UDP socket structure.
+\item \verb+kernel.args.net.buf+ points to the send buffer.
+\item \verb+kernel.args.net.buf_len+ contains the length of the buffer (0 = 256, but see the notes section)
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (kernel is out of packet buffers).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item By design, the kernel limits all network packets to 256 bytes.  This means the maximum payload for a single UDP packet is 228 bytes.
+\item {\bf Bug}: the kernel doesn't currently stop you from trying to send more than 228 bytes.  Attempts to do so will result in corrupt packets.
+\end{itemize}
+
+\subsection*{Network.UDP.Recv}
+Reads the UDP payload from an \verb+event.network.UDP+ event.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.buf+ points to the receive buffer.
+\item \verb+kernel.args.net.buflen+ contains the size of the receive buffer.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success; \verb+kernel.args.net.accepted+ contains the number of bytes copied from the event (0 = 0).
+\item Carry set on failure (event is not a network.UDP event).
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The full packet may be read into the user's address space by calling \verb+kernel.ReadData+.
+\end{itemize}
+
+\section*{Network Calls---TCP}
+
+\subsection*{Network.TCP.Open}
+Initializes a TCP socket in the user's address space.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to a 256 byte TCP socket structure (includes a re-transmission queue).
+\item \verb+kernel.args.net.dest_ip+ contains the destination address.
+\item \verb+kernel.args.net.dest_port+ contains the desired destination port.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry clear (always succeeds).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Opening a TCP socket {\em does not} create a packet filter for the particular socket.  Instead, ALL TCP packets received by the kernel are queued as events; it is up to the user program to accept or reject each in turn; see \verb+Network.Match+.
+\end{itemize}
+
+\subsection*{Network.TCP.Accept}
+Accepts a new connection from the outside world.
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item {\em Not yet implemented.}
+\end{itemize}
+
+\subsection*{Network.TCP.Reject}
+Rejects a connection from the outside world.  May also be used to forcibly abort an existing connection.
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item {\em Not yet implemented.}
+\end{itemize}
+
+\subsection*{Network.TCP.Send}
+Writes data to a TCP socket.
+
+\paragraph{Input}
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to the socket.
+\item \verb+kernel.args.net.buf+ points to the send buffer.
+\item \verb+kernel.args.net.buf_len+ contains the length of the buffer (0 = 0; may be used to force re-transmission).
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success; \verb+kernel.args.net.accepted+ contains the number of byte accepted.
+\item Carry set on error (socket not yet open, user has closed this side of the socket, kernel is out of packet buffers).
+\end{itemize}
+
+\paragraph{Events}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The socket presently contains a 128 byte transmit queue.  This queue is forwarded by both \\ \verb+Network.TCP.Send+ and by \verb+Network.TCP.Recv+.  The remote host must ACK the bytes in the transmit queue before more bytes become available in the queue.
+\end{itemize}
+
+
+\subsection*{Network.TCP.Recv}
+
+\begin{itemize}
+\item Reads the TCP payload from an \verb+event.network.TCP+ event.
+\item ACKs valid packets from the remote host.
+\item Maintains the state of the socket. 
+\end{itemize}
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to the socket.
+\item \verb+kernel.args.net.buf+ points to the receive buffer.
+\item \verb+kernel.args.net.buflen+ contains the size of the receive buffer.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success; \verb+kernel.args.net.accepted+ contains the number of bytes copied from the event (0 = 0). \verb+A+ contains the socket state.
+\item Carry set on failure (event is not a network.TCP event).
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item The full packet may be read into the user's address space by calling \verb+kernel.ReadData+.
+\end{itemize}
+
+\subsection*{Network.TCP.Close}
+Tells the remote host that no more data will be sent from this side of the socket.  The remote host is, however, free to continue sending until it issues a close.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.net.socket+ points to the socket.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on failure (kernel is out of buffers).
+\end{itemize}
+
+\section*{Display Calls}
+
+\subsection*{Display.Reset}
+Resets the display resolution and colors and disables the mouse and cursor.  Does NOT reset the font.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item In the future, the kernel should include support for re-initializing the default fonts.
+\end{itemize}
+
+\subsection*{Display.GetSize}
+Returns the size of the current text display.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item None
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item \verb+kernel.args.display.x+ contains the horizontal size.
+\item \verb+kernel.args.display.y+ contains the vertical size.
+\end{itemize}
+
+\subsection*{Display.DrawRow}
+Copies the user provided text buffer to the screen (from left to right) starting at the provided coordinates and using the provided color buffer.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.display.x+ contains the starting x coordinate.
+\item \verb+kernel.args.display.y+ contains the starting y coordinate.
+\item \verb+kernel.args.display.text+ points to the text data.
+\item \verb+kernel.args.display.color+ points to the color data.
+\item \verb+kernel.args.buflen+ contains the length of the buffer.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (x/y outside of the screen)
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item Probably isn't yet checking the coordinate bounds or clipping.
+\end{itemize}
+
+\subsection*{Display.DrawColumn}
+Copies the user provided text buffer to the screen (from top to bottom) starting at the provided coordinates and using the provided color buffer.
+
+\paragraph{Input}
+
+\begin{itemize}
+\item \verb+kernel.args.display.x+ contains the starting x coordinate.
+\item \verb+kernel.args.display.y+ contains the starting y coordinate.
+\item \verb+kernel.args.display.text+ points to the text data.
+\item \verb+kernel.args.display.color+ points to the color data.
+\item \verb+kernel.args.buflen+ contains the length of the buffer.
+\end{itemize}
+
+\paragraph{Output}
+
+\begin{itemize}
+\item Carry cleared on success.
+\item Carry set on error (x/y outside of the screen)
+\end{itemize}
+
+\paragraph{Notes}
+
+\begin{itemize}
+\item {\em Not yet implemented.}
 \end{itemize}
