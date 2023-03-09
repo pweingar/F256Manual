@@ -741,10 +741,12 @@ Creates a sub-directory.
 
 \paragraph{Input}
 
-* \verb+kernel.args.directory.mkdir.drive+ contains the device id (0 = SD, 1 = IEC \#8, 2 = IEC \#9).
-* \verb+kernel.args.directory.mkdir.path+ points to a buffer containing the path.
-* \verb+kernel.args.directory.mkdir.path_len+ contains the length of the path above.  May be zero for the root directory.
-* \verb+kernel.args.directory.mkdir.cookie+ contains a user-supplied cookie for matching the completed event.
+\begin{itemize}
+\item \verb+kernel.args.directory.mkdir.drive+ contains the device id (0 = SD, 1 = IEC \#8, 2 = IEC \#9).
+\item \verb+kernel.args.directory.mkdir.path+ points to a buffer containing the path.
+\item \verb+kernel.args.directory.mkdir.path_len+ contains the length of the path above.  May be zero for the root directory.
+\item \verb+kernel.args.directory.mkdir.cookie+ contains a user-supplied cookie for matching the completed event.
+\end{itemize}
 
 \paragraph{Output}
 \begin{itemize}
