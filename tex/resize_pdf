@@ -1,0 +1,10 @@
+gs \
+-q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dSAFER \
+-dCompatibilityLevel="1.5" -dPDFSETTINGS="/printer" \
+-dColorConversionStrategy=/LeaveColorUnchanged \
+-dSubsetFonts=true -dEmbedAllFonts=true \
+-dDEVICEWIDTHPOINTS=612 -dDEVICEHEIGHTPOINTS=396 \
+-dAutoRotatePages='/PageByPage' \
+-dFIXEDMEDIA -dPDFFitPage \
+-sOutputFile='f256jr_ref_rs.pdf' \
+-f 'f256jr_ref.pdf'
