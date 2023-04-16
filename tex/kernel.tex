@@ -255,7 +255,7 @@ event.UDP
 event.ICMP
 \end{verbatim}
 
-These events are generated whenever a network packet of the given type is received.  For TCP and UDP packets, a program can use the \verb+kernel.Net.Match+ call to see if the packet matches an open socket.  Non-matching UDP packets can be ignored; network aware programs should respond to unmatched TCP packets by calling \verb+kernel.Net.TCP.Reject+. TCP and UDP payloads may be read by calling \verb+kernel.Net.TCP.Recv+ and \verb+kernel.Net.UDP.Recv+ respectively.  For ICMP packets, programs can get the raw data by calling \verb+kernel.ReadData+.   
+These events are generated whenever a network packet of the given type is received.  For TCP and UDP packets, a program can use the \verb+kernel.Net.Match+ call to see if the packet matches an open socket.  Non-matching UDP packets can be ignored; network aware programs should respond to unmatched TCP packets by calling \verb+kernel.Net.TCP.+ \verb+Reject+. TCP and UDP payloads may be read by calling \verb+kernel.Net.TCP.Recv+ and \verb+kernel.Net.UDP.Recv+ respectively.  For ICMP packets, programs can get the raw data by calling \verb+kernel.ReadData+.   
 
 \begin{verbatim}
 event.clock.TICK
@@ -456,7 +456,7 @@ Opens a file for read, append, or create/overwrite.  The file should not be conc
 \paragraph{Notes}
 \begin{itemize}
 \item The kernel supports a maximum of 20 concurrently opened files (including directories and rename/delete operations) across all devices.
-\item The IEC driver supports a maximum of 8 concurrently opened files (not counting directories and rename/delete operations) per device. 
+\item The IEC driver supports a maximum of 8 concurrently opened files (not counting directories and rename\-/delete operations) per device. 
 \item Fat32 preserves case when creating files, and uses case-insensitive matching when opening files.
 \item IEC devices vary in their handling of case.  Users will just need to live with this.
 \item Unlike other kernel calls, most file operations are blocking.  In the case of IEC, this is due to the fact that an interrupt driven interface was not available at the time of writing (it is now, so IEC can be improved).  In the case of Fat32, the fat32.s package we're using contains its own, blocking SPI stack (which may be replaced in the future).  Fortunately, most operations are fast enough that events won't be dropped.
@@ -470,7 +470,7 @@ Reads bytes from a file opened for reading.
 
 \paragraph{Input}
 \begin{itemize}
-\item \verb+kernel.args.file.read.stream+ contains the stream ID of the file (the stream is returned in the \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
+\item \verb+kernel.args.file.read.stream+ contains the stream ID of the file (the stream is returned in the {\tt file.\-OPENED} event and from the \verb+File.Open+ call itself).
 \item \verb+kernel.args.file.read.buflen+ contains the requested number of bytes to read.
 \end{itemize}
 
@@ -502,7 +502,7 @@ Writes bytes to a file opened for writing.
 
 \paragraph{Input}
 \begin{itemize}
-\item \verb+kernel.args.file.write.stream+ contains the stream ID of the file (the stream is returned in the \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
+\item \verb+kernel.args.file.write.stream+ contains the stream ID of the file (the stream is returned in the \\ \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
 \item \verb+kernel.args.file.write.buf+ points to the buffer to write.
 \item \verb+kernel.args.file.write.buflen+ contains the requested number of bytes to write.
 \end{itemize}
@@ -517,7 +517,7 @@ Writes bytes to a file opened for writing.
 \begin{itemize}
 \item On a successful write, the kernel will queue an \verb+event.file.WROTE+ event. \\ \verb+event.file.wrote.requested+ contains the number of bytes requested; \\ \verb+event.file.wrote.wrote+ contains the number of bytes actually written.
 \item On error, the kernel will queue an \verb+event.file.ERROR+ event.
-\item In all cases, the event will also contain the stream id in \verb+event.file.stream+ and the user's cookie in \verb+event.file.cookie+.
+\item In all cases, the event will also contain the stream id in \verb+event.file.stream+ and the user's cookie in \\ \verb+event.file.cookie+.
 \end{itemize}
 
 \paragraph{Notes}
@@ -532,7 +532,7 @@ Changes the position of the next read or write within a file.
 
 \paragraph{Input}
 \begin{itemize}
-\item \verb+kernel.args.file.seek.stream+ contains the stream ID of the file (the stream is returned in the \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
+\item \verb+kernel.args.file.seek.stream+ contains the stream ID of the file (the stream is returned in the \\ \verb+file.OPENED+ event and from the \verb+File.Open+ call itself).
 \item \verb+kernel.args.file.seek.offset+ contains the 32-bit file offset.
 \end{itemize}
 

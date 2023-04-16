@@ -1,4 +1,4 @@
-\documentclass{book}
+\documentclass[openany,12pt]{book}
 \usepackage{datetime2}
 \DTMsetdatestyle{ddmmyyyy}
 \usepackage{hyperref}
@@ -7,13 +7,16 @@
 \usepackage{amssymb}
 \usepackage{notomath}
 \usepackage[T1]{fontenc}
+\usepackage[paperwidth=8.5in, paperheight=11in,inner=1.0in,outer=0.75in,top=0.75in,bottom=0.75in,twoside]{geometry} % US Letter, smaller margins
 % \usepackage[paperwidth=8.5in, paperheight=11in,inner=1.5in,outer=1.0in,top=0.75in,bottom=0.75in,twoside]{geometry} % US Letter
-\usepackage[paperwidth=9.35in, paperheight=6.05in,inner=1.5in,outer=1.0in,top=0.75in,bottom=0.75in,twoside]{geometry} % 8.5 x 5.5 (scale in post process)
+% \usepackage[paperwidth=9.35in, paperheight=6.05in,inner=1.5in,outer=1.0in,top=0.75in,bottom=0.75in,twoside]{geometry} % 8.5 x 5.5 (scale in post process)
 \usepackage{multirow}
 \usepackage{graphbox}
 \usepackage{sectsty}
 \usepackage[Bjornstrup]{fncychap} % Bjornstrup Glenn
 \usepackage{framed}
+\usepackage{fancyvrb}
+
 \definecolor{darkblue}{rgb}{0.1, 0.0, 0.6}
 \definecolor{silver}{rgb}{0.85, 0.85, 0.85}
 \ChNumVar{\color{darkblue}\fontsize{55}{60}\usefont{OT1}{pzc}{m}{n}\selectfont}

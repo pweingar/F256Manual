@@ -53,7 +53,7 @@ VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0
             lda #$01            ; Set the I/O page to #1
             sta MMU_IO_CTRL
 
-            lda #<VKY_GR_CLUT_0 ; pointer will be used to point to a particular LUT entry
+            lda #<VKY_GR_CLUT_0 ; pointer to a particular LUT entry
             sta pointer
             lda #>VKY_GR_CLUT_0
             sta pointer+1
@@ -101,7 +101,7 @@ NOTE: Pixel data for all graphics modes can be stored anywhere in the initial sy
 
 \section*{Graphics Layers}
 
-Now, what happens if two sprites take up the same position or if a program displays a tile map and a bitmap together? How does TinyVicky determine what color to display at a given position? TinyVicky provides a flexible layering system with several layers. Elements in ``near'' layers (lower numbers) get displayed on top of elements in ``far'' layers (higher numbers). If a sprite in layer 0 says a pixel should be blue while a tile in layer 1 says it should be red, the pixel will be blue. Color 0, however, is special. It is always the transparent ``color''. A pixel that is 0 in an element will be the color of whatever is behind it (or the global background color, if there is nothing behind it, see table~\ref{tab:back_reg}).
+Now, what happens if two sprites take up the same position or if a program displays a tile map and a bitmap together? How does TinyVicky determine what color to display at a given position? TinyVicky provides a flexible layering system with several layers. Elements in ``near'' layers (lower numbers) get displayed on top of elements in ``far'' layers (higher numbers). If a sprite in layer 0 says a pixel should be blue while a tile in layer 1 says it should be red, the pixel will be blue. Color 0, however, is special. It is always the transparent ``color''. A pixel that is 0 in an element will be the color of whatever is behind it (or the global background color, if there is nothing behind it) see table~\ref{tab:back_reg}.
 
 TinyVicky provides for seven layers, but they are split up a bit. Three of the layers are for bitmaps and tile maps. Only one bitmap or tile map can be placed in any of those three layers. The other four layers are for sprites only. Any sprite can be assigned to any of the sprite layers, and there can be multiple sprites in a layer. The sprite layers are interleaved with the bitmap and tile map layers (see figure:~\ref{fig:layers}).
 

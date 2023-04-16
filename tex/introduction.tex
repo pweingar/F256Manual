@@ -20,7 +20,7 @@ Example code in this manual is presented as assembly language. While the code is
 \item There are special operators for selecting specific bit ranges from a number to allow the assembly code to write the number byte-by-byte. The less than character (\verb+<+) selects bits 0--7. The greater than character (\verb+>+) selects bits 8--15. The back tick character (\verb+`+) selects bits 16--23. For example:
 \end{itemize}
 
-\begin{verbatim}
+\begin{Verbatim}[samepage=true]
     SAMPLE = $123456
 
     lda #<SAMPLE
@@ -29,7 +29,7 @@ Example code in this manual is presented as assembly language. While the code is
     sta $0801           ; Store $34 to $0801
     lda #`SAMPLE
     sta $0802           ; Store $12 to $0802
-\end{verbatim}
+\end{Verbatim}
 
 \section*{About the Machine}
 

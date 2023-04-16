@@ -118,7 +118,7 @@ As a reminder: be aware that the WDC65C22 on the \jr\ is being used with a 3.3 v
 \end{table}
 
 \example{Displaying Joystick 1}
-In this example, we will poll joystick 1 and print out the state of all the buttons by printing the byte we read from the joystick port as a simple binary number. The example will try to be a little bit smart by only printing the value when the value has changed. NOTE: this example expects OpenKernal to be installed, and will call two of its routines for initializing the screen and printing a character.
+In this example, we will poll joystick 1 and print out the state of all the buttons by printing the byte we read from the joystick port as a simple binary number. The example will try to be a little smart by only printing the value when the value has changed. NOTE: this example expects OpenKernal to be installed, and will call two of its routines for initializing the screen and printing a character.
 
 First, we initialize the screen, the variable we use to track the old value of the joystick port, and the VIA (setting port A to be an input port):
 \begin{verbatim}
@@ -129,7 +129,7 @@ ok_cout = $FFD2                         ; OpenKernal routine to print a characte
 
 * = $0080
 
-value:      .byte ?                     ; Variable to store the previous value of the joystick
+value:      .byte ?                     ; Variable to store the old joystick value
 prv:        .byte ?                     ; Copy of value for printing
 
 * = $e000

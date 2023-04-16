@@ -70,7 +70,7 @@ This example will build on the previous examples of setting up the CLUT and disp
 
             lda #$0C            ; enable GRAPHICS and BITMAP. Disable TEXT
             sta VKY_MSTR_CTRL_0 ; Save that to VICKY master control register 0
-            stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode (VICKY master control register 1)
+            stz VKY_MSTR_CTRL_1 ; Make sure we're just in 320x240 mode
 \end{verbatim}
 
 Next, it needs to set up the bitmap: setting the address, CLUT, and enabling the bitmap:

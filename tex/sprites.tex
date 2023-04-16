@@ -132,7 +132,7 @@ Next, the program loads the sprite's colors into the CLUT (\verb+ptr_src+ and \v
             sta ptr_dst+1
 
             ldx #0                      ; X is a counter for the number of colors copied
-color_loop: ldy #0                      ; Y is a pointer to the component within a CLUT color
+color_loop: ldy #0                      ; Y is a pointer to the component of a CLUT color
 comp_loop:  lda (ptr_src),y             ; Read a byte from the code
             sta (ptr_dst),y             ; And write it to the CLUT
             iny                         ; Move to the next byte
@@ -151,7 +151,7 @@ comp_loop:  lda (ptr_src),y             ; Read a byte from the code
             adc #0
             sta ptr_src+1
 
-            clc                         ; Advance ptr_dst to the next destination color entry
+            clc                         ; Advance ptr_dst to the next destination color
             lda ptr_dst
             adc #4
             sta ptr_dst
@@ -177,9 +177,9 @@ init_sp0:   lda #<balls_img_start       ; Address = balls_img_start
             stz VKY_SP0_AD_H
 
             lda #32
-            sta VKY_SP0_POS_X_L         ; (x, y) = (32, 32)... should be upper-left corner of the screen
-            stz VKY_SP0_POS_X_H
-
+            sta VKY_SP0_POS_X_L         ; (x, y) = (32, 32)... should be 
+            stz VKY_SP0_POS_X_H         ; upper-left corner of the screen
+            
             lda #32
             sta VKY_SP0_POS_Y_L
             stz VKY_SP0_POS_Y_H

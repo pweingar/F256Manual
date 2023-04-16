@@ -5,6 +5,10 @@ The \jr\ includes a built-in math coprocessor for integer math. This coprocessor
 
 NOTE: The input registers can be read or written by the CPU, but the addresses for the registers are different depending upon whether the CPU is reading or writing. The read address and write address for each register are listed separately in the tables below.
 
+\begin{leftbar}
+    At the time of writing, the integer division unit was not included in the FPGA build of the early versions of the \jr. It is possible the division unit will be included in the FPGA build before it is finalized. Therefore, I am still listing the intended locations for the division registers here. If the division unit never makes it to the F256s, future editions of this manual will be adjusted to remove them.
+\end{leftbar}
+
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|} \hline

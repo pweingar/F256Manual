@@ -218,7 +218,7 @@ start:      jsr ok_cint                 ; Initialize the text screen
             sta RTC_CTRL
 \end{verbatim}
 
-Since the time registers of the clock chip are encoded in binary-coded-decimal, printing is relatively straightforward, and is handled by a simple \verb+putbcd+ subroutine:
+\nopagebreak[1] Since the time registers of the clock chip are encoded in binary-coded-decimal, printing is relatively straightforward, and is handled by a simple \verb+putbcd+ subroutine:
 
 \begin{verbatim}
 ;
