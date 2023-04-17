@@ -10,20 +10,29 @@ The \jr\ has several software-controllable LEDs. There are the SD card access LE
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
 
-            \verb+0xD6A0+ & R/W & SYS0 & RESET & SD\_WP & SD\_CD & BUZZ & L1 & L0 & SD\_LED & PWR\_LED \\ \hline
+            \verb+0xD6A0+ & W & SYS0 & RESET & --- & CAP\_EN & BUZZ & L1 & L0 & SD\_L & PWR\_L \\ \hline
+            \verb+0xD6A0+ & R & SYS0 & RESET & SD\_WP & SD\_CD & \multicolumn{5}{|c|}{---} \\ \hline
             \verb+0xD6A1+ & R/W & SYS1 & \multicolumn{2}{|c|}{L1\_RATE}
                                        & \multicolumn{2}{|c|}{L0\_RATE}
-                                       & \multicolumn{2}{|c|}{---}
-                                       & L1\_MAN & L0\_MAN \\ \hline
+                                       & ---
+                                       & PSG\_ST
+                                       & L1\_MN & L0\_MN \\ \hline
         \end{tabular}
     \end{center}
     \caption{System Control Registers}
     \label{tab:sys_ctrl_reg}
 \end{table}
 
-The two status LEDs on the board are a little more complex. They may be in manual or automatic mode. The two flags L0\_MAN and L1\_MAN in SYS1 control which mode they are in. If an LED's flag is clear (0), then the LED is under manual control and its equivalent flag in SYS0 controls whether the LED is on or off. If the flag is set, then the LED is set to flash automatically, and the LED's flashing rate will be set by pair of bits L0\_RATE or L1\_RATE according to table~\ref{tab:led_rates}.
+The two status LEDs on the board are a little more complex. They may be in manual or automatic mode. The two flags L0\_MN and L1\_MN in SYS1 control which mode they are in. If an LED's flag is clear (0), then the LED is under manual control and its equivalent flag in SYS0 controls whether the LED is on or off. If the flag is set, then the LED is set to flash automatically, and the LED's flashing rate will be set by pair of bits L0\_RATE or L1\_RATE according to table~\ref{tab:led_rates}.
+
+The flag PSG\_ST controls how the output of the PSG sound chips are mixed. If clear (0), the PSGs will be mixed for monaural output (both will go to both left and right channels). If set (1), the left PSG will go to the left channel, and the right PSG will go to the right channel. This allows a program to use the PSGs as either independent 4 voice channels in stereo or as a monaural 8 voice channels.
 
 For the PC speaker, there is the BUZZ flag. By toggling BUZZ, a program can tweak the speaker and make a noise.
+
+\begin{leftbar}
+    NOTE: CAP\_EN is only on the \fk. If set, it enables the RGB LED for the shift lock key. It is ignored on the \jr.
+    Likewise, the \fk\ does not have a built-in buzzer, so BUZZ is ignored on the \fk.    
+\end{leftbar}
 
 \begin{table}[ht]
     \begin{center}
@@ -87,9 +96,9 @@ The \jr\ has a built-in pseudo-random number generator that produces 16-bit rand
 
 \section*{Machine ID and Version Information}
 
-Nine registers are set aside to identify the machine, the version of the printed circuit board, and the version of the FPGA. See table~\ref{tab:machine_id_ver} for the various registers. All of the registers are read-only, and only the chip information will change over the course of the machine's life span. The machine ID contains a four-bit code that is common between all the Foenix machines (see table~\ref{tab:machine_ids}).
+Nine registers are set aside to identify the machine, the version of the printed circuit board, and the version of the FPGA. See table~\ref{tab:machine_id_ver} for the various registers. All the registers are read-only, and only the chip information will change over the course of the machine's life span. The machine ID contains a four-bit code that is common between all the Foenix machines (see table~\ref{tab:machine_ids}).
 
-For the \jr, the machine ID will be 2.
+For the \jr, the machine ID will be 0x02. For the \fk, the machine ID will be 0x12.
 
 \begin{leftbar}
 	NOTE: The \jr\ RevA board does not support the PCB major and minor revision number registers or the PCB date code registers.
@@ -101,20 +110,20 @@ For the \jr, the machine ID will be 2.
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
             \verb+0xD6A7+ & R & MID & \multicolumn{3}{|c|}{---} & \multicolumn{5}{|c|}{ID} \\ \hline\hline
 
-            \verb+0xD6A8+ & R & PCBID0 & \multicolumn{8}{|c|}{ASCII character 0: ``A''} \\ \hline
+            \verb+0xD6A8+ & R & PCBID0 & \multicolumn{8}{|c|}{ASCII character 0: ``B''} \\ \hline
             \verb+0xD6A9+ & R & PCBID1 & \multicolumn{8}{|c|}{ASCII character 1: ``0''} \\ \hline
+            \verb+0xD6AA+ & R & CHSV0 & \multicolumn{8}{|c|}{TinyVicky subversion in BCD (low)} \\ \hline
+            \verb+0xD6AB+ & R & CHSV1 & \multicolumn{8}{|c|}{TinyVicky subversion in BCD (high)} \\ \hline
+            \verb+0xD6AC+ & R & CHV0 & \multicolumn{8}{|c|}{TinyVicky version in BCD (low)} \\ \hline
+            \verb+0xD6AD+ & R & CHV1 & \multicolumn{8}{|c|}{TinyVicky version in BCD (high)} \\ \hline
+            \verb+0xD6AE+ & R & CHN0 & \multicolumn{8}{|c|}{TinyVicky number in BCD (low)} \\ \hline
+            \verb+0xD6AF+ & R & CHN1 & \multicolumn{8}{|c|}{TinyVicky number in BCD (high)} \\ \hline\hline
+
             \verb+0xD6EB+ & R & PCBMA & \multicolumn{8}{|c|}{PCB Major Rev (ASCII)} \\ \hline
             \verb+0xD6EB+ & R & PCBMI & \multicolumn{8}{|c|}{PCB Minor Rev (ASCII)} \\ \hline
             \verb+0xD6EB+ & R & PCBD & \multicolumn{8}{|c|}{PCB Day (BCD)} \\ \hline
             \verb+0xD6EB+ & R & PCBM & \multicolumn{8}{|c|}{PCB Month (BCD)} \\ \hline
-            \verb+0xD6EB+ & R & PCBY & \multicolumn{8}{|c|}{PCB Year (BCD)} \\ \hline\hline
-
-            \verb+0xD6AA+ & R & CHSV0 & \multicolumn{8}{|c|}{Chip subversion in BCD (low)} \\ \hline
-            \verb+0xD6AB+ & R & CHSV1 & \multicolumn{8}{|c|}{Chip subversion in BCD (high)} \\ \hline
-            \verb+0xD6AC+ & R & CHV0 & \multicolumn{8}{|c|}{Chip version in BCD (low)} \\ \hline
-            \verb+0xD6AD+ & R & CHV1 & \multicolumn{8}{|c|}{Chip version in BCD (high)} \\ \hline
-            \verb+0xD6AE+ & R & CHN0 & \multicolumn{8}{|c|}{Chip number in BCD (low)} \\ \hline
-            \verb+0xD6AF+ & R & CHN1 & \multicolumn{8}{|c|}{Chip number in BCD (high)} \\ \hline
+            \verb+0xD6EB+ & R & PCBY & \multicolumn{8}{|c|}{PCB Year (BCD)} \\ \hline
         \end{tabular}
     \end{center}
     \caption{Machine ID and Versions}
@@ -127,8 +136,8 @@ For the \jr, the machine ID will be 2.
             MID4 & MID3 & MID2 & MID1 & MID0 & Machine \\\hline\hline
             0 & 0 & 0 & 0 & 0 & C256 FMX \\ \hline
             0 & 0 & 0 & 0 & 1 & C256 U \\ \hline
-            0 & 0 & 0 & 1 & 0 & F256jr \\ \hline
-            1 & 0 & 0 & 1 & 0 & F256K \\ \hline
+            0 & 0 & 0 & 1 & 0 & \jr \\ \hline
+            1 & 0 & 0 & 1 & 0 & \fk \\ \hline
             0 & 0 & 0 & 1 & 1 & A2560 Dev \\ \hline
             0 & 0 & 1 & 0 & 0 & Gen X \\ \hline
             0 & 0 & 1 & 0 & 1 & C256 U+ \\ \hline

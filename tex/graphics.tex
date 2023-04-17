@@ -96,7 +96,7 @@ lut_done:
 All three graphics engines arrange their pixel data in the same manner. They all use rectangular raster images as a base, although the width and height of the rectangle can vary. The pixels are placed in memory in sequential order in left-to-right and top-to-bottom order. That is, the first pixel in the sequence is the upper-left pixel in the image. The next pixel is the pixel to the immediate right and so on. If the image size is $w \times h$, the position of a pixel at $(x, y)$ in the list is $y \times w + x$.
 
 \begin{leftbar}
-NOTE: Pixel data for all graphics modes can be stored anywhere in the initial system RAM. For the \jr\ RevB board and the F256K, this means the pixel data can be stored anywhere in the first 512KB of system address space. For the \jr\ RevA boards, however, pixel data may only be stored in the first 256KB of system address space, since the RevA boards were built with only 256KB of system RAM.
+NOTE: Pixel data for all graphics modes can be stored anywhere in the initial system RAM. For the \jr\ RevB board and the \fk, this means the pixel data can be stored anywhere in the first 512KB of system address space. For the \jr\ RevA boards, however, pixel data may only be stored in the first 256KB of system address space, since the RevA boards were built with only 256KB of system RAM.
 \end{leftbar}
 
 \section*{Graphics Layers}

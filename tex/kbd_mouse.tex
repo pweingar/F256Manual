@@ -70,20 +70,42 @@ The position of the mouse pointer is controlled in one of two ways. In the defau
     \item[PS2\_BYTE\_2] the third byte of the PS/2 mouse message packet. Only used if MODE is set (1).
 \end{description}
 
-\section*{F256K Keyboard}
+\section*{\fk\ Keyboard}
 \label{sec_f256k_kbd}
 
 \begin{leftbar}
-    NOTE: this section pertains to the F256K only and is not relevant to the \jr.
+    NOTE: this section pertains to the \fk\ only and is not relevant to the \jr.
 \end{leftbar}
 
-The F256K includes a second WDC65C22 VIA chip at 0xDB00 on I/O page 0 (see page \pageref{chap_via} for details on the VIAs) which manages the keyboard input from the F256K's built-in keyboard. The F256K's keyboard is a matrix keyboard. Except for the RESTORE key, all keys on the keyboard are arranged in a matrix with the columns assigned to VIA1's PB pins and the rows assigned to VIA1's PA pins. VIA0's PB7 pin is also used for a column. See figure~\ref{fig:f256k_matrix}.
+The \fk\ includes a second WDC65C22 VIA chip at 0xDB00 on I/O page 0 (see page \pageref{chap_via} for details on the VIAs) which manages the keyboard input from the \fk's built-in keyboard. The F256K's keyboard is a matrix keyboard. Except for the RESTORE key, all keys on the keyboard are arranged in a matrix with the columns assigned to VIA1's PB pins and the rows assigned to VIA1's PA pins. VIA0's PB7 pin is also used for a column. See figure~\ref{fig:f256k_matrix}.
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics[scale=0.5]{images/f256k_matrix.pdf}
+        \includegraphics[scale=0.65]{images/f256k_matrix.pdf}
     \end{center}
-    \caption{F256K Keyboard Matrix}
+    \caption{\fk\ Keyboard Matrix}
     \label{fig:f256k_matrix}
 \end{figure}
 
+The \fk\ keyboard includes three indicator RGB LEDs that can be set under program control. The three LEDs are for power, media access (SD and IEC), and the shift lock indicator. Each LED has three single byte registers to set the red, green, and blue component intensities for the desired colors. See table~\ref{tab:f256k_kbd_leds}.
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|} \hline
+            Indicator & Address & R/W & Color \\\hline\hline
+            \multirow{3}{*}{Power} & 0xD6A7 & W & Blue \\\cline{2-4}
+                                   & 0xD6A8 & W & Green \\\cline{2-4}
+                                   & 0xD6A9 & W & Red \\\hline
+
+            \multirow{3}{*}{Media} & 0xD6AA & W & Blue \\\cline{2-4}
+                                   & 0xD6AB & W & Green \\\cline{2-4}
+                                   & 0xD6AC & W & Red \\\hline
+
+            \multirow{3}{*}{Shift} & 0xD6AD & W & Blue \\\cline{2-4}
+                                   & 0xD6AE & W & Green \\\cline{2-4}
+                                   & 0xD6AF & W & Red \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{\fk\ Keyboard LEDs}
+    \label{tab:f256k_kbd_leds}
+\end{table}

@@ -89,6 +89,8 @@ There are four basic formats of bytes that can be written to the port, as shown 
 
 Note: there is a PSG sound device for the left stereo channel and one for the right. The left channel PSG can be accessed at 0xD600, and the right channel at 0xD610. Both are in I/O page 0. There is also a sound ``device'' for managing the left and right PSGs together, which starts at 0xD608. The combined registers work in the same way as the left and right PSGs. Writing to the combined registers is equivalent to writing to the left and right channel registers simultaneously.
 
+The PSGs can be used with their outputs mixed in one of two modes. They can either be used as independent 4 voice stereo sound (one PSG on the left and one on the right), or they can be used as 8 voice monaural sound (both PSGs are routed to both left and right sound channels). This is controlled by the PSG\_ST flag in the system control registers (see page~\pageref{tab:sys_ctrl_reg}).
+
 \subsection*{Attenuation}
 
 All the channels support attenuation or volume control. The PSG expresses the loudness of the sound with how much it is attenuated or dampened. Therefore, an attenuation of 0 will be the loudest sound, while an attenuation of 15 will make the channel silent.
@@ -268,10 +270,10 @@ The SID chip can apply a filter to the audio before sending it out for amplifica
 \section*{OPL3}
 
 \begin{leftbar}
-	NOTE: This section is relevant to the F256K only. It does not apply to any of the \jr\ revisions.
+	NOTE: This section is relevant to the \fk\ only. It does not apply to any of the \jr\ revisions.
 \end{leftbar}
 
-The F256K includes an FPGA implementation of the OPL3 sound device, compatible with the Yamaha YMF262 sound chip. The OPL3 provides for complex, FM synthesized sound, which allows numerous oscillators to be combined in various ways to generate musical tones. An explanation of the various registers and functions provided by the OPL3 device is well outside the scope of this manual as it deserves its own book. Only how to access those ports will be covered here.
+The \fk\ includes an FPGA implementation of the OPL3 sound device, compatible with the Yamaha YMF262 sound chip. The OPL3 provides for complex, FM synthesized sound, which allows numerous oscillators to be combined in various ways to generate musical tones. An explanation of the various registers and functions provided by the OPL3 device is well outside the scope of this manual as it deserves its own book. Only how to access those ports will be covered here.
 
 The OPL3 provides many registers or ports for setting the various parameters. These ports are arranged in an address space of 9 bits (0x000--0x1FF). To access these ports, the CPU must first write the address of the port desired into one of two address registers. It then must write the data to be written to that port into the associated data register. To maintain compatibility with older versions of the Yamaha FM synthesizer chips, these ports are accessed through two different sets of address and data registers. For ports 0x000 through 0x0FF, the first pair of address and data registers are used. For ports 0x100 through 0x1FF, the second pair of registers are used. See table~\ref{tab:opl3_registers}.
 
