@@ -171,7 +171,7 @@ To turn it off later, we just need to write:
 
 \section*{Using the SIDs}
 
-The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips that can be installed on the \jr\ (see table~\ref{tab:sid_registers}).
+The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips (see table~\ref{tab:sid_registers}). For the \fjr, the SID chips are optional. The board comes with two unpopulated sockets into which either genuine SID chips or the various FPGA replacements may be installed. For the \fk, there is no socket for SIDs, but the two SID chips are provided by the built-in FPGAs.
 
 The SID chip provides three independent voices (so it can play three notes at once). The three voices are almost identical in their features, with voice 3 being the only one different. Each voice can produce one of four basic sound wave forms: randomized noise, square waves, saw tooth waves, and triangle waves. These waves can be generated over a range of frequencies, and for the square waves, the width of the pulse ({\it i.e. duty cycle}) may be adjusted.
 
@@ -269,22 +269,21 @@ The SID chip can apply a filter to the audio before sending it out for amplifica
 
 \section*{OPL3}
 
-\begin{leftbar}
-	NOTE: This section is relevant to the \fk\ only. It does not apply to any of the \jr\ revisions.
-\end{leftbar}
+\begin{note}
+	This section is relevant to the \fk\ only. It does not apply to any of the \jr\ revisions.
+\end{note}
 
 The \fk\ includes an FPGA implementation of the OPL3 sound device, compatible with the Yamaha YMF262 sound chip. The OPL3 provides for complex, FM synthesized sound, which allows numerous oscillators to be combined in various ways to generate musical tones. An explanation of the various registers and functions provided by the OPL3 device is well outside the scope of this manual as it deserves its own book. Only how to access those ports will be covered here.
 
-The OPL3 provides many registers or ports for setting the various parameters. These ports are arranged in an address space of 9 bits (0x000--0x1FF). To access these ports, the CPU must first write the address of the port desired into one of two address registers. It then must write the data to be written to that port into the associated data register. To maintain compatibility with older versions of the Yamaha FM synthesizer chips, these ports are accessed through two different sets of address and data registers. For ports 0x000 through 0x0FF, the first pair of address and data registers are used. For ports 0x100 through 0x1FF, the second pair of registers are used. See table~\ref{tab:opl3_registers}.
+The OPL3 provides many registers or ports for setting the various parameters. These ports are arranged in an address space of 9 bits (0x000--0x1FF). To access these ports, the CPU must first write the address of the port desired into one of two address registers. It then must write the data to be written to that port into the data register. To maintain compatibility with older versions of the Yamaha FM synthesizer chips, these ports are accessed through two different sets of address registers. For ports 0x000 through 0x0FF, the first address register is used. For ports 0x100 through 0x1FF, the second address register is used. See table~\ref{tab:opl3_registers}.
 
 \begin{table}[ht]
 	\begin{center}
 		\begin{tabular}{|c|c|l|} \hline
 			Address & R/W & Purpose \\ \hline \hline
 			\verb+0xD580+ & W & Address pointer register for ports 0x000--0x0FF \\ \hline
-			\verb+0xD581+ & W & Data register for ports 0x000--0x0FF \\ \hline
+			\verb+0xD581+ & W & Data register for all ports \\ \hline
 			\verb+0xD582+ & W & Address pointer register for ports 0x100--0x1FF \\ \hline
-			\verb+0xD583+ & W & Data register for ports 0x100--0x1FF \\ \hline
 		\end{tabular}
 	\end{center}
 	\caption{OPL3 Registers}

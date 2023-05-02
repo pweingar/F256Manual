@@ -32,7 +32,7 @@ TinyVicky allows for three full screen bitmaps to be displayed at once. These bi
 
     \item[CLUT] sets the graphics color lookup table to be used for this bitmap
 
-    \item[AD] give the address of the first byte of the pixel data within the 256 KB system RAM. Note that this address is relative to the system bus of 20 bits and is not based on the CPU's addressing.
+    \item[AD] give the address of the first byte of the pixel data within the 512KB system RAM. Note that this address is relative to the system bus of 21 bits and is not based on the CPU's addressing.
 \end{description}
 
 To set up and display a bitmap, the following things need to be done. The order is not terribly important, although updates to the bitmap's pixel data after the bitmap is displaying will be visible. That could be desirable, depending on what the program is doing.
@@ -89,14 +89,14 @@ Next, it needs to set up the bitmap: setting the address, CLUT, and enabling the
             sta VKY_BM0_ADDR_L
             lda #>bitmap_base   ; Set the middle byte of the bitmap's address
             sta VKY_BM0_ADDR_M
-            lda #`bitmap_base   ; Set the upper two bits of the bitmap's address
+            lda #`bitmap_base   ; Set the upper two bits of the address
             and #$03
             sta VKY_BM0_ADDR_H
 \end{verbatim}
 
 Now, the code needs to create the pixel data for the gradient in memory. This is a bit tricky on the \jr, because the program is using the larger $320 \times 240$ screen, which requires more than 64 KB of memory. In order to write to the entire bitmap, the program will have to work with the MMU to switch memory banks to access the whole bitmap. The program will use bank 1 (0x2000 -- 0x3FFF) as its window into the bitmap, which will start at 0x10000. It will walk through the memory byte-by-byte, setting each pixel's color based on what line it is on (tracked in a \verb+line+ variable). Once it has written a bank's worth of pixels (8 KB), it will increment the bank number and update the MMU register. Once it has written 240 lines, it will finish.
 
-NOTE: in the following code, \verb+bm_bank+ and \verb+line+ are byte variables, and \verb+pointer+ and \verb+column+ are two-byte variables in zero page (although really only \verb+pointer+ has to be there).
+In the following code, \verb+bm_bank+ and \verb+line+ are byte variables, and \verb+pointer+ and \verb+column+ are two-byte variables in zero page (although really only \verb+pointer+ has to be there).
 
 \begin{verbatim}
             ; Set the line number to 0

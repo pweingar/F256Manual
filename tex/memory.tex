@@ -19,10 +19,6 @@ To understand how it all works, we first need to look at how RAM and flash memor
 
 This memory is divided up into ``banks'' of 8 KB each. The 16-bit address space of the CPU is also divided up into 8 KB banks. The MMU allows the program to assign any bank of system memory to any bank of the CPU's memory. It does this through the use of memory look-up tables (LUT), which provide the upper bits needed to select the bank out of system memory for any given bank in CPU memory. It takes 13 bits to specify an address within 8 KB, which means for a 16-bit address from the CPU, the upper 3 bits are the bank number. Since the system bus is 21 bits, the upper 8 bits are used to address the correct 8 KB bank in the full system memory. So a MLUT must provide a 8-bit system bank number for each 3-bit bank number provided by the CPU. Figure~\ref{fig:mmu_address_xlate} shows the translation of a CPU address to a full system address through the currently selected memory MLUT.
 
-\begin{leftbar}
-NOTE: The original RevA developer's board has a different memory map from the RevB. The RevA does not include an expansion slot and has only 256KB of system RAM. See table~\ref{tab:sys_mem_map_reva} for the overall memory map of the RevA board. Additionally, the RevA bus is only 20-bits wide, and the memory MLUTs are only 7 bits wide.
-\end{leftbar}
-
 \begin{figure}[ht]
     \begin{center}
         \includegraphics[scale=0.65]{images/mmu_address_xlate.pdf}
@@ -132,8 +128,8 @@ When the \jr\ powers on, it initializes the MLUTs in two different ways. The ``b
     \label{fig:lut_choice}
 \end{figure}
 
-How the \jr\ decides which set of MLUTs to use depends upon the board. The older, RevA boards have a command available over the USB debug port that switches the active MLUTs on the fly. The newer, RevB boards have a jumper to choose between the MLUTs.
+How the \jr\ decides which set of MLUTs to use depends upon the model. For the \fjr\ RevB, there is a jumper that can be used to choose between boot from flash or boot from RAM. For the \fjr\ RevA (the early prototype board) and the \fk, the choice is made through a command sent over the USB debug port.
 
-\begin{leftbar}
-	NOTE: the memory MLUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the MLUTs except when directed by a program. Pressing the RESET button does not re-initialize the MLUTs. This means that a program should not assume the MLUTs are set to any particular value on reset, unless the operating system is initializing the MLUTs. A program running as an operating system or even just taking complete control over the board should always initialize the MLUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the MLUTs, but a program will not always be starting from a complete power cycle.
-\end{leftbar}
+\begin{note}
+	the memory MLUTs are really just tables stored in RAM in the TinyVicky chip, and apart from the power-up initialization, TinyVicky does not change the MLUTs except when directed by a program. Pressing the RESET button does not re-initialize the MLUTs. This means that a program should not assume the MLUTs are set to any particular value on reset, unless the operating system is initializing the MLUTs. A program running as an operating system or even just taking complete control over the board should always initialize the MLUTs to the values it needs as one of its first tasks. Of course, a complete power cycle of the board will reset the MLUTs, but a program will not always be starting from a complete power cycle.
+\end{note}

@@ -6,8 +6,8 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
     \begin{center}
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} \hline
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
-            \verb+0xD640+ & W & PS2\_CTRL & \multicolumn{2}{|c|}{---} & MCLR & KCLR & M\_WR & --- & K\_WR & --- \\\hline
-            \verb+0xD641+ & W & PS2\_OUT & \multicolumn{8}{|l|}{Data to send to keyboard} \\ \hline
+            \verb+0xD640+ & R/W & PS2\_CTRL & \multicolumn{2}{|c|}{---} & MCLR & KCLR & M\_WR & --- & K\_WR & --- \\\hline
+            \verb+0xD641+ & R/W & PS2\_OUT & \multicolumn{8}{|l|}{Data to send to keyboard} \\ \hline
             \verb+0xD642+ & R & KBD\_IN & \multicolumn{8}{|l|}{Data from the keyboard input FIFO} \\ \hline
             \verb+0xD643+ & R & MS\_IN & \multicolumn{8}{|l|}{Data from the mouse input FIFO} \\ \hline
             \verb+0xD644+ & R & PS2\_STAT & K\_AK & K\_NK & M\_AK & M\_NK & \multicolumn{2}{|c|}{---} & MEMP & KEMP \\ \hline
@@ -73,9 +73,9 @@ The position of the mouse pointer is controlled in one of two ways. In the defau
 \section*{\fk\ Keyboard}
 \label{sec_f256k_kbd}
 
-\begin{leftbar}
-    NOTE: this section pertains to the \fk\ only and is not relevant to the \jr.
-\end{leftbar}
+\begin{note}
+    this section pertains to the \fk\ only and is not relevant to the \jr.
+\end{note}
 
 The \fk\ includes a second WDC65C22 VIA chip at 0xDB00 on I/O page 0 (see page \pageref{chap_via} for details on the VIAs) which manages the keyboard input from the \fk's built-in keyboard. The F256K's keyboard is a matrix keyboard. Except for the RESTORE key, all keys on the keyboard are arranged in a matrix with the columns assigned to VIA1's PB pins and the rows assigned to VIA1's PA pins. VIA0's PB7 pin is also used for a column. See figure~\ref{fig:f256k_matrix}.
 

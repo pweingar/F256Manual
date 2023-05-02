@@ -35,7 +35,7 @@ Example code in this manual is presented as assembly language. While the code is
 
 \subsection*{Ports}
 
-The connectors of the back of the \jr\ from left to right are (see figure:~\ref{fig:rear}):
+The connectors of the back of the \fjr\ from left to right are (see figure:~\ref{fig:rear}):
 
 \begin{description}
     \item[Audio Line Out] the stereo audio output. These are standard RCA style line level outputs.
@@ -55,7 +55,35 @@ The connectors of the back of the \jr\ from left to right are (see figure:~\ref{
     \label{fig:rear}
 \end{figure}
 
-The top of the board has several connectors and other features that should be explained (see figure:~\ref{fig:top}):
+The connectors of the back of the \fk\ from left to right are (see figure:~\ref{fig:rear_k}):
+
+\begin{description}
+    \item[USB Debug Port] provides the debug interface through USB
+    
+    \item[PS/2 Mouse Port] provides the PS/2 interface for a mouse
+    
+    \item[NES Gamepad Port] provides the connections for NES style gamepads, through an optional adapter module
+    
+    \item[IEC Serial Port] supports the Commodore serial bus. A Commodore disk drive (1541, 1571, 1581, {\it etc.}), a Commodore compatible serial printer, or other device supporting the Commodore serial bus can be connected here.
+
+    \item[DVI Monitor Port] for output to your monitor. This can be connected to the DVI input of a monitor or run through a simple DVI-VGA connector to use with an older VGA input.
+    
+    \item[RS-232 Port] provides a standard RS-232 serial interface
+    
+    \item[Headphone Port] a standard jack for headphones
+
+    \item[Audio Line Out] the stereo audio output. These are standard RCA style line level outputs.
+\end{description}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.75]{images/f256k_back_annotated.pdf}
+    \end{center}
+    \caption{F256k Rear Connectors}
+    \label{fig:rear_k}
+\end{figure}
+
+The top of the \fjr\ board has several connectors and other features that should be explained (see figure:~\ref{fig:top}):
 
 \begin{description}
     \item[Power In] this is a standard ITX/ATX style power connector. Pretty much any PC power supply should work here, and a Pico-ATX style power adapter is more than sufficient.
@@ -97,9 +125,33 @@ The top of the board has several connectors and other features that should be ex
     \label{fig:top}
 \end{figure}
 
+The top of the \fk\ board contains a few connectors and jumpers (see figure~\ref{fig:top_k}). Note that, for the \fk, the JTAG port and DIP switches that are on top of the \fjr\ board are on the bottom side of the \fk, and they are accessible without removing the board from the case.
+
+\begin{description}
+    \item[Audio Line-input] this three pin header provides an stereo audio line level input for the CODEC.
+    
+    \item[Wi-Fi Module] this optional module works with the built-in serial port to allow for Wi-Fi access, if a program or operating system supports it.
+
+    \item[Serial Device Selectors] these two three pin headers allow the system to use either the RS-232 port on the back of the board for serial I/O or the optional Wi-Fi module.
+
+    \item[Expansion Port] for future expansion. This is a PCI-E style connector with a custom pinout. In the future, it might be used for memory expansion or other devices.
+
+    \item[Clock Battery] this CR2032 cell holder provides power for the real time clock chip.
+    
+    \item[Atari Style Joysticks] two DB-9 connectors (accessible through the side of the case) provide access for Atari style joysticks.
+   \end{description}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.55]{images/f256k_top_annotated.pdf}
+    \end{center}
+    \caption{F256k Top View}
+    \label{fig:top_k}
+\end{figure}
+
 \subsection*{System Architecture}
 
-For being so small, the \jr\ has a lot of components to it, so it is worth mapping out the over all structure of the computer. One of the main things to note is that most of what makes the \jr\ the \jr\ is the FPGA TinyVicky. TinyVicky provides the MMU, the various text and graphics engines, most of the I/O devices, controllers for the sound chips, and the controller for the first 256KB of SRAM. The CPU, VIA, RTC, flash memory, and expansion RAM are separate from TinyVicky, although TinyVicky is still responsible for translating CPU addresses to the appropriate chip selection logic and bank selection. One of the most important aspects of this architecture is that, while the first 256KB of SRAM is accessible to both the CPU and TinyVicky, TinyVicky cannot access the data in the flash or in any expansion RAM.
+For being so small, the \jr\ has a lot of components to it, so it is worth mapping out the over all structure of the computer. One of the main things to note is that most of what makes the \jr\ the \jr\ is the FPGA TinyVicky. TinyVicky provides the MMU, the various text and graphics engines, most of the I/O devices, controllers for the sound chips, and the controller for the 512KB of SRAM. The CPU, VIA, RTC, flash memory, and expansion RAM are separate from TinyVicky, although TinyVicky is still responsible for translating CPU addresses to the appropriate chip selection logic and bank selection. One of the most important aspects of this architecture is that, while the first 512KB of SRAM is accessible to both the CPU and TinyVicky, TinyVicky cannot access the data in the flash or in any expansion RAM.
 
 \begin{figure}[ht]
     \begin{center}

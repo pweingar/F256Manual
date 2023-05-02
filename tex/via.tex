@@ -13,11 +13,11 @@ The \jr\ includes a Western Design Center WDC65C22 versatile interface adapter o
     \item Two independent timer counters
 \end{itemize}
 
-On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3.3 volt logic instead of the 5 volt logic used in older 8-bit machines.
+On the \jr, the VIA is connected to header which is compatible with the keyboard header on the Commodore VIC-20 and C-64. This means that a Commodore compatible keyboard could be connected to the \jr\ and used for keyboard input with appropriate programming. The VIA also provides access to the two Atari-style joystick ports. The pins could also be used for general purpose I/O, although the voltage levels are for 3.3 volt logic instead of the 5 volt logic used in older 8-bit machines. The internal circuitry of the VIA's port A and port B I/O pins is shown in figure~\ref{fig:via_pin}.
 
-\begin{leftbar}
-    NOTE: While the \jr\ has a single VIA, the \fk\ has two VIA chips. The second VIA chip is located at 0xDB00. The purpose of this second VIA is to manage the built-in keyboard of the \fk. The keyboard/GPIO header pins on the \jr\ are moved to VIA1 and include some additional I/O pins. See page \pageref{sec_f256k_kbd} for a more complete description of the keyboard.
-\end{leftbar}
+\begin{note}
+    While the \fjr\ has a single VIA, the \fk\ has two VIA chips. The second VIA chip is located at 0xDB00. The purpose of this second VIA is to manage the built-in keyboard of the \fk, while the first VIA is used solely for the joystick. On the \fjr, the single VIA handles either the joystick or the keyboard. See page \pageref{sec_f256k_kbd} for a more complete description of the keyboard.
+\end{note}
 
 A complete description of the VIA would be rather long, so this guide will merely list out the register addresses and provide a quick break-down on the register functions. For a complete description, please see the data sheet from Western Design Center. See table~\ref{tab:via_reg} for a listing of all the VIA registers.
 
@@ -89,3 +89,11 @@ A complete description of the VIA would be rather long, so this guide will merel
     \item[IORA2] Same as IOPA except that the built-in handshaking capability is not used.
 
 \end{description}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.65]{images/via_pin_drivers.png}
+    \end{center}
+    \caption{VIA Pin Internal Circuitry}
+    \label{fig:via_pin}
+\end{figure}

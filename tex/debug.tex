@@ -28,7 +28,7 @@ The USB debug port is accessed over the USB Serial protocol. Data is sent from t
 
 The commands sent from the host PC are in the form of command packets show in table~\ref{tab:debug_cmd_packet}. The command codes themselves are listed in table~\ref{tab:debug_commands}. The \jr\ will respond to each command packet with a response packet as shown in table~\ref{tab:debug_resp_packet}. The size of a packet can vary depending on the command. Some commands and responses include no actual data payload bytes. Others will transfer actual data and will include however many bytes of payload are needed.
 
-Each command and response packet includes an LRC check byte, which is simply the exclusive-or of all the bytes in the packet, except for the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
+Each command and response packet includes an LRC check byte, which is simply the exclusive or of all the bytes in the packet, except for the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
 
 \begin{table}[ht]
     \begin{center}
@@ -110,4 +110,4 @@ Individual blocks or sectors of flash may be erased or programmed without affect
 
 The flash of the \jr\ has a limitation that the smallest block of flash that can be erased is 8KB, so when erasing sectors, two sectors must be erased, not just one. And the sector pairs must be aligned to 8KB. So sector 0 and sector 1 would be erased together, but not sector 1 and sector 2 (although sectors 0 -- 3 would be fine).
 
-Programming flash sectors has no such limitation (it is fine to flash just a 4KB block). However, for simplicity's sake, it would probably be best for any program directly accessing the debug port to limit erasing and programming to 8KB blocks. Programming the flash sectors does have a limitation: since the address is limited to 16-bits, the data can only be stored in the first 64KB of the 256KB system RAM.
+Programming flash sectors has no such limitation (it is fine to flash just a 4KB block). However, for simplicity's sake, it would probably be best for any program directly accessing the debug port to limit erasing and programming to 8KB blocks. Programming the flash sectors does have a limitation: since the address is limited to 16-bits, the data can only be stored in the first 64KB of the 512KB system RAM.

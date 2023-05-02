@@ -11,7 +11,7 @@ The \jr\ has several software-controllable LEDs. There are the SD card access LE
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
 
             \verb+0xD6A0+ & W & SYS0 & RESET & --- & CAP\_EN & BUZZ & L1 & L0 & SD\_L & PWR\_L \\ \hline
-            \verb+0xD6A0+ & R & SYS0 & RESET & SD\_WP & SD\_CD & \multicolumn{5}{|c|}{---} \\ \hline
+            \verb+0xD6A0+ & R & SYS0 & --- & SD\_WP & SD\_CD & \multicolumn{5}{|c|}{---} \\ \hline
             \verb+0xD6A1+ & R/W & SYS1 & \multicolumn{2}{|c|}{L1\_RATE}
                                        & \multicolumn{2}{|c|}{L0\_RATE}
                                        & ---
@@ -29,10 +29,10 @@ The flag PSG\_ST controls how the output of the PSG sound chips are mixed. If cl
 
 For the PC speaker, there is the BUZZ flag. By toggling BUZZ, a program can tweak the speaker and make a noise.
 
-\begin{leftbar}
-    NOTE: CAP\_EN is only on the \fk. If set, it enables the RGB LED for the shift lock key. It is ignored on the \jr.
+\begin{note}
+    CAP\_EN is only on the \fk. If set, it enables the RGB LED for the shift lock key. It is ignored on the \jr.
     Likewise, the \fk\ does not have a built-in buzzer, so BUZZ is ignored on the \fk.    
-\end{leftbar}
+\end{note}
 
 \begin{table}[ht]
     \begin{center}
@@ -99,10 +99,6 @@ The \jr\ has a built-in pseudo-random number generator that produces 16-bit rand
 Nine registers are set aside to identify the machine, the version of the printed circuit board, and the version of the FPGA. See table~\ref{tab:machine_id_ver} for the various registers. All the registers are read-only, and only the chip information will change over the course of the machine's life span. The machine ID contains a four-bit code that is common between all the Foenix machines (see table~\ref{tab:machine_ids}).
 
 For the \jr, the machine ID will be 0x02. For the \fk, the machine ID will be 0x12.
-
-\begin{leftbar}
-	NOTE: The \jr\ RevA board does not support the PCB major and minor revision number registers or the PCB date code registers.
-\end{leftbar}
 
 \begin{table}[ht]
     \begin{center}

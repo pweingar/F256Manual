@@ -52,7 +52,7 @@ This connector provides access to the serial in and out signals for the \jr's UA
     \label{fig:port_uart}
 \end{figure}
 
-NOTE: a ESP32 Feather board can be installed on the \jr\ to provide access to Wi-Fi, but using this board will take over the supplied UART. Therefore, the \jr\ can provide either an RS-232 serial port or access to Wi-Fi, but not both at the same time. A jumper on the board selects which is active.
+An ESP32 Feather board can be installed on the \jr\ to provide access to Wi-Fi, but using this board will take over the supplied UART. Therefore, the \jr\ can provide either an RS-232 serial port or access to Wi-Fi, but not both at the same time. A jumper on the board selects which is active.
 
 \subsection*{USB Debug Port}
 
@@ -86,7 +86,7 @@ There are two connectors for the usual PC case connections. There is one for the
     \label{fig:port_case}
 \end{figure}
 
-NOTE: not shown is a small secondary connector for an SPST switch for power (the connector is located at the front-right corner of the \jr\ RevB board). This connector provides an alternative to the usual case power push button. The two buttons cannot be used together. Either the case push button shown in \ref{fig:port_case} is used, or the other SPST switch is used, but not both.
+Not shown is a small secondary connector for an SPST switch for power (the connector is located at the front-right corner of the \fjr\ RevB board). This connector provides an alternative to the usual case power push button. The two buttons cannot be used together. Either the case push button shown in \ref{fig:port_case} is used, or the other SPST switch is used, but not both.
 
 \section*{Jumpers}
 
@@ -104,7 +104,7 @@ The SID chips have two sets of jumpers each. The first pair are the voltage sele
     \label{fig:jmp_sid_voltage}
 \end{figure}
 
-The second pair of SID jumpers are the channel selectors (see figure~\ref{fig:jmp_sid_channel}). These jumpers select the source of the left and right channels for the CODEC. With each one, you can select either the right or the left SID as an input to the CODEC for that stereo channel. If a \jr\ is using both SIDs, the left channel should select the left SID, and the right channel select the right SID. But if only a single SID is used, both channels can be set to that SID. For instance, if the SID is in the left socket, both left and right channels can select the left SID as the source to get a balanced monaural sound.
+The second pair of SID jumpers are the channel selectors (see figure~\ref{fig:jmp_sid_channel}). These jumpers select the source of the left and right channels for the CODEC. With each one, you can select either the right or the left SID as an input to the CODEC for that stereo channel. If a \fjr\ is using both SIDs, the left channel should select the left SID, and the right channel select the right SID. But if only a single SID is used, both channels can be set to that SID. For instance, if the SID is in the left socket, both left and right channels can select the left SID as the source to get a balanced monaural sound.
 
 \begin{figure}[ht]
     \begin{center}
@@ -116,7 +116,7 @@ The second pair of SID jumpers are the channel selectors (see figure~\ref{fig:jm
 
 \subsection*{Boot Source}
 
-For the \jr\ RevB, there is a jumper to select boot source (see figure~\ref{fig:jmp_boot}). With the jumper in the left position, the \jr\ will boot off the flash, using the last 8KB bank of flash memory as the last 8KB of CPU address space. With the jumper in the right position, the \jr\ will boot using RAM. On the RevA boards, this jumper is not present, and so this feature is controlled by a command on the USB debug port, which the RevB board does not support. See page~\ref{pg:mmu_boot_config} for a more complete description of boot sources.
+There is a jumper to select boot source (see figure~\ref{fig:jmp_boot}). With the jumper in the left position, the \fjr\ will boot off the flash, using the last 8KB bank of flash memory as the last 8KB of CPU address space. With the jumper in the right position, the \fjr\ will boot using RAM. See page~\ref{pg:mmu_boot_config} for a more complete description of boot sources.
 
 \begin{figure}[ht]
     \begin{center}

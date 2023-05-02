@@ -20,22 +20,6 @@
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|l|} \hline
-            Address & Purpose \\ \hline\hline
-            \verb+0x00000+ & \multirow{2}{*}{System RAM for programs, data, and graphics (256 KB)} \\ \cline{1-1}
-            \verb+0x3FFFF+ & \\ \hline
-            \verb+0x40000+ &  \multirow{2}{*}{Reserved} \\ \cline{1-1}
-            \verb+0x7FFFF+ & \\ \hline
-            \verb+0x80000+ & \multirow{2}{*}{Flash memory (512 KB)} \\ \cline{1-1}
-            \verb+0xFFFFF+ & \\ \hline
-        \end{tabular}
-    \end{center}
-    \caption{System Memory Map for the \jr\ RevA}
-    \label{tab:sys_mem_map_reva}
-\end{table}
-
-\begin{table}[ht]
-    \begin{center}
         \begin{tabular}{|c|c|l|} \hline
             Bank & Address & Purpose \\ \hline\hline
             \multirow{10}{*}{0} & \verb+0x0000+ & MMU Memory Control Register \\ \cline{2-3}

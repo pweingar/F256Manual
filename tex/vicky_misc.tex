@@ -181,7 +181,7 @@ start:      ; Disable IRQ handling
 
             ; Make sure we're in text mode
             lda #$01                ; enable TEXT
-            sta VKY_MSTR_CTRL_0     ; Save that to VICKY master control register 0
+            sta VKY_MSTR_CTRL_0     ; Save to VICKY master control register 0
             stz VKY_MSTR_CTRL_1
 
             ; Set the border

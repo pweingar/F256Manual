@@ -17,18 +17,13 @@
 \usepackage{framed}
 \usepackage{fancyvrb}
 
-\definecolor{red}{rgb}{1.0, 0.0, 0.0}
 \definecolor{darkblue}{rgb}{0.1, 0.0, 0.6}
 \definecolor{silver}{rgb}{0.85, 0.85, 0.85}
 \ChNumVar{\color{darkblue}\fontsize{55}{60}\usefont{OT1}{pzc}{m}{n}\selectfont}
 \ChTitleVar{\color{darkblue}\raggedleft\LARGE\sffamily\bfseries}
 
 \allsectionsfont{\color{darkblue}\bfseries\sffamily}
-
-\newenvironment{note}{\begin{leftbar}{\color{red}\bf\ Note:}}{\end{leftbar}}
-
-\newcommand{\jr}{F256}
-\newcommand{\fjr}{F256jr}
+\newcommand{\jr}{F256jr}
 \newcommand{\fk}{F256k}
 \newcommand{\microsec}{$\mu$s}
 \newcommand{\example}[1]{\subsection*{Example: #1}}
@@ -37,45 +32,20 @@
     \colorbox{silver}{\makebox[\textwidth][r]{
     \shortstack{
         \vspace{3cm} \\
-        \color{darkblue}\bfseries\sffamily\Huge Foenix \jr\ Reference Manual}} \\
+        \color{darkblue}\bfseries\sffamily\Huge TinyCore 65c02 MicroKernel F256(K) Edition}} \\
     }
 
     \vfill
 
-    \hfill\mbox{\color{darkblue}\bfseries\sffamily\Large Peter Weingartner}
+    \hfill\mbox{\color{darkblue}\bfseries\sffamily\Large Jessie Oberreuter}
 
     \hfill\mbox{\color{darkblue}\bfseries\sffamily\large \today}
+
+    \vskip 2em
+
+    \hfill\mbox{\color{darkblue}\bfseries\sffamily \copyright 2023, Jessie Oberreuter}
 \end{titlepage}
 
-\tableofcontents
-\listoftables
-
-\input{introduction.tex}
-\input{memory.tex}
-\input{text.tex}
-\input{graphics.tex}
-\input{bitmap.tex}
-\input{sprites.tex}
-\input{tiles.tex}
-\input{vicky_misc.tex}
-\input{sound.tex}
-\input{interrupts.tex}
-\input{time.tex}
-\input{via.tex}
-\input{controllers.tex}
-\input{sdc.tex}
-\input{kbd_mouse.tex}
-\input{uart.tex}
-\input{dma.tex}
-\input{sysctrl.tex}
-\input{iec.tex}
-\input{math.tex}
-\input{debug.tex}
-\input{expansion.tex}
-\input{connectors.tex}
-\input{memory_map.tex}
-% \input{kernel.tex}
-\input{links.tex}
-\input{copyright.tex}
+\input{kernel.tex}
 
 \end{document}
