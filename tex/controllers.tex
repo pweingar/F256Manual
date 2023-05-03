@@ -4,7 +4,7 @@ The \jr\ allows you to connect either Atari style joysticks or NES/SNES style ga
 
 \section*{Atari Style Joysticks}
 
-The \jr\ has two IDC headers that can be connected to a DB-9 socket to allow Atari style joysticks to be used (see figure:~\ref{fig:joystick_ports} for the pinouts). Joystick header 0 is wired to the pins of Port B of the VIA (see page~\ref{chap_via}), and joystick header 1 is connected to Port A. The various joystick switches are connected to the ports in same manner as on the C-64, with the exception that more buttons are supported (see table:~\ref{tab:via_joystick}).
+The \fjr\ has two IDC headers that can be connected to a DB-9 socket to allow Atari style joysticks to be used (see figure:~\ref{fig:joystick_ports} for the pinouts). Joystick header 0 is wired to the pins of Port B of the VIA (see page~\ref{chap_via}), and joystick header 1 is connected to Port A. The various joystick switches are connected to the ports in same manner as on the C-64, with the exception that more buttons are supported (see table:~\ref{tab:via_joystick}). On the \fk, the DB-9 connectors are supplied on the board and are on the right-hand side of the case; there is no need for an adapter cable.
 
 \begin{figure}[ht]
     \begin{center}
@@ -152,4 +152,4 @@ The process the program follows to read the state of the gamepad is:
     \label{tab:nes_data_reg}
 \end{table}
 
-NOTE: If you want to use NES/SNES controllers with the \jr, you will need to add an adapter to convert the common port to NES and SNES connectors. The Foenix shop has the adapter, which comes in one of two flavors: one for the \jr\ (which has an IDC pin header on the board for the NES/SNES controollers), and one for the F256k (which has a 9 pin mini-DIN connector on the back).
+NOTE: If you want to use NES/SNES controllers with the \jr, you will need to add an adapter to convert the common port to NES and SNES connectors. The Foenix shop has the adapter, which comes in one of two flavors: one for the \jr\ (which has an IDC pin header on the board for the NES/SNES controllers), and one for the \fk\ (which has a 9 pin mini-DIN connector on the back).

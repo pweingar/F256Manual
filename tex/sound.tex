@@ -1,6 +1,6 @@
 \chapter{Sound}
 
-The \jr\ supports two different sound chips, although only one is built-in. The built-in sound chip is the SN76489 (called the ``PSG'' here), which was used by many vintage machines including the TI99/4A, the BBC Micro, the IBM PCjr, and the Tandy 1000. On the \jr, the PSG is implemented as two stereo PSGs in the FPGA. The other chip supported is the Commodore SID chip (6581 or 8580). The SID is not installed by default, but the board comes with two sockets for SID chips. The \jr\ supports the original 6581, the lower voltage 8580, and the modern SID replacement projects.
+The \jr\ line has a couple of sound chips, which chips are present depends upon the model. All of the machines have built-in the SN76489 (called the ``PSG'' here), which was used by many vintage machines including the TI99/4A, the BBC Micro, the IBM PCjr, and the Tandy 1000. The PSG chips on the \jr\ are actually implemented as part of the TinyVicky FPGA. The \fjr\ also has two sockets on the board that may be populated with SID chips (either the original 6581, the later 8580, or any of the new FPGA replacements). The \fk\ implements these SID chips in the FPGA but also includes a physical OPL3 chip on the board.
 
 \section*{CODEC}
 
@@ -173,7 +173,7 @@ To turn it off later, we just need to write:
 
 The SID is a full-featured analog sound synthesizer, and a full explanation of how to use it is really beyond the scope of this document. In this document, I will provide just an introduction to the chip and list the register addresses for the SID chips (see table~\ref{tab:sid_registers}). For the \fjr, the SID chips are optional. The board comes with two unpopulated sockets into which either genuine SID chips or the various FPGA replacements may be installed. For the \fk, there is no socket for SIDs, but the two SID chips are provided by the built-in FPGAs.
 
-The SID chip provides three independent voices (so it can play three notes at once). The three voices are almost identical in their features, with voice 3 being the only one different. Each voice can produce one of four basic sound wave forms: randomized noise, square waves, saw tooth waves, and triangle waves. These waves can be generated over a range of frequencies, and for the square waves, the width of the pulse ({\it i.e. duty cycle}) may be adjusted.
+The SID chip provides three independent voices (so it can play three notes at once). The three voices are almost identical in their features, with voice 3 being the only one different. Each voice can produce one of four basic sound wave forms: randomized noise, square waves, saw tooth waves, and triangle waves. These waves can be generated over a range of frequencies, and for the square waves, the width of the pulse ({\it i.e.} duty cycle) may be adjusted.
 
 The type of wave form produced by a voice is controlled by the NOISE, PULSE, SAW, and TRI bits. If NOISE is set to 1, the output is random noise. If PULSE is set, a square wave is produced. If SAW is set, a saw tooth wave is produced. If TRI is set, the voice produces a triangle wave. If PULSE is set, the duty cycle of the square wave (or pulse width, if you prefer) is set by the PW bits according to the formula
 ${\rm PW} / 40.95$ (expressed as a percent).
@@ -273,7 +273,7 @@ The SID chip can apply a filter to the audio before sending it out for amplifica
 	This section is relevant to the \fk\ only. It does not apply to any of the \jr\ revisions.
 \end{note}
 
-The \fk\ includes an FPGA implementation of the OPL3 sound device, compatible with the Yamaha YMF262 sound chip. The OPL3 provides for complex, FM synthesized sound, which allows numerous oscillators to be combined in various ways to generate musical tones. An explanation of the various registers and functions provided by the OPL3 device is well outside the scope of this manual as it deserves its own book. Only how to access those ports will be covered here.
+The \fk\ includes a physical OPL3 sound chip, specifically the Yamaha YMF262 sound chip. The OPL3 provides for complex, FM synthesized sound, which allows numerous oscillators to be combined in various ways to generate musical tones. An explanation of the various registers and functions provided by the OPL3 device is well outside the scope of this manual as it deserves its own book. Only how to access those ports will be covered here.
 
 The OPL3 provides many registers or ports for setting the various parameters. These ports are arranged in an address space of 9 bits (0x000--0x1FF). To access these ports, the CPU must first write the address of the port desired into one of two address registers. It then must write the data to be written to that port into the data register. To maintain compatibility with older versions of the Yamaha FM synthesizer chips, these ports are accessed through two different sets of address registers. For ports 0x000 through 0x0FF, the first address register is used. For ports 0x100 through 0x1FF, the second address register is used. See table~\ref{tab:opl3_registers}.
 

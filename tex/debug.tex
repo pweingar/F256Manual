@@ -26,6 +26,8 @@ The USB debug port is accessed over the USB Serial protocol. Data is sent from t
     \item The \jr\ replies and sends a reset signal to the CPU
 \end{enumerate}
 
+\subsection*{Command Packets}
+
 The commands sent from the host PC are in the form of command packets show in table~\ref{tab:debug_cmd_packet}. The command codes themselves are listed in table~\ref{tab:debug_commands}. The \jr\ will respond to each command packet with a response packet as shown in table~\ref{tab:debug_resp_packet}. The size of a packet can vary depending on the command. Some commands and responses include no actual data payload bytes. Others will transfer actual data and will include however many bytes of payload are needed.
 
 Each command and response packet includes an LRC check byte, which is simply the exclusive or of all the bytes in the packet, except for the LRC value itself. This provides only rudimentary error checking, but the connection itself is generally pretty reliable, so more sophisticated error checking is really not needed.
@@ -60,6 +62,10 @@ Each command and response packet includes an LRC check byte, which is simply the
     \item[LRC check byte] This byte provides for simple error checking on the packet transmission.
 \end{description}
 
+\subsection*{Response Packets}
+
+Response packets follow the same general structure as a command packet (see table~\ref{tab:debug_resp_packet}):
+
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|l|} \hline
@@ -70,7 +76,7 @@ Each command and response packet includes an LRC check byte, which is simply the
             $3 + m$ & 1 & LRC check byte \\ \hline
         \end{tabular}
     \end{center}
-    \caption{USB Debug Port Command Packet}
+    \caption{USB Debug Port Reponse Packet}
     \label{tab:debug_resp_packet}
 \end{table}
 
@@ -96,8 +102,8 @@ Each command and response packet includes an LRC check byte, which is simply the
             \verb+0x11+ & Erase flash memory \\ \hline
             \verb+0x12+ & Erase flash sector \\ \hline
             \verb+0x13+ & Program flash sector \\ \hline
-            \verb+0x90+ & Set the MMU to boot in RAM (\jr\ Rev A only) \\ \hline
-            \verb+0x91+ & Set the MMU to boot in flash (\jr\ Rev A only) \\ \hline
+            \verb+0x90+ & Set the MMU to boot in RAM (\fjr\ Rev A, or \fk\ only) \\ \hline
+            \verb+0x91+ & Set the MMU to boot in flash (\fjr\ Rev A, or \fk\ only) \\ \hline
             \verb+0xFE+ & Fetch the revision number of the debug interface \\ \hline
         \end{tabular}
     \end{center}

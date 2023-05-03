@@ -24,8 +24,8 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
     \item[MCLR] set to 1 then 0 to clear the mouse input FIFO queue. 
     \item[K\_AK] when 1, the code sent to the keyboard has been acknowledged
     \item[K\_NK] when 1, the code sent to the keyboard has resulted in an error
-    \item[M\_AK] when 1, the code sent to the keyboard has been acknowledged
-    \item[M\_NK] when 1, the code sent to the keyboard has resulted in an error
+    \item[M\_AK] when 1, the code sent to the mouse has been acknowledged
+    \item[M\_NK] when 1, the code sent to the mouse has resulted in an error
     \item[KEMP] when 1, the keyboard input FIFO is empty
     \item[MEMP] when 1, the mouse input FIFO is empty 
 \end{description}
@@ -33,8 +33,6 @@ The \jr\ provides a single PS/2 port for use with either a keyboard or a mouse. 
 \section*{Mouse Support}
 
 The \jr\ provides special support for a PS/2 mouse, including support for a hardware mouse pointer.
-
-This is currently done with magic, the details of which will be made apparent when the stars are in proper alignment.
 
 \subsection*{Mouse Pointer}
 

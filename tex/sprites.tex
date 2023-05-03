@@ -54,7 +54,7 @@ These registers manage seven fields:
     \label{tab:sp_sizes}
 \end{table}
 
-\section*{Sprite, Layers, and Display Priority}
+\section*{Sprite Layers and Display Priority}
 
 While a sprite can be assigned to any of four layers, this layer is only used for determining how the sprite interacts with bitmap or tile map graphics and not how sprites layer with each other. When sprites ``collide,'' a built-in sprite priority order is used to determine which sprite determines a pixel's color. When two sprites are both trying to set the color of a pixel on the screen, the sprite with the lowest number is the one that determines the color. For example, if sprite 0 and sprite 5 are in the same location, it is sprite 0 that will display in the foreground. The sprite layers {\em cannot} be used to change this.
 

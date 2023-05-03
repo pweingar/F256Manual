@@ -70,7 +70,7 @@ There are three tile maps supported by TinyVicky, each of which has 12 bytes wor
     \item[SSY] vertical scroll in pixels. How these bits are used varies with the size. If tiles are 16 pixels wide, then flags SSY[3..0] are used. If tiles are only 8 pixels wide, then only SSY[3..1] are used.
 \end{description}
 
-One way tile maps get their flexibility is that, where text mode uses 8-bit bytes for the text matrix, a tile map is actually a rectangular collection of 16-bit integers in memory. A tile map entry is divided up into two pieces: the first byte is the number of the tile to display in that position (much like the character code in text mode), but the upper byte contains attribute bits (see table:~\ref{tab:tile_bits}), which have two fields:
+One way tile maps get their flexibility is that, where text mode uses 8-bit bytes for the text matrix, a tile map uses 16-bit integers in memory. A tile map entry is divided up into two pieces: the first byte is the number of the tile to display in that position (much like the character code in text mode), but the upper byte contains attribute bits (see table:~\ref{tab:tile_bits}) and has two fields:
 
 \begin{description}
     \item[SET] is the number of the tile set to use for this tile's appearance

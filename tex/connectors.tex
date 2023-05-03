@@ -1,14 +1,18 @@
-\chapter{I/O Connectors and Jumpers}
+\chapter{F256jr I/O Connectors and Jumpers}
+
+\begin{note}
+    This chapter describes the various jumpers and connectors on the \fjr\ board and is not relevant to the \fk.    
+\end{note}
 
 \section*{Connectors}
 
-The \jr\ has several connectors on its board for I/O devices beyond the standard connections on the back. Some of these connectors are the only way to access that particular I/O device, but some are auxiliary connectors that provide alternate forms of access. All are IDC header pins. The diagrams that follow show the pin assignments for these connectors. In these diagrams, the views are top-down onto the board, with the board arranged so that the main connectors are towards the top and the power connector is towards the bottom.
+The \fjr\ has several connectors on its board for I/O devices beyond the standard connections on the back. Some of these connectors are the only way to access that particular I/O device, but some are auxiliary connectors that provide alternate forms of access. All are IDC header pins. The diagrams that follow show the pin assignments for these connectors. In these diagrams, the views are top-down onto the board, with the board arranged so that the main connectors are towards the top and the power connector is towards the bottom.
 
 \subsection*{Game Connectors}
 
 There are two connectors for game controllers. There are two connectors for Atari style joysticks (figure~\ref{fig:port_joy}). And two for NES or Super NES gamepads (figure~\ref{fig:port_nes}).
 
-For the Atari style joysticks, an adapter cable will be needed to convert from IDC to the standard DB-9 connector. There are two key differences between the \jr\ and Atari or Commodore devices: first, the \jr\ provides 3.3 volts instead of 5 volts, and second there are no paddle inputs supported on the \jr.
+For the Atari style joysticks, an adapter cable will be needed to convert from IDC to the standard DB-9 connector. There are two key differences between the \fjr\ and Atari or Commodore devices: first, the \fjr\ provides 3.3 volts instead of 5 volts, and second there are no paddle inputs supported on the \fjr.
 
 For the NES and SNES style gamepads, an adapter box will be needed to provide the correct interfacing for a controller. This adapter should be available from Foenix Retro Systems in the near future (at the time of writing this manual).
 
@@ -30,7 +34,7 @@ For the NES and SNES style gamepads, an adapter box will be needed to provide th
 
 \subsection*{PS/2 Port}
 
-An internal connector is included for the PS/2 mouse and keyboard port (figure~\ref{fig:port_ps2}). This connector just provides an alternate way of accessing the PS/2 signals. It could be useful in building an integrated case for the \jr\ that includes a PS/2 keyboard.
+An internal connector is included for the PS/2 mouse and keyboard port (figure~\ref{fig:port_ps2}). This connector just provides an alternate way of accessing the PS/2 signals. It could be useful in building an integrated case for the \fjr\ that includes a PS/2 keyboard.
 
 \begin{figure}[ht]
     \begin{center}
@@ -42,7 +46,7 @@ An internal connector is included for the PS/2 mouse and keyboard port (figure~\
 
 \subsection*{UART}
 
-This connector provides access to the serial in and out signals for the \jr's UART (figure~\ref{fig:port_uart}). The TxD and RxD signals are compatible with standard $\pm 12$ volt RS-232 signals. The signals on this connector can be brought out to a DB-9 connector to provide a standard 3 wire RS-232 serial port.
+This connector provides access to the serial in and out signals for the \fjr's UART (figure~\ref{fig:port_uart}). The TxD and RxD signals are compatible with standard $\pm 12$ volt RS-232 signals. The signals on this connector can be brought out to a DB-9 connector to provide a standard 3 wire RS-232 serial port.
 
 \begin{figure}[ht]
     \begin{center}
@@ -52,7 +56,7 @@ This connector provides access to the serial in and out signals for the \jr's UA
     \label{fig:port_uart}
 \end{figure}
 
-An ESP32 Feather board can be installed on the \jr\ to provide access to Wi-Fi, but using this board will take over the supplied UART. Therefore, the \jr\ can provide either an RS-232 serial port or access to Wi-Fi, but not both at the same time. A jumper on the board selects which is active.
+An ESP32 Feather board can be installed on the \fjr\ to provide access to Wi-Fi, but using this board will take over the supplied UART. Therefore, the \fjr\ can provide either an RS-232 serial port or access to Wi-Fi, but not both at the same time. A jumper on the board selects which is active.
 
 \subsection*{USB Debug Port}
 
@@ -90,7 +94,7 @@ Not shown is a small secondary connector for an SPST switch for power (the conne
 
 \section*{Jumpers}
 
-There are several IDC header pins with jumpers to configure various options on the \jr. All the jumper headers are three pin headers, where the center pin is the common. The header is used to select the appropriate routing of a signal or voltage level. So the jumper is always used to connect the center common pin to either the left or right pins (or the top or bottom, depending on the orientation of the header).
+There are several IDC header pins with jumpers to configure various options on the \fjr. All the jumper headers are three pin headers, where the center pin is the common. The header is used to select the appropriate routing of a signal or voltage level. So the jumper is always used to connect the center common pin to either the left or right pins (or the top or bottom, depending on the orientation of the header).
 
 \subsection*{SID Jumpers}
 
@@ -116,7 +120,7 @@ The second pair of SID jumpers are the channel selectors (see figure~\ref{fig:jm
 
 \subsection*{Boot Source}
 
-There is a jumper to select boot source (see figure~\ref{fig:jmp_boot}). With the jumper in the left position, the \fjr\ will boot off the flash, using the last 8KB bank of flash memory as the last 8KB of CPU address space. With the jumper in the right position, the \fjr\ will boot using RAM. See page~\ref{pg:mmu_boot_config} for a more complete description of boot sources.
+There is a jumper to select boot source (see figure~\ref{fig:jmp_boot}). With the jumper in the left position, the \fjr\ will boot off the flash, using the last 8KB bank of flash memory as the last 8KB of CPU address space. With the jumper in the right position, the \fjr\ will boot using RAM. See page~\pageref{pg:mmu_boot_config} for a more complete description of boot sources.
 
 \begin{figure}[ht]
     \begin{center}

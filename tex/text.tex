@@ -1,10 +1,10 @@
 \chapter{The Text Screen}
 
-The display on the \jr\ is managed by TinyVicky, which is the smaller member of the Vicky family of display controllers in the other Foenix machines. TinyVicky provides several display engines to let your programs control the screen:
+The display on the \jr\ is managed by the video controller of the TinyVicky chip. The display controller provides four different engines for generating images on the screen:
 
 \begin{itemize}
     \item Text: an old school style text screen where the characters to display are stored in a text matrix, and the shape of those characters comes from font memory. Text mode characters are 8 pixels wide by 8 pixels high.
-    \item Bitmap: a simple pixel graphics mode that can be either 300x240 or 300x200.
+    \item Bitmap: a simple pixel image engine that can display a bitmap image covering the screen.
     \item Sprite: an engine to display small, movable sprites on the screen.
     \item Tile: an engine to display images on the screen made up of tiles from a tile set.
 \end{itemize}
@@ -40,7 +40,7 @@ Characters in TinyVicky text mode have two colors: the foreground and the backgr
 
 The text LUTs are stored in I/O page 0. The foreground LUT starts at 0xD800, and the background LUT starts at 0xD840.
 
-Each LUT is a list of 16 entries. Each entry is a set of four bytes: blue, green, red, and alpha. Each byte indicates how much of that primary color is present as a component of the actual color. The values range from 0 (none) to 255 (as much as possible). Currently, the alpha channel is not used and is there for future expansion.
+Each LUT is a list of 16 entries. Each entry is a set of four bytes: blue, green, red, and alpha (in that order). Each byte indicates how much of that primary color is present as a component of the actual color. The values range from 0 (none) to 255 (as much as possible). Currently, the alpha channel is not used and is there for future expansion.
 
 \begin{table}[ht]
     \begin{center}
@@ -70,7 +70,7 @@ Each LUT is a list of 16 entries. Each entry is a set of four bytes: blue, green
 
 \section*{Color Matrix}
 
-The way that text color is selected for each character is through the color matrix. This section of memory is in I/O page 3 and starts at 0xC000 when page 3 is swapped into the CPU's address space. The layout is precisely the same as the text matrix (e.g. the character at 0xC123 in the text matrix has its color information at 0xC123 in the color matrix).
+The way that text color is selected for each character is through the color matrix. This section of memory is in I/O page 3 and starts at 0xC000 when page 3 is swapped into the CPU's address space. The layout is precisely the same as the text matrix ({\it e.g.} the character at 0xC123 in the text matrix has its color information at 0xC123 in the color matrix).
 
 Each byte in the color matrix specifies two colors by providing an index into each of the two text LUTs. The most significant four bits is the number of the foreground color to use. The number of the least significant four bits is the number of the background color to use.
 
@@ -137,9 +137,9 @@ Whether text mode is being displayed (and in what resolution) is controlled by t
     \item[CLK\_70] if set, the video refresh will be set to 70 Hz mode (640x400 text resolution, 320x200 graphics). If clear,
         the video refresh will be set to 60 Hz (640x480 text resolution, 320x240 graphics).
 
-    \item[DBL\_X] if set, text mode characters will be twice as wide (320 pixels)
+    \item[DBL\_X] if set, text mode characters will be twice as wide
 
-    \item[DBL\_Y] if set, text mode characters will be twice as high (240 or 200 pixels, depending on CLK\_70)
+    \item[DBL\_Y] if set, text mode characters will be twice as high
     
     \item[MON\_SLP] if set, the monitor SYNC signal will be turned off, putting the monitor to sleep
     

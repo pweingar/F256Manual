@@ -40,7 +40,7 @@ To set up and display a bitmap, the following things need to be done. The order 
 \begin{enumerate}
     \item Enable bitmap graphics in the TinyVicky Master Control Register (see table:~\ref{tab:vky_master_ctrl_reg}). This means you need to set both the GRAPH and BITMAP bits and either clear TEXT or set the OVRLY to display text and bitmap together.
 
-    \item Set up the pixel data for the bitmap somewhere in the first 256 KB of RAM.
+    \item Set up the pixel data for the bitmap somewhere in the first 512KB of RAM.
 
     \item Set the address of the bitmap's pixel data in the AD field.
 
@@ -116,7 +116,7 @@ bank_loop:  stz pointer         ; Set the pointer to start of the current bank
 
             ; Alter the LUT entries for $2000 -> $bfff
 
-            lda #$80            ; Turn on editing of MMU LUT #0, and work off #0
+            lda #$80            ; Turn on editing of MMU LUT #0, and use #0
             sta MMU_MEM_CTRL
 
             lda bm_bank

@@ -4,6 +4,8 @@ This manual is meant to be as complete as possible an introduction to the variou
 
 One thing this manual will not provide is a tutorial in programming the 65C02 processor at the heart of the \jr. There are plenty of excellent books and videos explaining how the processor works and how to do assembly programming. While examples will generally be written in assembly, I will try to annotate them fully so that what is happening is very clear even to the novice assembly language coder.
 
+There are two models of \jr\ available: the \fjr, and the \fk. The \fjr\ is sold as a single board in the mini-ITX format, which may be installed in a standard PC case and requires a separate PS/2 keyboard. The \fk\ is a complete system with a case and a built-in matrixed keyboard. The two versions do have differences but are mostly compatible. This manual was started when the \fjr\ was the only model and is mostly written from its perspective with differences in the \fk\ called out as exceptions.
+
 Several of chapters in this manual include example assembly code to show how the various features of the \jr\ work. While the code included in the text should be executable, the complete examples can be found on the Github repository that hosts the manual itself. Most of the examples are able to run on their own, but a few of them expect there to be some sort of operating system providing text display routines compatible with the old Commodore kernel. The examples were all written on a machine using OpenKERNAL, which was written for the \jr, but really anything that provides the CINT and CHROUT calls should work fine. Of course, the examples could be tweaked without too much trouble to run on essentially any operating system.
 
 \subsection*{A Note on Notation}
@@ -33,7 +35,7 @@ Example code in this manual is presented as assembly language. While the code is
 
 \section*{About the Machine}
 
-\subsection*{Ports}
+\subsection*{F256jr Ports}
 
 The connectors of the back of the \fjr\ from left to right are (see figure:~\ref{fig:rear}):
 
@@ -55,33 +57,6 @@ The connectors of the back of the \fjr\ from left to right are (see figure:~\ref
     \label{fig:rear}
 \end{figure}
 
-The connectors of the back of the \fk\ from left to right are (see figure:~\ref{fig:rear_k}):
-
-\begin{description}
-    \item[USB Debug Port] provides the debug interface through USB
-    
-    \item[PS/2 Mouse Port] provides the PS/2 interface for a mouse
-    
-    \item[NES Gamepad Port] provides the connections for NES style gamepads, through an optional adapter module
-    
-    \item[IEC Serial Port] supports the Commodore serial bus. A Commodore disk drive (1541, 1571, 1581, {\it etc.}), a Commodore compatible serial printer, or other device supporting the Commodore serial bus can be connected here.
-
-    \item[DVI Monitor Port] for output to your monitor. This can be connected to the DVI input of a monitor or run through a simple DVI-VGA connector to use with an older VGA input.
-    
-    \item[RS-232 Port] provides a standard RS-232 serial interface
-    
-    \item[Headphone Port] a standard jack for headphones
-
-    \item[Audio Line Out] the stereo audio output. These are standard RCA style line level outputs.
-\end{description}
-
-\begin{figure}[ht]
-    \begin{center}
-        \includegraphics[scale=0.75]{images/f256k_back_annotated.pdf}
-    \end{center}
-    \caption{F256k Rear Connectors}
-    \label{fig:rear_k}
-\end{figure}
 
 The top of the \fjr\ board has several connectors and other features that should be explained (see figure:~\ref{fig:top}):
 
@@ -125,6 +100,36 @@ The top of the \fjr\ board has several connectors and other features that should
     \label{fig:top}
 \end{figure}
 
+\subsection*{F256k Ports}
+
+The connectors of the back of the \fk\ from left to right are (see figure:~\ref{fig:rear_k}):
+
+\begin{description}
+    \item[USB Debug Port] provides the debug interface through USB
+    
+    \item[PS/2 Mouse Port] provides the PS/2 interface for a mouse
+    
+    \item[NES Gamepad Port] provides the connections for NES style gamepads, through an optional adapter module
+    
+    \item[IEC Serial Port] supports the Commodore serial bus. A Commodore disk drive (1541, 1571, 1581, {\it etc.}), a Commodore compatible serial printer, or other device supporting the Commodore serial bus can be connected here.
+
+    \item[DVI Monitor Port] for output to your monitor. This can be connected to the DVI input of a monitor or run through a simple DVI-VGA connector to use with an older VGA input.
+    
+    \item[RS-232 Port] provides a standard RS-232 serial interface
+    
+    \item[Headphone Port] a standard jack for headphones
+
+    \item[Audio Line Out] the stereo audio output. These are standard RCA style line level outputs.
+\end{description}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.75]{images/f256k_back_annotated.pdf}
+    \end{center}
+    \caption{F256k Rear Connectors}
+    \label{fig:rear_k}
+\end{figure}
+
 The top of the \fk\ board contains a few connectors and jumpers (see figure~\ref{fig:top_k}). Note that, for the \fk, the JTAG port and DIP switches that are on top of the \fjr\ board are on the bottom side of the \fk, and they are accessible without removing the board from the case.
 
 \begin{description}
@@ -159,4 +164,12 @@ For being so small, the \jr\ has a lot of components to it, so it is worth mappi
     \end{center}
     \caption{F256jr Internal Architecture}
     \label{fig:arch}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.55]{images/f256k_layout.pdf}
+    \end{center}
+    \caption{F256k Internal Architecture}
+    \label{fig:f256k_arch}
 \end{figure}

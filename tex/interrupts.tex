@@ -1,7 +1,7 @@
 \chapter{Interrupt Controller}
 \label{chap:interrupts}
 
-The 65C02 has two interrupts: non-maskable interrupts (NMI) for high priority events, and the regular interrupt request line (IRQ) for normal priority events. Currently, the C256 series of computers do not use NMI for any purpose, so the only interrupt is the IRQ line. There are many devices on the \jr\ which can trigger interrupts, so to save the interrupt handler the chore of querying each device in turn, the \jr\ provides an interrupt controller module.
+The 65C02 has two interrupts: non-maskable interrupts (NMI) for high priority events, and the regular interrupt request line (IRQ) for normal priority events. Currently, the \jr\ series of computers do not use NMI for any purpose, so the only interrupt is the IRQ line. There are many devices on the \jr\ which can trigger interrupts, so to save the interrupt handler the chore of querying each device in turn, the \jr\ provides an interrupt controller module.
 
 The individual devices route their interrupt request signals to the interrupt controller. When an interrupt comes in, the controller knows which device it is and decides whether to forward the interrupt to the CPU. The interrupt handler can then query the interrupt handler to see which device or devices have interrupts pending and can then acknowledge them once they have been properly handled.
 
