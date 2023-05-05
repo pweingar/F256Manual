@@ -72,22 +72,24 @@ The position of the mouse pointer is controlled in one of two ways. In the defau
 \label{sec_f256k_kbd}
 
 \begin{note}
-    this section pertains to the \fk\ only and is not relevant to the \jr.
+    this section pertains to the \fk\ only.
 \end{note}
 
 The \fk\ includes a second WDC65C22 VIA chip at 0xDB00 on I/O page 0 (see page \pageref{chap_via} for details on the VIAs) which manages the keyboard input from the \fk's built-in keyboard. The F256K's keyboard is a matrix keyboard. Except for the RESTORE key, all keys on the keyboard are arranged in a matrix with the columns assigned to VIA1's PB pins and the rows assigned to VIA1's PA pins. VIA0's PB7 pin is also used for a column. See figure~\ref{fig:f256k_matrix}.
 
 \begin{figure}[ht]
     \begin{center}
-        \includegraphics[scale=0.65]{images/f256k_matrix.pdf}
+        \includegraphics[scale=0.9]{images/f256k_matrix.pdf}
     \end{center}
     \caption{\fk\ Keyboard Matrix}
     \label{fig:f256k_matrix}
 \end{figure}
 
+\pagebreak[4]
+
 The \fk\ keyboard includes three indicator RGB LEDs that can be set under program control. The three LEDs are for power, media access (SD and IEC), and the shift lock indicator. Each LED has three single byte registers to set the red, green, and blue component intensities for the desired colors. See table~\ref{tab:f256k_kbd_leds}.
 
-\begin{table}[ht]
+\begin{table}
     \begin{center}
         \begin{tabular}{|c|c|c|c|} \hline
             Indicator & Address & R/W & Color \\\hline\hline
