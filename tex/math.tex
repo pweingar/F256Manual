@@ -1,64 +1,62 @@
 \chapter{Integer Math Coprocessor}
 \label{sec:int_math_copro}
 
-The \jr\ includes a built-in math coprocessor for integer math. This coprocessor provides fast 16-bit multiplication and division in both signed and unsigned forms. The use of this coprocessor is straightforward: both operands are written to the appropriate registers and then the result is read for the corresponding answer register. The math units are completely separate blocks using separate registers, so they function independently of each other.
-
-NOTE: The input registers can be read or written by the CPU, but the addresses for the registers are different depending upon whether the CPU is reading or writing. The read address and write address for each register are listed separately in the tables below.
-
-\begin{leftbar}
-    At the time of writing, the integer division unit was not included in the FPGA build of the early versions of the \jr. It is possible the division unit will be included in the FPGA build before it is finalized. Therefore, I am still listing the intended locations for the division registers here. If the division unit never makes it to the F256s, future editions of this manual will be adjusted to remove them.
-\end{leftbar}
+The \jr\ includes a built-in math coprocessor for integer math. This coprocessor provides fast 16-bit unsigned multiplication and division. As well as a 32-bit adder. The use of this coprocessor is straightforward: both operands are written to the appropriate registers and then the result is read for the corresponding answer register. The math units are completely separate blocks using separate registers, so they function independently of each other.
 
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|} \hline
-            Address W & Address R & Name & Data \\\hline\hline
-            \verb+0xDE00+ & \verb+0xDE00+ & MULU\_A\_L & Unsigned A (bits 7--0) \\ \hline
-            \verb+0xDE01+ & \verb+0xDE01+ & MULU\_A\_H & Unsigned A (bits 15--8) \\ \hline
-            \verb+0xDE02+ & \verb+0xDE02+ & MULU\_B\_L & Unsigned B (bits 7--0) \\ \hline
-            \verb+0xDE03+ & \verb+0xDE03+ & MULU\_B\_H & Unsigned B (bits 15--8) \\ \hline
-                          & \verb+0xDE04+ & MULU\_LL & Unsigned $A \times B$  (bits 7--0) \\ \hline
-                          & \verb+0xDE05+ & MULU\_LH & Unsigned $A \times B$  (bits 15--8) \\ \hline
-                          & \verb+0xDE06+ & MULU\_HL & Unsigned $A \times B$  (bits 23--16) \\ \hline
-                          & \verb+0xDE07+ & MULU\_HH & Unsigned $A \times B$  (bits 31--24) \\ \hline\hline
-
-            \verb+0xDE04+ & \verb+0xDE08+ & MULS\_A\_L & Signed A (bits 7--0) \\ \hline
-            \verb+0xDE05+ & \verb+0xDE09+ & MULS\_A\_H & Signed A (bits 15--8) \\ \hline
-            \verb+0xDE06+ & \verb+0xDE0A+ & MULS\_B\_L & Signed B (bits 7--0) \\ \hline
-            \verb+0xDE07+ & \verb+0xDE0B+ & MULS\_B\_H & Signed B (bits 15--8) \\ \hline
-                          & \verb+0xDE0C+ & MULS\_LL & Signed $A \times B$  (bits 7--0) \\ \hline
-                          & \verb+0xDE0D+ & MULS\_LH & Signed $A \times B$  (bits 15--8) \\ \hline
-                          & \verb+0xDE0E+ & MULS\_HL & Signed $A \times B$  (bits 23--16) \\ \hline
-                          & \verb+0xDE0F+ & MULS\_HH & Signed $A \times B$  (bits 31--24) \\ \hline
+            Address & R/W & Name & Data \\\hline\hline
+            0xDE00  & R/W & MULU\_A\_L & Unsigned A Low Byte \\\hline
+            0xDE01  & R/W & MULU\_A\_H & Unsigned A High Byte \\\hline
+            0xDE02  & R/W & MULU\_B\_L & Unsigned B Low Byte \\\hline
+            0xDE03  & R/W & MULU\_B\_H & Unsigned B High Byte \\\hline
+            0xDE10  & R   & MULU\_LL   & $A \times B$ (unsigned) byte 0 \\\hline
+            0xDE11  & R   & MULU\_LH   & $A \times B$ (unsigned) byte 1 \\\hline
+            0xDE12  & R   & MULU\_HL   & $A \times B$ (unsigned) byte 2 \\\hline
+            0xDE13  & R   & MULU\_HH   & $A \times B$ (unsigned) byte 3 \\\hline
         \end{tabular}
     \end{center}
-    \caption{Math Multiplication Registers}
+    \caption{Unsigned Multiplication Registers}
     \label{tab:math_mult_reg}
 \end{table}
 
 \begin{table}[ht]
     \begin{center}
         \begin{tabular}{|c|c|c|c|} \hline
-            Address W & Address R  & Name & Data \\\hline\hline
-            \verb+0xDE08+ & \verb+0xDE10+ & DIVU\_DEN\_L & Unsigned Denominator (bits 7--0) \\ \hline
-            \verb+0xDE09+ & \verb+0xDE11+ & DIVU\_DEN\_H & Unsigned Denominator (bits 15--8) \\ \hline
-            \verb+0xDE0A+ & \verb+0xDE12+ & DIVU\_NUM\_L & Unsigned Numerator (bits 7--0) \\ \hline
-            \verb+0xDE0B+ & \verb+0xDE13+ & DIVU\_NUM\_H & Unsigned Numerator (bits 15--8) \\ \hline
-                          & \verb+0xDE14+ & DIVU\_QUO\_L & Unsigned Quotient ${\rm NUM} / {\rm DEN}$ (bits 7--0) \\ \hline
-                          & \verb+0xDE15+ & DIVU\_QUO\_H & Quotient ${\rm NUM} / {\rm DEN}$ (bits 15--8) \\ \hline
-                          & \verb+0xDE16+ & DIVU\_REM\_L & Unsigned Remainder ${\rm NUM} / {\rm DEN}$ (bits 7--0) \\ \hline
-                          & \verb+0xDE17+ & DIVU\_REM\_H & Unsigned Remainder ${\rm NUM} / {\rm DEN}$ (bits 15-8) \\ \hline\hline
-
-            \verb+0xDE0C+ & \verb+0xDE18+ & DIVS\_DEN\_L & Signed Denominator (bits 7--0) \\ \hline
-            \verb+0xDE0D+ & \verb+0xDE19+ & DIVS\_DEN\_H & Signed Denominator (bits 15--8) \\ \hline
-            \verb+0xDE0E+ & \verb+0xDE1A+ & DIVS\_NUM\_L & Signed Numerator (bits 7--0) \\ \hline
-            \verb+0xDE0F+ & \verb+0xDE1B+ & DIVS\_NUM\_H & Signed Numerator (bits 15--8) \\ \hline
-                          & \verb+0xDE1C+ & DIVS\_QUO\_L & Signed Quotient ${\rm NUM} / {\rm DEN}$ (bits 7--0) \\ \hline
-                          & \verb+0xDE1D+ & DIVS\_QUO\_H & Signed Quotient ${\rm NUM} / {\rm DEN}$ (bits 15--8) \\ \hline
-                          & \verb+0xDE1E+ & DIVS\_REM\_L & Signed Remainder ${\rm NUM} / {\rm DEN}$ (bits 7--0) \\ \hline
-                          & \verb+0xDE1F+ & DIVS\_REM\_H & Signed Remainder ${\rm NUM} / {\rm DEN}$ (bits 15-8) \\ \hline
+            Address & R/W & Name & Data \\\hline\hline
+            0xDE04  & R/W & DIVU\_DEN\_L & Unsigned Denominator Low Byte \\\hline
+            0xDE05  & R/W & DIVU\_DEN\_H & Unsigned Denominator High Byte \\\hline
+            0xDE06  & R/W & DIVU\_NUM\_L & Unsigned Numerator Low Byte \\\hline
+            0xDE07  & R/W & DIVU\_NUM\_H & Unsigned Numerator High Byte \\\hline
+            0xDE14  & R   & QUOU\_LL   & Quotient of ${\rm NUM} / {\rm DEN}$ (unsigned) low byte \\\hline
+            0xDE15  & R   & QUOU\_LH   & Quotient of ${\rm NUM} / {\rm DEN}$ (unsigned) high byte \\\hline
+            0xDE16  & R   & REMU\_HL   & Remainder of ${\rm NUM} / {\rm DEN}$ (unsigned) low byte \\\hline
+            0xDE17  & R   & REMU\_HH   & Remainder of ${\rm NUM} / {\rm DEN}$ (unsigned) low byte \\\hline  
         \end{tabular}
     \end{center}
-    \caption{Math Division Registers}
+    \caption{Unsigned Division Registers}
     \label{tab:math_div_reg}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|} \hline
+            Address & R/W & Name & Data \\\hline\hline
+            0xDE08 & R/W & ADD\_A\_LL & Unsigned A byte 0 \\\hline
+            0xDE09 & R/W & ADD\_A\_LH & Unsigned A byte 1 \\\hline
+            0xDE0A & R/W & ADD\_A\_HL & Unsigned A byte 2 \\\hline
+            0xDE0B & R/W & ADD\_A\_HH & Unsigned A byte 3 \\\hline
+            0xDE0C & R/W & ADD\_B\_LL & Unsigned B byte 0 \\\hline
+            0xDE0D & R/W & ADD\_B\_LH & Unsigned B byte 1 \\\hline
+            0xDE0E & R/W & ADD\_B\_HL & Unsigned B byte 2 \\\hline
+            0xDE0F & R/W & ADD\_B\_HH & Unsigned B byte 3 \\\hline
+            0xDE18 & R   & ADD\_R\_LL & $A + B$ (unsigned) byte 0 \\\hline
+            0xDE19 & R   & ADD\_R\_LH & $A + B$ (unsigned) byte 1 \\\hline
+            0xDE1A & R   & ADD\_R\_HL & $A + B$ (unsigned) byte 2 \\\hline
+            0xDE1B & R   & ADD\_R\_HH & $A + B$ (unsigned) byte 3 \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Unsigned 32-bit Addition Registers}
+    \label{tab:math_add_reg}
 \end{table}
