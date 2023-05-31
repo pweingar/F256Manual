@@ -1,18 +1,18 @@
 \chapter{Introduction}
 
-This manual is meant to be as complete as possible an introduction to the various hardware features of the \jr. In it, I will attempt to explain each of the major subsystems of the \jr\ and provide simple but practical examples of their use.
+This manual is meant to be a thorough introduction to the various hardware features of the \jr. In it, I will attempt to explain each of the major subsystems of the \jr\ and provide simple but practical examples of their use.
 
 One thing this manual will not provide is a tutorial in programming the 65C02 processor at the heart of the \jr. There are plenty of excellent books and videos explaining how the processor works and how to do assembly programming. While examples will generally be written in assembly, I will try to annotate them fully so that what is happening is very clear even to the novice assembly language coder.
 
-There are two models of \jr\ available: the \fjr, and the \fk. The \fjr\ is sold as a single board in the mini-ITX format, which may be installed in a standard PC case and requires a separate PS/2 keyboard. The \fk\ is a complete system with a case and a built-in matrixed keyboard. The two versions do have differences but are mostly compatible. This manual was started when the \fjr\ was the only model and is mostly written from its perspective with differences in the \fk\ called out as exceptions.
+There are two models of \jr\ available: the \fjr, and the \fk. The \fjr\ is a single board computer, designed to fit within a mini-ITX case, that requires a separate PS/2 keyboard. The \fk\ is a complete system with a case and a built-in custom keyboard. The two versions do have differences but are mostly compatible. Differences between the systems will be clearly noted.
 
 Several of chapters in this manual include example assembly code to show how the various features of the \jr\ work. While the code included in the text should be executable, the complete examples can be found on the Github repository that hosts the manual itself. Most of the examples are able to run on their own, but a few of them expect there to be some sort of operating system providing text display routines compatible with the old Commodore kernel. The examples were all written on a machine using OpenKERNAL, which was written for the \jr, but really anything that provides the CINT and CHROUT calls should work fine. Of course, the examples could be tweaked without too much trouble to run on essentially any operating system.
 
 \subsection*{A Note on Notation}
 
-Important side notes are called out with a black bar in the margin. These notes generally call out key differences between the different versions of the \jr\ and may have some important considerations for programs that need to run on all versions.
+Important side notes are called out with a black bar in the margin. These notes generally call out key differences between the different versions of the \jr\ and may have some important considerations for programs targeting multiple platforms.
 
-Example code in this manual is presented as assembly language. While the code is fairly generic 65C02 assembly code, the code was tested using the 64TASS assembler, and there points of 64TASS syntax that are worth explaining.
+Example code in this manual is presented as assembly language. While the code is fairly generic 65C02 assembly code, the code was tested using the 64TASS assembler, and there are aspects of its syntax that are worth explaining.
 
 \begin{itemize}
 \item Numeric literals are in decimal unless prefixed by the dollar sign (\$)
