@@ -52,7 +52,7 @@ For the PC speaker, there is the BUZZ flag. By toggling BUZZ, a program can twea
 
 \section*{Software Reset}
 
-A program can trigger a system reset. This can be done by writing the value \verb+0xDE+ to \verb+0xD6A2+ and the value \verb+AD+ to \verb+0xD6A3+ to validate that a reset is really intended (see table:~\ref{tab:sys_reset}), and then setting the most significant bit (RESET) of \verb+0xD6A0+ to actually trigger the reset.
+A program can trigger a system reset. This can be done by writing the value \verb+0xDE+ to \verb+0xD6A2+ and the value \verb+AD+ to \verb+0xD6A3+ to validate that a reset is really intended (see table:~\ref{tab:sys_reset}), setting the most significant bit (RESET) of \verb+0xD6A0+, and then clearing the RESET bit to actually trigger the reset.
 
 \begin{table}[ht]
     \begin{center}
