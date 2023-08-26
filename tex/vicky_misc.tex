@@ -160,7 +160,7 @@ start:      ; Disable IRQ handling
 
             ; Load my IRQ handler into the IRQ vector
             ; NOTE: this code just takes over IRQs completely. It could save
-            ;       the pointer to the old handler and chain to it when it had
+            ;       the pointer to the old handler and chain to it when it has
             ;       handled its interrupt. But what is proper really depends on
             ;       what the program is trying to do.
             lda #<my_handler
