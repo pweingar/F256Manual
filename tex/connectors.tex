@@ -12,7 +12,7 @@ The \fjr\ has several connectors on its board for I/O devices beyond the standar
 
 There are two connectors for game controllers. There are two connectors for Atari style joysticks (figure~\ref{fig:port_joy}). And two for NES or Super NES gamepads (figure~\ref{fig:port_nes}).
 
-For the Atari style joysticks, an adapter cable will be needed to convert from IDC to the standard DB-9 connector. There are two key differences between the \fjr\ and Atari or Commodore devices: first, the \fjr\ provides 3.3 volts instead of 5 volts, and second there are no paddle inputs supported on the \fjr.
+For the Atari style joysticks, an adapter cable will be needed to convert from IDC to the standard DE-9 connector. There are two key differences between the \fjr\ and Atari or Commodore devices: first, the \fjr\ provides 3.3 volts instead of 5 volts, and second there are no paddle inputs supported on the \fjr.
 
 For the NES and SNES style gamepads, an adapter box will be needed to provide the correct interfacing for a controller. This adapter should be available from Foenix Retro Systems in the near future (at the time of writing this manual).
 
@@ -46,7 +46,7 @@ An internal connector is included for the PS/2 mouse and keyboard port (figure~\
 
 \subsection*{UART}
 
-This connector provides access to the serial in and out signals for the \fjr's UART (figure~\ref{fig:port_uart}). The TxD and RxD signals are compatible with standard $\pm 12$ volt RS-232 signals. The signals on this connector can be brought out to a DB-9 connector to provide a standard 3 wire RS-232 serial port.
+This connector provides access to the serial in and out signals for the \fjr's UART (figure~\ref{fig:port_uart}). The TxD and RxD signals are compatible with standard $\pm 12$ volt RS-232 signals. The signals on this connector can be brought out to a DE-9 connector to provide a standard 3 wire RS-232 serial port.
 
 \begin{figure}[ht]
     \begin{center}
@@ -132,7 +132,7 @@ There is a jumper to select boot source (see figure~\ref{fig:jmp_boot}). With th
 
 \subsection*{UART Configuration}
 
-There are two headers for selecting how the UART is used---selecting between the serial port or the ESP32 Wi-Fi module (see figure~\ref{fig:jmp_uart}). One jumper controls the routing of the TxD line, while the other controls the routing of the RxD line. With the jumper positioned across the ``back'' pair of pins, the signal is routed to the Wi-Fi module. With the jumper positioned across the ``front'' pair of pins, the signal is routed to the DB-9 port connected to the UART connector. Note that both the TxD and RxD jumpers should be in the same relative position so that they both use the same device.
+There are two headers for selecting how the UART is used---selecting between the serial port or the ESP32 Wi-Fi module (see figure~\ref{fig:jmp_uart}). One jumper controls the routing of the TxD line, while the other controls the routing of the RxD line. With the jumper positioned across the ``back'' pair of pins, the signal is routed to the Wi-Fi module. With the jumper positioned across the ``front'' pair of pins, the signal is routed to the DE-9 port connected to the UART connector. Note that both the TxD and RxD jumpers should be in the same relative position so that they both use the same device.
 
 \begin{figure}[ht]
     \begin{center}
