@@ -4,7 +4,7 @@
 
 .include "../common/f256jr.asm"         ; Include register definitions for the F256jr
 .include "../common/f256_dma.asm"       ; Include the DMA registers
-.include "../common/f256_xymath.asm"    ; Include the coordinate math registers
+.include "../common/f256_math.asm"    	; Include the math coprocessor registers
 
 ;
 ; Definitions
@@ -165,27 +165,14 @@ wait_dma:   lda DMA_STATUS      ; Wait until DMA is not busy
             ; Calculate starting address based on address of bitmap and (X,Y)
             ;
 
-            lda #<bitmap_base   ; Give the coordinate math unit the base address
-            sta XY_BASE
-            lda #>bitmap_base
-            sta XY_BASE+1
-            lda #`bitmap_base
-            and #$03
-            sta XY_BASE+2
+			; Calculate bitmap_base + 320 * 40 + 100
 
-            lda #100             ; Set (x,y) of the rectangle to (100, 40)
-            sta XY_POS_X    
-            stz XY_POS_X+1
-            lda #40
-            sta XY_POS_Y
-            stz XY_POS_Y+1
-
-            lda XY_ADDRESS      ; Get the address of the upper left corner of the rectangle
-            sta DMA_DST_ADDR    ; And use it as the DMA address
-            lda XY_ADDRESS+1
-            sta DMA_DST_ADDR+1
-            lda XY_ADDRESS+2
-            sta DMA_DST_ADDR+2
+			lda #<(bitmap_base + 320 * 40 + 100)
+			sta DMA_DST_ADDR
+			lda #>(bitmap_base + 320 * 40 + 100)
+			sta DMA_DST_ADDR+1
+			lda #`(bitmap_base + 320 * 40 + 100)
+			sta DMA_DST_ADDR+2
 
             lda #$30
             sta DMA_FILL_VAL    ; We will fill the screen with $30     

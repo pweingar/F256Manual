@@ -1,7 +1,7 @@
 
-; 64tass Turbo Assembler Macro V1.55.2200 listing file
+; 64tass Turbo Assembler Macro V1.58.2974 listing file
 ; 64tass -a --mw65c02 --intel-hex --list=dma.lst --labels=dma.lbl -o dma.hex dma.asm
-; Wed Dec 14 19:30:35 2022
+; Thu Sep 21 19:32:09 2023
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -67,34 +67,36 @@
 
 ;******  Processing file: ../common/f256_dma.asm
 
-=$df00					DMA_CTRL = $DF00
-=$80					DMA_CTRL_START = $80
-=$08					DMA_CTRL_INT_EN = $08
-=$04					DMA_CTRL_FILL = $04
-=$02					DMA_CTRL_2D = $02
-=$01					DMA_CTRL_ENABLE = $01
-=$df01					DMA_STATUS = $DF01
-=$80					DMA_STAT_BUSY = $80
-=$df01					DMA_FILL_VAL = $DF01
-=$df04					DMA_SRC_ADDR = $DF04
-=$df08					DMA_DST_ADDR = $DF08
-=$df0c					DMA_COUNT = $DF0C
-=$df0c					DMA_WIDTH = $DF0C
-=$df0e					DMA_HEIGHT = $DF0E
-=$df10					DMA_STRIDE_SRC = $DF10
-=$df12					DMA_STRIDE_DST = $DF12
+=$df00					DMA_CTRL = $DF00                ; DMA Control Register
+=$80					DMA_CTRL_START = $80            ; Start the DMA operation
+=$08					DMA_CTRL_INT_EN = $08           ; Enable DMA interrupts
+=$04					DMA_CTRL_FILL = $04             ; DMA is a fill operation (otherwise DMA is a copy)
+=$02					DMA_CTRL_2D = $02               ; DMA is 2D operation (otherwise it is 1D)
+=$01					DMA_CTRL_ENABLE = $01           ; DMA engine is enabled
+=$df01					DMA_STATUS = $DF01              ; DMA status register (Read Only)
+=$80					DMA_STAT_BUSY = $80             ; DMA engine is busy with an operation
+=$df01					DMA_FILL_VAL = $DF01            ; Byte value to use for fill operations
+=$df04					DMA_SRC_ADDR = $DF04            ; Source address (system bus) for copy operations
+=$df08					DMA_DST_ADDR = $DF08            ; Destination address (system bus) for fill and copy operations
+=$df0c					DMA_COUNT = $DF0C               ; Number of bytes to fill or copy (1D operations, 24 bit value)
+=$df0c					DMA_WIDTH = $DF0C               ; Width of rectangle to fill or copy (2D operations, 16 bit value)
+=$df0e					DMA_HEIGHT = $DF0E              ; Height of rectangle to fill or copy (2D operations, 16 bit value)
+=$df10					DMA_STRIDE_SRC = $DF10          ; Width of the source bitmap image in bytes (2D operations, 16 bit value)
+=$df12					DMA_STRIDE_DST = $DF12          ; Width of the destination bitmap image in bytes (2D operations, 16 bit value)
 
 ;******  Return to file: dma.asm
 
 
-;******  Processing file: ../common/f256_xymath.asm
+;******  Processing file: ../common/f256_math.asm
 
-=$d301					XY_BASE = $D301         ; Starting address of the bitmap
-=$d304					XY_POS_X = $D304        ; X-coordinate desired
-=$d306					XY_POS_Y = $D306        ; Y-coordinate desired
-=$d308					XY_OFFSET = $D308       ; Offset within an MMU bank of the pixel for (X, Y)
-=$d30a					XY_BANK = $D30A         ; MMU bank containing the pixel for (X, Y)
-=$d30b					XY_ADDRESS = $D30B      ; System address of the pixel for (X, Y)
+=$de00					MULU_A_L = $DE00	; Input A for unsigned multiplication
+=$de01					MULU_A_H = $DE01
+=$de02					MULU_B_L = $DE02	; Input B for unsigned multiplication
+=$de03					MULU_B_H = $DE03
+=$de10					MULU_LL = $DE10		; Result A * B
+=$de11					MULU_LH = $DE11
+=$de12					MULU_HL = $DE12
+=$de13					MULU_HH = $DE13
 
 ;******  Return to file: dma.asm
 
@@ -161,7 +163,7 @@
 .e06e	a9 05		lda #$05	            lda #DMA_CTRL_FILL | DMA_CTRL_ENABLE
 .e070	8d 00 df	sta $df00	            sta DMA_CTRL
 .e073	a9 ff		lda #$ff	            lda #$ff
-.e075	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with 0
+.e075	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with $FF
 .e078	a9 00		lda #$00	            lda #<bitmap_base   ; Our bitmap will be the destination
 .e07a	8d 08 df	sta $df08	            sta DMA_DST_ADDR
 .e07d	a9 00		lda #$00	            lda #>bitmap_base
@@ -182,48 +184,35 @@
 .e0a3	29 80		and #$80	            and #DMA_STAT_BUSY
 .e0a5	c9 80		cmp #$80	            cmp #DMA_STAT_BUSY
 .e0a7	f0 f7		beq $e0a0	            beq wait_dma
-.e0a9	9c 00 df	stz $df00	            stz DMA_CTRL
+.e0a9	9c 00 df	stz $df00	            stz DMA_CTRL        ; Turn off the DMA engine
 .e0ac	a9 07		lda #$07	            lda #DMA_CTRL_FILL | DMA_CTRL_2D | DMA_CTRL_ENABLE
 .e0ae	8d 00 df	sta $df00	            sta DMA_CTRL
-.e0b1	a9 00		lda #$00	            lda #<bitmap_base   ; Give the coordinate math unit the base address
-.e0b3	8d 01 d3	sta $d301	            sta XY_BASE
-.e0b6	a9 00		lda #$00	            lda #>bitmap_base
-.e0b8	8d 02 d3	sta $d302	            sta XY_BASE+1
-.e0bb	a9 01		lda #$01	            lda #`bitmap_base
-.e0bd	29 03		and #$03	            and #$03
-.e0bf	8d 03 d3	sta $d303	            sta XY_BASE+2
-.e0c2	a9 64		lda #$64	            lda #100             ; Set (x,y) of the rectangle to (100, 40)
-.e0c4	8d 04 d3	sta $d304	            sta XY_POS_X
-.e0c7	9c 05 d3	stz $d305	            stz XY_POS_X+1
-.e0ca	a9 28		lda #$28	            lda #40
-.e0cc	8d 06 d3	sta $d306	            sta XY_POS_Y
-.e0cf	9c 07 d3	stz $d307	            stz XY_POS_Y+1
-.e0d2	ad 0b d3	lda $d30b	            lda XY_ADDRESS      ; Get the address of the upper left corner of the rectangle
-.e0d5	8d 08 df	sta $df08	            sta DMA_DST_ADDR    ; And use it as the DMA address
-.e0d8	ad 0c d3	lda $d30c	            lda XY_ADDRESS+1
-.e0db	8d 09 df	sta $df09	            sta DMA_DST_ADDR+1
-.e0de	ad 0d d3	lda $d30d	            lda XY_ADDRESS+2
-.e0e1	8d 0a df	sta $df0a	            sta DMA_DST_ADDR+2
-.e0e4	a9 30		lda #$30	            lda #$30
-.e0e6	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with 128
-.e0e9	a9 64		lda #$64	            lda #100            ; Size of rectangle is (100,30)
-.e0eb	8d 0c df	sta $df0c	            sta DMA_WIDTH
-.e0ee	9c 0d df	stz $df0d	            stz DMA_WIDTH+1
-.e0f1	a9 1e		lda #$1e	            lda #30
-.e0f3	8d 0e df	sta $df0e	            sta DMA_HEIGHT
-.e0f6	9c 0f df	stz $df0f	            stz DMA_HEIGHT+1
-.e0f9	a9 40		lda #$40	            lda #<bitmap_width
-.e0fb	8d 12 df	sta $df12	            sta DMA_STRIDE_DST
-.e0fe	a9 01		lda #$01	            lda #>bitmap_width
-.e100	8d 13 df	sta $df13	            sta DMA_STRIDE_DST+1
-.e103	ad 00 df	lda $df00	            lda DMA_CTRL
-.e106	09 80		ora #$80	            ora #DMA_CTRL_START
-.e108	8d 00 df	sta $df00	            sta DMA_CTRL
-.e10b	ad 01 df	lda $df01	wait_dma2d: lda DMA_STATUS      ; Wait until DMA is not busy
-.e10e	29 80		and #$80	            and #DMA_STAT_BUSY
-.e110	c9 80		cmp #$80	            cmp #DMA_STAT_BUSY
-.e112	f0 f7		beq $e10b	            beq wait_dma2d
-.e114	ea		nop		done:       nop                 ; Lock up here
-.e115	80 fd		bra $e114	            bra done
+.e0b1	a9 64		lda #$64				lda #<(bitmap_base + 320 * 40 + 100)
+.e0b3	8d 08 df	sta $df08				sta DMA_DST_ADDR
+.e0b6	a9 32		lda #$32				lda #>(bitmap_base + 320 * 40 + 100)
+.e0b8	8d 09 df	sta $df09				sta DMA_DST_ADDR+1
+.e0bb	a9 01		lda #$01				lda #`(bitmap_base + 320 * 40 + 100)
+.e0bd	8d 0a df	sta $df0a				sta DMA_DST_ADDR+2
+.e0c0	a9 30		lda #$30	            lda #$30
+.e0c2	8d 01 df	sta $df01	            sta DMA_FILL_VAL    ; We will fill the screen with $30
+.e0c5	a9 64		lda #$64	            lda #100            ; Size of rectangle is (100,30)
+.e0c7	8d 0c df	sta $df0c	            sta DMA_WIDTH
+.e0ca	9c 0d df	stz $df0d	            stz DMA_WIDTH+1
+.e0cd	a9 1e		lda #$1e	            lda #30
+.e0cf	8d 0e df	sta $df0e	            sta DMA_HEIGHT
+.e0d2	9c 0f df	stz $df0f	            stz DMA_HEIGHT+1
+.e0d5	a9 40		lda #$40	            lda #<bitmap_width  ; Set the width of the destination bitmap for 2D DMA
+.e0d7	8d 12 df	sta $df12	            sta DMA_STRIDE_DST
+.e0da	a9 01		lda #$01	            lda #>bitmap_width
+.e0dc	8d 13 df	sta $df13	            sta DMA_STRIDE_DST+1
+.e0df	ad 00 df	lda $df00	            lda DMA_CTRL
+.e0e2	09 80		ora #$80	            ora #DMA_CTRL_START
+.e0e4	8d 00 df	sta $df00	            sta DMA_CTRL
+.e0e7	ad 01 df	lda $df01	wait_dma2d: lda DMA_STATUS      ; Wait until DMA is not busy
+.e0ea	29 80		and #$80	            and #DMA_STAT_BUSY
+.e0ec	c9 80		cmp #$80	            cmp #DMA_STAT_BUSY
+.e0ee	f0 f7		beq $e0e7	            beq wait_dma2d
+.e0f0	ea		nop		done:       nop                 ; Lock up here
+.e0f1	80 fd		bra $e0f0	            bra done
 
 ;******  End of listing
