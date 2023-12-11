@@ -35,8 +35,8 @@ VKY_BRDR_CTRL = $D004           ; Vicky Border Control Register
 VKY_BRDR_COL_B = $D005          ; Vicky Border Color -- Blue
 VKY_BRDR_COL_G = $D006          ; Vicky Border Color -- Green
 VKY_BRDR_COL_R = $D007          ; Vicky Border Color -- Red
-VKY_BRDR_VERT = $D008           ; Vicky Border vertical thickness in pixels
-VKY_BRDR_HORI = $D009           ; Vicky Border Horizontal Thickness in pixels
+VKY_BRDR_HORI = $D008           ; Vicky Border Horizontal Thickness in pixels
+VKY_BRDR_VERT = $D009           ; Vicky Border vertical thickness in pixels
 
 VKY_BKG_COL_B = $D00D           ; Vicky Graphics Background Color Blue Component
 VKY_BKG_COL_G = $D00E           ; Vicky Graphics Background Color Green Component
