@@ -11,7 +11,7 @@ The \jr\ has several software-controllable LEDs. There are the SD card access LE
             Address & R/W & Name & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\\hline\hline
 
             \verb+0xD6A0+ & W & SYS0 & RESET & --- & CAP\_EN & BUZZ & L1 & L0 & SD\_L & PWR\_L \\ \hline
-            \verb+0xD6A0+ & R & SYS0 & --- & SD\_WP & SD\_CD & \multicolumn{5}{|c|}{---} \\ \hline
+            \verb+0xD6A0+ & R & SYS0 & --- & SD\_WP & SD\_CD & BUZZ & L1 & L0 & SD\_L & PWR\_L \\ \hline
             \verb+0xD6A1+ & R/W & SYS1 & \multicolumn{2}{|c|}{L1\_RATE}
                                        & \multicolumn{2}{|c|}{L0\_RATE}
                                        & SID\_ST
@@ -23,7 +23,7 @@ The \jr\ has several software-controllable LEDs. There are the SD card access LE
     \label{tab:sys_ctrl_reg}
 \end{table}
 
-The two status LEDs on the board are a little more complex. They may be in manual or automatic mode. The two flags L0\_MN and L1\_MN in SYS1 control which mode they are in. If an LED's flag is clear (0), then the LED is under manual control and its equivalent flag in SYS0 controls whether the LED is on or off. If the flag is set, then the LED is set to flash automatically, and the LED's flashing rate will be set by pair of bits L0\_RATE or L1\_RATE according to table~\ref{tab:led_rates}.
+The two status LEDs on the board are a little more complex. They may be in manual or automatic mode. The two flags L0\_MN and L1\_MN in SYS1 control which mode they are in. If an LED's flag is set (1), then the LED is under manual control and its equivalent flag in SYS0 controls whether the LED is on or off. If the flag is clear, then the LED is set to flash automatically, and the LED's flashing rate will be set by pair of bits L0\_RATE or L1\_RATE according to table~\ref{tab:led_rates}.
 
 The flag PSG\_ST controls how the output of the PSG sound chips are mixed. If clear (0), the PSGs will be mixed for monaural output (both will go to both left and right channels). If set (1), the left PSG will go to the left channel, and the right PSG will go to the right channel. This allows a program to use the PSGs as either independent 4 voice channels in stereo or as a monaural 8 voice channels.
 
