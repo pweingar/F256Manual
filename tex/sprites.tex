@@ -94,6 +94,11 @@ VKY_SP0_POS_X_H = $D905
 VKY_SP0_POS_Y_L = $D906         ; Sprite #0's Y position register
 VKY_SP0_POS_Y_H = $D907
 
+VKY_GR_CLUT_0 = $D000           ; Graphics LUT #0 (in I/O page #1)
+
+ptr_src = $0080                 ; A pointer to data to read
+ptr_dst = $0082                 ; A pointer to data to write
+
             ;
             ; Set up TinyVicky to display sprites
             ;
@@ -140,7 +145,7 @@ comp_loop:  lda (ptr_src),y             ; Read a byte from the code
             bne comp_loop               ; Continue until 4 bytes copied
 
             inx                         ; Move to the next color
-            cmp #16
+            cpx #16
             beq done_lut                ; Until we have copied all 16
 
             clc                         ; Move ptr_src to the next source color

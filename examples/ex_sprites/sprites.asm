@@ -72,7 +72,7 @@ comp_loop:  lda (ptr_src),y             ; Read a byte from the code
             bne comp_loop               ; Continue until we have copied 4 bytes
 
             inx                         ; Move to the next color
-            cmp #16
+            cpx #16
             beq done_lut                ; Until we have copied all 16
 
             clc                         ; Advance ptr_src to the next source color entry
