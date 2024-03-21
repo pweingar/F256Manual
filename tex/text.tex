@@ -177,7 +177,7 @@ The glyph to display would be defined by the eight byte sequence 0x1F, 0x30, 0x3
 
 \section*{Text Cursor}
 
-\jr\ has a text mode cursor. The text mode cursor is implemented as a character which is displayed in a $(x, y)$ position on the screen, visually replacing the character ordinarily at that position. It may be displayed continuously, or it may flash at one of four rates. When flashing, that position in the text screen will alternate between the text cursor and the character at that position in the text matrix. The color for the text cursor comes from the color for the position on the screen as specified in the color matrix. In other words, the text cursor does not have its own color.
+\jr\ has a text mode cursor. The text mode cursor is implemented as a character which is displayed in a $(x, y)$ position on the screen, visually replacing the character ordinarily at that position. It may be displayed continuously, or it may flash at one of four rates. When flashing, that position in the text screen will alternate between the text cursor and the character at that position in the text matrix. The color for the text cursor comes from the color for the position on the screen as specified in the color matrix. In other words, the text cursor does not have its own color. The text cursor registers are located in I/O bank 0.
 
 \begin{table}[ht]
     \begin{center}
