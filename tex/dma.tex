@@ -175,99 +175,73 @@ wait_dma:   lda DMA_STATUS      ; Wait until DMA is not busy
             stz DMA_CTRL        ; Turn off the DMA engine
 \end{verbatim}
 
-\example{Calculating an Address for DMA}
+\example{Using DMA to Fill a Rectangle}
 \label{ex:dma_2d}
 
-We can extend our 1D DMA example to draw a 2D rectangle at a given coordinate on the screen. Using the coordinate math block, we can quickly calculate the starting address for the destination address of the rectangle to fill.
+We can extend our 1D DMA example to draw a 2D rectangle at a given coordinate on the screen. In this example, we will calculate the starting address based on coordinates using the assembler's built-in math functions for constants. In general, a program will need to calculate these values at runtime and could use the built-in integer math coprocessor.
+
+We will need to use some different registers to specify the size and layout of the rectangular area. These registers overlap the registers used in the 1D case. The first two replace the \verb+DMA_COUNT+ register to give the width and height of the rectangle. The second specifies the stride for the destination bitmap (for copying, there is a source stride as well that can be different from the destination stride):
 
 \begin{verbatim}
-DMA_CTRL_2D = $02               ; DMA is 2D operation (otherwise it is 1D)
-
-DMA_WIDTH = $DF0C               ; Width of rectangle to fill or copy
-DMA_HEIGHT = $DF0E              ; Height of rectangle to fill or copy
-
-DMA_STRIDE_DST = $DF12          ; Width of the destination bitmap image
-
-XY_BASE = $D301         ; Starting address of the bitmap
-XY_POS_X = $D304        ; X-coordinate desired
-XY_POS_Y = $D306        ; Y-coordinate desired
-XY_OFFSET = $D308       ; Offset within an MMU bank of the pixel for (X, Y)
-XY_BANK = $D30A         ; MMU bank containing the pixel for (X, Y)
-XY_ADDRESS = $D30B      ; System address of the pixel for (X, Y)
+            DMA_WIDTH = $DF0C               ; Width of rectangle (16-bit)
+            DMA_HEIGHT = $DF0E              ; Height of rectangle (16-bit)
+            DMA_STRIDE_DST = $DF12          ; Stride of the destination (16-bit)
 \end{verbatim}
 
 We start off very similar to the 1D fill and just turn on the flag for 2D DMA:
+
 \begin{verbatim}
-    lda #DMA_CTRL_FILL | DMA_CTRL_2D | DMA_CTRL_ENABLE
-    sta DMA_CTRL
+            lda #DMA_CTRL_FILL | DMA_CTRL_2D | DMA_CTRL_ENABLE
+            sta DMA_CTRL
 \end{verbatim}
 
-Now, we can take the base address of our bitmap and use it at the base address of the coordinate calculation:
+We can then calculate the starting address, using the base address of the bitmap and a starting coordinate of $(100, 40)$:
 
 \begin{verbatim}
-    lda #<bitmap_base   ; Give the coordinate math unit the base address
-    sta XY_BASE
-    lda #>bitmap_base
-    sta XY_BASE+1
-    lda #`bitmap_base
-    and #$03
-    sta XY_BASE+2
+            lda #<(bitmap_base + 320 * 40 + 100)
+            sta DMA_DST_ADDR
+            lda #>(bitmap_base + 320 * 40 + 100)
+            sta DMA_DST_ADDR+1
+            lda #`(bitmap_base + 320 * 40 + 100)
+            sta DMA_DST_ADDR+2
 \end{verbatim}
 
-Next, we give it our $x$ and $y$ coordinates for the upper left corner of the rectangle we want to draw. In this case, $(100, 40)$:
+Next, we set the value to write into the bitmap fill area:
 
 \begin{verbatim}
-    lda #100             ; Set (x,y) of the rectangle to (100, 40)
-    sta XY_POS_X    
-    stz XY_POS_X+1
-    lda #40
-    sta XY_POS_Y
-    stz XY_POS_Y+1
-\end{verbatim}
-
-Then, we can just read off the address from the coordinate calculator and use it as the destination address for our DMA operation:
-
-\begin{verbatim}
-    lda XY_ADDRESS      ; Get the address of the upper left corner of the rect
-    sta DMA_DST_ADDR    ; And use it as the DMA address
-    lda XY_ADDRESS+1
-    sta DMA_DST_ADDR+1
-    lda XY_ADDRESS+2
-    sta DMA_DST_ADDR+2
-
-    lda #$30
-    sta DMA_FILL_VAL    ; We will fill the screen with $30     
+            lda #$30
+            sta DMA_FILL_VAL    ; We will fill the screen with $30     
 \end{verbatim}
 
 A difference from 1D is that the size of the fill is a width and a height, so we provide the width and height of the rectangle we want to draw. In this case, we are setting it to $(100, 30)$:
 
 \begin{verbatim}
-    lda #100            ; Size of rectangle is (100,30)
-    sta DMA_WIDTH
-    stz DMA_WIDTH+1
-    lda #30
-    sta DMA_HEIGHT
-    stz DMA_HEIGHT+1
+            lda #100            ; Size of rectangle is (100,30)
+            sta DMA_WIDTH
+            stz DMA_WIDTH+1
+            lda #30
+            sta DMA_HEIGHT
+            stz DMA_HEIGHT+1
 \end{verbatim}
 
 For 2D DMA operations, we need to provide the ``stride''. This is the width of the overall bitmap into which the DMA operation is writing. In this case, we are updating a bitmap that is the full screen, so we set the destination stride to 320:
 
 \begin{verbatim}
-    lda #<bitmap_width  ; Set the width of the destination bitmap for 2D DMA
-    sta DMA_STRIDE_DST
-    lda #>bitmap_width
-    sta DMA_STRIDE_DST+1
+            lda #<bitmap_width  ; Set the width of the destination bitmap for 2D DMA
+            sta DMA_STRIDE_DST
+            lda #>bitmap_width
+            sta DMA_STRIDE_DST+1
 \end{verbatim}
 
 And then we can start the DMA operation and wait for it to complete:
 
 \begin{verbatim}
-    lda DMA_CTRL
-    ora #DMA_CTRL_START
-    sta DMA_CTRL
+            lda DMA_CTRL
+            ora #DMA_CTRL_START
+            sta DMA_CTRL
 
 wait_dma2d: lda DMA_STATUS      ; Wait until DMA is not busy
-    and #DMA_STAT_BUSY
-    cmp #DMA_STAT_BUSY
-    beq wait_dma2d
+            and #DMA_STAT_BUSY
+            cmp #DMA_STAT_BUSY
+            beq wait_dma2d
 \end{verbatim}
